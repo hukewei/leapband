@@ -18,7 +18,7 @@ class SampleListener extends Listener {
     }
 
     public void onConnect(Controller controller) {
-        System.out.println("Connected");
+        System.out.println("Connected here");
         controller.enableGesture(Gesture.Type.TYPE_SWIPE);
         controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
