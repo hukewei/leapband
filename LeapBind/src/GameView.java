@@ -12,54 +12,17 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
-class HandsTrackLabel extends JLabel {
-	private int x_1;
-	private int y_1;
-	private int x_2;
-	private int y_2;
 
-	public HandsTrackLabel() {
-		this.setSize(Constance.Windows_width, Constance.Windows_height);
-		x_1 = 50;
-		y_1 = 50;
-		x_2 = 50;
-		y_2 = 50;
-		this.hideCursor();
-	}
-
-	public void setHand1(float x, float y) {
-		this.x_1 = (int) x;
-		this.y_1 = (int) y;
-		repaint();
-	}
-	
-	public void setHand2(float x, float y) {
-		this.x_2 = (int) x;
-		this.y_2 = (int) y;
-		repaint();
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.setColor(Color.yellow);
-		g.fillOval(x_1, y_1, 70, 40);
-		g.setColor(Color.blue);
-		g.fillOval(x_2, y_2, 70, 40);
-	}
-	
-	public void hideCursor() {
-		Image image = Toolkit.getDefaultToolkit().createImage(
-				new MemoryImageSource(0, 0, new int[0], 0, 0));
-		this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(image,
-				new Point(0, 0), null));
-	}
-}
 
 public class GameView extends JFrame implements PropertyChangeListener {
 	
-	private HandsTrackLabel hands = new HandsTrackLabel();
+	
+	
+	private HandsTrackLabel hands;
+	private JSplitPane split_pane;
+	private ControlPane control_pane;
 	
 	public GameView() {
 		this.setTitle("Image View");
@@ -68,10 +31,19 @@ public class GameView extends JFrame implements PropertyChangeListener {
 		this.setLayout(null);
 		SimpleModel.getInstance().addPropertyChangeListener(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//mouse = new MousePane();
-		hands.setLayout(null);
-		this.add(hands,BorderLayout.CENTER);
+		hands = new HandsTrackLabel();
+		//hands.setLayout(null);
+		//this.add(hands,BorderLayout.CENTER);
 		hands.setSize(new Dimension(Constance.Windows_width, Constance.Windows_height));
+		control_pane = new ControlPane();
+		control_pane.setLayout(null);
+		JPanel hand_pane = new JPanel();
+		hand_pane.add(hands);
+		split_pane= new JSplitPane(0,control_pane,hands);
+		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+		split_pane.setDividerLocation(250);
+		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
+		this.add(split_pane);
 		this.setVisible(true);
 	}
 	
