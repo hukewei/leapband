@@ -12,12 +12,14 @@ public class BindMain {
 	public static void main(String[] args) {
 		
 		//new MenuView();
-		new GameView();
+		//new GameView();
+		new RoomSelectView();
 		
 		LeapListener listener = new LeapListener();
         Controller controller = new Controller();
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
         controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
         listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);

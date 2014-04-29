@@ -25,7 +25,7 @@ public class GameView extends JFrame implements PropertyChangeListener {
 	private ControlPane control_pane;
 	
 	public GameView() {
-		this.setTitle("Image View");
+		this.setTitle("Game View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);

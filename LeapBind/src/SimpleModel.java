@@ -1,6 +1,8 @@
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import javax.swing.DefaultListModel;
+
 class Cordinates {
 	float x;
 	float y;
@@ -15,12 +17,25 @@ public class SimpleModel {
 	
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
+	
+	private DefaultListModel<String> dict = null;
 		
 	public static SimpleModel getInstance() {
 		if (model == null) {
 			model = new SimpleModel();
 		}
 		return model;
+	}
+	
+	public DefaultListModel<String> getDictModel(){
+		if (dict == null) {
+			dict = new DefaultListModel<String>();
+			dict.addElement("room1");
+			dict.addElement("room2");
+			dict.addElement("room3");
+			dict.addElement("room4");
+		}
+		return dict;
 	}
 	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
@@ -41,5 +56,10 @@ public class SimpleModel {
 		changes.firePropertyChange("hand1", null, hand_1);
 		changes.firePropertyChange("hand2", null, hand_2);
 	}
+	
+	public void doSwipe(String direction) {
+		changes.firePropertyChange("swipe", null, direction);
+	}
+	
 
 }

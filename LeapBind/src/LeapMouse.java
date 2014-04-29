@@ -78,7 +78,8 @@ class LeapListener extends Listener {
         int numGestures = frame.gestures().count();
         
         
-
+        	int up_count = 0;
+        	int down_count = 0;
         	for (int i=0; i < numGestures; i++) {
         	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
                 	
@@ -99,8 +100,26 @@ class LeapListener extends Listener {
                 		System.out.println("key tap");
         	    	slow();
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
+        	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
+        	    	if (swipe.state() == Gesture.State.STATE_START && swipe.speed() > 1000) {
+        	    		if(swipe.direction().getY() > 0){
+        	                  //swipeDirection = "up";
+        	                  up_count++;
+        	                  
+        	              } else {
+        	                  //swipeDirection = "down";
+        	                  down_count++;
+        	              }                 
+        	    		
+        	    	}
+//                    System.out.println("Swipe id: " + swipe.id()
+//                               + ", " + swipe.state()
+//                               + ", position: " + swipe.position()
+//                               + ", direction: " + swipe.direction()
+//                               + ", speed: " + swipe.speed());
         	    	
-        	    	switchApplication();
+        	    	
+        	    	//switchApplication();
         	    	Swype = true;
         	    	if(DEBUG)
         	    		System.out.println("swype");
@@ -138,6 +157,16 @@ class LeapListener extends Listener {
         	    
         	  
         	  }
+        	try {
+        		Robot keyHandler = new Robot();
+        		if (up_count > down_count) {
+        			model.doSwipe("UP");
+        		}  else if (down_count > up_count) {
+        			model.doSwipe("DOWN");
+        		}
+        	} catch (AWTException e) {
+				e.printStackTrace();
+			}
         
         if (!frame.fingers().isEmpty()) {
           
