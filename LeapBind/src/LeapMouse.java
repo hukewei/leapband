@@ -52,6 +52,8 @@ class LeapListener extends Listener {
 
 	boolean Swype = false;
 	boolean Circle = false;
+    long last_timestamp = 0;
+
 
     public void onInit(Controller controller) {
         System.out.println("Initialized");
@@ -74,12 +76,14 @@ class LeapListener extends Listener {
     public void onFrame(Controller controller) {
         // Get the most recent frame and report some basic information
         Frame frame = controller.frame();
-
         int numGestures = frame.gestures().count();
         
         
         	int up_count = 0;
         	int down_count = 0;
+        	int left_count = 0;
+        	int right_count = 0;
+        	if ((frame.timestamp() - last_timestamp > 600000)) {
         	for (int i=0; i < numGestures; i++) {
         	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
                 	
@@ -101,15 +105,26 @@ class LeapListener extends Listener {
         	    	slow();
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
-        	    	if (swipe.state() == Gesture.State.STATE_START && swipe.speed() > 1000) {
-        	    		if(swipe.direction().getY() > 0){
-        	                  //swipeDirection = "up";
-        	                  up_count++;
-        	                  
-        	              } else {
-        	                  //swipeDirection = "down";
-        	                  down_count++;
-        	              }                 
+        	    	if (swipe.speed() > 500) {
+        	    		boolean is_horizontal = (Math.abs(swipe.direction().getX()) > Math.abs(swipe.direction().getY()));
+        	    		if (!is_horizontal) {
+        	    			if(swipe.direction().getY() > 0){
+          	                  //swipeDirection = "up";
+          	                  up_count++;
+          	              	} else {
+          	                  //swipeDirection = "down";
+          	                  down_count++;
+          	              	}          
+        	    		} else {
+        	    			if(swipe.direction().getX() > 0){
+        	                  //swipeDirection = "right";
+        	                  right_count++;
+        	              	} else {
+        	                  //swipeDirection = "left";
+        	                  left_count++;
+        	              	}  
+        	    		}
+        	    		       
         	    		
         	    	}
 //                    System.out.println("Swipe id: " + swipe.id()
@@ -157,17 +172,29 @@ class LeapListener extends Listener {
         	    
         	  
         	  }
-        	try {
-        		Robot keyHandler = new Robot();
-        		if (up_count > down_count) {
-        			model.doSwipe("UP");
-        		}  else if (down_count > up_count) {
-        			model.doSwipe("DOWN");
+        	}
+        	if (Swype) {
+        		int [] direction_count = {left_count, right_count, up_count, down_count};
+        		int maxValue = direction_count[0];  
+        	    for(int i=1;i < direction_count.length;i++){  
+        	    	if(direction_count[i] > maxValue){  
+        	    		maxValue = direction_count[i];  
+        	    	}  
+        	    }
+
+        		if (maxValue > 0 ) {
+        		      if (maxValue == left_count) {
+        		    	  model.doSwipe("LEFT");
+        		      } else if (maxValue == right_count) {
+        		    	  model.doSwipe("RIGHT");
+        		      } else if (maxValue == up_count) {
+        		    	  model.doSwipe("UP");
+        		      } else if (maxValue == down_count) {
+        		    	  model.doSwipe("DOWN");
+        		      }
+        		      last_timestamp = frame.timestamp();
         		}
-        	} catch (AWTException e) {
-				e.printStackTrace();
-			}
-        
+        	}
         if (!frame.fingers().isEmpty()) {
           
             // Get fingers
