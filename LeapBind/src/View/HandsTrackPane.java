@@ -1,5 +1,7 @@
 package View;
 
+
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,15 +12,16 @@ import java.awt.image.MemoryImageSource;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Model.Constance;
+import Utilities.Constance;
 
-class HandsTrackLabel extends JPanel {
+
+class HandsTrackPane extends JPanel {
 	private int x_1;
 	private int y_1;
 	private int x_2;
 	private int y_2;
 
-	public HandsTrackLabel() {
+	public HandsTrackPane() {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		x_1 = 50;
 		y_1 = 50;

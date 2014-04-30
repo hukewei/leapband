@@ -1,4 +1,5 @@
-package Model;
+package Utilities;
+
 
 public class Cordinates {
 	public float x;

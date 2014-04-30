@@ -1,5 +1,6 @@
 package View;
 
+
 import jade.gui.GuiEvent;
 
 import java.awt.BorderLayout;
@@ -11,27 +12,32 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import Model.Constance;
 import SMA.UserAgent;
+import Utilities.Constance;
 
 
 
-public class MenuView extends JAgentFrame {
+
+public class MenuView extends JFrame implements PropertyChangeListener{
 	private JPanel buttonPane;
+	private UserAgent myAgent;
 
 	public MenuView(UserAgent agent) {
-		super(agent);
+		myAgent = agent;
+		//super(agent);
 		this.setTitle("Menu View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		myAgent.addPropertyChangeListener(this);
 		//mouse = new MousePane();
 		buttonPane = new JPanel();
 		buttonPane.setLayout(null);

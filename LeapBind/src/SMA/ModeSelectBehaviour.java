@@ -1,6 +1,5 @@
 package SMA;
-import Model.Constance;
-import jade.core.Agent;
+
 import jade.core.behaviours.OneShotBehaviour;
 
 
@@ -17,9 +16,14 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 
 	@Override
 	public void action() {
-		if (msg == UserAgent.Single_Mode)
-		myAgent.setSingle_mode(true);
-		myAgent.changeToRoomSelectView();
+		System.out.println("message is " + msg);
+		if (msg == UserAgent.Single_Mode) {
+			myAgent.setSingle_mode(true);
+			myAgent.changeToRoomSelectView();
+		} else if (msg == UserAgent.Multiple_Mode) {
+			myAgent.setMultiple_mode(true);
+			myAgent.changeToRoomSelectView();
+		}
 		
 	}
 

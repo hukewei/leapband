@@ -1,5 +1,8 @@
 package View;
 
+
+
+
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 
@@ -11,9 +14,10 @@ import org.jfugue.Pattern;
 import org.jfugue.Player;
 import org.jfugue.Rhythm;
 
-import Model.Constance;
-import Model.Cordinates;
 import SMA.UserAgent;
+import Utilities.Constance;
+import Utilities.Cordinates;
+
 
 
 
@@ -21,7 +25,7 @@ public class GameView extends JAgentFrame {
 	
 	
 	
-	private HandsTrackLabel hands;
+	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
 	private Player player = new Player();
@@ -33,7 +37,7 @@ public class GameView extends JAgentFrame {
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		hands = new HandsTrackLabel();
+		hands = new HandsTrackPane();
 		//hands.setLayout(null);
 		//this.add(hands,BorderLayout.CENTER);
 		hands.setSize(new Dimension(Constance.Windows_width, Constance.Windows_height));

@@ -1,12 +1,6 @@
 package Controller;
-/******************************************************************************\
-* Author: Alberto Vaccari
-* LeapMouse.java
-* 
-* This app simulates a mouse, based on the Sample.java for LeapMotion
-*           
-*           
-\******************************************************************************/
+
+
 
 
 import java.awt.AWTException;

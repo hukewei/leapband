@@ -1,5 +1,8 @@
 package View;
 
+
+
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
@@ -11,8 +14,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-import Model.Constance;
 import SMA.UserAgent;
+import Utilities.Constance;
+
 
 
 public class RoomSelectView extends JAgentFrame {

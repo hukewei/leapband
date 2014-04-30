@@ -1,4 +1,5 @@
 package SMA;
+
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 
@@ -8,8 +9,9 @@ import java.io.IOException;
 
 import javax.swing.DefaultListModel;
 
+
 import Controller.LeapListener;
-import Model.Cordinates;
+import Utilities.Cordinates;
 import View.GameView;
 import View.MenuView;
 import View.RoomSelectView;
@@ -35,9 +37,10 @@ public class UserAgent extends GuiAgent{
 	
 	private DefaultListModel<String> dict = null;
 	
-	public boolean isSingle_mode() {
-		return single_mode;
-	}
+	private LeapListener listener;
+	private Controller controller;
+	
+
 	
 	protected void setup() {
 		super.setup();
@@ -47,9 +50,11 @@ public class UserAgent extends GuiAgent{
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
 		menu_view.setVisible(true);
+		game_view.setVisible(false);
 		
-		LeapListener listener = new LeapListener(this);
-        Controller controller = new Controller();
+		listener = new LeapListener(this);
+        controller = new Controller();
+        
         //controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
         controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
@@ -57,15 +62,16 @@ public class UserAgent extends GuiAgent{
         listener.setClickType(1);
         listener.setCalibratedScren(true);
         controller.addListener(listener);
+        
         System.out.println("Press Enter to quit...");
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            System.in.read();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Remove the listener when done
-        controller.removeListener(listener);
+        //controller.removeListener(listener);
 	}
 	
 	
@@ -74,6 +80,7 @@ public class UserAgent extends GuiAgent{
 		String message = arg0.getParameter(0).toString();
 		this.addBehaviour(new ModeSelectBehaviour(this, message));
 	}
+
 	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
 		changes.addPropertyChangeListener(pcl);
@@ -83,9 +90,9 @@ public class UserAgent extends GuiAgent{
 		room_view.setVisible(true);
 		menu_view.setVisible(false);
 	}
-
-	public void firePropertyChange(String msg) {
-		changes.firePropertyChange("mode", null, msg); 
+	
+	public boolean isSingle_mode() {
+		return single_mode;
 	}
 	
 	public void setSingle_mode(boolean single_mode) {
@@ -101,9 +108,6 @@ public class UserAgent extends GuiAgent{
 		this.multiple_mode = multiple_mode;
 		this.single_mode = !multiple_mode;
 	}
-
-	
-		
 	
 	public DefaultListModel<String> getDictModel(){
 		if (dict == null) {

@@ -1,4 +1,5 @@
-package Model;
+package Utilities;
+
 
 public class Constance {
 	public static int Windows_width = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
