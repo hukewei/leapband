@@ -2,10 +2,15 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/LeapDeveloperKit/LeapSDK/lib/LeapJava.jar">
+	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/jfugue-4.0.3.jar"/>
+	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/jade.jar"/>
+	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/LeapJava.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/hukewei/Dropbox/GI05/LeapDeveloperKit/LeapSDK/lib/"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/jackson-databind-2.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/jackson-annotations-2.2.0.jar"/>
+	<classpathentry kind="lib" path="/Users/hukewei/Dropbox/GI05/NF28/Projet/libs/jackson-core-2.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,4 +1,8 @@
+package Model;
 import java.io.IOException;
+
+import Controller.LeapListener;
+import View.GameView;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Gesture;
@@ -12,12 +16,12 @@ public class BindMain {
 	public static void main(String[] args) {
 		
 		//new MenuView();
-		//new GameView();
-		new RoomSelectView();
+		new GameView();
+		//new RoomSelectView();
 		
 		LeapListener listener = new LeapListener();
         Controller controller = new Controller();
-        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        //controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
         controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
         listener.setDebug(true);
@@ -35,5 +39,4 @@ public class BindMain {
         controller.removeListener(listener);
 
 	}
-
 }

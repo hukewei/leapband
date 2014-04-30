@@ -1,12 +1,10 @@
+package Model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
 
-class Cordinates {
-	float x;
-	float y;
-}
+
 
 
 public class SimpleModel {

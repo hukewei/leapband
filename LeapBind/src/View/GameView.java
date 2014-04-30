@@ -1,18 +1,20 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
+package View;
+
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.image.MemoryImageSource;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+
+import org.jfugue.Pattern;
+import org.jfugue.Player;
+import org.jfugue.Rhythm;
+
+import Model.Constance;
+import Model.Cordinates;
+import Model.SimpleModel;
 
 
 
@@ -23,6 +25,7 @@ public class GameView extends JFrame implements PropertyChangeListener {
 	private HandsTrackLabel hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
+	private Player player = new Player();
 	
 	public GameView() {
 		this.setTitle("Game View");
@@ -62,6 +65,16 @@ public class GameView extends JFrame implements PropertyChangeListener {
 					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 			hands.setHand2(((Cordinates) evt.getNewValue()).x,
 					((Cordinates) evt.getNewValue()).y);
+		} else if (evt.getPropertyName().equals("swipe")) {
+			if ((String)evt.getNewValue() == "DOWN") {
+				Rhythm rhythm = new Rhythm();
+				//Bang out your drum beat  
+				rhythm.setLayer(1, "O..oO...O..oOO.."); 
+				rhythm.addSubstitution('o', "Rs [BASS_DRUM]s"); 
+				Pattern pattern = rhythm.getPattern(); 
+				pattern.repeat(1); 
+				player.play(pattern);
+			}
 		}
 
 	}
