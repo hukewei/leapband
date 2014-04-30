@@ -87,6 +87,7 @@ public class LeapListener extends Listener {
         	int down_count = 0;
         	int left_count = 0;
         	int right_count = 0;
+        	int circle_count = 0;
         	if ((frame.timestamp() - last_timestamp > 600000)) {
         	for (int i=0; i < numGestures; i++) {
         	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
@@ -95,8 +96,6 @@ public class LeapListener extends Listener {
         	    	//Left Click
         	    	if(CLICK_TYPE == 0)
         	    	{	
-        	    		clickMouse(0);
-                		releaseMouse(0);
                 		Lclicked = true;
 	                    if(DEBUG)
 	                    {
@@ -147,8 +146,7 @@ public class LeapListener extends Listener {
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_CIRCLE && !Circle) {
       	    		if(DEBUG)
     	    		System.out.println("Circle");
-      	    		clickMouse(0);
-            		releaseMouse(0);
+      	    		circle_count++;
         	    	Circle = true; 	
         	    	CircleGesture circle = new CircleGesture(frame.gestures().get(i));
         	        float progress = circle.progress();
@@ -177,8 +175,9 @@ public class LeapListener extends Listener {
         	  
         	  }
         	}
-        	if (Swype) {
-        		int [] direction_count = {left_count, right_count, up_count, down_count};
+        	
+        	if (Swype || Circle) {
+        		int [] direction_count = {left_count, right_count, up_count, down_count, circle_count};
         		int maxValue = direction_count[0];  
         	    for(int i=1;i < direction_count.length;i++){  
         	    	if(direction_count[i] > maxValue){  
@@ -195,6 +194,9 @@ public class LeapListener extends Listener {
         		    	  model.doSwipe("UP");
         		      } else if (maxValue == down_count) {
         		    	  model.doSwipe("DOWN");
+        		      } else if (maxValue == circle_count) {
+        		    	  clickMouse(0);
+        		    	  releaseMouse(0);
         		      }
         		      last_timestamp = frame.timestamp();
         		}
