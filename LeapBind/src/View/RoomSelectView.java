@@ -1,40 +1,34 @@
 package View;
 
-import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Robot;
 import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
 
 import Model.Constance;
-import Model.SimpleModel;
+import SMA.UserAgent;
 
 
-public class RoomSelectView extends JFrame implements PropertyChangeListener {
-	private JList list_room;
+public class RoomSelectView extends JAgentFrame {
+	private JList<String> list_room;
 	private JButton create_room;
 	private JButton enter_room;
 	
 	@SuppressWarnings("unchecked")
-	public RoomSelectView() {
+	public RoomSelectView(UserAgent agent) {
+		super(agent);
 		this.setTitle("Room View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
-		SimpleModel.getInstance().addPropertyChangeListener(this);
 		//load model to list
 		list_room = new JList<String>();
-		list_room.setModel(SimpleModel.getInstance().getDictModel());
+		list_room.setModel(myAgent.getDictModel());
 		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
 		list_room.setBackground(Color.yellow);
 		list_room.setBounds(0,50,300, 300);

@@ -1,5 +1,7 @@
 package View;
 
+import jade.gui.GuiEvent;
+
 import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -9,29 +11,26 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import Model.Constance;
-import Model.SimpleModel;
 import SMA.UserAgent;
 
 
 
-public class MenuView extends JFrame implements PropertyChangeListener {
+public class MenuView extends JAgentFrame {
 	private JPanel buttonPane;
-	private UserAgent myAgent;
 
-	public MenuView() {
-
-		this.setTitle("Image View");
+	public MenuView(UserAgent agent) {
+		super(agent);
+		this.setTitle("Menu View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
-		SimpleModel.getInstance().addPropertyChangeListener(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//mouse = new MousePane();
 		buttonPane = new JPanel();
@@ -41,37 +40,32 @@ public class MenuView extends JFrame implements PropertyChangeListener {
 
 		//*************** button
 		//mouse.setLayout(null);
-		JButton start = new JButton("start");
-		JButton stop = new JButton("stop");
-		JButton exit = new JButton("exit");
+		JLabel leap_band = new JLabel("Leap Band");
+		JButton single = new JButton("Single Mode");
+		JButton multiple = new JButton("Multiple Mode");
+		JButton exit = new JButton("Exit");
 		exit.addActionListener(new java.awt.event.ActionListener() {  
             public void actionPerformed(java.awt.event.ActionEvent evt) {  
                 System.exit(1);  
             }  
         });
-		start.setBounds(500, 50,500, 150);
-		stop.setBounds(500,250,500,150);
-		exit.setBounds(500,450,500,150);
+		leap_band.setBounds(500, 50, 500, 150);
+		single.setBounds(500, 150,500, 150);
+		multiple.setBounds(500,350,500,150);
+		exit.setBounds(500,550,500,150);
 				
-//		start.setBackground(Color.yellow);
-//		start.setOpaque(true);
-//		start.setBorderPainted(false);
-//		
-//		stop.setBackground(Color.pink);
-//		stop.setOpaque(true);
-//		stop.setBorderPainted(false);
-				
-		
-		buttonPane.add(start);
-		buttonPane.add(stop);
+		buttonPane.add(leap_band);
+		buttonPane.add(single);
+		buttonPane.add(multiple);
 		buttonPane.add(exit);
 		
-		start.addActionListener(new ActionListener() {
+		
+		
+		single.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				selectSingleMode();
 			}
 		});
 		//this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
@@ -87,6 +81,11 @@ public class MenuView extends JFrame implements PropertyChangeListener {
 		//this.hideCursor();
 	}
 
+	private void selectSingleMode() {
+		GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
+		ev.addParameter(UserAgent.Single_Mode);
+		myAgent.postGuiEvent(ev);
+	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

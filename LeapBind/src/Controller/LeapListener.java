@@ -13,17 +13,28 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
-import Model.SimpleModel;
+import SMA.UserAgent;
 
-import com.leapmotion.leap.*;
+import com.leapmotion.leap.CircleGesture;
+import com.leapmotion.leap.Controller;
+import com.leapmotion.leap.Finger;
+import com.leapmotion.leap.FingerList;
+import com.leapmotion.leap.Frame;
+import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.Hand;
+import com.leapmotion.leap.Listener;
+import com.leapmotion.leap.Pointable;
+import com.leapmotion.leap.PointableList;
+import com.leapmotion.leap.Screen;
+import com.leapmotion.leap.ScreenList;
+import com.leapmotion.leap.SwipeGesture;
+import com.leapmotion.leap.Vector;
 
 public class LeapListener extends Listener {
 	
-	SimpleModel model = SimpleModel.getInstance();
+	private UserAgent myAgent;
+	
 
 	//True for Debugging
 	boolean DEBUG = false;
@@ -36,7 +47,7 @@ public class LeapListener extends Listener {
 	boolean USE_CALIBRATED_SCREEN = true;
 
 	//Just to control the speed, it can be changed accordingly to needs
-	int SLOW = 10;
+	int SLOW = 0;
 
 	//Screen resolution, it should match the current screen resolution for more precise movements
 	int SCREEN_X = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
@@ -59,7 +70,11 @@ public class LeapListener extends Listener {
     long last_timestamp = 0;
 
 
-    public void onInit(Controller controller) {
+    public LeapListener(UserAgent userAgent) {
+		myAgent = userAgent;
+	}
+
+	public void onInit(Controller controller) {
         System.out.println("Initialized");
         System.out.println("Current screen resolution: " + SCREEN_X +"x" + SCREEN_Y);
     }
@@ -172,7 +187,6 @@ public class LeapListener extends Listener {
         	    	Swype = false;
         	    }
         	    
-        	  
         	  }
         	}
         	
@@ -187,13 +201,13 @@ public class LeapListener extends Listener {
 
         		if (maxValue > 0 ) {
         		      if (maxValue == left_count) {
-        		    	  model.doSwipe("LEFT");
+        		    	  myAgent.doSwipe("LEFT");
         		      } else if (maxValue == right_count) {
-        		    	  model.doSwipe("RIGHT");
+        		    	  myAgent.doSwipe("RIGHT");
         		      } else if (maxValue == up_count) {
-        		    	  model.doSwipe("UP");
+        		    	  myAgent.doSwipe("UP");
         		      } else if (maxValue == down_count) {
-        		    	  model.doSwipe("DOWN");
+        		    	  myAgent.doSwipe("DOWN");
         		      } else if (maxValue == circle_count) {
         		    	  clickMouse(0);
         		    	  releaseMouse(0);
@@ -415,7 +429,7 @@ public class LeapListener extends Listener {
 //                			yNorm_2
 //                			);
                 	
-                	model.updateHands(
+			        myAgent.updateHands(
                 			x_1,
                 			y_1,
                 			x_2,

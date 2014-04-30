@@ -2,7 +2,6 @@ package View;
 
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,11 +13,11 @@ import org.jfugue.Rhythm;
 
 import Model.Constance;
 import Model.Cordinates;
-import Model.SimpleModel;
+import SMA.UserAgent;
 
 
 
-public class GameView extends JFrame implements PropertyChangeListener {
+public class GameView extends JAgentFrame {
 	
 	
 	
@@ -27,12 +26,12 @@ public class GameView extends JFrame implements PropertyChangeListener {
 	private ControlPane control_pane;
 	private Player player = new Player();
 	
-	public GameView() {
+	public GameView(UserAgent agent) {
+		super(agent);
 		this.setTitle("Game View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
-		SimpleModel.getInstance().addPropertyChangeListener(this);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		hands = new HandsTrackLabel();
 		//hands.setLayout(null);
