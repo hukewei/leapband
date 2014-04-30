@@ -1,9 +1,11 @@
+package SMA;
 
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
+
 
 
 
@@ -22,7 +24,7 @@ public class UserMain {
 			AgentContainer operationContainer = rt.createAgentContainer(p);
 			AgentController c1 = operationContainer.createNewAgent(
 					"User_1",
-					"UserAgent",
+					"SMA.UserAgent",
 					null);
 			c1.start();
 		} catch(Exception ex) {

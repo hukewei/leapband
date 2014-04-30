@@ -47,7 +47,6 @@ public class GameView extends JFrame implements PropertyChangeListener {
 		split_pane.setDividerLocation(250);
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.add(split_pane);
-		this.setVisible(true);
 	}
 	
 

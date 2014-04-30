@@ -6,7 +6,6 @@ import javax.swing.DefaultListModel;
 
 
 
-
 public class SimpleModel {
 	private PropertyChangeSupport changes = new PropertyChangeSupport(this);
 	private static SimpleModel model = null;

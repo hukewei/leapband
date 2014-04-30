@@ -1,3 +1,4 @@
+package SMA;
 
 import jade.core.Profile;
 import jade.core.ProfileImpl;

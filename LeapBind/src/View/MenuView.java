@@ -1,29 +1,29 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.image.MemoryImageSource;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Model.Constance;
 import Model.SimpleModel;
+import SMA.UserAgent;
 
 
 
 public class MenuView extends JFrame implements PropertyChangeListener {
 	private JPanel buttonPane;
+	private UserAgent myAgent;
 
 	public MenuView() {
 
@@ -66,7 +66,14 @@ public class MenuView extends JFrame implements PropertyChangeListener {
 		buttonPane.add(stop);
 		buttonPane.add(exit);
 		
-		this.setVisible(true);
+		start.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		//this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 		
 		// personnel cursor

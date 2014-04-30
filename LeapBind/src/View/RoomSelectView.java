@@ -51,7 +51,6 @@ public class RoomSelectView extends JFrame implements PropertyChangeListener {
 		enter_room = new JButton("enter room");
 		enter_room.setBounds(600, 50,200, 150);
 		this.add(enter_room);
-		this.setVisible(true);
 	}
 
 	@Override

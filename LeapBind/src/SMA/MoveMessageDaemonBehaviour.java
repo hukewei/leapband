@@ -1,7 +1,9 @@
+package SMA;
 import jade.core.behaviours.CyclicBehaviour;
 
 
-public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
+
+public class MoveMessageDaemonBehaviour extends CyclicBehaviour{
 
 	@Override
 	public void action() {
