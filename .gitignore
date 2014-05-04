@@ -1,4 +1,4 @@
-*.class
+**/*.class
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -14,7 +14,9 @@ hs_err_pid*
 .classpath
 .project
 .settings/
+**/bin/
 
+# files of SMA
 APDescription.txt
 MTPs-Main-Container.txt
 
