@@ -49,8 +49,8 @@ public class UserAgent extends GuiAgent{
 		menu_view = new MenuView(this);
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
-		menu_view.setVisible(true);
-		game_view.setVisible(false);
+		//menu_view.setVisible(true);
+		game_view.setVisible(true);
 		
 		listener = new LeapListener(this);
         controller = new Controller();

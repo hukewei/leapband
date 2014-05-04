@@ -1,1 +1,1 @@
-http://192.168.2.4:7778/acc
+http://keweis-mbp:7778/acc
