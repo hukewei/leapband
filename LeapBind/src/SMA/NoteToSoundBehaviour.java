@@ -7,7 +7,7 @@ public class NoteToSoundBehaviour extends OneShotBehaviour{
 	
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
+		//just a example
 		
 	}
 
