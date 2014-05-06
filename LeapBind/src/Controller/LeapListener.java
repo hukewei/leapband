@@ -54,7 +54,7 @@ public class LeapListener extends Listener {
 	boolean Rclicked = false;
 	boolean keystroke = false;
 	boolean LHold = false;
-	boolean ENABLE_MOUSE = true;
+	boolean ENABLE_MOUSE = false;
 
 	boolean Swype = false;
 	boolean Circle = false;
@@ -212,9 +212,9 @@ public class LeapListener extends Listener {
             FingerList fingers = frame.fingers();
             fingers_count = frame.fingers().count();
             
-            if(DEBUG && fingers_count != prev_fingers_count)
+            if(fingers_count != prev_fingers_count)
             {
-            	System.out.println("Currently " + fingers_count + " fingers visible.\n");
+            	if (DEBUG)System.out.println("Currently " + fingers_count + " fingers visible.\n");
             	prev_fingers_count = fingers_count;
             	if (fingers_count > 1) {
             		ENABLE_MOUSE = false;
