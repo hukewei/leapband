@@ -349,6 +349,8 @@ public class LeapListener extends Listener {
 
 	                if (screens.isEmpty()) return;
 	                Screen s = screens.get(0);
+	                
+
 	                PointableList pointables = hand1.pointables();
 
 	                if(pointables.isEmpty()) return;
@@ -367,6 +369,8 @@ public class LeapListener extends Listener {
 			        float x_1 = s.widthPixels() * intersection.getX();
 			        // flip y coordinate to standard top-left origin
 			        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
+			        float z_1 = firstPointable.tipPosition().getZ();
+			        System.out.println("z1 = " + z_1);
 			        pointables = hand2.pointables();
 
 	                if(pointables.isEmpty()) return;
@@ -385,6 +389,8 @@ public class LeapListener extends Listener {
 			        float x_2 = s.widthPixels() * intersection.getX();
 			        // flip y coordinate to standard top-left origin
 			        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
+			        float z_2 = firstPointable.tipPosition().getZ();
+
 			        
 			        
 			        // track hands position
@@ -399,7 +405,7 @@ public class LeapListener extends Listener {
 //			          return;
 //
 //			        float xNor_1 = s.widthPixels() * intersect.getX();
-//			        float yNorm_1 = s.heightPixels() * (1.0f - intersect.getY());
+//			        float yNorm_1 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
 //			        
 //			        palm = hand2.palmPosition();
 //			        direction = hand2.direction();
@@ -411,20 +417,22 @@ public class LeapListener extends Listener {
 //			          return;
 //
 //			        float xNor_2 = s.widthPixels() * intersect.getX();
-//			        float yNorm_2 = s.heightPixels() * (1.0f - intersect.getY());
+//			        float yNorm_2 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
 //
-//                	model.updateHands(
+//                	myAgent.updateHands(
 //                			xNor_1,
 //                			yNorm_1,
 //                			xNor_2,
 //                			yNorm_2
-//                			);
+//                	);
                 	
 			        myAgent.updateHands(
                 			x_1,
                 			y_1,
                 			x_2,
-                			y_2
+                			y_2,
+                			z_1,
+                			z_2
                 			);
                 	
 

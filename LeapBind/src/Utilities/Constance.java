@@ -9,4 +9,7 @@ public class Constance {
 	public static int Swipe_Down = 201;
 	public static int Swipe_Left = 202;
 	public static int Swipe_Right = 203;
+	
+	public static int Hand_width = 80;
+	public static int Hand_height = 45;
 }
