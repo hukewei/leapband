@@ -10,24 +10,32 @@ import java.io.IOException;
 import javax.swing.DefaultListModel;
 
 
+
+import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.Controller;
+
 import Controller.LeapListener;
 import Utilities.Cordinates;
 import View.GameView;
+import View.InstrumentView;
 import View.MenuView;
 import View.RoomSelectView;
 
-import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Gesture;
+
 
 @SuppressWarnings("serial")
 public class UserAgent extends GuiAgent{
+	
 	private PropertyChangeSupport changes;
 	public static int TEXT_EVENT = 0;
 	public static int SELECT_EVENT = 1;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
+	public static String return_Menu = "102";
+	public static String instrument_Mode = "103";
 	private MenuView menu_view;
 	private GameView game_view;
+	private InstrumentView instrument_view;
 	private RoomSelectView room_view;
 	private boolean single_mode = false;
 	private boolean multiple_mode = false;
@@ -47,10 +55,11 @@ public class UserAgent extends GuiAgent{
 		System.out.println(getLocalName()+"--> Installed");
 		changes = new PropertyChangeSupport(this);
 		menu_view = new MenuView(this);
+		instrument_view = new InstrumentView(this);
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
-		//menu_view.setVisible(true);
-		game_view.setVisible(true);
+		menu_view.setVisible(true);
+		//game_view.setVisible(true);
 		
 		listener = new LeapListener(this);
         controller = new Controller();
@@ -89,6 +98,22 @@ public class UserAgent extends GuiAgent{
 	public void changeToRoomSelectView() {
 		room_view.setVisible(true);
 		menu_view.setVisible(false);
+	}
+	
+	public void changeToInstrumentView(){
+		instrument_view.setVisible(true);
+		menu_view.setVisible(false);
+	}
+	public void changeToGameView(){
+		game_view.setVisible(true);
+		instrument_view.setVisible(false);
+	}
+	
+	public void changeToMenuView(){
+		menu_view.setVisible(true);
+		room_view.setVisible(false);
+		game_view.setVisible(false);
+		instrument_view.setVisible(false);		
 	}
 	
 	public boolean isSingle_mode() {
@@ -140,6 +165,9 @@ public class UserAgent extends GuiAgent{
 	public void doSwipe(String direction) {
 		changes.firePropertyChange("swipe", null, direction);
 	}
+
+
+	
 	
 
 }

@@ -19,10 +19,19 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 		System.out.println("message is " + msg);
 		if (msg == UserAgent.Single_Mode) {
 			myAgent.setSingle_mode(true);
-			myAgent.changeToRoomSelectView();
+			myAgent.changeToInstrumentView();
+			//myAgent.changeToRoomSelectView();
 		} else if (msg == UserAgent.Multiple_Mode) {
 			myAgent.setMultiple_mode(true);
 			myAgent.changeToRoomSelectView();
+		}else if(msg == UserAgent.return_Menu){
+			myAgent.setSingle_mode(false);
+			myAgent.setMultiple_mode(false);
+			myAgent.changeToMenuView();
+		}else if(msg == UserAgent.instrument_Mode){
+			//myAgent.setSingle_mode(false);
+			//myAgent.setMultiple_mode(false);
+			myAgent.changeToGameView();
 		}
 		
 	}

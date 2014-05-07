@@ -18,7 +18,7 @@ public class MainBoot {
 			AgentContainer mainContainer = rt.createMainContainer(p);
 		}
 		catch(Exception ex) {
-			ex.printStackTrace();
+			
 		}
 	}
 }
