@@ -1,4 +1,8 @@
 package View;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,7 +28,7 @@ public class musicview extends JFrame{
 		choixmini[2]= "                                    How to save a life";
 		this.setTitle("SONGS");
 		this.setSize(400,450);
-		this.setLocationRelativeTo(null);		//´°¿ÚÏÔÊ¾ÔÚÆÁÄ»ÖÐ¼ä
+		this.setLocationRelativeTo(null);		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä»ï¿½Ð¼ï¿½
 		this.setLayout(null);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
 		label = new JLabel(choix[0]);
@@ -102,5 +106,13 @@ public class musicview extends JFrame{
 		this.add(precedent);
 		this.add(valider);
 		this.setVisible(true);
+		
+		// personnel cursor
+		
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Point cursorHotSpot = new Point(0,0);
+		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+		this.setCursor(customCursor);
 	}
 }

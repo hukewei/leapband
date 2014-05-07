@@ -2,7 +2,11 @@ package View;
 
 import jade.gui.GuiEvent;
 
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -42,7 +46,7 @@ public class InstrumentView extends JAgentFrame {
 			valider.setBounds(600,600,300,100);
 			this.setTitle("ChooseView");
 			this.setSize(Constance.Windows_width, Constance.Windows_height);
-			this.setLocationRelativeTo(null);		//´°¿ÚÏÔÊ¾ÔÚÆÁÄ»ÖÐ¼ä
+			this.setLocationRelativeTo(null);		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä»ï¿½Ð¼ï¿½
 			this.setLayout(null);
 			
 			JButton home = new JButton();
@@ -145,7 +149,13 @@ public class InstrumentView extends JAgentFrame {
 				}
 			});
 		
-		// TODO Auto-generated constructor stub
+			// personnel cursor
+			
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Image cursorImage = toolkit.getImage("src/cursor.png");
+			Point cursorHotSpot = new Point(0,0);
+			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+			this.setCursor(customCursor);
 	}
 
 	@Override
