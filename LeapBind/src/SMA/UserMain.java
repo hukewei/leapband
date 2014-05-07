@@ -32,7 +32,6 @@ public class UserMain {
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-
 	}
 }
 

@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import SMA.UserAgent;
 import Utilities.Constance;
 
-public class InstrumentView extends JAgentFrame {
+public class InstrumentSelectView extends JAgentFrame {
 		
 		private JLabel label;
 		private JLabel test;
@@ -28,7 +28,7 @@ public class InstrumentView extends JAgentFrame {
 		private JLabel labelright;
 		private JLabel text;
 		private int i=0;
-	public InstrumentView(UserAgent agent) {
+	public InstrumentSelectView(UserAgent agent) {
 			super(agent);
 			final String[] choix = new String[3];
 			final String[] choixmini = new String[3];

@@ -17,7 +17,7 @@ import com.leapmotion.leap.Controller;
 import Controller.LeapListener;
 import Utilities.Cordinates;
 import View.GameView;
-import View.InstrumentView;
+import View.InstrumentSelectView;
 import View.MenuView;
 import View.RoomSelectView;
 
@@ -35,7 +35,7 @@ public class UserAgent extends GuiAgent{
 	public static String instrument_Mode = "103";
 	private MenuView menu_view;
 	private GameView game_view;
-	private InstrumentView instrument_view;
+	private InstrumentSelectView instrument_view;
 	private RoomSelectView room_view;
 	private boolean single_mode = false;
 	private boolean multiple_mode = false;
@@ -55,7 +55,7 @@ public class UserAgent extends GuiAgent{
 		System.out.println(getLocalName()+"--> Installed");
 		changes = new PropertyChangeSupport(this);
 		menu_view = new MenuView(this);
-		instrument_view = new InstrumentView(this);
+		instrument_view = new InstrumentSelectView(this);
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
 		menu_view.setVisible(true);
