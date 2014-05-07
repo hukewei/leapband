@@ -153,11 +153,13 @@ public class UserAgent extends GuiAgent{
 		changes.firePropertyChange("pos", null, pointer);
 	}
 	
-	public void updateHands(float x_1, float y_1, float x_2, float y_2) {
+	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2) {
 		hand_1.x = x_1;
 		hand_1.y = y_1;
 		hand_2.x = x_2;
 		hand_2.y = y_2;
+		hand_1.z = z_1;
+		hand_2.z = z_2;
 		changes.firePropertyChange("hand1", null, hand_1);
 		changes.firePropertyChange("hand2", null, hand_2);
 	}
