@@ -109,13 +109,11 @@ public class UserAgent extends GuiAgent{
 		instrument_view.setVisible(false);
 	}
 	
-	public void changeToMeunuView(){
+	public void changeToMenuView(){
 		menu_view.setVisible(true);
 		room_view.setVisible(false);
 		game_view.setVisible(false);
-		
-		
-		
+		instrument_view.setVisible(false);		
 	}
 	
 	public boolean isSingle_mode() {

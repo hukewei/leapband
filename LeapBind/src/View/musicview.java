@@ -97,6 +97,7 @@ public class musicview extends JFrame{
 		valider.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
 			}
 		});
 		this.add(label);

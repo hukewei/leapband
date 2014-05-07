@@ -74,8 +74,6 @@ public class ControlPane extends JPanel{
 		stop.setIcon(icone);
 		JLabel volume = new JLabel(new ImageIcon("src/volume.png"));
 		volume.setBounds(1200, 50, 80, 80);
-		//JLabel play = new JLabel(new ImageIcon("/Users/akeharuxiao/Dropbox/image/play.png"));
-		//play.setBounds(0, 170, 600, 256);
 		
 		this.add(home);
 		this.add(player);
@@ -84,63 +82,5 @@ public class ControlPane extends JPanel{
 		this.add(volume);
 		this.add(userId);
 		//this.add(play);
-/*		JButton home=new JButton();
-		home.setIcon(new ImageIcon("src/home.jpg"));
-		home.setBounds(0, 0, 50, 50);
-		this.add(home);
-		
-		JLabel userId=new JLabel("player1");
-		userId.setBounds(100, 0, 100, 20);
-		userId.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel userImage=new JLabel(new ImageIcon("src/userImage.JPG"));
-		userImage.setBounds(100, 25, 100, 100);
-		this.add(userId);
-		this.add(userImage);
-		
-		JButton chooseMusic=new JButton("Choose a music");
-		chooseMusic.setBounds(500, 50, 300, 100);
-		chooseMusic.setFont(new Font("Serif", Font.PLAIN, 30));
-		this.add(chooseMusic);
-		
-		JButton before=new JButton();
-		JButton play=new JButton();
-		JButton after=new JButton();
-		before.setIcon(new ImageIcon("src/before.JPG"));
-		play.setIcon(new ImageIcon("src/play.JPG"));
-		after.setIcon(new ImageIcon("src/after.JPG"));
-		before.setBounds(850, 50, 80, 80);
-		play.setBounds(950, 50, 80, 80);
-		after.setBounds(1050, 50, 80, 80);
-		this.add(before);
-		this.add(play);
-		this.add(after);
-	   
-   
-	        
-		
-		
-		home.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
-				ev.addParameter(UserAgent.return_Menu);
-				myAgent.postGuiEvent(ev);
-				
-			}
-		});
-*/
-		
-//		JButton start = new JButton("start");
-//		start.setBounds(0, 50,200, 150);
-//		this.add(start);
-//		JButton end = new JButton("end");
-//		end.setBounds(300, 50,200, 150);
-//		this.add(end);
-	}
-	
-	
-
-	
-			
+	}			
 }

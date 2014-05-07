@@ -27,7 +27,7 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 		}else if(msg == UserAgent.return_Menu){
 			myAgent.setSingle_mode(false);
 			myAgent.setMultiple_mode(false);
-			myAgent.changeToMeunuView();
+			myAgent.changeToMenuView();
 		}else if(msg == UserAgent.instrument_Mode){
 			//myAgent.setSingle_mode(false);
 			//myAgent.setMultiple_mode(false);
