@@ -62,7 +62,8 @@ public class RoomSelectView extends JAgentFrame {
 					current_index++;
 				}
 			}
-			list_room.setSelectedIndex(current_index);	
+			list_room.setSelectedIndex(current_index);
+			
 		}
 	}
 

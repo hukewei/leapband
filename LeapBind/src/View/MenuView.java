@@ -4,8 +4,10 @@ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -18,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import SMA.UserAgent;
 import Utilities.Constance;
@@ -36,6 +39,7 @@ public class MenuView extends JFrame implements PropertyChangeListener{
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
+		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myAgent.addPropertyChangeListener(this);
 		//mouse = new MousePane();
@@ -50,21 +54,25 @@ public class MenuView extends JFrame implements PropertyChangeListener{
 		JButton single = new JButton("Single Mode");
 		JButton multiple = new JButton("Multiple Mode");
 		JButton exit = new JButton("Exit");
-		exit.addActionListener(new java.awt.event.ActionListener() {  
-            public void actionPerformed(java.awt.event.ActionEvent evt) {  
-                System.exit(1);  
-            }  
-        });
-		leap_band.setBounds(500, 50, 500, 150);
-		single.setBounds(500, 150,500, 150);
-		multiple.setBounds(500,350,500,150);
-		exit.setBounds(500,550,500,150);
+		
+		
+		leap_band.setBounds(500, 30, 500, 150);
+		leap_band.setFont(new Font("Serif", Font.PLAIN, 50));
+		leap_band.setHorizontalAlignment(SwingConstants.CENTER);
+		leap_band.setForeground(Color.MAGENTA);
+		single.setBounds(500, 150,500, 120);
+		single.setFont(new Font("Serif", Font.PLAIN, 30));
+		multiple.setBounds(500,350,500,120);
+		multiple.setFont(new Font("Serif", Font.PLAIN, 30));
+		exit.setBounds(500,550,500,120);
+		exit.setFont(new Font("Serif", Font.PLAIN, 30));
 				
 		buttonPane.add(leap_band);
 		buttonPane.add(single);
 		buttonPane.add(multiple);
 		buttonPane.add(exit);
 		
+
 		
 		
 		single.addActionListener(new ActionListener() {
@@ -74,6 +82,21 @@ public class MenuView extends JFrame implements PropertyChangeListener{
 				selectSingleMode();
 			}
 		});
+		
+		multiple.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				selectMultiMode();
+				
+			}
+		});
+		
+		exit.addActionListener(new java.awt.event.ActionListener() {  
+            public void actionPerformed(java.awt.event.ActionEvent evt) {  
+                System.exit(1);  
+            }  
+        });
 		//this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
 		
 		// personnel cursor
@@ -85,11 +108,19 @@ public class MenuView extends JFrame implements PropertyChangeListener{
 		this.setCursor(customCursor);
 		
 		//this.hideCursor();
+		
+		
 	}
 
 	private void selectSingleMode() {
 		GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
 		ev.addParameter(UserAgent.Single_Mode);
+		myAgent.postGuiEvent(ev);
+	}
+	
+	private void selectMultiMode(){
+		GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
+		ev.addParameter(UserAgent.Multiple_Mode);
 		myAgent.postGuiEvent(ev);
 	}
 	
