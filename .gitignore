@@ -19,3 +19,6 @@ hs_err_pid*
 APDescription.txt
 MTPs-Main-Container.txt
 
+# Mac OS X temp file
+**/.DS_Store
+
