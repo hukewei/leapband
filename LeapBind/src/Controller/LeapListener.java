@@ -6,6 +6,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import SMA.UserAgent;
+import Utilities.Constance;
 
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
@@ -95,7 +96,7 @@ public class LeapListener extends Listener {
         	int right_count = 0;
         	int circle_count = 0;
         	int screen_tap_count = 0;
-        	if ((frame.timestamp() - last_timestamp > 600000)) {
+        	if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
         	for (int i=0; i < numGestures; i++) {
         	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
         	    	//If Key Tap Mode enabled 
@@ -172,7 +173,7 @@ public class LeapListener extends Listener {
         	        }
         	    	
         	    	
-        	    	slow();
+        	    	slow();	
         	    }  else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SCREEN_TAP) {
         	    	System.out.println("screen tap");
         	    	screen_tap_count++;
