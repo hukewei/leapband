@@ -16,12 +16,14 @@ import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import SMA.UserAgent;
 
@@ -41,7 +43,7 @@ public class ControlPane extends JPanel{
 		this.setLayout(null);
 		
 		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/fangzi.png");
+		Icon icon = new ImageIcon("src/home.png");
 		home.setBounds(140,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			
@@ -56,8 +58,10 @@ public class ControlPane extends JPanel{
 		//JLabel userId=new JLabel("player1");
 		//userId.setBounds(230, 20, 150, 20);
 		//userId.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel player = new JLabel(new ImageIcon("src/player.png"));
+		JLabel player = new JLabel(new ImageIcon("src/person2.jpg"));
 		player.setBounds(320, 50, 130, 100);
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 5);
+		player.setBorder(border);
 		JButton music = new JButton("Choose a music");
 		music.setFont(new Font("Serif", Font.PLAIN, 30));
 		music.setBounds(520, 50, 400, 100);
