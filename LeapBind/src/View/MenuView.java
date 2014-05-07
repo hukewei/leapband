@@ -14,7 +14,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,13 +27,11 @@ import Utilities.Constance;
 
 
 
-public class MenuView extends JFrame implements PropertyChangeListener{
+public class MenuView extends JAgentFrame{
 	private JPanel buttonPane;
-	private UserAgent myAgent;
 
 	public MenuView(UserAgent agent) {
-		myAgent = agent;
-		//super(agent);
+		super(agent);
 		this.setTitle("Menu View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);

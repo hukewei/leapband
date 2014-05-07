@@ -117,11 +117,11 @@ public class InstrumentSelectView extends JAgentFrame {
 		
 			// personnel cursor
 			
-//			Toolkit toolkit = Toolkit.getDefaultToolkit();
-//			Image cursorImage = toolkit.getImage("src/cursor.png");
-//			Point cursorHotSpot = new Point(0,0);
-//			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-//			this.setCursor(customCursor);
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			Image cursorImage = toolkit.getImage("src/cursor.png");
+			Point cursorHotSpot = new Point(0,0);
+			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+			this.setCursor(customCursor);
 	}
 	
 	private void selectPrecedent() {

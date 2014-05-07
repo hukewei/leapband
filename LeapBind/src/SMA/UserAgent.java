@@ -5,14 +5,8 @@ import jade.gui.GuiEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.IOException;
 
 import javax.swing.DefaultListModel;
-
-
-
-import com.leapmotion.leap.Gesture;
-import com.leapmotion.leap.Controller;
 
 import Controller.LeapListener;
 import Utilities.Cordinates;
@@ -20,6 +14,9 @@ import View.GameView;
 import View.InstrumentSelectView;
 import View.MenuView;
 import View.RoomSelectView;
+
+import com.leapmotion.leap.Controller;
+import com.leapmotion.leap.Gesture;
 
 
 
@@ -64,9 +61,10 @@ public class UserAgent extends GuiAgent{
 		listener = new LeapListener(this);
         controller = new Controller();
         
-        //controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
         controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
         //listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);
