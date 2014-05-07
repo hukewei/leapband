@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import SMA.UserAgent;
 import Utilities.Constance;
 
+@SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame {
 		
 		private JLabel label;
@@ -35,7 +36,6 @@ public class InstrumentSelectView extends JAgentFrame {
 		
 	public InstrumentSelectView(UserAgent agent) {
 			super(agent);
-			
 			choix[0]= "src/gu.png";
 			choix[1]= "src/pianoniu.png";
 			choix[2]= "src/guitar.png";
@@ -74,8 +74,6 @@ public class InstrumentSelectView extends JAgentFrame {
 			labelright.setBounds(950,400,200,200);
 			//test.setIcon(new ImageIcon(img));
 			suivant.addActionListener(new ActionListener(){
-				int left = 0;
-				int right = 0;
 				public void actionPerformed(ActionEvent e) {
 					selectSuivant();
 				}
@@ -119,11 +117,11 @@ public class InstrumentSelectView extends JAgentFrame {
 		
 			// personnel cursor
 			
-			Toolkit toolkit = Toolkit.getDefaultToolkit();
-			Image cursorImage = toolkit.getImage("src/cursor.png");
-			Point cursorHotSpot = new Point(0,0);
-			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-			this.setCursor(customCursor);
+//			Toolkit toolkit = Toolkit.getDefaultToolkit();
+//			Image cursorImage = toolkit.getImage("src/cursor.png");
+//			Point cursorHotSpot = new Point(0,0);
+//			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+//			this.setCursor(customCursor);
 	}
 	
 	private void selectPrecedent() {

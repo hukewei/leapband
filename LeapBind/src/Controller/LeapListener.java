@@ -113,6 +113,7 @@ public class LeapListener extends Listener {
                 		System.out.println("key tap");
         	    	slow();
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
+        	        ENABLE_MOUSE = false;
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
         	    	if (swipe.speed() > 500) {
         	    		boolean is_horizontal = (Math.abs(swipe.direction().getX()) > Math.abs(swipe.direction().getY()));
