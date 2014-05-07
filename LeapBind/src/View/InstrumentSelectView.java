@@ -20,7 +20,8 @@ import javax.swing.JLabel;
 import SMA.UserAgent;
 import Utilities.Constance;
 
-public class InstrumentView extends JAgentFrame {
+@SuppressWarnings("serial")
+public class InstrumentSelectView extends JAgentFrame {
 		
 		private JLabel label;
 		private JLabel test;
@@ -28,10 +29,13 @@ public class InstrumentView extends JAgentFrame {
 		private JLabel labelright;
 		private JLabel text;
 		private int i=0;
-	public InstrumentView(UserAgent agent) {
+		String[] choix = new String[3];
+		String[] choixmini = new String[3];
+		private int left = 0;
+		private int right = 0;
+		
+	public InstrumentSelectView(UserAgent agent) {
 			super(agent);
-			final String[] choix = new String[3];
-			final String[] choixmini = new String[3];
 			choix[0]= "src/gu.png";
 			choix[1]= "src/pianoniu.png";
 			choix[2]= "src/guitar.png";
@@ -70,53 +74,15 @@ public class InstrumentView extends JAgentFrame {
 			labelright.setBounds(950,400,200,200);
 			//test.setIcon(new ImageIcon(img));
 			suivant.addActionListener(new ActionListener(){
-				int left = 0;
-				int right = 0;
 				public void actionPerformed(ActionEvent e) {
-					++i;
-					if(i<0){
-						i=i+1;
-					}
-					if(i==choix.length){
-						i=0;
-					}
-					if(i-1 < 0){
-						left = choix.length-1;
-					}
-					else{left = i-1;}
-					if(i+1 == choix.length){
-						right = 0;
-					}
-					else {right = i+1;}
-					label.setIcon(new ImageIcon(choix[i]));
-					labeleft.setIcon(new ImageIcon(choixmini[left]));
-					labelright.setIcon(new ImageIcon(choixmini[right]));
-					//System.out.println("suivant" +i);
+					selectSuivant();
 				}
 			});
+			
 			precedent.addActionListener(new ActionListener(){
-				int left = 0;
-				int right = 0;
+				@Override
 				public void actionPerformed(ActionEvent e) {
-					--i;
-					if(i == choix.length){
-						i=i-1;
-					}
-					if(i < 0){
-						i=choix.length-1;
-					}
-					if(i-1 < 0){
-						left = choix.length-1;
-					}
-					else{left = i-1;}
-					if(i+1 == choix.length){
-						right = 0;
-					}
-					else {right = i+1;}
-					label.setIcon(new ImageIcon(choix[i]));
-					labeleft.setIcon(new ImageIcon(choixmini[left]));
-					labelright.setIcon(new ImageIcon(choixmini[right]));
-				//	System.out.println("precedent "+i);
+					selectPrecedent();
 				}
 			});
 			valider.addActionListener(new ActionListener(){
@@ -151,16 +117,66 @@ public class InstrumentView extends JAgentFrame {
 		
 			// personnel cursor
 			
-			Toolkit toolkit = Toolkit.getDefaultToolkit();
-			Image cursorImage = toolkit.getImage("src/cursor.png");
-			Point cursorHotSpot = new Point(0,0);
-			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-			this.setCursor(customCursor);
+//			Toolkit toolkit = Toolkit.getDefaultToolkit();
+//			Image cursorImage = toolkit.getImage("src/cursor.png");
+//			Point cursorHotSpot = new Point(0,0);
+//			Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+//			this.setCursor(customCursor);
+	}
+	
+	private void selectPrecedent() {
+		--i;
+		if(i == choix.length){
+			i=i-1;
+		}
+		if(i < 0){
+			i=choix.length-1;
+		}
+		if(i-1 < 0){
+			left = choix.length-1;
+		}
+		else{left = i-1;}
+		if(i+1 == choix.length){
+			right = 0;
+		}
+		else {right = i+1;}
+		label.setIcon(new ImageIcon(choix[i]));
+		labeleft.setIcon(new ImageIcon(choixmini[left]));
+		labelright.setIcon(new ImageIcon(choixmini[right]));
+	}
+	
+	private void selectSuivant() {
+		++i;
+		if(i<0){
+			i=i+1;
+		}
+		if(i==choix.length){
+			i=0;
+		}
+		if(i-1 < 0){
+			left = choix.length-1;
+		}
+		else{left = i-1;}
+		if(i+1 == choix.length){
+			right = 0;
+		}
+		else {right = i+1;}
+		label.setIcon(new ImageIcon(choix[i]));
+		labeleft.setIcon(new ImageIcon(choixmini[left]));
+		labelright.setIcon(new ImageIcon(choixmini[right]));
+		//System.out.println("suivant" +i);
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		if (evt.getPropertyName().equals("swipe")) {
+			if ((String)evt.getNewValue() == "LEFT") {
+				selectPrecedent();
+			} else if ((String)evt.getNewValue() == "RIGHT") {
+				selectSuivant();
+			}
+			
+		}
 		
 	}
 
