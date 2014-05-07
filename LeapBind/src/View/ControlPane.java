@@ -42,7 +42,7 @@ public class ControlPane extends JPanel{
 		
 		JButton home = new JButton();
 		Icon icon = new ImageIcon("src/fangzi.png");
-		home.setBounds(0, 0, 50, 50);
+		home.setBounds(140,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			
 			@Override
@@ -53,11 +53,11 @@ public class ControlPane extends JPanel{
 				myAgent.postGuiEvent(ev);
 			}
 		});
-		JLabel userId=new JLabel("player1");
-		userId.setBounds(220, 20, 100, 20);
-		userId.setHorizontalAlignment(SwingConstants.CENTER);
+		//JLabel userId=new JLabel("player1");
+		//userId.setBounds(230, 20, 150, 20);
+		//userId.setHorizontalAlignment(SwingConstants.CENTER);
 		JLabel player = new JLabel(new ImageIcon("src/player.png"));
-		player.setBounds(200, 20, 150, 150);
+		player.setBounds(320, 50, 130, 100);
 		JButton music = new JButton("Choose a music");
 		music.setFont(new Font("Serif", Font.PLAIN, 30));
 		music.setBounds(520, 50, 400, 100);
@@ -70,17 +70,17 @@ public class ControlPane extends JPanel{
 		});
 		JButton stop = new JButton();
 		Icon icone = new ImageIcon("src/stop.png");
-		stop.setBounds(1000, 50, 80, 80);
+		stop.setBounds(1000, 50, 100, 100);
 		stop.setIcon(icone);
 		JLabel volume = new JLabel(new ImageIcon("src/volume.png"));
-		volume.setBounds(1200, 50, 80, 80);
+		volume.setBounds(1200, 50, 100, 100);
 		
 		this.add(home);
 		this.add(player);
 		this.add(music);
 		this.add(stop);
 		this.add(volume);
-		this.add(userId);
+		//this.add(userId);
 		//this.add(play);
 	}			
 }

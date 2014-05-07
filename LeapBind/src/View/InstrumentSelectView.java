@@ -55,7 +55,7 @@ public class InstrumentSelectView extends JAgentFrame {
 			
 			JButton home = new JButton();
 			Icon icon = new ImageIcon("src/fangzi.png");
-			home.setBounds(15,15,100,100);
+			home.setBounds(140,50,100,100);
 			home.setIcon(icon);
 			//test = new JLabel(new ImageIcon("/Users/akeharuxiao/Desktop/1.png"));
 			//test.setBounds(200, 100, 30, 30);
