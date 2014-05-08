@@ -269,32 +269,6 @@ public class LeapListener extends Listener {
                     moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
                 }
 
-
-
-//               //If Finger Tap Mode enabled 
-//               if(CLICK_TYPE == 1){ 
-//	               // Left Click
-//	               if(fingers.count() == 1 && !Lclicked && avgPos.getZ()<=-70)
-//	                {
-//	                	clickMouse(0);
-//	                	releaseMouse(0);
-//	                	Lclicked = true;
-//
-//	                    if(DEBUG)
-//	                    {
-//	                    	System.out.println("LClicked  - Finger Tap");
-//	                    }
-//
-//	                }
-//
-//	                else if(fingers.count() != 1 || avgPos.getZ()>0)
-//	                {
-//
-//	                	Lclicked = false;
-//	                	slow();
-//
-//	                }
-//               }
                 // Left Click hold
                 if(fingers.count() == 2 && !LHold && avgPos.getZ()<=-70)
                 {
