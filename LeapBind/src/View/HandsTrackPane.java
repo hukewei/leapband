@@ -9,6 +9,7 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +23,7 @@ class HandsTrackPane extends JPanel {
 	private int y_2;
 	private float size_1;
 	private float size_2;
+	private JLabel play;
 
 	public HandsTrackPane() {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
@@ -31,6 +33,10 @@ class HandsTrackPane extends JPanel {
 		y_2 = 50;
 		size_1 = 2;
 		size_2 = 2;
+		this.setLayout(null);
+		play = new JLabel(new ImageIcon("src/play1.png"));
+		play.setBounds(0, 270, Constance.Windows_width, 300);
+		this.add(play);
 		this.hideCursor();
 	}
 	

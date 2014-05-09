@@ -45,15 +45,12 @@ public class GameView extends JAgentFrame {
 		hands.setSize(new Dimension(Constance.Windows_width, Constance.Windows_height));
 		control_pane = new ControlPane(agent);
 		control_pane.setLayout(null);
-		JPanel hand_pane = new JPanel();
-		hand_pane.add(hands);
+//		JPanel hand_pane = new JPanel();
+//		hand_pane.add(hands);
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		split_pane.setDividerLocation(250);
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
-		JLabel play = new JLabel(new ImageIcon("src/play.png"));
-		play.setBounds(0, 350, Constance.Windows_width, Constance.Windows_height/2);
-		this.add(play);
 		this.add(split_pane);
 	}
 	
