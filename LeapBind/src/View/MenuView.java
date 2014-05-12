@@ -88,6 +88,9 @@ public class MenuView extends JFrame implements PropertyChangeListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				selectMultiMode();
+				GuiEvent ev = new GuiEvent(this,UserAgent.TEXT_EVENT);
+				ev.addParameter("listGroup");
+				myAgent.postGuiEvent(ev);
 				
 			}
 		});

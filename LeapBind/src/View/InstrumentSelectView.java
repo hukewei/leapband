@@ -91,8 +91,9 @@ public class InstrumentSelectView extends JAgentFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//new playview();
-					GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
+					GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_INSTRUMENT_EVENT);
 					ev.addParameter(UserAgent.instrument_Mode);
+					ev.addParameter(label.getIcon().toString());
 					myAgent.postGuiEvent(ev);
 				}
 			});

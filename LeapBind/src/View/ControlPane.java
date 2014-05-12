@@ -16,12 +16,14 @@ import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import SMA.UserAgent;
 
@@ -53,11 +55,13 @@ public class ControlPane extends JPanel{
 				myAgent.postGuiEvent(ev);
 			}
 		});
-		JLabel userId=new JLabel("player1");
+		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
-		userId.setHorizontalAlignment(SwingConstants.CENTER);
-		JLabel player = new JLabel(new ImageIcon("src/player.png"));
-		player.setBounds(200, 20, 150, 150);
+		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
+		JLabel player = new JLabel(new ImageIcon("src/person2.jpg"));
+		player.setBounds(200, 20, 100, 100);
+		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
+		player.setBorder(border);
 		JButton music = new JButton("Choose a music");
 		music.setFont(new Font("Serif", Font.PLAIN, 30));
 		music.setBounds(520, 50, 400, 100);
@@ -80,7 +84,7 @@ public class ControlPane extends JPanel{
 		this.add(music);
 		this.add(stop);
 		this.add(volume);
-		this.add(userId);
+		//this.add(userId);
 		//this.add(play);
 	}			
 }

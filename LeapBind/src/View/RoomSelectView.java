@@ -7,6 +7,7 @@ import jade.gui.GuiEvent;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -38,10 +39,12 @@ public class RoomSelectView extends JAgentFrame {
 		this.setLocationRelativeTo(null);
 		//load model to list
 		list_room = new JList<String>();
-		list_room.setModel(myAgent.getDictModel());
+		//list_room.setModel(myAgent.getDict());
 		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
 		list_room.setBackground(Color.LIGHT_GRAY);
 		list_room.setBounds(250,150,500,500);
+		list_room.setFixedCellHeight(80);
+		list_room.setFont(new Font("Serif", Font.PLAIN, 30));
 		this.add(list_room);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image cursorImage = toolkit.getImage("src/cursor.png");
@@ -69,6 +72,28 @@ public class RoomSelectView extends JAgentFrame {
 			}
 		});
 		this.add(home);
+		
+		create_room.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				GuiEvent ev = new GuiEvent(this,UserAgent.CREAT_ROOM_EVENT);
+				ev.addParameter("creatRoom");
+				myAgent.postGuiEvent(ev);
+				
+			}
+		});
+		
+		enter_room.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
+				ev.addParameter("joinRoom");
+				myAgent.postGuiEvent(ev);
+				
+			}
+		});
 	}
 
 	@Override
@@ -85,6 +110,14 @@ public class RoomSelectView extends JAgentFrame {
 			list_room.setSelectedIndex(current_index);
 			
 		}
+	}
+	
+	public JList<String> getList_room() {
+		return list_room;
+	}
+
+	public void setList_room(JList<String> list_room) {
+		this.list_room = list_room;
 	}
 
 }
