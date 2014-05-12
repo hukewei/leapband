@@ -14,4 +14,5 @@ public class Constance {
 	public static int Hand_height = 45;
 	
 	public static int Gesture_Interval = 600000;
+	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
 }

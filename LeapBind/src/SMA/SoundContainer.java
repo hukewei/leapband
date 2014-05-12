@@ -5,7 +5,7 @@ import jade.core.Runtime;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 
-public class MainContainer {
+public class SoundContainer {
 	public static String SECOND_PROPERTIES_FILE = "MusicConfig";
 	
 	
