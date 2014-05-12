@@ -16,6 +16,8 @@ public class MainBoot {
 		try{
 			p = new ProfileImpl(MAIN_PROPERTIES_FILE);
 			AgentContainer mainContainer = rt.createMainContainer(p);
+			
+			
 		}
 		catch(Exception ex) {
 			

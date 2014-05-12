@@ -1,13 +1,20 @@
 package SMA;
 
+
+
+import jade.core.AID;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
+import jade.lang.acl.ACLMessage;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
-
 import Controller.LeapListener;
 import Utilities.Cordinates;
 import View.GameView;
@@ -26,10 +33,16 @@ public class UserAgent extends GuiAgent{
 	private PropertyChangeSupport changes;
 	public static int TEXT_EVENT = 0;
 	public static int SELECT_EVENT = 1;
+	public static int SELECT_INSTRUMENT_EVENT = 2;
+	public static int CREAT_ROOM_EVENT = 3;
+	public static int JOINT_ROOM_EVENT = 4;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
 	public static String instrument_Mode = "103";
+	public static String piano = "0";
+	public static String druma = "1";
+	public static String guitar = "2";
 	private MenuView menu_view;
 	private GameView game_view;
 	private InstrumentSelectView instrument_view;
@@ -39,11 +52,14 @@ public class UserAgent extends GuiAgent{
 	private Cordinates pointer = new Cordinates();
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
+
 	
 	private DefaultListModel<String> dict = null;
 	
 	private LeapListener listener;
 	private Controller controller;
+	
+	private ACLMessage messageDemande=new ACLMessage(ACLMessage.REQUEST);
 	
 
 	
@@ -84,18 +100,59 @@ public class UserAgent extends GuiAgent{
 	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
-		String message = arg0.getParameter(0).toString();
-		this.addBehaviour(new ModeSelectBehaviour(this, message));
+		if(arg0.getType()==1){
+			String messageMode = arg0.getParameter(0).toString();
+			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
+		}else if(arg0.getType()==2){
+			this.addBehaviour(new InstrumentSelectBehaviour(this, encodageInstrument(arg0.getParameter(1).toString())));
+			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
+			
+		}else if(arg0.getType()==0){
+			
+			messageDemande.setContent(arg0.getParameter(0).toString());	
+			
+			this.addBehaviour(new GetListGroupBehaviour(this,messageDemande));
+			System.out.println("userAgent envoyer demande\n");
+
+		}else if(arg0.getType()==3){
+			messageDemande.setContent(arg0.getParameter(0).toString());	
+			
+			
+			this.addBehaviour(new CreatGroupBehaviour(this,messageDemande));
+			
+		}
+		
 	}
+	
+	
+	
 
 	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
 		changes.addPropertyChangeListener(pcl);
     }
 	
+	public String encodageInstrument(String message){
+		
+		String instrument = message.split("/")[1];
+		if(instrument.equals("gu.png")){
+			return "1";
+		}else if(instrument.equals("guitar.png")){
+			return "2";
+		}else{
+			return "0";
+		}
+		
+	}
+	
 	public void changeToRoomSelectView() {
-		room_view.setVisible(true);
-		menu_view.setVisible(false);
+		if(getDict()!=null){
+			room_view.getList_room().setModel(getDict());
+			room_view.setVisible(true);
+			menu_view.setVisible(false);
+		}
+		
+		
 	}
 	
 	public void changeToInstrumentView(){
@@ -103,6 +160,7 @@ public class UserAgent extends GuiAgent{
 		menu_view.setVisible(false);
 	}
 	public void changeToGameView(){
+		//System.out.println("okkk");
 		game_view.setVisible(true);
 		instrument_view.setVisible(false);
 	}
@@ -132,17 +190,6 @@ public class UserAgent extends GuiAgent{
 		this.single_mode = !multiple_mode;
 	}
 	
-	public DefaultListModel<String> getDictModel(){
-		if (dict == null) {
-			dict = new DefaultListModel<String>();
-			dict.addElement("room1");
-			dict.addElement("room2");
-			dict.addElement("room3");
-			dict.addElement("room4");
-		}
-		return dict;
-	}
-	
 	public void updatePosition(float x, float y) {
 		pointer.x = x;
 		pointer.y = y;
@@ -164,8 +211,31 @@ public class UserAgent extends GuiAgent{
 		changes.firePropertyChange("swipe", null, direction);
 	}
 
+	public GameView getGame_view() {
+		return game_view;
+	}
 
-	
-	
 
+	public void setGame_view(GameView game_view) {
+		this.game_view = game_view;
+	}
+	
+	public RoomSelectView getRoom_view() {
+		return room_view;
+	}
+
+
+	public void setRoom_view(RoomSelectView room_view) {
+		this.room_view = room_view;
+	}
+
+
+	public DefaultListModel<String> getDict() {
+		return dict;
+	}
+
+
+	public void setDict(DefaultListModel<String> dict) {
+		this.dict = dict;
+	}
 }

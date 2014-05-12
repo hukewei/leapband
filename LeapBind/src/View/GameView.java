@@ -5,6 +5,7 @@ package View;
 
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -31,6 +32,7 @@ public class GameView extends JAgentFrame {
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
 	private Player player = new Player();
+	public JLabel play;
 	
 	public GameView(UserAgent agent) {
 		super(agent);
@@ -47,6 +49,9 @@ public class GameView extends JAgentFrame {
 		control_pane.setLayout(null);
 //		JPanel hand_pane = new JPanel();
 //		hand_pane.add(hands);
+		play = new JLabel();
+		play.setBounds(0, 350, Constance.Windows_width, Constance.Windows_height/2);
+		hands.add(play);
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		split_pane.setDividerLocation(250);

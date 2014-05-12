@@ -31,6 +31,7 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 		}else if(msg == UserAgent.instrument_Mode){
 			//myAgent.setSingle_mode(false);
 			//myAgent.setMultiple_mode(false);
+			System.out.println("ookokokoko");
 			myAgent.changeToGameView();
 		}
 		
