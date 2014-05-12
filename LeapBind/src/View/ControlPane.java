@@ -55,12 +55,13 @@ public class ControlPane extends JPanel{
 				myAgent.postGuiEvent(ev);
 			}
 		});
-		//JLabel userId=new JLabel("player1");
-		//userId.setBounds(230, 20, 150, 20);
-		//userId.setHorizontalAlignment(SwingConstants.CENTER);
+		/*JLabel userId=new JLabel("player1");
+		userId.setBounds(220, 20, 100, 20);
+		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
 		JLabel player = new JLabel(new ImageIcon("src/person2.jpg"));
-		player.setBounds(320, 50, 130, 100);
-		Border border = BorderFactory.createLineBorder(Color.BLACK, 5);
+		player.setBounds(200, 20, 100, 100);
+		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
+
 		player.setBorder(border);
 		JButton music = new JButton("Choose a music");
 		music.setFont(new Font("Serif", Font.PLAIN, 30));

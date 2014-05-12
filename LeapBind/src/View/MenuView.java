@@ -89,8 +89,13 @@ public class MenuView extends JAgentFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				selectMultiMode();
+				GuiEvent ev = new GuiEvent(this,UserAgent.TEXT_EVENT);
+				ev.addParameter("listGroup");
+				myAgent.postGuiEvent(ev);
+				System.out.println("envoyer listGroup\n");
 				
 			}
+			
 		});
 		
 		exit.addActionListener(new java.awt.event.ActionListener() {  
