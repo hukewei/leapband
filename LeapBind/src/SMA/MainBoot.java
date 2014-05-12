@@ -17,11 +17,7 @@ public class MainBoot {
 			p = new ProfileImpl(MAIN_PROPERTIES_FILE);
 			AgentContainer mainContainer = rt.createMainContainer(p);
 			
-			AgentController c1 = mainContainer.createNewAgent(
-					"MultiPlayAgent",
-					"SMA.MultiPlayAgent",
-					null);
-			c1.start();
+			
 		}
 		catch(Exception ex) {
 			

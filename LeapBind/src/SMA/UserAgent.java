@@ -75,7 +75,7 @@ public class UserAgent extends GuiAgent{
 		menu_view.setVisible(true);
 		//game_view.setVisible(true);
 		
-		/*listener = new LeapListener(this);
+		listener = new LeapListener(this);
         controller = new Controller();
         
         //controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
@@ -84,7 +84,7 @@ public class UserAgent extends GuiAgent{
         //listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);
-        controller.addListener(listener);*/
+        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -112,6 +112,7 @@ public class UserAgent extends GuiAgent{
 			messageDemande.setContent(arg0.getParameter(0).toString());	
 			
 			this.addBehaviour(new GetListGroupBehaviour(this,messageDemande));
+			System.out.println("userAgent envoyer demande\n");
 
 		}else if(arg0.getType()==3){
 			messageDemande.setContent(arg0.getParameter(0).toString());	
@@ -145,8 +146,13 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void changeToRoomSelectView() {
-		room_view.setVisible(true);
-		menu_view.setVisible(false);
+		if(getDict()!=null){
+			room_view.getList_room().setModel(getDict());
+			room_view.setVisible(true);
+			menu_view.setVisible(false);
+		}
+		
+		
 	}
 	
 	public void changeToInstrumentView(){
@@ -154,7 +160,7 @@ public class UserAgent extends GuiAgent{
 		menu_view.setVisible(false);
 	}
 	public void changeToGameView(){
-		System.out.println("okkk");
+		//System.out.println("okkk");
 		game_view.setVisible(true);
 		instrument_view.setVisible(false);
 	}

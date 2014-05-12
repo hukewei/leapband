@@ -1,5 +1,7 @@
 package SMA;
 
+import java.io.IOException;
+
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 
@@ -37,17 +39,22 @@ public class GameManageBehaviour extends CyclicBehaviour{
 	
 	public void answer(){
 		
-		ACLMessage reply=.createReply();
+		ACLMessage reply=msg.createReply();
 		
 		reply.setPerformative(jade.lang.acl.ACLMessage.INFORM);
 		
-		String listString="";
+		//String listString="";
 		
-		for(String s:myAgent.getDict()){
+		/*for(String s:myAgent.getDict()){
 			listString+=s+",";
-		}
+		}*/
 
-		reply.setContent(listString);
+		try {
+			reply.setContentObject(myAgent.getDict());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		myAgent.send(reply);
 	}

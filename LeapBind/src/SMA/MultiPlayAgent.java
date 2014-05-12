@@ -2,6 +2,9 @@ package SMA;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
+
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -13,7 +16,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 @SuppressWarnings("serial")
 public class MultiPlayAgent extends Agent{
 	
-	private List<String> dict;
+	private DefaultListModel<String> dict;
 
 	protected void setup() {
 		
@@ -43,18 +46,18 @@ public class MultiPlayAgent extends Agent{
 		
 	}
 
-	public List<String> getDict(){
+	public DefaultListModel<String> getDict(){
 		if (dict == null) {
-			dict = new ArrayList<String>();
-			dict.add("room1");
-			dict.add("room2");
-			dict.add("room3");
-			dict.add("room4");
+			dict = new DefaultListModel<String>();
+			dict.addElement("room1");
+			dict.addElement("room2");
+			dict.addElement("room3");
+			dict.addElement("room4");
 		}
 		return dict;
 	}
 	public void setDict(String item){
-		dict.add(item);
+		dict.addElement(item);
 		
 	}
 

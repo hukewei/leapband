@@ -1,5 +1,7 @@
 package SMA;
 
+import java.io.IOException;
+
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -22,29 +24,23 @@ public class GetListGameBehaviour extends OneShotBehaviour{
 	@Override
 	public void action() {
 		
-//		ACLMessage message=myAgent.receive();
-//		
-//		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){
-		System.out.println("****"+msg.getContent());
-			
 			ACLMessage reply=msg.createReply();
 			
-			reply.setPerformative(jade.lang.acl.ACLMessage.INFORM);
+			//reply.setPerformative(jade.lang.acl.ACLMessage.INFORM);
 			
-			String listString="";
-			
-			for(String s:myAgent.getDict()){
-				listString+=s+",";
+			try {
+				reply.setContentObject(myAgent.getDict());
+				System.out.println("set defautlistmodele of reply\n");
+				myAgent.send(reply);
+				System.out.println("multiAgent sent reply\n");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			reply.setContent(listString);
 			
-			myAgent.send(reply);
+			
 		
 
-	
-		
-		
 		
 		
 	}

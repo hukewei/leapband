@@ -6,7 +6,7 @@ import jade.lang.acl.ACLMessage;
 
 
 @SuppressWarnings("serial")
-public class GameDaemonBehaviour extends Behaviour{
+public class GameDaemonBehaviour extends CyclicBehaviour{
 	
 	private MultiPlayAgent myAgent;
 	private boolean isPrint=false;
@@ -23,10 +23,10 @@ public class GameDaemonBehaviour extends Behaviour{
 		ACLMessage message=myAgent.receive();
 		
 		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){
-			isPrint=true;
-			System.out.println(message.getContent());
+			//isPrint=true;
+			System.out.println(message.getContent()+"\n");
 			if(message.getContent().equals("listGroup")){
-				//System.out.println("ok");
+				System.out.println("oklistGruop\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
 			}else if(message.getContent()=="creatRoom"){
 				
@@ -37,13 +37,13 @@ public class GameDaemonBehaviour extends Behaviour{
 		
 	}
 
-	@Override
+	/*@Override
 	public boolean done() {
 		if(isPrint){
 			return true;
 		}else{
 			return false;
 		}
-	}
+	}*/
 
 }
