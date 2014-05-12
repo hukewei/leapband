@@ -43,8 +43,8 @@ public class ControlPane extends JPanel{
 		this.setLayout(null);
 		
 		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/fangzi.png");
-		home.setBounds(0, 0, 50, 50);
+		Icon icon = new ImageIcon("src/home.png");
+		home.setBounds(140,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			
 			@Override
@@ -61,6 +61,7 @@ public class ControlPane extends JPanel{
 		JLabel player = new JLabel(new ImageIcon("src/person2.jpg"));
 		player.setBounds(200, 20, 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
+
 		player.setBorder(border);
 		JButton music = new JButton("Choose a music");
 		music.setFont(new Font("Serif", Font.PLAIN, 30));
@@ -74,10 +75,10 @@ public class ControlPane extends JPanel{
 		});
 		JButton stop = new JButton();
 		Icon icone = new ImageIcon("src/stop.png");
-		stop.setBounds(1000, 50, 80, 80);
+		stop.setBounds(1000, 50, 100, 100);
 		stop.setIcon(icone);
 		JLabel volume = new JLabel(new ImageIcon("src/volume.png"));
-		volume.setBounds(1200, 50, 80, 80);
+		volume.setBounds(1200, 50, 100, 100);
 		
 		this.add(home);
 		this.add(player);

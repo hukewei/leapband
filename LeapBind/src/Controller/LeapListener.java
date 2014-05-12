@@ -6,6 +6,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import SMA.UserAgent;
+import Utilities.Constance;
 
 import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
@@ -94,10 +95,10 @@ public class LeapListener extends Listener {
         	int left_count = 0;
         	int right_count = 0;
         	int circle_count = 0;
-        	if ((frame.timestamp() - last_timestamp > 600000)) {
+        	int screen_tap_count = 0;
+        	if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
         	for (int i=0; i < numGestures; i++) {
         	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
-                	
         	    	//If Key Tap Mode enabled 
         	    	//Left Click
         	    	if(CLICK_TYPE == 0)
@@ -109,10 +110,12 @@ public class LeapListener extends Listener {
 	                    }
         	    	}
         	    	
+        	    	
                 	if(DEBUG)
                 		System.out.println("key tap");
         	    	slow();
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
+        	        ENABLE_MOUSE = false;
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
         	    	if (swipe.speed() > 500) {
         	    		boolean is_horizontal = (Math.abs(swipe.direction().getX()) > Math.abs(swipe.direction().getY()));
@@ -170,9 +173,11 @@ public class LeapListener extends Listener {
         	        }
         	    	
         	    	
-        	    	slow();
-        	    }        	    
-        	    else
+        	    	slow();	
+        	    }  else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SCREEN_TAP) {
+        	    	System.out.println("screen tap");
+        	    	screen_tap_count++;
+        	    } else
         	    {
         	    	Circle = false; 	
         	    	Swype = false;
@@ -182,7 +187,7 @@ public class LeapListener extends Listener {
         	}
         	
         	if (Swype || Circle) {
-        		int [] direction_count = {left_count, right_count, up_count, down_count, circle_count};
+        		int [] direction_count = {left_count, right_count, up_count, down_count, circle_count, screen_tap_count};
         		int maxValue = direction_count[0];  
         	    for(int i=1;i < direction_count.length;i++){  
         	    	if(direction_count[i] > maxValue){  
@@ -199,7 +204,7 @@ public class LeapListener extends Listener {
         		    	  myAgent.doSwipe("UP");
         		      } else if (maxValue == down_count) {
         		    	  myAgent.doSwipe("DOWN");
-        		      } else if (maxValue == circle_count) {
+        		      } else if (maxValue == screen_tap_count ) {
         		    	  clickMouse(0);
         		    	  releaseMouse(0);
         		      }
@@ -264,32 +269,6 @@ public class LeapListener extends Listener {
                     moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
                 }
 
-
-
-               //If Finger Tap Mode enabled 
-               if(CLICK_TYPE == 1){ 
-	               // Left Click
-	               if(fingers.count() == 1 && !Lclicked && avgPos.getZ()<=-70)
-	                {
-	                	clickMouse(0);
-	                	releaseMouse(0);
-	                	Lclicked = true;
-
-	                    if(DEBUG)
-	                    {
-	                    	System.out.println("LClicked  - Finger Tap");
-	                    }
-
-	                }
-
-	                else if(fingers.count() != 1 || avgPos.getZ()>0)
-	                {
-
-	                	Lclicked = false;
-	                	slow();
-
-	                }
-               }
                 // Left Click hold
                 if(fingers.count() == 2 && !LHold && avgPos.getZ()<=-70)
                 {
@@ -587,7 +566,6 @@ public class LeapListener extends Listener {
 				} catch (AWTException e) {
 					e.printStackTrace();
 				}
-
     	 
     	 
     }

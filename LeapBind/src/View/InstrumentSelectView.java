@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import SMA.UserAgent;
 import Utilities.Constance;
 
+@SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame {
 		
 		private JLabel label;
@@ -35,7 +36,6 @@ public class InstrumentSelectView extends JAgentFrame {
 		
 	public InstrumentSelectView(UserAgent agent) {
 			super(agent);
-			
 			choix[0]= "src/gu.png";
 			choix[1]= "src/pianoniu.png";
 			choix[2]= "src/guitar.png";
@@ -54,8 +54,8 @@ public class InstrumentSelectView extends JAgentFrame {
 			this.setLayout(null);
 			
 			JButton home = new JButton();
-			Icon icon = new ImageIcon("src/fangzi.png");
-			home.setBounds(15,15,100,100);
+			Icon icon = new ImageIcon("src/home.png");
+			home.setBounds(140,50,100,100);
 			home.setIcon(icon);
 			//test = new JLabel(new ImageIcon("/Users/akeharuxiao/Desktop/1.png"));
 			//test.setBounds(200, 100, 30, 30);
@@ -74,8 +74,6 @@ public class InstrumentSelectView extends JAgentFrame {
 			labelright.setBounds(950,400,200,200);
 			//test.setIcon(new ImageIcon(img));
 			suivant.addActionListener(new ActionListener(){
-				int left = 0;
-				int right = 0;
 				public void actionPerformed(ActionEvent e) {
 					selectSuivant();
 				}

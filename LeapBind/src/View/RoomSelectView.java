@@ -59,8 +59,8 @@ public class RoomSelectView extends JAgentFrame {
 		enter_room.setBounds(850, 450,300, 150);
 		this.add(enter_room);
 		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/fangzi.png");
-		home.setBounds(0, 0, 50, 50);
+		Icon icon = new ImageIcon("src/home.png");
+		home.setBounds(140,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			
 			@Override

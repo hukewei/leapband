@@ -14,8 +14,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,13 +29,11 @@ import Utilities.Constance;
 
 
 
-public class MenuView extends JFrame implements PropertyChangeListener{
+public class MenuView extends JAgentFrame{
 	private JPanel buttonPane;
-	private UserAgent myAgent;
 
 	public MenuView(UserAgent agent) {
-		myAgent = agent;
-		//super(agent);
+		super(agent);
 		this.setTitle("Menu View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
@@ -60,11 +59,13 @@ public class MenuView extends JFrame implements PropertyChangeListener{
 		leap_band.setFont(new Font("Serif", Font.PLAIN, 50));
 		leap_band.setHorizontalAlignment(SwingConstants.CENTER);
 		leap_band.setForeground(Color.MAGENTA);
-		single.setBounds(500, 150,500, 120);
+		single.setBounds(500, 250,500, 150);
 		single.setFont(new Font("Serif", Font.PLAIN, 30));
-		multiple.setBounds(500,350,500,120);
+		multiple.setBounds(500,500,500,150);
 		multiple.setFont(new Font("Serif", Font.PLAIN, 30));
-		exit.setBounds(500,550,500,120);
+		exit.setBounds(1100,450,150,200);
+		Icon icon = new ImageIcon("src/exit.jpg");
+		exit.setIcon(icon);
 		exit.setFont(new Font("Serif", Font.PLAIN, 30));
 				
 		buttonPane.add(leap_band);

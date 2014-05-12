@@ -27,8 +27,8 @@ public class musicview extends JFrame{
 		choixmini[1]= "                                          Good Life";
 		choixmini[2]= "                                    How to save a life";
 		this.setTitle("SONGS");
-		this.setSize(400,450);
-		this.setLocationRelativeTo(null);		//������ʾ����Ļ�м�
+		this.setSize(500,450);
+		this.setLocationRelativeTo(null);		
 		this.setLayout(null);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
 		label = new JLabel(choix[0]);
