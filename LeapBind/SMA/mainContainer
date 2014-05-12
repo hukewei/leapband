@@ -1,0 +1,4 @@
+main=true
+gui=true
+platform-id=tdia04
+local-port=2315

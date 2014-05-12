@@ -1,0 +1,6 @@
+main=false
+gui=false
+container-name = Music
+host = 192.168.1.18
+local-port = 2315
+port=2315
