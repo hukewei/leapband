@@ -238,12 +238,4 @@ public class UserAgent extends GuiAgent{
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
 	}
-	
-	
-
-	
-
-	
-	
-
 }
