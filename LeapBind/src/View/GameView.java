@@ -50,7 +50,7 @@ public class GameView extends JAgentFrame {
 //		JPanel hand_pane = new JPanel();
 //		hand_pane.add(hands);
 		play = new JLabel();
-		play.setBounds(0, 350, Constance.Windows_width, Constance.Windows_height/2);
+		play.setBounds(150, 270, Constance.Windows_width, 300);
 		hands.add(play);
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
