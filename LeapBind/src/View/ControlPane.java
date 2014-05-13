@@ -44,7 +44,7 @@ public class ControlPane extends JPanel{
 		
 		JButton home = new JButton();
 		Icon icon = new ImageIcon("src/home.png");
-		home.setBounds(140,50,100,100);
+		home.setBounds(100,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			
 			@Override
@@ -59,7 +59,7 @@ public class ControlPane extends JPanel{
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
 		JLabel player = new JLabel(new ImageIcon("src/person2.jpg"));
-		player.setBounds(200, 20, 100, 100);
+		player.setBounds(300, 50, 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);

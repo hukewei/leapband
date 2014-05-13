@@ -50,7 +50,7 @@ public class InstrumentSelectView extends JAgentFrame {
 			valider.setBounds(600,600,300,100);
 			this.setTitle("ChooseView");
 			this.setSize(Constance.Windows_width, Constance.Windows_height);
-			this.setLocationRelativeTo(null);		//������ʾ����Ļ�м�
+			this.setLocationRelativeTo(null);		
 			this.setLayout(null);
 			
 			JButton home = new JButton();

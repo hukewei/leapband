@@ -34,9 +34,9 @@ class HandsTrackPane extends JPanel {
 		size_1 = 2;
 		size_2 = 2;
 		this.setLayout(null);
-		play = new JLabel(new ImageIcon("src/play1.png"));
-		play.setBounds(0, 270, Constance.Windows_width, 300);
-		this.add(play);
+		//play = new JLabel(new ImageIcon("src/play1.png"));
+		//play.setBounds(0, 270, Constance.Windows_width, 300);
+		//this.add(play);
 		this.hideCursor();
 	}
 	
