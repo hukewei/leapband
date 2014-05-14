@@ -5,9 +5,10 @@
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Leapband : The project for UV NF28 and IA04" />
-
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <title>Leapband</title>
   </head>
 
@@ -15,11 +16,35 @@
 
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
+       <nav class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+         <div class="navbar-header">
+            <a class="navbar-brand" href="#">LeapBand</a>
+         </div>
+         <div>
+            <a id="forkme_banner" href="https://github.com/hukewei/leapband">View on GitHub</a>
+            <ul class="nav navbar-nav">
+               <li class="active"><a href="#">Home</a></li>
+               <li><a href="blog/">Blog</a></li>
+               <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                     More <b class="caret"></b>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li><a href="https://docs.google.com/document/d/1DgKSaJZGZRoWrgQ5-Tgc1DCabt7M4OisQwPMpN4rcn0/pub">Introduction</a></li>
+                     <li><a href="https://docs.google.com/presentation/d/1CVFnkqghktwFvl5ZSlknglG16epZBKSLEQTeYcJaEX0/pub?start=false&loop=false&delayms=3000">Maquette</a></li>
+                     <li><a href="https://docs.google.com/document/d/1Su9Xb5VVHLy8GBt84u1oj-XRH_QTrj4qHD3mL3gnwaY/pub">Model</a></li>
+                     <li class="divider"></li>
+                     <li><a href="http://blog.kekebox.com">Kekebox</a></li>
+                     <li class="divider"></li>
+                     <li><a href="http://kewei.me">Kewei.me</a></li>
+                  </ul>
+               </li>
+            </ul>
+         </div>
+        </nav>
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/hukewei/leapband">View on GitHub</a>
-
           <h1 id="project_title">Leapband</h1>
-          <h2 id="project_tagline">The project for UV NF28 and IA04</h2>
+          <h2 id="project_tagline">Playing the music in a new interactive way with your friends</h2>
 
             <section id="downloads">
               <a class="zip_download_link" href="https://github.com/hukewei/leapband/zipball/master">Download this project as a .zip file</a>
@@ -38,8 +63,9 @@
 
 <h3>
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Introduction</h3>
-<p>Leap Band introduce a new way that allows you to interacte with machine using your finger/hand gestures, Users are enabled to play a variaty kinds of instruments by only using their gestures, no physic contact is required. </p>
+<p>Leap Band introduce a new way that allows you to interacte with machine using your finger/hand gestures, Users are enabled to play a variaty kinds of instruments by only using their gestures, no physic contact is required. What you need is a leap motion controller.</p>
 <p>The project Leap Band also allow user to play different kinds of music with other players, you can compose your music and play them with your friends.</p>
+<p>The project is also under the frame of UV NF28 and IA04 of the UTC</p>
 <p>If you want to know more, you can read our specifications sheet at <a href="https://docs.google.com/document/d/1DgKSaJZGZRoWrgQ5-Tgc1DCabt7M4OisQwPMpN4rcn0/pub">Goole Docs (in French)</a></p>
 <h3>
 <a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Official Blog</h3>
@@ -84,7 +110,6 @@ is licensed under a
     <div id="footer_wrap" class="outer">
       <footer class="inner">
         <p class="copyright">Leapband maintained by <a href="https://github.com/hukewei">hukewei</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
 
