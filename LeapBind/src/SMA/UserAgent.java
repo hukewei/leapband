@@ -36,14 +36,13 @@ public class UserAgent extends GuiAgent{
 	public static int TEXT_EVENT = 0;
 	public static int SELECT_EVENT = 1;
 	public static int SELECT_INSTRUMENT_EVENT = 2;
-	public static int CREAT_ROOM_EVENT = 3;
+	public static int CREATE_ROOM_EVENT = 3;
 	public static int JOINT_ROOM_EVENT = 4;
 	public static int CONFIRM_ROOM_EVENT = 5;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
 	public static String instrument_Mode = "103";
-	public static String roomselect_Mode = "104";
 	public static String wait_Mode = "105";
 	public static String piano = "0";
 	public static String druma = "1";
@@ -123,15 +122,28 @@ public class UserAgent extends GuiAgent{
 
 		}else if(arg0.getType()==3){
 			messageDemande.setContent(arg0.getParameter(0).toString());	
-			
-			
 			this.addBehaviour(new CreatGroupBehaviour(this,messageDemande));
 			
 		}
 		
 	}
 	
-	
+	public AID getServerName() {
+		DFAgentDescription template=new DFAgentDescription();
+		ServiceDescription sd=new ServiceDescription();
+		sd.setType("Organisation");
+		sd.setName("Multiplay");
+		template.addServices(sd);
+		try{
+			DFAgentDescription[] result=DFService.search(this, template);
+			if(result.length>0){
+				return result[0].getName();
+			}
+		}catch(FIPAException fe){
+			fe.printStackTrace();
+		}
+		return null;
+	}
 	
 
 	

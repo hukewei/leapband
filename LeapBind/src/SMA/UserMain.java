@@ -23,14 +23,8 @@ public class UserMain {
 		try{
 			p = new ProfileImpl(SECONDARY_PROPERTIES_FILE);
 			AgentContainer operationContainer = rt.createAgentContainer(p);
-			
+
 			AgentController c1 = operationContainer.createNewAgent(
-					"MultiPlayAgent",
-					"SMA.MultiPlayAgent",
-					null);
-			c1.start();
-			
-		    c1 = operationContainer.createNewAgent(
 					"User_1",
 					"SMA.UserAgent",
 					null);

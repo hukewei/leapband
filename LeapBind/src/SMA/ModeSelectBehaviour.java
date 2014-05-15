@@ -1,5 +1,6 @@
 package SMA;
 
+import Utilities.Constance;
 import jade.core.behaviours.OneShotBehaviour;
 
 
@@ -41,7 +42,7 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			//myAgent.setSingle_mode(false);
 			//myAgent.setMultiple_mode(false);
 		}
-		else if (msg == UserAgent.roomselect_Mode){
+		else if (msg == Constance.roomselect_Mode){
 			System.out.println("enter waiting room");
 			myAgent.changeToRoomWaitView();
 		}
