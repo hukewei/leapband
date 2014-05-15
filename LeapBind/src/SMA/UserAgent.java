@@ -61,6 +61,8 @@ public class UserAgent extends GuiAgent{
 
 	
 	private DefaultListModel<String> dict = null;
+	private DefaultListModel<String> dict_list_player = null;
+
 	
 	private LeapListener listener;
 	private Controller controller;
@@ -168,7 +170,6 @@ public class UserAgent extends GuiAgent{
 	
 	public void changeToRoomSelectView() {
 		if(getDict()!=null){
-			room_view.getList_room().setModel(getDict());
 			room_view.setVisible(true);
 			instrument_view.setVisible(false);
 			//menu_view.setVisible(false);
@@ -176,11 +177,11 @@ public class UserAgent extends GuiAgent{
 	}
 		
 	public void changeToRoomWaitView() {
-			//if(getDict()!=null){
-				//wait_view.getList_player().setModel(getDict());
+			if(getDict()!=null){
+				//wait_view.getList_player().setModel(getDictPlayer());
 				wait_view.setVisible(true);
 				room_view.setVisible(false);
-			//}
+			}
 			System.out.println("ohhhhhhhhhh");
 		
 		
@@ -267,11 +268,21 @@ public class UserAgent extends GuiAgent{
 	public DefaultListModel<String> getDict() {
 		return dict;
 	}
+	
+	public DefaultListModel<String> getDictPlayer() {
+		return dict_list_player;
+	}
 
 
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
+		room_view.getList_room().setModel(this.dict);
 		System.out.println("update dict");
-		System.out.println(dict);
+	}
+	
+	public void setDictPlayer(DefaultListModel<String> dict) {
+		this.dict_list_player = dict;
+		wait_view.getList_player().setModel(this.dict_list_player);
+		System.out.println("update dict player");
 	}
 }

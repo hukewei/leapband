@@ -18,4 +18,6 @@ public class Constance {
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String roomselect_Mode = "104";
+	public static String MEMBER_CHANGE = "memberChangeInform";
+	public static String GROUP_CREATED = "groupCreatedInform";
 }
