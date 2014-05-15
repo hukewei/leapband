@@ -1,7 +1,6 @@
 package SMA;
-import jade.core.behaviours.Behaviour;
+import Utilities.Constance;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
 
@@ -28,10 +27,16 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 			if(message.getContent().equals("listGroup")){
 				System.out.println("oklistGruop\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
-			}else if(message.getContent()=="creatRoom"){
-				
-				myAgent.addBehaviour(new GameManageBehaviour(myAgent,message));
 			}
+		} else if (message!=null && message.getPerformative() == ACLMessage.SUBSCRIBE) {
+			System.out.println("subscrib received");
+			System.out.println(message.getContent());
+			if (message.getContent() == Constance.roomselect_Mode) {
+				System.out.println("code 104 matched");
+			}
+			//UserAgent ask for creating a new room
+			System.out.println("receive userAgent subscription");
+			myAgent.addBehaviour(new GameManageBehaviour(myAgent,message));
 		}
 		
 		

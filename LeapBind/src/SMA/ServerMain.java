@@ -23,8 +23,8 @@ public class ServerMain {
 			p = new ProfileImpl(SECONDARY_PROPERTIES_FILE);
 			AgentContainer operationContainer = rt.createAgentContainer(p);
 			AgentController c1 = operationContainer.createNewAgent(
-					"Server",
 					"MultiPlayAgent",
+					"SMA.MultiPlayAgent",
 					null);
 			c1.start();
 		} catch(Exception ex) {

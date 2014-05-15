@@ -15,4 +15,7 @@ public class Constance {
 	
 	public static int Gesture_Interval = 600000;
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
+	
+	public static String ROOM_CREATED = "ROOM_CREATED";
+	public static String roomselect_Mode = "104";
 }
