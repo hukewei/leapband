@@ -18,8 +18,7 @@ import Utilities.Constance;
 public class GameManageBehaviour extends CyclicBehaviour{
 	
 	private MultiPlayAgent myAgent;
-	private ACLMessage msg;
-	private ACLMessage msgResponse;
+	private ACLMessage msg = null;
 	private AID host_name = null;
 	private ArrayList<AID> list_member = new ArrayList<AID>();	
 	
@@ -32,18 +31,22 @@ public class GameManageBehaviour extends CyclicBehaviour{
 
 	@Override
 	public void action() {
-		if(msg.getContent().equals("104")){
-			//creat a groupe of game
-			int countGroup=myAgent.getDict().size();
-			countGroup+=1;
-			//update room list
-			myAgent.setDict("room"+countGroup);
-			list_member.add(msg.getSender());
-			host_name = msg.getSender();
-			answer_host_ack();
-			
-		} else if(msg.getContent().equals("joinRoom")){
-			
+		if(msg != null) {
+			if(msg.getContent().equals(Constance.roomselect_Mode)){
+				//creat a groupe of game
+				int countGroup=myAgent.getDict().size();
+				countGroup+=1;
+				//update room list
+				myAgent.setDict("room"+countGroup);
+				
+				list_member.add(msg.getSender());
+				host_name = msg.getSender();
+				answer_host_ack();
+				msg.setContent("");
+				
+			} else if (msg.getContent().equals("joinRoom")){
+				
+			}
 		}
 		
 	}

@@ -29,6 +29,11 @@ public class UserMain {
 					"SMA.UserAgent",
 					null);
 			c1.start();
+			AgentController c2 = operationContainer.createNewAgent(
+					"User_2",
+					"SMA.UserAgent",
+					null);
+			c2.start();
 		
 		} catch(Exception ex) {
 			ex.printStackTrace();
