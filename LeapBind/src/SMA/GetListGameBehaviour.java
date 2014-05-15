@@ -26,7 +26,7 @@ public class GetListGameBehaviour extends OneShotBehaviour{
 		
 			ACLMessage reply=msg.createReply();
 			
-			//reply.setPerformative(jade.lang.acl.ACLMessage.INFORM);
+			reply.setPerformative(ACLMessage.INFORM);
 			
 			try {
 				reply.setContentObject(myAgent.getDict());

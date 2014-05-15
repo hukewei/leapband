@@ -57,15 +57,14 @@ public class UserAgent extends GuiAgent{
 	private Cordinates pointer = new Cordinates();
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
+	private AID server_name = null;
 
 	
 	private DefaultListModel<String> dict = null;
 	
 	private LeapListener listener;
 	private Controller controller;
-	
-	private ACLMessage messageDemande=new ACLMessage(ACLMessage.REQUEST);
-	
+		
 
 	
 	protected void setup() {
@@ -114,21 +113,24 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
 			
 		}else if(arg0.getType()==0){
+			//ask for the list of rooms
+//			ACLMessage messageDemande = new ACLMessage(ACLMessage.REQUEST);
+//			messageDemande.setContent(arg0.getParameter(0).toString());	
 			
-			messageDemande.setContent(arg0.getParameter(0).toString());	
-			
-			this.addBehaviour(new GetListGroupBehaviour(this,messageDemande));
+			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoyer demande\n");
 
-		}else if(arg0.getType()==3){
-			messageDemande.setContent(arg0.getParameter(0).toString());	
-			this.addBehaviour(new CreatGroupBehaviour(this,messageDemande));
+		}else if(arg0.getType() == CREATE_ROOM_EVENT){
+			this.addBehaviour(new CreatGroupBehaviour(this));
 			
 		}
 		
 	}
 	
 	public AID getServerName() {
+		if (server_name != null) {
+			return server_name;
+		}
 		DFAgentDescription template=new DFAgentDescription();
 		ServiceDescription sd=new ServiceDescription();
 		sd.setType("Organisation");
@@ -137,12 +139,12 @@ public class UserAgent extends GuiAgent{
 		try{
 			DFAgentDescription[] result=DFService.search(this, template);
 			if(result.length>0){
-				return result[0].getName();
+				server_name = result[0].getName();
 			}
 		}catch(FIPAException fe){
 			fe.printStackTrace();
 		}
-		return null;
+		return server_name;
 	}
 	
 
@@ -269,5 +271,7 @@ public class UserAgent extends GuiAgent{
 
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
+		System.out.println("update dict");
+		System.out.println(dict);
 	}
 }

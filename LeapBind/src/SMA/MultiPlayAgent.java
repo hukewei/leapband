@@ -51,10 +51,10 @@ public class MultiPlayAgent extends Agent{
 	public DefaultListModel<String> getDict(){
 		if (dict == null) {
 			dict = new DefaultListModel<String>();
-			dict.addElement("room1");
-			dict.addElement("room2");
-			dict.addElement("room3");
-			dict.addElement("room4");
+//			dict.addElement("room1");
+//			dict.addElement("room2");
+//			dict.addElement("room3");
+//			dict.addElement("room4");
 		}
 		return dict;
 	}

@@ -28,10 +28,10 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 				System.out.println("oklistGruop\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
 			}
-		} else if (message!=null && message.getPerformative() == ACLMessage.SUBSCRIBE) {
+		} else if (message != null && message.getPerformative() == ACLMessage.SUBSCRIBE) {
 			System.out.println("subscrib received");
 			System.out.println(message.getContent());
-			if (message.getContent() == Constance.roomselect_Mode) {
+			if (message.getContent().equals(Constance.roomselect_Mode)) {
 				System.out.println("code 104 matched");
 			}
 			//UserAgent ask for creating a new room

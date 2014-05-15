@@ -15,10 +15,10 @@ public class CreatGroupBehaviour extends Behaviour{
 	private boolean done = false;
 	
 
-	public CreatGroupBehaviour(UserAgent myAgent,ACLMessage messageDemande) {
+	public CreatGroupBehaviour(UserAgent myAgent) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=messageDemande; //content = 104
+		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); //content = 104
 		System.out.println("create room behaviour created");
 	}
 
@@ -29,7 +29,7 @@ public class CreatGroupBehaviour extends Behaviour{
 			if (server_name != null){
 				msg.clearAllReceiver();
 				msg.addReceiver(server_name);
-				msg.setPerformative(ACLMessage.SUBSCRIBE);
+				msg.setContent(Constance.roomselect_Mode);
 				myAgent.send(msg);
 				first = false;
 				System.out.println("Ask for creating room sent");
