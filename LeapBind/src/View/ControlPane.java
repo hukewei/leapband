@@ -31,7 +31,7 @@ import SMA.UserAgent;
 public class ControlPane extends JPanel{
 	// personnel cursor
 	private UserAgent myAgent;
-	
+	private Boolean propietaire = true;
 	
 	public ControlPane(UserAgent agent) {
 		this.myAgent=agent;
@@ -73,6 +73,9 @@ public class ControlPane extends JPanel{
 				new musicview();
 			}
 		});
+		if(!is_proprietaire()){
+			music.setEnabled(false);
+		}
 		JButton stop = new JButton();
 		Icon icone = new ImageIcon("src/stop.png");
 		stop.setBounds(1000, 50, 100, 100);
@@ -87,5 +90,11 @@ public class ControlPane extends JPanel{
 		this.add(volume);
 		//this.add(userId);
 		//this.add(play);
-	}			
+	}
+	public Boolean is_proprietaire(){
+		return propietaire;
+	}
+	public void set_proprietaire(boolean b){
+		propietaire = b;
+	}
 }
