@@ -19,6 +19,8 @@ public class MultiPlayAgent extends Agent{
 	private DefaultListModel<String> dict;
 
 	protected void setup() {
+		super.setup();
+		System.out.println(getLocalName()+"--> Installed");
 		
 		DFAgentDescription dfd=new DFAgentDescription();
 
@@ -57,8 +59,8 @@ public class MultiPlayAgent extends Agent{
 		return dict;
 	}
 	public void setDict(String item){
-		dict.addElement(item);
-		
+		dict.addElement(item); 
 	}
+	
 
 }
