@@ -23,15 +23,30 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			//myAgent.changeToRoomSelectView();
 		} else if (msg == UserAgent.Multiple_Mode) {
 			myAgent.setMultiple_mode(true);
-			myAgent.changeToRoomSelectView();
+			myAgent.changeToInstrumentView();
+			//myAgent.changeToRoomSelectView();
 		}else if(msg == UserAgent.return_Menu){
 			myAgent.setSingle_mode(false);
 			myAgent.setMultiple_mode(false);
 			myAgent.changeToMenuView();
 		}else if(msg == UserAgent.instrument_Mode){
+			if(myAgent.isSingle_mode()){
+				System.out.println("singlemode---game start");
+				myAgent.changeToGameView();
+			}
+			else if(myAgent.isMultiple_mode()){
+				System.out.println("multimode---select room");
+				myAgent.changeToRoomSelectView();
+			}
 			//myAgent.setSingle_mode(false);
 			//myAgent.setMultiple_mode(false);
-			System.out.println("ookokokoko");
+		}
+		else if (msg == UserAgent.roomselect_Mode){
+			System.out.println("enter waiting room");
+			myAgent.changeToRoomWaitView();
+		}
+		else if (msg == UserAgent.wait_Mode){
+			System.out.println("starting game");
 			myAgent.changeToGameView();
 		}
 		

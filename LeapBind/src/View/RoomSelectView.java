@@ -78,7 +78,7 @@ public class RoomSelectView extends JAgentFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				GuiEvent ev = new GuiEvent(this,UserAgent.CREAT_ROOM_EVENT);
-				ev.addParameter("creatRoom");
+				ev.addParameter(UserAgent.roomselect_Mode);
 				myAgent.postGuiEvent(ev);
 				
 			}
@@ -89,7 +89,7 @@ public class RoomSelectView extends JAgentFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
-				ev.addParameter("joinRoom");
+				ev.addParameter(UserAgent.roomselect_Mode);
 				myAgent.postGuiEvent(ev);
 				
 			}

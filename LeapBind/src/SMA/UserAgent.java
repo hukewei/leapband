@@ -15,11 +15,13 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
+
 import Controller.LeapListener;
 import Utilities.Cordinates;
 import View.GameView;
 import View.InstrumentSelectView;
 import View.MenuView;
+import View.MultiwaitRoom;
 import View.RoomSelectView;
 
 import com.leapmotion.leap.Controller;
@@ -36,10 +38,13 @@ public class UserAgent extends GuiAgent{
 	public static int SELECT_INSTRUMENT_EVENT = 2;
 	public static int CREAT_ROOM_EVENT = 3;
 	public static int JOINT_ROOM_EVENT = 4;
+	public static int CONFIRM_ROOM_EVENT = 5;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
 	public static String instrument_Mode = "103";
+	public static String roomselect_Mode = "104";
+	public static String wait_Mode = "105";
 	public static String piano = "0";
 	public static String druma = "1";
 	public static String guitar = "2";
@@ -47,6 +52,7 @@ public class UserAgent extends GuiAgent{
 	private GameView game_view;
 	private InstrumentSelectView instrument_view;
 	private RoomSelectView room_view;
+	private MultiwaitRoom wait_view;
 	private boolean single_mode = false;
 	private boolean multiple_mode = false;
 	private Cordinates pointer = new Cordinates();
@@ -71,6 +77,7 @@ public class UserAgent extends GuiAgent{
 		instrument_view = new InstrumentSelectView(this);
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
+		wait_view = new MultiwaitRoom(this);
 		menu_view.setVisible(true);
 		//game_view.setVisible(true);
 		
@@ -149,8 +156,18 @@ public class UserAgent extends GuiAgent{
 		if(getDict()!=null){
 			room_view.getList_room().setModel(getDict());
 			room_view.setVisible(true);
-			menu_view.setVisible(false);
+			instrument_view.setVisible(false);
+			//menu_view.setVisible(false);
 		}
+	}
+		
+	public void changeToRoomWaitView() {
+			//if(getDict()!=null){
+				//wait_view.getList_player().setModel(getDict());
+				wait_view.setVisible(true);
+				room_view.setVisible(false);
+			//}
+			System.out.println("ohhhhhhhhhh");
 		
 		
 	}
@@ -162,13 +179,16 @@ public class UserAgent extends GuiAgent{
 	public void changeToGameView(){
 		//System.out.println("okkk");
 		game_view.setVisible(true);
+		wait_view.setVisible(false);
 		instrument_view.setVisible(false);
 	}
 	
 	public void changeToMenuView(){
 		menu_view.setVisible(true);
 		room_view.setVisible(false);
+		wait_view.setVisible(false);
 		game_view.setVisible(false);
+		wait_view.setVisible(false);
 		instrument_view.setVisible(false);		
 	}
 	
