@@ -88,9 +88,12 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
-				ev.addParameter(Constance.roomselect_Mode);
-				myAgent.postGuiEvent(ev);
+				String room_name = list_room.getSelectedValue();
+				if (room_name != null) {
+					GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
+					ev.addParameter(room_name);
+					myAgent.postGuiEvent(ev);
+				}
 				
 			}
 		});

@@ -58,6 +58,7 @@ public class UserAgent extends GuiAgent{
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
+	private String selected_instrument = null;
 
 	
 	private DefaultListModel<String> dict = null;
@@ -111,7 +112,8 @@ public class UserAgent extends GuiAgent{
 			String messageMode = arg0.getParameter(0).toString();
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
-			this.addBehaviour(new InstrumentSelectBehaviour(this, encodageInstrument(arg0.getParameter(1).toString())));
+			selected_instrument = encodageInstrument(arg0.getParameter(1).toString());
+			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
 			
 		}else if(arg0.getType()==0){
@@ -122,9 +124,10 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoyer demande\n");
 
-		}else if(arg0.getType() == CREATE_ROOM_EVENT){
+		} else if(arg0.getType() == CREATE_ROOM_EVENT){
 			this.addBehaviour(new CreatGroupBehaviour(this));
-			
+		} else if(arg0.getType() == JOINT_ROOM_EVENT){
+			this.addBehaviour(new EnterGroupBehaviour(this, arg0.getParameter(0).toString()));
 		}
 		
 	}

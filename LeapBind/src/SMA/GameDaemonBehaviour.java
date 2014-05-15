@@ -33,10 +33,11 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 			System.out.println(message.getContent());
 			if (message.getContent().equals(Constance.roomselect_Mode)) {
 				System.out.println("code 104 matched");
+				System.out.println("receive userAgent subscription");
+				//UserAgent ask for creating a new room
+				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
-			//UserAgent ask for creating a new room
-			System.out.println("receive userAgent subscription");
-			myAgent.addBehaviour(new GameManageBehaviour(myAgent,message));
+			
 		}
 		
 		
