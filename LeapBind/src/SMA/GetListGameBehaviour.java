@@ -29,6 +29,7 @@ public class GetListGameBehaviour extends OneShotBehaviour{
 			ACLMessage reply=msg.createReply();
 			
 			reply.setPerformative(ACLMessage.INFORM);
+
 			reply.setConversationId(Constance.GROUP_CREATED);
 			
 			try {

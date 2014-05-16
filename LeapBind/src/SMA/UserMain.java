@@ -29,6 +29,7 @@ public class UserMain {
 					"SMA.UserAgent",
 					null);
 			c1.start();
+
 			AgentController c2 = operationContainer.createNewAgent(
 					"User_2",
 					"SMA.UserAgent",

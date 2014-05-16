@@ -124,6 +124,7 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoyer demande\n");
 
+
 		} else if(arg0.getType() == CREATE_ROOM_EVENT){
 			this.addBehaviour(new CreatGroupBehaviour(this));
 		} else if(arg0.getType() == JOINT_ROOM_EVENT){

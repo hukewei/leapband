@@ -64,8 +64,7 @@ public class GameManageBehaviour extends CyclicBehaviour{
 			host_name = host_msg.getSender();
 			answer_host_ack();
 			player_changed = true;
-			initialize = false;
-			
+			initialize = false;	
 		}
 		if (player_changed) {
 			info_all_player();

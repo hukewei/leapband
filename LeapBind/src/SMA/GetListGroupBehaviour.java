@@ -46,6 +46,7 @@ public class GetListGroupBehaviour extends Behaviour{
 				System.out.println("server not found, retry...");
 			}
 		} else {
+
 			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
 					MessageTemplate.MatchConversationId(Constance.GROUP_CREATED));
 			ACLMessage message= myAgent.receive(mt);
