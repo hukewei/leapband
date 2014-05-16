@@ -17,5 +17,9 @@ public class Constance {
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
+	public static String ROOM_ENTERED = "ROOM_ENTERED";
 	public static String roomselect_Mode = "104";
+	public static String EnterGroupMode = "108";
+	public static String MEMBER_CHANGE = "memberChangeInform";
+	public static String GROUP_CREATED = "groupCreatedInform";
 }

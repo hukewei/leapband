@@ -7,19 +7,21 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 @SuppressWarnings("serial")
-public class CreatGroupBehaviour extends Behaviour{
+public class EnterGroupBehaviour extends Behaviour{
 	
 	private UserAgent myAgent;
 	private ACLMessage msg;
 	private boolean first = true;
 	private boolean done = false;
+	private String msg_conversation = null;
 	
 
-	public CreatGroupBehaviour(UserAgent myAgent) {
+	public EnterGroupBehaviour(UserAgent myAgent, String content) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); //content = 104
-		System.out.println("create room behaviour created");
+		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); 
+		msg_conversation = content;
+		System.out.println("enter room behaviour created");
 	}
 
 	@Override
@@ -27,23 +29,24 @@ public class CreatGroupBehaviour extends Behaviour{
 		if (first) {
 			AID server_name = myAgent.getServerName();
 			if (server_name != null){
-				msg.clearAllReceiver();
 				msg.addReceiver(server_name);
-				msg.setContent(Constance.roomselect_Mode);
+				msg.setContent(Constance.EnterGroupMode);
+				msg.setConversationId(msg_conversation);
 				myAgent.send(msg);
 				first = false;
-				System.out.println("Ask for creating room sent");
+				System.out.println("Ask for entring a room sent");
 			} else {
 				System.out.println("server not found");
 			}
 		} else {
-			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CONFIRM);
+			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM),
+					MessageTemplate.MatchConversationId(msg_conversation));
 			ACLMessage message=myAgent.receive(mt);
 			
 			if(message != null){
 				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
 				done = true;
-				System.out.println("room created, behaviour done");
+				System.out.println("room entered, behaviour done");
 				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
 			}
 		}

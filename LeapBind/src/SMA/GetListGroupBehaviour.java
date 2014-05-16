@@ -3,6 +3,8 @@ package SMA;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
+import Utilities.Constance;
+
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -44,7 +46,9 @@ public class GetListGroupBehaviour extends Behaviour{
 				System.out.println("server not found, retry...");
 			}
 		} else {
-			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+
+			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
+					MessageTemplate.MatchConversationId(Constance.GROUP_CREATED));
 			ACLMessage message= myAgent.receive(mt);
 	
 			if(message!=null){

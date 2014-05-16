@@ -2,6 +2,8 @@ package SMA;
 
 import java.io.IOException;
 
+import Utilities.Constance;
+
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
@@ -27,6 +29,8 @@ public class GetListGameBehaviour extends OneShotBehaviour{
 			ACLMessage reply=msg.createReply();
 			
 			reply.setPerformative(ACLMessage.INFORM);
+
+			reply.setConversationId(Constance.GROUP_CREATED);
 			
 			try {
 				reply.setContentObject(myAgent.getDict());

@@ -17,6 +17,19 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class MultiPlayAgent extends Agent{
 	
 	private DefaultListModel<String> dict;
+	private int room_ids = 0;
+
+	public int getRoom_ids() {
+		return room_ids;
+	}
+
+	public void setRoom_ids(int room_ids) {
+		this.room_ids = room_ids;
+	}
+	
+	public int generateRoomId() {
+		return ++room_ids;
+	}
 
 	protected void setup() {
 		super.setup();
@@ -61,6 +74,7 @@ public class MultiPlayAgent extends Agent{
 	public void setDict(String item){
 		dict.addElement(item); 
 	}
+
 	
 
 }
