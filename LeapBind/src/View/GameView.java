@@ -38,6 +38,7 @@ public class GameView extends JAgentFrame {
 		super(agent);
 		this.setTitle("Game View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
+		System.out.println("width"+Constance.Windows_width+","+Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

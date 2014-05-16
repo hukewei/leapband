@@ -3,6 +3,8 @@ package SMA;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
+import Utilities.Constance;
+
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
@@ -12,6 +14,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 
 @SuppressWarnings("serial")
@@ -23,20 +26,19 @@ public class GetListGroupBehaviour extends Behaviour{
 	private boolean done = false;
 	
 
-	public GetListGroupBehaviour(UserAgent myAgent,ACLMessage messageDemande) {
+	public GetListGroupBehaviour(UserAgent myAgent) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=messageDemande;
+		this.msg= new ACLMessage(ACLMessage.REQUEST);
 	}
-
 
 	@Override
 	public void action() {
 		if (first_run) {
 			AID server_name = myAgent.getServerName();
 			if(server_name !=null){
-				msg.clearAllReceiver();
 				msg.addReceiver(server_name);
+				msg.setContent("listGroup");
 				myAgent.send(msg);
 				System.out.println("getlistgroupbehaviour envoie demande au multiAgent\n");
 				first_run = false;
@@ -44,7 +46,10 @@ public class GetListGroupBehaviour extends Behaviour{
 				System.out.println("server not found, retry...");
 			}
 		} else {
-			ACLMessage message=myAgent.receive();
+
+			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
+					MessageTemplate.MatchConversationId(Constance.GROUP_CREATED));
+			ACLMessage message= myAgent.receive(mt);
 	
 			if(message!=null){
 				/*String[] list=message.getContent().split(",");

@@ -57,15 +57,17 @@ public class UserAgent extends GuiAgent{
 	private Cordinates pointer = new Cordinates();
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
+	private AID server_name = null;
+	private String selected_instrument = null;
 
 	
 	private DefaultListModel<String> dict = null;
+	private DefaultListModel<String> dict_list_player = null;
+
 	
 	private LeapListener listener;
 	private Controller controller;
-	
-	private ACLMessage messageDemande=new ACLMessage(ACLMessage.REQUEST);
-	
+		
 
 	
 	protected void setup() {
@@ -110,25 +112,31 @@ public class UserAgent extends GuiAgent{
 			String messageMode = arg0.getParameter(0).toString();
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
-			this.addBehaviour(new InstrumentSelectBehaviour(this, encodageInstrument(arg0.getParameter(1).toString())));
+			selected_instrument = encodageInstrument(arg0.getParameter(1).toString());
+			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
 			
 		}else if(arg0.getType()==0){
+			//ask for the list of rooms
+//			ACLMessage messageDemande = new ACLMessage(ACLMessage.REQUEST);
+//			messageDemande.setContent(arg0.getParameter(0).toString());	
 			
-			messageDemande.setContent(arg0.getParameter(0).toString());	
-			
-			this.addBehaviour(new GetListGroupBehaviour(this,messageDemande));
+			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoyer demande\n");
 
-		}else if(arg0.getType()==3){
-			messageDemande.setContent(arg0.getParameter(0).toString());	
-			this.addBehaviour(new CreatGroupBehaviour(this,messageDemande));
-			
+
+		} else if(arg0.getType() == CREATE_ROOM_EVENT){
+			this.addBehaviour(new CreatGroupBehaviour(this));
+		} else if(arg0.getType() == JOINT_ROOM_EVENT){
+			this.addBehaviour(new EnterGroupBehaviour(this, arg0.getParameter(0).toString()));
 		}
 		
 	}
 	
 	public AID getServerName() {
+		if (server_name != null) {
+			return server_name;
+		}
 		DFAgentDescription template=new DFAgentDescription();
 		ServiceDescription sd=new ServiceDescription();
 		sd.setType("Organisation");
@@ -137,12 +145,12 @@ public class UserAgent extends GuiAgent{
 		try{
 			DFAgentDescription[] result=DFService.search(this, template);
 			if(result.length>0){
-				return result[0].getName();
+				server_name = result[0].getName();
 			}
 		}catch(FIPAException fe){
 			fe.printStackTrace();
 		}
-		return null;
+		return server_name;
 	}
 	
 
@@ -166,7 +174,6 @@ public class UserAgent extends GuiAgent{
 	
 	public void changeToRoomSelectView() {
 		if(getDict()!=null){
-			room_view.getList_room().setModel(getDict());
 			room_view.setVisible(true);
 			instrument_view.setVisible(false);
 			//menu_view.setVisible(false);
@@ -174,11 +181,11 @@ public class UserAgent extends GuiAgent{
 	}
 		
 	public void changeToRoomWaitView() {
-			//if(getDict()!=null){
-				//wait_view.getList_player().setModel(getDict());
+			if(getDict()!=null){
+				//wait_view.getList_player().setModel(getDictPlayer());
 				wait_view.setVisible(true);
 				room_view.setVisible(false);
-			//}
+			}
 			System.out.println("ohhhhhhhhhh");
 		
 		
@@ -265,9 +272,21 @@ public class UserAgent extends GuiAgent{
 	public DefaultListModel<String> getDict() {
 		return dict;
 	}
+	
+	public DefaultListModel<String> getDictPlayer() {
+		return dict_list_player;
+	}
 
 
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
+		room_view.getList_room().setModel(this.dict);
+		System.out.println("update dict");
+	}
+	
+	public void setDictPlayer(DefaultListModel<String> dict) {
+		this.dict_list_player = dict;
+		wait_view.getList_player().setModel(this.dict_list_player);
+		System.out.println("update dict player");
 	}
 }

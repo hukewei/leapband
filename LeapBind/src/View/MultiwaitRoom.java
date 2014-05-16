@@ -97,22 +97,6 @@ public class MultiwaitRoom extends JAgentFrame {
 		});
 	}
 
-	
-/*	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("swipe")) {
-			int current_index = list_room.getSelectedIndex();
-			if (current_index > -1 ) {
-				if ((String)evt.getNewValue() == "UP") {
-					current_index--;
-				} else if ((String)evt.getNewValue() == "DOWN") {
-					current_index++;
-				}
-			}
-			list_room.setSelectedIndex(current_index);
-			
-		}
-	}
-	*/
 	public JList<String> getList_player() {
 		return list_player;
 	}
@@ -123,7 +107,18 @@ public class MultiwaitRoom extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		// TODO Auto-generated method stub
+		if (evt.getPropertyName().equals("swipe")) {
+			int current_index = list_player.getSelectedIndex();
+			if (current_index > -1 ) {
+				if ((String)evt.getNewValue() == "UP") {
+					current_index--;
+				} else if ((String)evt.getNewValue() == "DOWN") {
+					current_index++;
+				}
+			}
+			list_player.setSelectedIndex(current_index);
+			
+		}
 		
 	}
 
