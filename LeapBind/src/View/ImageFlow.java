@@ -12,8 +12,10 @@ import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -29,24 +31,21 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.net.URL;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.event.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import SMA.UserAgent;
 import Utilities.Constance;
 import Utilities.CrystalCaseFactory;
 import Utilities.ImageFlowItem;
-
-import java.io.*;
 
 public class ImageFlow extends JPanel {
 	
@@ -124,6 +123,12 @@ public class ImageFlow extends JPanel {
     {
         this(ImageFlowItem.loadFromDirectory(directory));
         this.myAgent=agent;
+        // personnel cursor
+    	Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Point cursorHotSpot = new Point(0,0);
+		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+		this.setCursor(customCursor);
     }
 
 

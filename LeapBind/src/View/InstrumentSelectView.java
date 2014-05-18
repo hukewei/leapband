@@ -4,11 +4,7 @@ import jade.gui.GuiEvent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -29,7 +25,6 @@ public class InstrumentSelectView extends JAgentFrame{
 	
 	private ImageFlow imageFlow = null;
 
-
 	public InstrumentSelectView(UserAgent agent) {
 		super(agent);
 		this.setTitle("ChooseView");
@@ -48,9 +43,9 @@ public class InstrumentSelectView extends JAgentFrame{
     	
     	JLabel choose=new JLabel("Choose your instrument");
     	choose.setBounds(500, 30, 500, 150);
-    	choose.setFont(new Font("Serif", Font.PLAIN, 50));
+    	choose.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 50));
     	choose.setHorizontalAlignment(SwingConstants.CENTER);
-    	choose.setForeground(Color.MAGENTA);
+    	choose.setForeground(Color.WHITE);
     	imageFlowPanel.add(choose,BorderLayout.NORTH);
     	
     	imageFlow = new ImageFlow(new File("src/instrument/"),agent);
@@ -60,20 +55,11 @@ public class InstrumentSelectView extends JAgentFrame{
     	home.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
 				ev.addParameter(UserAgent.return_Menu);
 				myAgent.postGuiEvent(ev);
 			}
 		});
-    	
-    	// personnel cursor
-
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
-		Point cursorHotSpot = new Point(0,0);
-		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-		this.setCursor(customCursor);
 	}
 
 	@Override
