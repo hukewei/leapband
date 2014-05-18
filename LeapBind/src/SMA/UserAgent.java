@@ -39,6 +39,7 @@ public class UserAgent extends GuiAgent{
 	public static int CREATE_ROOM_EVENT = 3;
 	public static int JOINT_ROOM_EVENT = 4;
 	public static int CONFIRM_ROOM_EVENT = 5;
+	public static int EXIT_ROOM_EVENT = 6;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
@@ -59,6 +60,7 @@ public class UserAgent extends GuiAgent{
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
 	private String selected_instrument = null;
+	private String current_room_id = null; //conversation id if in a group
 
 	
 	private DefaultListModel<String> dict = null;
@@ -105,6 +107,9 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
+	public void setRoomId(String id) {
+		current_room_id = id;
+	}
 	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
@@ -130,6 +135,9 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new CreatGroupBehaviour(this));
 		} else if(arg0.getType() == JOINT_ROOM_EVENT){
 			this.addBehaviour(new EnterGroupBehaviour(this, arg0.getParameter(0).toString()));
+		} else if(arg0.getType() == EXIT_ROOM_EVENT){
+			if (current_room_id != null)
+			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
 		}
 		
 	}

@@ -29,6 +29,7 @@ public class GameManageBehaviour extends CyclicBehaviour{
 	private boolean player_changed = false;
 	private int room_id = 0;
 	private boolean initialize = true;
+	private String conversation_id = null;
 	
 
 	public GameManageBehaviour(MultiPlayAgent myAgent, ACLMessage host_msg) {
@@ -40,16 +41,29 @@ public class GameManageBehaviour extends CyclicBehaviour{
 
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE), 
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.or(
+				MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE),
+				MessageTemplate.MatchPerformative(ACLMessage.CANCEL)
+				), 
 				MessageTemplate.MatchConversationId("Room" + room_id));
 		ACLMessage message=myAgent.receive(mt);
 		if (message != null) {
-			System.out.println("asking for entering a existed room");
-			if (message.getContent().equals(Constance.EnterGroupMode)){
-				setDictPlayer(message.getSender().getName());
-				list_member.add(message.getSender());
-				answer_guest_ack(message);
-				player_changed = true;
+			if (message.getPerformative() == ACLMessage.SUBSCRIBE) {
+				System.out.println("asking for entering a existed room");
+				if (message.getContent().equals(Constance.EnterGroupMode)){
+					setDictPlayer(message.getSender().getName());
+					list_member.add(message.getSender());
+					answer_guest_ack(message);
+					player_changed = true;
+				}
+			} else if (message.getPerformative() == ACLMessage.CANCEL) {
+				System.out.println("asking for entering a existed room");
+				if (message.getContent().equals(Constance.EnterGroupMode)){
+					setDictPlayer(message.getSender().getName());
+					list_member.add(message.getSender());
+					answer_guest_ack(message);
+					player_changed = true;
+				}
 			}
 		}
 		if(initialize){
@@ -57,7 +71,8 @@ public class GameManageBehaviour extends CyclicBehaviour{
 //			int countGroup=myAgent.getDict().size();
 //			countGroup+=1;
 			//update room list
-			myAgent.setDict("Room"+room_id);
+			conversation_id = "Room"+room_id;
+			myAgent.setDict(conversation_id);
 			setDictPlayer(host_msg.getSender().getName());
 			//info_all_player();
 			list_member.add(host_msg.getSender());
@@ -81,7 +96,7 @@ public class GameManageBehaviour extends CyclicBehaviour{
 	public void answer_host_ack() {
 		ACLMessage reply=host_msg.createReply();
 		reply.setPerformative(ACLMessage.CONFIRM);
-		reply.setContent(Constance.ROOM_CREATED);
+		reply.setContent(conversation_id);
 		myAgent.send(reply);
 	}
 	

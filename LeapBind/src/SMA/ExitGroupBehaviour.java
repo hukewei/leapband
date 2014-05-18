@@ -7,21 +7,20 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 @SuppressWarnings("serial")
-public class EnterGroupBehaviour extends Behaviour{
+public class ExitGroupBehaviour extends Behaviour{
 	
 	private UserAgent myAgent;
 	private ACLMessage msg;
 	private boolean first = true;
 	private boolean done = false;
 	private String msg_conversation = null;
-	
 
-	public EnterGroupBehaviour(UserAgent myAgent, String content) {
+	public ExitGroupBehaviour(UserAgent myAgent, String content) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); 
+		this.msg=new ACLMessage(ACLMessage.CANCEL); 
 		msg_conversation = content;
-		System.out.println("enter room behaviour created");
+		System.out.println("Exit room behaviour created");
 	}
 
 	@Override
@@ -47,7 +46,6 @@ public class EnterGroupBehaviour extends Behaviour{
 				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
 				done = true;
 				System.out.println("room entered, behaviour done");
-				myAgent.setRoomId(msg_conversation);
 				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
 			}
 		}
@@ -58,6 +56,5 @@ public class EnterGroupBehaviour extends Behaviour{
 	public boolean done() {
 		return done;
 	}
-	
 
 }
