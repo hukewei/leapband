@@ -5,6 +5,7 @@ import jade.gui.GuiEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -18,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import SMA.UserAgent;
 import Utilities.Constance;
@@ -43,7 +45,14 @@ public class InstrumentSelectView extends JAgentFrame{
 		home.setIcon(icon);
 		imageFlowPanel.add(home);
 		
-    	imageFlowPanel.add(new JLabel("sdfsdfs"),BorderLayout.NORTH);
+    	
+    	JLabel choose=new JLabel("Choose your instrument");
+    	choose.setBounds(500, 30, 500, 150);
+    	choose.setFont(new Font("Serif", Font.PLAIN, 50));
+    	choose.setHorizontalAlignment(SwingConstants.CENTER);
+    	choose.setForeground(Color.MAGENTA);
+    	imageFlowPanel.add(choose,BorderLayout.NORTH);
+    	
     	imageFlow = new ImageFlow(new File("src/instrument/"),agent);
     	imageFlowPanel.add(imageFlow);
     	this.add(imageFlowPanel);
