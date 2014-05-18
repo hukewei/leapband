@@ -57,8 +57,8 @@ public class GameManageBehaviour extends CyclicBehaviour{
 					player_changed = true;
 				}
 			} else if (message.getPerformative() == ACLMessage.CANCEL) {
-				System.out.println("asking for entering a existed room");
-				if (message.getContent().equals(Constance.EnterGroupMode)){
+				System.out.println("asking for quiting a existed room");
+				if (message.getContent().equals(Constance.ExitGroupMode)){
 					setDictPlayer(message.getSender().getName());
 					list_member.add(message.getSender());
 					answer_guest_ack(message);

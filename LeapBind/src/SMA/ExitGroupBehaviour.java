@@ -29,11 +29,11 @@ public class ExitGroupBehaviour extends Behaviour{
 			AID server_name = myAgent.getServerName();
 			if (server_name != null){
 				msg.addReceiver(server_name);
-				msg.setContent(Constance.EnterGroupMode);
+				msg.setContent(Constance.ExitGroupMode);
 				msg.setConversationId(msg_conversation);
 				myAgent.send(msg);
 				first = false;
-				System.out.println("Ask for entring a room sent");
+				System.out.println("Ask for quiting a room sent");
 			} else {
 				System.out.println("server not found");
 			}
