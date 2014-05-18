@@ -3,6 +3,7 @@ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
@@ -15,6 +16,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -45,7 +47,7 @@ public class RoomSelectView extends JAgentFrame {
 		list_room = new JList<String>();
 		//list_room.setModel(myAgent.getDict());
 		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
-		//list_room.setOpaque(false);
+		list_room.setOpaque(false);
 		list_room.setBackground(new Color(255,255,204,100));
 		
 		//list_room.setBackground(Color.LIGHT_GRAY);
@@ -211,5 +213,7 @@ public class RoomSelectView extends JAgentFrame {
 	public void setList_room(JList<String> list_room) {
 		this.list_room = list_room;
 	}
+	
+	
 
 }

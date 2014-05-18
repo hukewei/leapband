@@ -82,17 +82,17 @@ public class UserAgent extends GuiAgent{
 		menu_view.setVisible(true);
 		//game_view.setVisible(true);
 		
-		listener = new LeapListener(this);
-        controller = new Controller();
-        
-        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
-        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
-        //listener.setDebug(true);
-        listener.setClickType(1);
-        listener.setCalibratedScren(true);
-        controller.addListener(listener);
+//		listener = new LeapListener(this);
+//        controller = new Controller();
+//        
+//        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+//        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+//        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+//        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+//        //listener.setDebug(true);
+//        listener.setClickType(1);
+//        listener.setCalibratedScren(true);
+//        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
