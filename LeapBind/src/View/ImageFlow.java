@@ -93,7 +93,8 @@ public class ImageFlow extends JPanel {
     private KeyScroller keyScroller;
     private KeyAvatarSelector keyAvatarSelector;
 
-    private Font avatarFont;
+    private Font avatarFont1;
+    private Font avatarFont2;
     private CrystalCaseFactory fx;
 
     private List<ListSelectionListener> listSelectionListeners;
@@ -101,7 +102,8 @@ public class ImageFlow extends JPanel {
     public ImageFlow(List<ImageFlowItem> items)
     {
         avatars = items;
-        avatarFont = new Font("Dialog", Font.PLAIN, 24);
+        avatarFont1 = new Font("Chalkboard", Font.PLAIN, 24);
+        avatarFont2 = new Font("Chalkboard", Font.PLAIN, 18);
         fx = CrystalCaseFactory.getInstance();
 
         loadAvatars();
@@ -236,6 +238,7 @@ public class ImageFlow extends JPanel {
 
         if (drawableAvatars.length > 0) {
             drawAvatarName(g2);
+            drawAvatarPresent(g2);
         }
 
         g2.setComposite(oldComposite);
@@ -273,29 +276,78 @@ public class ImageFlow extends JPanel {
                                                    textAlphaLevel));
 
         FontRenderContext context = g2.getFontRenderContext();
-        TextLayout layout = new TextLayout(avatarText.substring(0, avatarText.lastIndexOf(".")), avatarFont, context);
+        TextLayout layout = new TextLayout(avatarText.substring(0, avatarText.lastIndexOf(".")), avatarFont1, context);
         Rectangle2D bounds = layout.getBounds();
 
         double bulletWidth = bounds.getWidth() + 12;
         double bulletHeight = bounds.getHeight() + layout.getDescent() + 4;
-
+        
         double x = (getWidth() - bulletWidth) / 2.0;
-        double y = (getHeight() + CD_SIZE) / 2.0;
+        double y = (getHeight() + CD_SIZE+100) / 2.0;
+        
 
         BufferedImage textImage = new BufferedImage((int) bulletWidth,
                                                     (int) bulletHeight,
                                                     BufferedImage.TYPE_INT_ARGB);
+        
+        
         Graphics2D g2text = textImage.createGraphics();
         g2text.setColor(new Color(0, 0, 0, 170));
         layout.draw(g2text, 6, layout.getAscent() + 1);
         g2text.setColor(Color.WHITE);
         layout.draw(g2text, 6, layout.getAscent());
         g2text.dispose();
-
+        
         g2.drawImage(fx.createReflectedPicture(textImage,
                                                fx.createGradientMask((int) bulletWidth,
                                                                      (int) bulletHeight)),
                                             (int) x, (int) y, null);
+        
+        g2.setComposite(composite);
+    }
+    
+    private void drawAvatarPresent(Graphics2D g2) {
+        Composite composite = g2.getComposite();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
+                                                   textAlphaLevel));
+
+        FontRenderContext context = g2.getFontRenderContext();
+        String present="";
+        if(avatarText.substring(0, avatarText.lastIndexOf(".")).equals("drum")){
+        	present="Play game with drum";
+        }else if(avatarText.substring(0, avatarText.lastIndexOf(".")).equals("guitar")){
+        	present="Play game with guitar";
+        }else{
+        	present="Play game with piano";
+        }
+        TextLayout layout = new TextLayout(present, avatarFont2, context);
+        Rectangle2D bounds = layout.getBounds();
+
+        double bulletWidth = bounds.getWidth() + 12;
+        double bulletHeight = bounds.getHeight() + layout.getDescent() + 4;
+        
+        double x = (getWidth() - bulletWidth) / 2.0;
+        double y = (getHeight() + CD_SIZE+200) / 2.0;
+        
+
+        BufferedImage textImage = new BufferedImage((int) bulletWidth,
+                                                    (int) bulletHeight,
+                                                    BufferedImage.TYPE_INT_ARGB);
+        
+        
+        Graphics2D g2text = textImage.createGraphics();
+        g2text.setColor(new Color(0, 0, 0, 170));
+        layout.draw(g2text, 6, layout.getAscent() + 1);
+        g2text.setColor(Color.LIGHT_GRAY);
+        layout.draw(g2text, 6, layout.getAscent());
+        g2text.dispose();
+        
+        /*g2.drawImage(fx.createReflectedPicture(textImage,
+                                               fx.createGradientMask((int) bulletWidth,
+                                                                     (int) bulletHeight)),
+                                            (int) x, (int) y, null);*/
+        g2.drawImage(textImage,(int) x, (int) y, null);
+        
         g2.setComposite(composite);
     }
 
