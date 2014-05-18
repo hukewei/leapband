@@ -1,4 +1,4 @@
-package SMA;
+package SMA.user;
 
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;

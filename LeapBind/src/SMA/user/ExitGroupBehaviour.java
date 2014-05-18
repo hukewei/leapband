@@ -1,4 +1,4 @@
-package SMA;
+package SMA.user;
 
 import Utilities.Constance;
 import jade.core.AID;
@@ -7,21 +7,20 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 @SuppressWarnings("serial")
-public class EnterGroupBehaviour extends Behaviour{
+public class ExitGroupBehaviour extends Behaviour{
 	
 	private UserAgent myAgent;
 	private ACLMessage msg;
 	private boolean first = true;
 	private boolean done = false;
 	private String msg_conversation = null;
-	
 
-	public EnterGroupBehaviour(UserAgent myAgent, String content) {
+	public ExitGroupBehaviour(UserAgent myAgent, String content) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); 
+		this.msg=new ACLMessage(ACLMessage.CANCEL); 
 		msg_conversation = content;
-		System.out.println("enter room behaviour created");
+		System.out.println("Exit room behaviour created");
 	}
 
 	@Override
@@ -30,11 +29,11 @@ public class EnterGroupBehaviour extends Behaviour{
 			AID server_name = myAgent.getServerName();
 			if (server_name != null){
 				msg.addReceiver(server_name);
-				msg.setContent(Constance.EnterGroupMode);
+				msg.setContent(Constance.ExitGroupMode);
 				msg.setConversationId(msg_conversation);
 				myAgent.send(msg);
 				first = false;
-				System.out.println("Ask for entring a room sent");
+				System.out.println("Ask for quiting a room sent");
 			} else {
 				System.out.println("server not found");
 			}
@@ -44,11 +43,9 @@ public class EnterGroupBehaviour extends Behaviour{
 			ACLMessage message=myAgent.receive(mt);
 			
 			if(message != null){
-				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
+				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, UserAgent.Exit_Room_Mode));
 				done = true;
-				System.out.println("room entered, behaviour done");
-				myAgent.setRoomId(msg_conversation);
-				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
+				System.out.println("room quitted, behaviour done");
 			}
 		}
 		
@@ -58,6 +55,5 @@ public class EnterGroupBehaviour extends Behaviour{
 	public boolean done() {
 		return done;
 	}
-	
 
 }

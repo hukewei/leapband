@@ -7,12 +7,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,9 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
-import Utilities.RoundedBorder;
 
 @SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame{
@@ -40,7 +36,7 @@ public class InstrumentSelectView extends JAgentFrame{
     	imageFlowPanel.setBackground(new Color(110, 110, 110));
     	
     	home = new JButton();
-		Icon icon = new ImageIcon("src/home.png");
+		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
 		home.setBackground(new Color(110, 110, 110));
@@ -56,7 +52,7 @@ public class InstrumentSelectView extends JAgentFrame{
     	choose.setForeground(Color.ORANGE);
     	imageFlowPanel.add(choose);
     	
-    	imageFlow = new ImageFlow(new File("src/instrument/"),agent);
+    	imageFlow = new ImageFlow(new File("src/images/instrument/"),agent);
     	imageFlowPanel.add(imageFlow);
     	this.add(imageFlowPanel);
     	

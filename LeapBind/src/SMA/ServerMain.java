@@ -24,7 +24,7 @@ public class ServerMain {
 			AgentContainer operationContainer = rt.createAgentContainer(p);
 			AgentController c1 = operationContainer.createNewAgent(
 					"MultiPlayAgent",
-					"SMA.MultiPlayAgent",
+					"SMA.server.MultiPlayAgent",
 					null);
 			c1.start();
 		} catch(Exception ex) {

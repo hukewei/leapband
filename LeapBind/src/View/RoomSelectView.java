@@ -22,7 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CustomImgPanel;
 import Utilities.RoundedBorder;
@@ -39,7 +39,7 @@ public class RoomSelectView extends JAgentFrame {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/roomView.jpg");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/roomView.jpg");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
@@ -56,7 +56,7 @@ public class RoomSelectView extends JAgentFrame {
 		list_room.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_room);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
@@ -149,7 +149,7 @@ public class RoomSelectView extends JAgentFrame {
 		});
 		imagePanel.add(enter_room);
 		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/home.png");
+		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
 		home.setContentAreaFilled(false);

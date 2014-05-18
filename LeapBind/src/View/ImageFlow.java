@@ -42,7 +42,7 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CrystalCaseFactory;
 import Utilities.ImageFlowItem;
@@ -127,7 +127,7 @@ public class ImageFlow extends JPanel {
         this.myAgent=agent;
         // personnel cursor
     	Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);

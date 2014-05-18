@@ -111,7 +111,7 @@ public class musicview extends JFrame{
 		// personnel cursor
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);

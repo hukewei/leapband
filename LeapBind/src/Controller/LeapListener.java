@@ -5,7 +5,7 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
 
 import com.leapmotion.leap.CircleGesture;

@@ -17,7 +17,7 @@ import org.jfugue.Pattern;
 import org.jfugue.Player;
 import org.jfugue.Rhythm;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.Cordinates;
 
@@ -59,7 +59,6 @@ public class GameView extends JAgentFrame {
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.add(split_pane);
 	}
-	
 
 
 

@@ -1,4 +1,4 @@
-package SMA;
+package SMA.user;
 
 import Utilities.Constance;
 import jade.core.AID;
@@ -7,20 +7,21 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 @SuppressWarnings("serial")
-public class ExitGroupBehaviour extends Behaviour{
+public class EnterGroupBehaviour extends Behaviour{
 	
 	private UserAgent myAgent;
 	private ACLMessage msg;
 	private boolean first = true;
 	private boolean done = false;
 	private String msg_conversation = null;
+	
 
-	public ExitGroupBehaviour(UserAgent myAgent, String content) {
+	public EnterGroupBehaviour(UserAgent myAgent, String content) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=new ACLMessage(ACLMessage.CANCEL); 
+		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); 
 		msg_conversation = content;
-		System.out.println("Exit room behaviour created");
+		System.out.println("enter room behaviour created");
 	}
 
 	@Override
@@ -29,11 +30,11 @@ public class ExitGroupBehaviour extends Behaviour{
 			AID server_name = myAgent.getServerName();
 			if (server_name != null){
 				msg.addReceiver(server_name);
-				msg.setContent(Constance.ExitGroupMode);
+				msg.setContent(Constance.EnterGroupMode);
 				msg.setConversationId(msg_conversation);
 				myAgent.send(msg);
 				first = false;
-				System.out.println("Ask for quiting a room sent");
+				System.out.println("Ask for entring a room sent");
 			} else {
 				System.out.println("server not found");
 			}
@@ -43,9 +44,11 @@ public class ExitGroupBehaviour extends Behaviour{
 			ACLMessage message=myAgent.receive(mt);
 			
 			if(message != null){
-				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, UserAgent.Exit_Room_Mode));
+				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
 				done = true;
-				System.out.println("room quitted, behaviour done");
+				System.out.println("room entered, behaviour done");
+				myAgent.setRoomId(msg_conversation);
+				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
 			}
 		}
 		
@@ -55,5 +58,6 @@ public class ExitGroupBehaviour extends Behaviour{
 	public boolean done() {
 		return done;
 	}
+	
 
 }

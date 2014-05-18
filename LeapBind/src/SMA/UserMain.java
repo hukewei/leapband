@@ -25,13 +25,13 @@ public class UserMain {
 			AgentContainer operationContainer = rt.createAgentContainer(p);
 			AgentController c1 = operationContainer.createNewAgent(
 					"User_1",
-					"SMA.UserAgent",
+					"SMA.user.UserAgent",
 					null);
 			c1.start();
 
 			AgentController c2 = operationContainer.createNewAgent(
 					"User_2",
-					"SMA.UserAgent",
+					"SMA.user.UserAgent",
 					null);
 			c2.start();
 //			AgentController c3 = operationContainer.createNewAgent(

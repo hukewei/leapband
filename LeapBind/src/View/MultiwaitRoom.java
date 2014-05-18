@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
 
 
@@ -48,7 +48,7 @@ public class MultiwaitRoom extends JAgentFrame {
 		list_player.setFont(new Font("Serif", Font.PLAIN, 30));
 		this.add(list_player);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
@@ -60,7 +60,7 @@ public class MultiwaitRoom extends JAgentFrame {
 		exit.setBounds(850, 450,300, 150);
 		this.add(exit);
 		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/home.png");
+		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(140,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			

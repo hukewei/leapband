@@ -1,4 +1,4 @@
-package SMA;
+package SMA.sound;
 
 import jade.core.ProfileImpl;
 import jade.core.Runtime;

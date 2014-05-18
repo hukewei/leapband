@@ -1,9 +1,10 @@
-package SMA;
+package SMA.server;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+
 
 import jade.core.Agent;
 import jade.domain.DFService;

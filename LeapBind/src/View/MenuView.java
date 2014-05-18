@@ -33,7 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CustomImgPanel;
 import Utilities.RoundedBorder;
@@ -56,11 +56,11 @@ public class MenuView extends JAgentFrame {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/back.jpg");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/back.jpg");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
-		JLabel leap_band = new JLabel(new ImageIcon("src/leapband.png"));
+		JLabel leap_band = new JLabel(new ImageIcon("src/images/leapband.png"));
 		
 		leap_band.setBounds(500, 30, 500, 150);
 		//leap_band.setFont(new Font("Serif", Font.PLAIN, 50));
@@ -69,7 +69,7 @@ public class MenuView extends JAgentFrame {
 		
 		imagePanel.add(leap_band);
 		
-		JLabel gif=new JLabel(new ImageIcon("src/notesdorees.gif"));
+		JLabel gif=new JLabel(new ImageIcon("src/images/notesdorees.gif"));
 		imagePanel.add(gif);
 		gif.setBounds(950, 80, 500, 150);
 		
@@ -224,7 +224,7 @@ public class MenuView extends JAgentFrame {
 		// personnel cursor
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);

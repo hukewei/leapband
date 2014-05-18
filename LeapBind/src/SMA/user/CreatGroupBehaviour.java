@@ -1,4 +1,4 @@
-package SMA;
+package SMA.user;
 
 import Utilities.Constance;
 import jade.core.AID;

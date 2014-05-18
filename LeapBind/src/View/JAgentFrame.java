@@ -11,7 +11,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JFrame;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 
 
 public abstract class JAgentFrame extends JFrame implements PropertyChangeListener{

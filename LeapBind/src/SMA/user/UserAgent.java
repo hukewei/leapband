@@ -1,4 +1,4 @@
-package SMA;
+package SMA.user;
 
 
 

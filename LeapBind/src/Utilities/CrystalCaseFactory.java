@@ -35,8 +35,7 @@ public class CrystalCaseFactory {
         Graphics2D g2 = crystal.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                             RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-
-        int width = cover.getWidth(null);
+		int width = cover.getWidth(null);
         int height = cover.getHeight(null);
 
         float scale;
@@ -59,6 +58,7 @@ public class CrystalCaseFactory {
         g2.drawImage(cover, x, y, scaledWidth, scaledHeight, null);
 
         g2.dispose();
+        
 
         return crystal;
     }

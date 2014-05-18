@@ -1,4 +1,4 @@
-package SMA;
+package SMA.server;
 
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;

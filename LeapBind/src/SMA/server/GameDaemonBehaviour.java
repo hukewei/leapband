@@ -1,4 +1,4 @@
-package SMA;
+package SMA.server;
 import Utilities.Constance;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;

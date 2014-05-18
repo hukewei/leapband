@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
-import SMA.UserAgent;
+import SMA.user.UserAgent;
 
 
 public class ControlPane extends JPanel{
@@ -36,14 +36,14 @@ public class ControlPane extends JPanel{
 	public ControlPane(UserAgent agent) {
 		this.myAgent=agent;
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/cursor.png");
+		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
 		this.setLayout(null);
 		
 		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/home.png");
+		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(100,50,100,100);
 		home.setIcon(icon);
 		home.addActionListener(new ActionListener() {			
@@ -58,7 +58,7 @@ public class ControlPane extends JPanel{
 		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
-		JLabel player = new JLabel(new ImageIcon("src/person2.jpg"));
+		JLabel player = new JLabel(new ImageIcon("src/images/person2.jpg"));
 		player.setBounds(300, 50, 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
@@ -77,10 +77,10 @@ public class ControlPane extends JPanel{
 			music.setEnabled(false);
 		}
 		JButton stop = new JButton();
-		Icon icone = new ImageIcon("src/stop.png");
+		Icon icone = new ImageIcon("src/images/stop.png");
 		stop.setBounds(1000, 50, 100, 100);
 		stop.setIcon(icone);
-		JLabel volume = new JLabel(new ImageIcon("src/volume.png"));
+		JLabel volume = new JLabel(new ImageIcon("src/images/volume.png"));
 		volume.setBounds(1200, 50, 100, 100);
 		
 		this.add(home);

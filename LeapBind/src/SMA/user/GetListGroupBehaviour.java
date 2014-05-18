@@ -1,4 +1,4 @@
-package SMA;
+package SMA.user;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;

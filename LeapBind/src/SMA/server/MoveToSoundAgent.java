@@ -1,4 +1,7 @@
-package SMA;
+package SMA.server;
+
+
+
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -20,9 +23,48 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 
-/*
-	public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
+public class MoveToSoundAgent extends Agent{
+	private String current_note;
+	private String current_instrument;
+	private NoteInformData inform_note;
+	private NoteInformData inform_note1;
+	private NoteInformData inform_note2;
+	private NoteInformData inform_note3;
+	private NoteInformData inform_note4;
+	private NoteInformData inform_note5;
+	private NoteInformData inform_note6;
+	private NoteInformData inform_note7;
+	private NoteInformData inform_note8;
+	private ArrayList<NoteInformData> noteslist;
+	protected void setup() {
 		
+		//CDEFGAB 
+		inform_note = new NoteInformData("C5W", "Guitar",1);
+		inform_note1 = new NoteInformData("D5W", "Guitar",1);
+		inform_note2 = new NoteInformData("E5W", "Piano",1);
+		inform_note3 = new NoteInformData("F5W", "Piano",1);
+		inform_note4 = new NoteInformData("G5W", "Ocarina",1);
+		inform_note5 = new NoteInformData("[Crash_Cymbal_1]q", "Percussion",1);
+		inform_note6 = new NoteInformData("[Hand_Clap]q", "Percussion",1);
+		inform_note7 = new NoteInformData("[COWBELL]q", "Percussion",1);
+		//inform_note7 = new NoteInformData("G5W", "Ocarina",1);
+		inform_note8 = new NoteInformData("A5W", "Ocarina",1);
+		noteslist=new ArrayList<NoteInformData>();
+		noteslist.add(inform_note1);
+		noteslist.add(inform_note2);
+		noteslist.add(inform_note3);
+		noteslist.add(inform_note4);
+		noteslist.add(inform_note5);
+		noteslist.add(inform_note6);
+		noteslist.add(inform_note7);
+		noteslist.add(inform_note8);
+		noteslist.add(inform_note);
+		
+		this.addBehaviour(new SoundMessageDaemonBehaviour() );	
+		
+	}
+
+	public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 
 		@Override
 		public void action() {
@@ -91,7 +133,7 @@ import jade.lang.acl.MessageTemplate;
 	
 		*/
 	
-	/*
+	
 	public class SenderInformBehaviour extends OneShotBehaviour {
 		private boolean Done;
 		private AID aid;
@@ -127,6 +169,11 @@ import jade.lang.acl.MessageTemplate;
 
 			
 		}
-	}
+	
 		
-*/
+
+		
+
+	}
+
+}
