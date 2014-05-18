@@ -113,6 +113,7 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
 			selected_instrument = encodageInstrument(arg0.getParameter(1).toString());
+			System.out.println(selected_instrument);
 			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
 			
@@ -161,10 +162,10 @@ public class UserAgent extends GuiAgent{
 	
 	public String encodageInstrument(String message){
 		
-		String instrument = message.split("/")[1];
-		if(instrument.equals("gu.png")){
+		//String instrument = message.split("/")[1];
+		if(message.equals("gu.png")){
 			return "1";
-		}else if(instrument.equals("guitar.png")){
+		}else if(message.equals("guitar.png")){
 			return "2";
 		}else{
 			return "0";
