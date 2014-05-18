@@ -43,10 +43,9 @@ public class ExitGroupBehaviour extends Behaviour{
 			ACLMessage message=myAgent.receive(mt);
 			
 			if(message != null){
-				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
+				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, UserAgent.Exit_Room_Mode));
 				done = true;
-				System.out.println("room entered, behaviour done");
-				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
+				System.out.println("room quitted, behaviour done");
 			}
 		}
 		

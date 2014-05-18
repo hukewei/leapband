@@ -143,6 +143,7 @@ public class UserAgent extends GuiAgent{
 		} else if(arg0.getType() == EXIT_ROOM_EVENT){
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
+			this.addBehaviour(new GetListGroupBehaviour(this));
 		}
 		
 	}

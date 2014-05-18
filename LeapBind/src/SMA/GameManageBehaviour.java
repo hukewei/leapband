@@ -1,7 +1,7 @@
 package SMA;
 
 import jade.core.AID;
-import jade.core.behaviours.CyclicBehaviour;
+import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -18,7 +18,7 @@ import Utilities.Constance;
  * @author hukewei
  *
  */
-public class GameManageBehaviour extends CyclicBehaviour{
+public class GameManageBehaviour extends Behaviour{
 	
 	private MultiPlayAgent myAgent;
 	private ACLMessage msg = null;
@@ -30,7 +30,7 @@ public class GameManageBehaviour extends CyclicBehaviour{
 	private int room_id = 0;
 	private boolean initialize = true;
 	private String conversation_id = null;
-	
+	private boolean game_over = false;
 
 	public GameManageBehaviour(MultiPlayAgent myAgent, ACLMessage host_msg) {
 		super();
@@ -51,7 +51,7 @@ public class GameManageBehaviour extends CyclicBehaviour{
 			if (message.getPerformative() == ACLMessage.SUBSCRIBE) {
 				System.out.println("asking for entering a existed room");
 				if (message.getContent().equals(Constance.EnterGroupMode)){
-					setDictPlayer(message.getSender().getName());
+					setPlayerDict(message.getSender().getName());
 					list_member.add(message.getSender());
 					answer_guest_ack(message);
 					player_changed = true;
@@ -59,10 +59,17 @@ public class GameManageBehaviour extends CyclicBehaviour{
 			} else if (message.getPerformative() == ACLMessage.CANCEL) {
 				System.out.println("asking for quiting a existed room");
 				if (message.getContent().equals(Constance.ExitGroupMode)){
-					setDictPlayer(message.getSender().getName());
-					list_member.add(message.getSender());
-					answer_guest_ack(message);
+					removePlayerDict(message.getSender().getName());
+					list_member.remove(message.getSender());
+					answer_exit_req(message);
 					player_changed = true;
+					if (list_member.size() == 0) {
+						game_over = true;
+						myAgent.getDict().removeElement(conversation_id);
+					} else {
+						//change host to the next one
+						host_name = list_member.get(0);
+					}
 				}
 			}
 		}
@@ -73,7 +80,7 @@ public class GameManageBehaviour extends CyclicBehaviour{
 			//update room list
 			conversation_id = "Room"+room_id;
 			myAgent.setDict(conversation_id);
-			setDictPlayer(host_msg.getSender().getName());
+			setPlayerDict(host_msg.getSender().getName());
 			//info_all_player();
 			list_member.add(host_msg.getSender());
 			host_name = host_msg.getSender();
@@ -89,8 +96,12 @@ public class GameManageBehaviour extends CyclicBehaviour{
 	}
 	
 	
-	public void setDictPlayer(String item){
+	public void setPlayerDict(String item){
 		dict_player.addElement(item); 
+	}
+	
+	public void removePlayerDict(String item){
+		dict_player.removeElement(item);
 	}
 	
 	public void answer_host_ack() {
@@ -104,6 +115,13 @@ public class GameManageBehaviour extends CyclicBehaviour{
 		ACLMessage reply=message.createReply();
 		reply.setPerformative(ACLMessage.CONFIRM);
 		reply.setContent(Constance.ROOM_ENTERED);
+		myAgent.send(reply);
+	}
+	
+	public void answer_exit_req(ACLMessage message) {
+		ACLMessage reply=message.createReply();
+		reply.setPerformative(ACLMessage.CONFIRM);
+		reply.setContent(Constance.ROOM_QUITTED);
 		myAgent.send(reply);
 	}
 	
@@ -144,6 +162,11 @@ public class GameManageBehaviour extends CyclicBehaviour{
 		}
 		
 		myAgent.send(reply);
+	}
+
+	@Override
+	public boolean done() {
+		return game_over;
 	}
 
 }

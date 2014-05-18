@@ -49,7 +49,7 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			myAgent.changeToGameView();
 		} else if (msg == UserAgent.Exit_Room_Mode){
 			System.out.println("quiting group");
-			myAgent.changeToGameView();
+			myAgent.changeToRoomSelectView();
 		} 
 		
 	}

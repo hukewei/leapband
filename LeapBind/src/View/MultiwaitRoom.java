@@ -89,9 +89,9 @@ public class MultiwaitRoom extends JAgentFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
+				GuiEvent ev = new GuiEvent(this,UserAgent.EXIT_ROOM_EVENT);
 				//ev.addParameter(UserAgent.instrument_Mode);
-				//myAgent.postGuiEvent(ev);
+				myAgent.postGuiEvent(ev);
 				
 			}
 		});
