@@ -42,6 +42,7 @@ import javax.swing.Timer;
 import javax.swing.event.*;
 
 import SMA.UserAgent;
+import Utilities.Constance;
 import Utilities.CrystalCaseFactory;
 import Utilities.ImageFlowItem;
 
@@ -73,7 +74,7 @@ public class ImageFlow extends JPanel {
     private int avatarIndex = -1;
     private double avatarPosition = 0.0;
     private double avatarSpacing = 0.6;
-    private int avatarAmount = 5;
+    private int avatarAmount = Constance.Nb_Instrument_Supported;
 
     private double sigma;
     private double rho;
@@ -121,7 +122,6 @@ public class ImageFlow extends JPanel {
 
     public ImageFlow(File directory,UserAgent agent)
     {
-    	
         this(ImageFlowItem.loadFromDirectory(directory));
         this.myAgent=agent;
     }
@@ -404,7 +404,7 @@ public class ImageFlow extends JPanel {
         }
     }
 
-    private void scrollAndAnimateBy(int increment) {
+    void scrollAndAnimateBy(int increment) {
         if (loadingDone && (scrollerTimer == null || !scrollerTimer.isRunning())) {
             int index = avatarIndex + increment;
             if (index < 0) {
