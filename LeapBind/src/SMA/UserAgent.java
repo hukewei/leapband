@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 
 import Controller.LeapListener;
 import Utilities.Cordinates;
@@ -23,6 +24,7 @@ import View.InstrumentSelectView;
 import View.MenuView;
 import View.MultiwaitRoom;
 import View.RoomSelectView;
+import View.JAgentFrame;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Gesture;
@@ -39,11 +41,13 @@ public class UserAgent extends GuiAgent{
 	public static int CREATE_ROOM_EVENT = 3;
 	public static int JOINT_ROOM_EVENT = 4;
 	public static int CONFIRM_ROOM_EVENT = 5;
+	public static int EXIT_ROOM_EVENT = 6;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
 	public static String instrument_Mode = "103";
 	public static String wait_Mode = "105";
+	public static String Exit_Room_Mode = "123";
 	public static String piano = "0";
 	public static String drum = "1";
 	public static String guitar = "2";
@@ -59,6 +63,8 @@ public class UserAgent extends GuiAgent{
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
 	private String selected_instrument = null;
+	private String current_room_id = null; //conversation id if in a group
+	private JAgentFrame current_frame = null;
 
 	
 	private DefaultListModel<String> dict = null;
@@ -80,6 +86,7 @@ public class UserAgent extends GuiAgent{
 		room_view = new RoomSelectView(this);
 		wait_view = new MultiwaitRoom(this);
 		menu_view.setVisible(true);
+		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
 		listener = new LeapListener(this);
@@ -105,6 +112,9 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
+	public void setRoomId(String id) {
+		current_room_id = id;
+	}
 	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
@@ -130,6 +140,10 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new CreatGroupBehaviour(this));
 		} else if(arg0.getType() == JOINT_ROOM_EVENT){
 			this.addBehaviour(new EnterGroupBehaviour(this, arg0.getParameter(0).toString()));
+		} else if(arg0.getType() == EXIT_ROOM_EVENT){
+			if (current_room_id != null)
+			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
+			this.addBehaviour(new GetListGroupBehaviour(this));
 		}
 		
 	}
@@ -173,10 +187,19 @@ public class UserAgent extends GuiAgent{
 		
 	}
 	
+	public void changeCurrentViewTo(JAgentFrame frame) {
+		frame.setVisible(true);
+		if (current_frame != null) {
+			current_frame.setVisible(false);
+		}
+		current_frame = frame;
+	}
+	
 	public void changeToRoomSelectView() {
 		if(getDict()!=null){
-			room_view.setVisible(true);
-			instrument_view.setVisible(false);
+			//room_view.setVisible(true);
+			changeCurrentViewTo(room_view);
+			//instrument_view.setVisible(false);
 			//menu_view.setVisible(false);
 		}
 	}
@@ -184,8 +207,9 @@ public class UserAgent extends GuiAgent{
 	public void changeToRoomWaitView() {
 			if(getDict()!=null){
 				//wait_view.getList_player().setModel(getDictPlayer());
-				wait_view.setVisible(true);
-				room_view.setVisible(false);
+				//wait_view.setVisible(true);
+				//room_view.setVisible(false);
+				changeCurrentViewTo(wait_view);
 			}
 			System.out.println("ohhhhhhhhhh");
 		
@@ -193,23 +217,26 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void changeToInstrumentView(){
-		instrument_view.setVisible(true);
-		menu_view.setVisible(false);
+//		instrument_view.setVisible(true);
+//		menu_view.setVisible(false);
+		changeCurrentViewTo(instrument_view);
 	}
 	public void changeToGameView(){
 		//System.out.println("okkk");
-		game_view.setVisible(true);
-		wait_view.setVisible(false);
-		instrument_view.setVisible(false);
+//		game_view.setVisible(true);
+//		wait_view.setVisible(false);
+//		instrument_view.setVisible(false);
+		changeCurrentViewTo(game_view);
 	}
 	
 	public void changeToMenuView(){
-		menu_view.setVisible(true);
-		room_view.setVisible(false);
-		wait_view.setVisible(false);
-		game_view.setVisible(false);
-		wait_view.setVisible(false);
-		instrument_view.setVisible(false);		
+//		menu_view.setVisible(true);
+//		room_view.setVisible(false);
+//		wait_view.setVisible(false);
+//		game_view.setVisible(false);
+//		wait_view.setVisible(false);
+//		instrument_view.setVisible(false);	
+		changeCurrentViewTo(menu_view);
 	}
 	
 	public boolean isSingle_mode() {

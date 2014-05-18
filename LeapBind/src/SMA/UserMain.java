@@ -23,7 +23,6 @@ public class UserMain {
 		try{
 			p = new ProfileImpl(SECONDARY_PROPERTIES_FILE);
 			AgentContainer operationContainer = rt.createAgentContainer(p);
-
 			AgentController c1 = operationContainer.createNewAgent(
 					"User_1",
 					"SMA.UserAgent",

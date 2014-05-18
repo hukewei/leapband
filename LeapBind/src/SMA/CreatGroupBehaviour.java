@@ -44,6 +44,7 @@ public class CreatGroupBehaviour extends Behaviour{
 				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
 				done = true;
 				System.out.println("room created, behaviour done");
+				myAgent.setRoomId(message.getContent());
 				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
 			}
 		}
