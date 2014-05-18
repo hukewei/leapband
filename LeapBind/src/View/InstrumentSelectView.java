@@ -11,9 +11,12 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,11 +26,13 @@ import javax.swing.SwingConstants;
 
 import SMA.UserAgent;
 import Utilities.Constance;
+import Utilities.RoundedBorder;
 
 @SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame{
 	
 	private ImageFlow imageFlow = null;
+	private JButton home;
 
 
 	public InstrumentSelectView(UserAgent agent) {
@@ -39,19 +44,22 @@ public class InstrumentSelectView extends JAgentFrame{
 	    JPanel imageFlowPanel=new JPanel(new BorderLayout());
     	imageFlowPanel.setBackground(new Color(110, 110, 110));
     	
-    	JButton home = new JButton();
+    	home = new JButton();
 		Icon icon = new ImageIcon("src/home.png");
-		home.setBounds(140,50,100,100);
+		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
+		home.setBackground(new Color(110, 110, 110));
+		
 		imageFlowPanel.add(home);
+		
 		
     	
     	JLabel choose=new JLabel("Choose your instrument");
-    	choose.setBounds(500, 30, 500, 150);
-    	choose.setFont(new Font("Serif", Font.PLAIN, 50));
+    	choose.setBounds(500, 10, 500, 200);
+    	choose.setFont(new Font("Chalkboard", Font.PLAIN, 40));
     	choose.setHorizontalAlignment(SwingConstants.CENTER);
-    	choose.setForeground(Color.MAGENTA);
-    	imageFlowPanel.add(choose,BorderLayout.NORTH);
+    	choose.setForeground(Color.ORANGE);
+    	imageFlowPanel.add(choose);
     	
     	imageFlow = new ImageFlow(new File("src/instrument/"),agent);
     	imageFlowPanel.add(imageFlow);

@@ -84,7 +84,7 @@ public class MenuView extends JAgentFrame {
 //		buttonPane.setSize(new Dimension(Constance.Windows_width, Constance.Windows_height));
 		
 		
-		this.add(imagePanel);
+		//this.add(imagePanel);
 		
 
 		//*************** button

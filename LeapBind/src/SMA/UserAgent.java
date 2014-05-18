@@ -45,7 +45,7 @@ public class UserAgent extends GuiAgent{
 	public static String instrument_Mode = "103";
 	public static String wait_Mode = "105";
 	public static String piano = "0";
-	public static String druma = "1";
+	public static String drum = "1";
 	public static String guitar = "2";
 	private MenuView menu_view;
 	private GameView game_view;
@@ -163,7 +163,7 @@ public class UserAgent extends GuiAgent{
 	public String encodageInstrument(String message){
 		
 		//String instrument = message.split("/")[1];
-		if(message.equals("gu.png")){
+		if(message.equals("drum.png")){
 			return "1";
 		}else if(message.equals("guitar.png")){
 			return "2";

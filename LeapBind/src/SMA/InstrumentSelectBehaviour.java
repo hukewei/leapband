@@ -22,7 +22,7 @@ public class InstrumentSelectBehaviour extends OneShotBehaviour{
 	@Override
 	public void action() {
 		System.out.println("message is " + msg);
-		if(msg == UserAgent.druma){
+		if(msg == UserAgent.drum){
 			myAgent.getGame_view().play.setIcon(new ImageIcon("src/play1.png"));
 		}else if(msg == UserAgent.guitar){
 			myAgent.getGame_view().play.setIcon(new ImageIcon("src/guitar.png"));
