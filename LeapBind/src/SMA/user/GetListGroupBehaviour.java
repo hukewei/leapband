@@ -40,7 +40,7 @@ public class GetListGroupBehaviour extends Behaviour{
 				msg.addReceiver(server_name);
 				msg.setContent("listGroup");
 				myAgent.send(msg);
-				System.out.println("getlistgroupbehaviour envoie demande au multiAgent\n");
+				System.out.println("getlistgroupbehaviour envoie la demande au multiAgent\n");
 				first_run = false;
 			} else {
 				System.out.println("server not found, retry...");

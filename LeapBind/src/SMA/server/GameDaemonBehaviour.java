@@ -2,13 +2,14 @@ package SMA.server;
 import Utilities.Constance;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.tools.gui.ACLMessageNode;
 
 
 @SuppressWarnings("serial")
 public class GameDaemonBehaviour extends CyclicBehaviour{
 	
 	private MultiPlayAgent myAgent;
-	private boolean isPrint=false;
+	//private boolean isPrint=false;
 	
 	public GameDaemonBehaviour(MultiPlayAgent myAgent) {
 		super();
@@ -21,14 +22,14 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 		
 		ACLMessage message=myAgent.receive();
 		
-		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){
+		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){//GETLISTGROUPBEHAVIOUR
 			//isPrint=true;
 			System.out.println(message.getContent()+"\n");
 			if(message.getContent().equals("listGroup")){
 				System.out.println("oklistGruop\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
 			}
-		} else if (message != null && message.getPerformative() == ACLMessage.SUBSCRIBE) {
+		} else if (message != null && message.getPerformative() == ACLMessage.SUBSCRIBE) {//ENTERGROUPBEHAVIOUR
 			System.out.println("subscrib received");
 			System.out.println(message.getContent());
 			if (message.getContent().equals(Constance.roomselect_Mode)) {
@@ -37,19 +38,13 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 				//UserAgent ask for creating a new room
 				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
-			
+		} else if (message != null && message.getPerformative() == ACLMessage.CANCEL){//EXITGROUPBEHAVIOUR
+			System.out.println(message.getContent()+"\n");
+			if(message.getContent().equals(Constance.ExitGroupMode)){
+				System.out.println("code X matched");
+				System.out.println("receive userAgent cancel subscription");
+				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
+			}
 		}
-		
-		
 	}
-
-	/*@Override
-	public boolean done() {
-		if(isPrint){
-			return true;
-		}else{
-			return false;
-		}
-	}*/
-
 }

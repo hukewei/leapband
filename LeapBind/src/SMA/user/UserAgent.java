@@ -89,17 +89,17 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-//		listener = new LeapListener(this);
-//        controller = new Controller();
-//        
-//        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-//        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
-//        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-//        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
-//        //listener.setDebug(true);
-//        listener.setClickType(1);
-//        listener.setCalibratedScren(true);
-//        controller.addListener(listener);
+		listener = new LeapListener(this);
+        controller = new Controller();
+        
+        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+        //listener.setDebug(true);
+        listener.setClickType(1);
+        listener.setCalibratedScren(true);
+        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -133,7 +133,7 @@ public class UserAgent extends GuiAgent{
 //			messageDemande.setContent(arg0.getParameter(0).toString());	
 			
 			this.addBehaviour(new GetListGroupBehaviour(this));
-			System.out.println("userAgent envoyer demande\n");
+			System.out.println("userAgent envoie la demande\n");
 
 
 		} else if(arg0.getType() == CREATE_ROOM_EVENT){
