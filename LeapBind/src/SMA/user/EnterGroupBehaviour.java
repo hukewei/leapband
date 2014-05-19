@@ -50,7 +50,6 @@ public class EnterGroupBehaviour extends Behaviour{
 				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
 			}
 		}
-		
 	}
 
 	@Override

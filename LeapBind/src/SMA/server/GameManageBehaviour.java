@@ -49,20 +49,22 @@ public class GameManageBehaviour extends Behaviour{
 		ACLMessage message=myAgent.receive(mt);
 		if (message != null) {
 			if (message.getPerformative() == ACLMessage.SUBSCRIBE) {
-				System.out.println("asking for entering a existed room");
+				System.out.println("asking for entering an existing room");
 				if (message.getContent().equals(Constance.EnterGroupMode)){
 					setPlayerDict(message.getSender().getName());
 					list_member.add(message.getSender());
 					answer_guest_ack(message);
+					initialize=true;
 					player_changed = true;
 				}
 			} else if (message.getPerformative() == ACLMessage.CANCEL) {
-				System.out.println("asking for quiting a existed room");
+				System.out.println("asking for quitting an existing room");
 				if (message.getContent().equals(Constance.ExitGroupMode)){
 					removePlayerDict(message.getSender().getName());
 					list_member.remove(message.getSender());
 					answer_exit_req(message);
-					player_changed = true;
+					initialize=false;
+					player_changed=true;
 					if (list_member.size() == 0) {
 						game_over = true;
 						myAgent.getDict().removeElement(conversation_id);
@@ -92,12 +94,10 @@ public class GameManageBehaviour extends Behaviour{
 			info_all_player();
 			player_changed = false;
 		}
-		
 	}
 	
-	
 	public void setPlayerDict(String item){
-		dict_player.addElement(item); 
+		if(!dict_player.contains(item))dict_player.addElement(item); 
 	}
 	
 	public void removePlayerDict(String item){
@@ -128,6 +128,7 @@ public class GameManageBehaviour extends Behaviour{
 	private void info_all_player() {
 		ACLMessage info_player_change = new ACLMessage(ACLMessage.INFORM);
 		for (int i = 0; i < list_member.size(); i++) {
+			System.out.println("QUI RECOIT CA:"+list_member.get(i));
 			info_player_change.addReceiver(list_member.get(i));
 		}
 		info_player_change.setSender(myAgent.getAID());
@@ -140,7 +141,6 @@ public class GameManageBehaviour extends Behaviour{
 		info_player_change.setConversationId(Constance.MEMBER_CHANGE);
 		myAgent.send(info_player_change);
 	}
-	
 	
 	public void answer(){
 		

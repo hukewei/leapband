@@ -37,25 +37,15 @@ public class MultiPlayAgent extends Agent{
 		System.out.println(getLocalName()+"--> Installed");
 		
 		DFAgentDescription dfd=new DFAgentDescription();
-
 		dfd.setName(getAID());
-
 		ServiceDescription sd=new ServiceDescription();
-
 		sd.setType("Organisation");
-
 		sd.setName("Multiplay");
-
 		dfd.addServices(sd);
-
 		try{
-
 			DFService.register(this, dfd);
-
 		}catch(FIPAException fe){
-
 			fe.printStackTrace();
-
 		}
 		//addBehaviour(new GetListGameBehaviour(this));
 		addBehaviour(new GameDaemonBehaviour(this));
@@ -75,7 +65,4 @@ public class MultiPlayAgent extends Agent{
 	public void setDict(String item){
 		dict.addElement(item); 
 	}
-
-	
-
 }

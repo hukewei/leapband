@@ -126,26 +126,18 @@ public class UserAgent extends GuiAgent{
 			System.out.println(selected_instrument);
 			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
-			
 		}else if(arg0.getType()==0){
-			//ask for the list of rooms
-//			ACLMessage messageDemande = new ACLMessage(ACLMessage.REQUEST);
-//			messageDemande.setContent(arg0.getParameter(0).toString());	
-			
 			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoie la demande\n");
-
-
-		} else if(arg0.getType() == CREATE_ROOM_EVENT){
+		}else if(arg0.getType() == CREATE_ROOM_EVENT){
 			this.addBehaviour(new CreatGroupBehaviour(this));
-		} else if(arg0.getType() == JOINT_ROOM_EVENT){
+		}else if(arg0.getType() == JOINT_ROOM_EVENT){
 			this.addBehaviour(new EnterGroupBehaviour(this, arg0.getParameter(0).toString()));
-		} else if(arg0.getType() == EXIT_ROOM_EVENT){
+		}else if(arg0.getType() == EXIT_ROOM_EVENT){
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
 			this.addBehaviour(new GetListGroupBehaviour(this));
 		}
-		
 	}
 	
 	public AID getServerName() {
@@ -193,6 +185,7 @@ public class UserAgent extends GuiAgent{
 			current_frame.setVisible(false);
 		}
 		current_frame = frame;
+		if(!current_frame.getTitle().contains(getLocalName())) current_frame.setTitle(current_frame.getTitle()+" "+getLocalName());//Pour voir quel fenetre correspond a quel agent
 	}
 	
 	public void changeToRoomSelectView() {

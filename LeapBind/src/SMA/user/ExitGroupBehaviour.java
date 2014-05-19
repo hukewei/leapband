@@ -37,7 +37,7 @@ public class ExitGroupBehaviour extends Behaviour{
 			} else {
 				System.out.println("server not found");
 			}
-		} else {
+		}else {
 			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM),
 					MessageTemplate.and(MessageTemplate.MatchContent(Constance.ROOM_QUITTED), MessageTemplate.MatchConversationId(msg_conversation)));
 			ACLMessage message=myAgent.receive(mt);

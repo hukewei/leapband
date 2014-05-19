@@ -26,12 +26,10 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 			//isPrint=true;
 			System.out.println(message.getContent()+"\n");
 			if(message.getContent().equals("listGroup")){
-				System.out.println("oklistGruop\n");
+				System.out.println("oklistGroup\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
 			}
 		} else if (message != null && message.getPerformative() == ACLMessage.SUBSCRIBE) {//ENTERGROUPBEHAVIOUR
-			System.out.println("subscrib received");
-			System.out.println(message.getContent());
 			if (message.getContent().equals(Constance.roomselect_Mode)) {
 				System.out.println("code 104 matched");
 				System.out.println("receive userAgent subscription");
@@ -39,9 +37,8 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
 		} else if (message != null && message.getPerformative() == ACLMessage.CANCEL){//EXITGROUPBEHAVIOUR
-			System.out.println(message.getContent()+"\n");
 			if(message.getContent().equals(Constance.ExitGroupMode)){
-				System.out.println("code X matched");
+				System.out.println("code 109 matched");
 				System.out.println("receive userAgent cancel subscription");
 				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
