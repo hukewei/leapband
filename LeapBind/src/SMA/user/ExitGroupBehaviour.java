@@ -49,7 +49,6 @@ public class ExitGroupBehaviour extends Behaviour{
 				myAgent.setRoomId(null);
 			}
 		}
-		
 	}
 
 	@Override

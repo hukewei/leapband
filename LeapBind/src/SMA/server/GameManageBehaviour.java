@@ -61,6 +61,7 @@ public class GameManageBehaviour extends Behaviour{
 				System.out.println("asking for quitting an existing room");
 				if (message.getContent().equals(Constance.ExitGroupMode)){
 					removePlayerDict(message.getSender().getName());
+					info_all_player();
 					list_member.remove(message.getSender());
 					answer_exit_req(message);
 					initialize=false;

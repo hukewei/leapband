@@ -63,6 +63,6 @@ public class MultiPlayAgent extends Agent{
 		return dict;
 	}
 	public void setDict(String item){
-		dict.addElement(item); 
+		if(!dict.contains(item))dict.addElement(item); 
 	}
 }
