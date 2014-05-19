@@ -59,20 +59,6 @@ public class MultiwaitRoom extends JAgentFrame {
 		exit = new JButton("Exit");
 		exit.setBounds(850, 450,300, 150);
 		this.add(exit);
-		JButton home = new JButton();
-		Icon icon = new ImageIcon("src/images/home.png");
-		home.setBounds(140,50,100,100);
-		home.setIcon(icon);
-		home.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
-				ev.addParameter(UserAgent.return_Menu);
-				myAgent.postGuiEvent(ev);
-			}
-		});
-		this.add(home);
 		
 		start.addActionListener(new ActionListener() {
 			

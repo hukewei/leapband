@@ -49,7 +49,6 @@ public class RoomSelectView extends JAgentFrame {
 		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
 		list_room.setOpaque(false);
 		list_room.setBackground(new Color(255,255,204,100));
-		
 		//list_room.setBackground(Color.LIGHT_GRAY);
 		list_room.setBounds(300,150,500,500);
 		list_room.setFixedCellHeight(80);

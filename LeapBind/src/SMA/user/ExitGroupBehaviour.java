@@ -39,13 +39,14 @@ public class ExitGroupBehaviour extends Behaviour{
 			}
 		} else {
 			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM),
-					MessageTemplate.MatchConversationId(msg_conversation));
+					MessageTemplate.and(MessageTemplate.MatchContent(Constance.ROOM_QUITTED), MessageTemplate.MatchConversationId(msg_conversation)));
 			ACLMessage message=myAgent.receive(mt);
 			
 			if(message != null){
 				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, UserAgent.Exit_Room_Mode));
 				done = true;
 				System.out.println("room quitted, behaviour done");
+				myAgent.setRoomId(null);
 			}
 		}
 		

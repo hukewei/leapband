@@ -40,9 +40,8 @@ public class EnterGroupBehaviour extends Behaviour{
 			}
 		} else {
 			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM),
-					MessageTemplate.MatchConversationId(msg_conversation));
+					MessageTemplate.and(MessageTemplate.MatchContent(Constance.ROOM_ENTERED), MessageTemplate.MatchConversationId(msg_conversation)));
 			ACLMessage message=myAgent.receive(mt);
-			
 			if(message != null){
 				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, Constance.roomselect_Mode));
 				done = true;
