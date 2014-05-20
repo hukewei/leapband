@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 
+
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -64,5 +66,24 @@ public class MultiPlayAgent extends Agent{
 	}
 	public void setDict(String item){
 		if(!dict.contains(item))dict.addElement(item); 
+	}
+	public List<AID> getUsersName() {
+		List<AID> users = new ArrayList<AID>();
+		DFAgentDescription template=new DFAgentDescription();
+		ServiceDescription sd=new ServiceDescription();
+		sd.setType("Game");
+		sd.setName("User");
+		template.addServices(sd);
+		try{
+			DFAgentDescription[] result=DFService.search(this, template);
+			if(result.length>0){
+				for(int i=0; i<result.length;i++){
+					users.add(result[i].getName());
+				}
+			}
+		}catch(FIPAException fe){
+			fe.printStackTrace();
+		}
+		return users;
 	}
 }

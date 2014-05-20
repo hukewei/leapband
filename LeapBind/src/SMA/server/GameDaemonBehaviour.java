@@ -22,10 +22,13 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 		
 		ACLMessage message=myAgent.receive();
 		
-		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){//GETLISTGROUPBEHAVIOUR
-			//isPrint=true;
+		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){//GETLISTGROUPBEHAVIOUR or CREATEGROUPBEHAVIOUR
 			System.out.println(message.getContent()+"\n");
-			if(message.getContent().equals("listGroup")){
+			if(message.getContent().equals(Constance.roomselect_Mode)){
+				System.out.println("code 104 matched");
+				System.out.println("receive userAgent create room request");
+				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
+			}else if(message.getContent().equals("listGroup")){
 				System.out.println("oklistGroup\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
 			}

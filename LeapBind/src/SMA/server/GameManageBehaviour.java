@@ -7,6 +7,7 @@ import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 
@@ -24,7 +25,7 @@ public class GameManageBehaviour extends Behaviour{
 	private ACLMessage msg = null;
 	private AID host_name = null;
 	private ACLMessage host_msg = null;
-	private ArrayList<AID> list_member = new ArrayList<AID>();	
+	private ArrayList<AID> list_member = new ArrayList<AID>();
 	private DefaultListModel<String> dict_player = new DefaultListModel<>();
 	private boolean player_changed = false;
 	private int room_id = 0;
@@ -41,59 +42,45 @@ public class GameManageBehaviour extends Behaviour{
 
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.or(
-				MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE),
-				MessageTemplate.MatchPerformative(ACLMessage.CANCEL)
-				), 
-				MessageTemplate.MatchConversationId("Room" + room_id));
-		ACLMessage message=myAgent.receive(mt);
+		ACLMessage message=myAgent.receive();
 		if (message != null) {
-			if (message.getPerformative() == ACLMessage.SUBSCRIBE) {
+			if(message.getPerformative() == ACLMessage.REQUEST){
+				System.out.println("asking for creating a new room");
+				if(message.getContent().equals(Constance.roomselect_Mode)){
+					conversation_id = "Room"+room_id;
+					myAgent.setDict(conversation_id);
+					setPlayerDict(host_msg.getSender().getName());
+					list_member.add(host_msg.getSender());
+					host_name = host_msg.getSender();
+					answer_host_ack();
+					info_all_player();
+					info_all_users();
+				}
+			}else if (message.getPerformative() == ACLMessage.SUBSCRIBE&&message.getConversationId().equals("Room" + room_id)) {
 				System.out.println("asking for entering an existing room");
 				if (message.getContent().equals(Constance.EnterGroupMode)){
 					setPlayerDict(message.getSender().getName());
 					list_member.add(message.getSender());
 					answer_guest_ack(message);
-					initialize=true;
-					player_changed = true;
+					info_all_player();
 				}
-			} else if (message.getPerformative() == ACLMessage.CANCEL) {
+			} else if (message.getPerformative() == ACLMessage.CANCEL&&message.getConversationId().equals("Room" + room_id)) {
 				System.out.println("asking for quitting an existing room");
 				if (message.getContent().equals(Constance.ExitGroupMode)){
 					removePlayerDict(message.getSender().getName());
-					info_all_player();
 					list_member.remove(message.getSender());
 					answer_exit_req(message);
-					initialize=false;
-					player_changed=true;
 					if (list_member.size() == 0) {
 						game_over = true;
 						myAgent.getDict().removeElement(conversation_id);
+						info_all_users();
 					} else {
 						//change host to the next one
 						host_name = list_member.get(0);
 					}
+					info_all_player();
 				}
 			}
-		}
-		if(initialize){
-			//creat a groupe of game
-//			int countGroup=myAgent.getDict().size();
-//			countGroup+=1;
-			//update room list
-			conversation_id = "Room"+room_id;
-			myAgent.setDict(conversation_id);
-			setPlayerDict(host_msg.getSender().getName());
-			//info_all_player();
-			list_member.add(host_msg.getSender());
-			host_name = host_msg.getSender();
-			answer_host_ack();
-			player_changed = true;
-			initialize = false;	
-		}
-		if (player_changed) {
-			info_all_player();
-			player_changed = false;
 		}
 	}
 	
@@ -129,7 +116,6 @@ public class GameManageBehaviour extends Behaviour{
 	private void info_all_player() {
 		ACLMessage info_player_change = new ACLMessage(ACLMessage.INFORM);
 		for (int i = 0; i < list_member.size(); i++) {
-			System.out.println("QUI RECOIT CA:"+list_member.get(i));
 			info_player_change.addReceiver(list_member.get(i));
 		}
 		info_player_change.setSender(myAgent.getAID());
@@ -142,7 +128,22 @@ public class GameManageBehaviour extends Behaviour{
 		info_player_change.setConversationId(Constance.MEMBER_CHANGE);
 		myAgent.send(info_player_change);
 	}
-	
+	private void info_all_users(){
+		ACLMessage info_all_users = new ACLMessage(ACLMessage.INFORM);
+		List<AID> users = myAgent.getUsersName();
+		for(AID aid:users){
+			info_all_users.addReceiver(aid);
+		}
+		info_all_users.setSender(myAgent.getAID());
+		info_all_users.setConversationId("updateDICT");
+		try {
+			info_all_users.setContentObject(myAgent.getDict());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		myAgent.send(info_all_users);
+	}
 	public void answer(){
 		
 		ACLMessage reply=msg.createReply();

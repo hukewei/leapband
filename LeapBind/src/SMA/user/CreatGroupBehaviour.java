@@ -18,7 +18,7 @@ public class CreatGroupBehaviour extends Behaviour{
 	public CreatGroupBehaviour(UserAgent myAgent) {
 		super();
 		this.myAgent = myAgent;
-		this.msg=new ACLMessage(ACLMessage.SUBSCRIBE); //content = 104
+		this.msg=new ACLMessage(ACLMessage.REQUEST); //content = 104
 		System.out.println("create room behaviour created");
 	}
 

@@ -3,6 +3,7 @@ package SMA.user;
 
 
 import jade.core.AID;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -10,9 +11,14 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CyclicBarrier;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -79,6 +85,7 @@ public class UserAgent extends GuiAgent{
 	protected void setup() {
 		super.setup();
 		System.out.println(getLocalName()+"--> Installed");
+		registerUserAgent();
 		changes = new PropertyChangeSupport(this);
 		menu_view = new MenuView(this);
 		instrument_view = new InstrumentSelectView(this);
@@ -110,6 +117,25 @@ public class UserAgent extends GuiAgent{
 
         // Remove the listener when done
         //controller.removeListener(listener);
+        addBehaviour(new updatesBehaviour());
+	}
+	
+	public class updatesBehaviour extends CyclicBehaviour{
+
+		@Override
+		public void action() {
+			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),MessageTemplate.MatchConversationId("updateDICT"));
+			ACLMessage update_message = myAgent.receive(mt);
+			if(update_message!=null){
+				try {
+					setDict((DefaultListModel<String>)update_message.getContentObject());
+				} catch (UnreadableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 	
 	public void setRoomId(String id) {
@@ -139,6 +165,19 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new GetListGroupBehaviour(this));
 		}
 	}
+	private void registerUserAgent(){
+		DFAgentDescription dfd=new DFAgentDescription();
+		dfd.setName(getAID());
+		ServiceDescription sd=new ServiceDescription();
+		sd.setType("Game");
+		sd.setName("User");
+		dfd.addServices(sd);
+		try{
+			DFService.register(this, dfd);
+		}catch(FIPAException fe){
+			fe.printStackTrace();
+		}
+	}
 	
 	public AID getServerName() {
 		if (server_name != null) {
@@ -159,8 +198,6 @@ public class UserAgent extends GuiAgent{
 		}
 		return server_name;
 	}
-	
-
 	
 	public void addPropertyChangeListener(PropertyChangeListener pcl) {
 		changes.addPropertyChangeListener(pcl);
