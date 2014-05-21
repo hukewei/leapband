@@ -24,8 +24,8 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
-				MessageTemplate.MatchConversationId(Constance.MEMBER_CHANGE));
+		MessageTemplate mt = MessageTemplate.or(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM),MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
+				MessageTemplate.MatchConversationId(Constance.MEMBER_CHANGE)));
 		ACLMessage message= myAgent.receive(mt);
 
 		if(message!=null){
@@ -39,7 +39,10 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 				} catch (UnreadableException e) {
 					e.printStackTrace();
 				}
-			}			
+			}else if(message.getPerformative() == ACLMessage.CONFIRM){
+				myAgent.changeToGameView();
+				done=true;
+			}
 		}
 		
 	}

@@ -49,8 +49,7 @@ public class StartGameBehaviour extends Behaviour{
 			
 			if(message != null){
 				System.out.println("game will start");
-				myAgent.getGame_view().setVisible(true);
-				myAgent.getWait_view().setVisible(false);
+				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
 				done=true;
 				
 			}
