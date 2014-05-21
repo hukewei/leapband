@@ -34,6 +34,7 @@ public class StartGameBehaviour extends Behaviour{
 				msg.clearAllReceiver();
 				msg.addReceiver(server_name);
 				msg.setContent(Constance.START_GAME);
+				msg.setConversationId(myAgent.getRoomId());
 				myAgent.send(msg);
 				System.out.println("Ask for start game sent");
 				first=false;
@@ -41,12 +42,13 @@ public class StartGameBehaviour extends Behaviour{
 				System.out.println("server not found");
 			}
 		}else{
-			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CONFIRM);
+			MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchConversationId(myAgent.getRoomId())), 
+					MessageTemplate.MatchContent(Constance.CONFIRM_START));
 			
 			ACLMessage message=myAgent.receive(mt);
-			System.out.println("game will start");
 			
 			if(message != null){
+				System.out.println("game will start");
 				myAgent.getGame_view().setVisible(true);
 				myAgent.getWait_view().setVisible(false);
 				done=true;

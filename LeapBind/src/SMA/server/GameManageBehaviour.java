@@ -31,7 +31,6 @@ public class GameManageBehaviour extends Behaviour{
 	private boolean initialize = true;
 	private String conversation_id = null;
 	private boolean game_over = false;
-	private boolean start_game =false;
 
 	public GameManageBehaviour(MultiPlayAgent myAgent, ACLMessage host_msg) {
 		super();
@@ -42,12 +41,13 @@ public class GameManageBehaviour extends Behaviour{
 
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.or(
-				MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE),
+		MessageTemplate mt = MessageTemplate.and(MessageTemplate.or(MessageTemplate.or(
+				MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
+				MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE)),
 				MessageTemplate.MatchPerformative(ACLMessage.CANCEL)
 				), 
 				MessageTemplate.MatchConversationId("Room" + room_id));
-		ACLMessage message=myAgent.receive(mt);
+		ACLMessage message = myAgent.receive(mt);
 		if (message != null) {
 			if (message.getPerformative() == ACLMessage.SUBSCRIBE) {
 				System.out.println("asking for entering a existed room");
@@ -72,9 +72,9 @@ public class GameManageBehaviour extends Behaviour{
 						host_name = list_member.get(0);
 					}
 				}
-			}else if(message.getPerformative()==ACLMessage.REQUEST){
-				if(message.getContent().equals("start")){
-					start_game=true;
+			} else if(message.getPerformative()==ACLMessage.REQUEST){
+				if(message.getContent().equals(Constance.START_GAME)){
+					info_all_player_start_game(message);
 				}
 			}
 		}
@@ -96,11 +96,7 @@ public class GameManageBehaviour extends Behaviour{
 		if (player_changed) {
 			info_all_player();
 			player_changed = false;
-		}
-		if(start_game){
-			
-		}
-		
+		}	
 	}
 	
 	
@@ -149,13 +145,14 @@ public class GameManageBehaviour extends Behaviour{
 		myAgent.send(info_player_change);
 	}
 	
-	private void info_all_player_start_game() {
+	private void info_all_player_start_game(ACLMessage m) {
 		ACLMessage info_game_start = new ACLMessage(ACLMessage.CONFIRM);
 		for (int i = 0; i < list_member.size(); i++) {
 			info_game_start.addReceiver(list_member.get(i));
 		}
+		info_game_start.setConversationId(m.getConversationId());
 		info_game_start.setSender(myAgent.getAID());
-		info_game_start.setContent("confirm to start game");
+		info_game_start.setContent(Constance.CONFIRM_START);
 		myAgent.send(info_game_start);
 	}
 	

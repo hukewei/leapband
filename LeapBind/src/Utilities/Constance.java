@@ -25,5 +25,6 @@ public class Constance {
 	public static String ExitGroupMode = "109";
 	public static String MEMBER_CHANGE = "memberChangeInform";
 	public static String GROUP_CREATED = "groupCreatedInform";
-	public static String START_GAME = "start";
+	public static String START_GAME = "Game_Start_Request";
+	public static String CONFIRM_START = "Game_Start_Confirmed";
 }

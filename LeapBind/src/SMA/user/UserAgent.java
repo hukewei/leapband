@@ -124,6 +124,10 @@ public class UserAgent extends GuiAgent{
 		current_room_id = id;
 	}
 	
+	public String getRoomId() {
+		return current_room_id;
+	}
+	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
 		if(arg0.getType()==1){
