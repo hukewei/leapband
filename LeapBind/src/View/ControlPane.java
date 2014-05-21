@@ -4,9 +4,11 @@ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -37,6 +39,7 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import SMA.user.UserAgent;
+import Utilities.Constance;
 import Utilities.RoundedBorder;
 
 
@@ -44,8 +47,12 @@ public class ControlPane extends JPanel{
 	// personnel cursor
 	private UserAgent myAgent;
 	private Boolean propietaire = true;
+	private int width;
+	private int height;
 	
 	public ControlPane(UserAgent agent) {
+		this.width=Constance.Windows_width;
+		this.height=Constance.Windows_height;
 		this.myAgent=agent;
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image cursorImage = toolkit.getImage("src/images/cursor.png");
@@ -55,9 +62,11 @@ public class ControlPane extends JPanel{
 		this.setLayout(null);
 		this.setBackground(new Color(255,255,204,200));
 		
+		
 		JButton home = new JButton();
 		Icon icon = new ImageIcon("src/images/home.png");
-		home.setBounds(100,50,100,100);
+		//home.setPreferredSize(new Dimension(100,100));
+		home.setBounds((int) (width*0.1),(int) (height*0.05),100,100);
 		home.setIcon(icon);
 		home.setBackground(Color.WHITE);
 		home.addActionListener(new ActionListener() {			
@@ -73,13 +82,15 @@ public class ControlPane extends JPanel{
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
 		JLabel player = new JLabel(new ImageIcon("src/images/person2.jpg"));
-		player.setBounds(300, 50, 100, 100);
+		//player.setPreferredSize(new Dimension(100,100));
+		player.setBounds((int) (width*0.2), (int) (height*0.05), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
 		JButton music = new JButton("Choose a music");
 		music.setFont(new Font("Serif", Font.PLAIN, 30));
-		music.setBounds(520, 50, 400, 100);
+		//music.setPreferredSize(new Dimension(400,100));
+		music.setBounds((int) (width*0.35), (int) (height*0.05), 400, 100);
 		music.setBackground(Color.WHITE);
 		//music.setBorder(border);
 		music.addActionListener(new ActionListener() {			
@@ -94,17 +105,14 @@ public class ControlPane extends JPanel{
 		}
 		JButton stop = new JButton();
 		Icon icone = new ImageIcon("src/images/stop.png");
-		stop.setBounds(1000, 50, 100, 100);
+		//stop.setPreferredSize(new Dimension(100,100));
+		stop.setBounds((int) (width*0.7), (int) (height*0.05), 100, 100);
 		stop.setIcon(icone);
 		stop.setBackground(Color.WHITE);
 		
 		JLabel volume = new JLabel(new ImageIcon("src/images/volume.png"));
-		volume.setBounds(1200, 50, 100, 100);
-		
-		
-		
-		
-		
+		volume.setBounds((int) (width*0.9), (int) (height*0.05), 100, 100);
+		//volume.setPreferredSize(new Dimension(100,100));
 		
 		this.add(home);
 		this.add(player);

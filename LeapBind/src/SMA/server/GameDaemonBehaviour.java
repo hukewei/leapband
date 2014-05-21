@@ -27,6 +27,9 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 			if(message.getContent().equals("listGroup")){
 				System.out.println("oklistGruop\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
+			}else if(message.getContent().equals("start")){
+				System.out.println("start game received");
+				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
 		} else if (message != null && message.getPerformative() == ACLMessage.SUBSCRIBE) {
 			System.out.println("subscrib received");

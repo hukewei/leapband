@@ -89,17 +89,17 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-//		listener = new LeapListener(this);
-//        controller = new Controller();
-//        
-//        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-//        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
-//        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-//        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
-//        //listener.setDebug(true);
-//        listener.setClickType(1);
-//        listener.setCalibratedScren(true);
-//        controller.addListener(listener);
+		listener = new LeapListener(this);
+        controller = new Controller();
+        
+        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+        //listener.setDebug(true);
+        listener.setClickType(1);
+        listener.setCalibratedScren(true);
+        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -112,6 +112,14 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
+	public MultiwaitRoom getWait_view() {
+		return wait_view;
+	}
+
+	public void setWait_view(MultiwaitRoom wait_view) {
+		this.wait_view = wait_view;
+	}
+
 	public void setRoomId(String id) {
 		current_room_id = id;
 	}
@@ -144,6 +152,9 @@ public class UserAgent extends GuiAgent{
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
 			this.addBehaviour(new GetListGroupBehaviour(this));
+		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
+			System.out.println("start game demande");
+			this.addBehaviour(new StartGameBehaviour(this));
 		}
 		
 	}
@@ -316,5 +327,9 @@ public class UserAgent extends GuiAgent{
 		this.dict_list_player = dict;
 		wait_view.getList_player().setModel(this.dict_list_player);
 		System.out.println("update dict player");
+	}
+	public int[] getInstrumentPosition(){
+		return new int[]{game_view.instrumentX,game_view.instrumentY};
+		
 	}
 }

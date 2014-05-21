@@ -44,7 +44,7 @@ public class RoomSelectView extends JAgentFrame {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/roomView1.JPG");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/roomView.jpg");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
@@ -58,7 +58,7 @@ public class RoomSelectView extends JAgentFrame {
 		((JComponent) list_room.getCellRenderer()).setOpaque(false);
 		list_room.setBackground(new Color(255,255,204,100));
 		//list_room.setBackground(Color.LIGHT_GRAY);
-		list_room.setBounds(303,157,505,530);
+		list_room.setBounds((int) (Constance.Windows_width*0.3),(int) (Constance.Windows_height*0.2),(int) (Constance.Windows_width*0.35),(int) (Constance.Windows_height*0.7));
 		list_room.setFixedCellHeight(80);
 		list_room.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_room);

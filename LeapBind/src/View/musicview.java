@@ -1,5 +1,7 @@
 package View;
+import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -18,6 +20,7 @@ public class musicview extends JFrame{
 	private JLabel labelup;
 	private JLabel labeldown;
 	public musicview(){
+		getContentPane().setBackground(Color.BLACK);
 		final String[] choix = new String[3];
 		final String[] choixmini = new String[3];
 		choix[0]= "-----------------------Canon----------------------";
@@ -33,10 +36,18 @@ public class musicview extends JFrame{
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
 		label = new JLabel(choix[0]);
 		label.setBounds(0, 80, 400, 160);
+    	label.setFont(new Font("Chalkboard", Font.PLAIN, 20));
+    	label.setForeground(Color.WHITE);
+
 		labelup = new JLabel(choixmini[1]);
 		labelup.setBounds(0, 0, 400, 160);
+    	labelup.setFont(new Font("Chalkboard", Font.PLAIN, 20));
+    	labelup.setForeground(Color.WHITE);
+    	
 		labeldown = new JLabel(choixmini[2]);
 		labeldown.setBounds(0, 160, 400, 160);
+    	labeldown.setFont(new Font("Chalkboard", Font.PLAIN, 20));
+    	labeldown.setForeground(Color.WHITE);
 		
 		JButton precedent = new JButton("avant");
 		precedent.setBounds(20,300,100,80);

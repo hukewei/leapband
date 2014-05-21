@@ -26,6 +26,8 @@ public class GameView extends JAgentFrame {
 	private ControlPane control_pane;
 	private Player player = new Player();
 	public JLabel play;
+	public int instrumentX;
+	public int instrumentY;
 	
 	public GameView(UserAgent agent) {
 		super(agent);
@@ -44,7 +46,9 @@ public class GameView extends JAgentFrame {
 //		JPanel hand_pane = new JPanel();
 //		hand_pane.add(hands);
 		play = new JLabel();
-		play.setBounds(150, 270, Constance.Windows_width, 300);
+		instrumentX=(int)(Constance.Windows_width*0.08);
+		instrumentY= (int)(Constance.Windows_height*0.3);
+		play.setBounds(instrumentX,instrumentY, Constance.Windows_width, 300);
 		hands.add(play);
 		
 
