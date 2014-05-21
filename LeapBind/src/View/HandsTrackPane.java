@@ -37,6 +37,7 @@ class HandsTrackPane extends JPanel {
 		//play.setBounds(0, 270, Constance.Windows_width, 300);
 		//this.add(play);
 		this.hideCursor();
+		this.setOpaque(false);
 	}
 	
 	public float getHandSize(float f) {

@@ -1,8 +1,5 @@
 package View;
 
-
-
-
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,13 +17,9 @@ import org.jfugue.Rhythm;
 import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.Cordinates;
-
-
-
+import Utilities.CustomImgPanel;
 
 public class GameView extends JAgentFrame {
-	
-	
 	
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
@@ -38,10 +31,10 @@ public class GameView extends JAgentFrame {
 		super(agent);
 		this.setTitle("Game View");
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
-		System.out.println("width"+Constance.Windows_width+","+Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		hands = new HandsTrackPane();
 		//hands.setLayout(null);
 		//this.add(hands,BorderLayout.CENTER);
@@ -53,11 +46,18 @@ public class GameView extends JAgentFrame {
 		play = new JLabel();
 		play.setBounds(150, 270, Constance.Windows_width, 300);
 		hands.add(play);
+		
+
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/drumBack.jpg");
+		imagePanel.setLayout(null);
+		this.add(imagePanel);
+		
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		split_pane.setDividerLocation(250);
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
-		this.add(split_pane);
+		split_pane.setOpaque(false);
+		imagePanel.add(split_pane);
 	}
 
 
