@@ -5,6 +5,7 @@ import jade.gui.GuiEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
@@ -14,13 +15,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
+import java.util.ListResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
@@ -39,26 +44,30 @@ public class RoomSelectView extends JAgentFrame {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/roomView.jpg");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/roomView1.JPG");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
 		//load model to list
+		
 		list_room = new JList<String>();
+		
 		//list_room.setModel(myAgent.getDict());
 		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
-		list_room.setOpaque(false);
+		list_room.setOpaque(false);	
+		((JComponent) list_room.getCellRenderer()).setOpaque(false);
 		list_room.setBackground(new Color(255,255,204,100));
 		//list_room.setBackground(Color.LIGHT_GRAY);
-		list_room.setBounds(300,150,500,500);
+		list_room.setBounds(303,157,505,530);
 		list_room.setFixedCellHeight(80);
 		list_room.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_room);
+		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-		this.setCursor(customCursor);
+		imagePanel.setCursor(customCursor);
 		//this.setLayout(null);
 		create_room = new JButton("create room");
 		create_room.setBounds(950,150,300, 150);
