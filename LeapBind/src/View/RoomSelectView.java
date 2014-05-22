@@ -3,29 +3,22 @@ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
-import java.util.ListResourceBundle;
+import java.util.Timer;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JPanel;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
@@ -81,9 +74,7 @@ public class RoomSelectView extends JAgentFrame {
 			public void mouseReleased(MouseEvent e) {
 				
 				create_room.setBorder(new RoundedBorder(new Color(224,224,224,100)));
-				GuiEvent ev = new GuiEvent(this,UserAgent.CREATE_ROOM_EVENT);
-				ev.addParameter(Constance.roomselect_Mode);
-				myAgent.postGuiEvent(ev);
+				
 			}
 			
 			@Override
@@ -94,12 +85,30 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				changeCursorImage("src/images/cursor.png");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 				create_room.setBorder(new RoundedBorder(new Color(224,224,224,100)));
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	GuiEvent ev = new GuiEvent(this,UserAgent.CREATE_ROOM_EVENT);
+								ev.addParameter(Constance.roomselect_Mode);
+								myAgent.postGuiEvent(ev);
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				create_room.setBorder(new RoundedBorder(new Color(224,224,224,50)));
 				
 			}
@@ -121,14 +130,7 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
 				enter_room.setBorder(new RoundedBorder(new Color(224,224,224,100)));
-				String room_name = list_room.getSelectedValue();
-				if (room_name != null) {
-					GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
-					ev.addParameter(room_name);
-					myAgent.postGuiEvent(ev);
-				}
 			}
 			
 			@Override
@@ -140,11 +142,31 @@ public class RoomSelectView extends JAgentFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				enter_room.setBorder(new RoundedBorder(new Color(224,224,224,100)));
-				
+				changeCursorImage("src/images/cursor.png");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	String room_name = list_room.getSelectedValue();
+								if (room_name != null) {
+									GuiEvent ev = new GuiEvent(this,UserAgent.JOINT_ROOM_EVENT);
+									ev.addParameter(room_name);
+									myAgent.postGuiEvent(ev);
+								}
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				enter_room.setBorder(new RoundedBorder(new Color(224,224,224,50)));
 				
 			}
@@ -161,15 +183,7 @@ public class RoomSelectView extends JAgentFrame {
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
 		home.setContentAreaFilled(false);
-		home.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
-				ev.addParameter(UserAgent.return_Menu);
-				myAgent.postGuiEvent(ev);
-			}
-		});
+		home.addMouseListener(new HomeMouseListener(this));
 		imagePanel.add(home);
 		
 		/*create_room.addActionListener(new ActionListener() {

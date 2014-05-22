@@ -69,8 +69,8 @@ public class GameView extends JAgentFrame {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equals("hand1")) {
-//			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
-//					+ " y = " + ((Cordinates) evt.getNewValue()).y);
+			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
+					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 			hands.setHand1(((Cordinates) evt.getNewValue()).x,
 					((Cordinates) evt.getNewValue()).y,
 					((Cordinates) evt.getNewValue()).z);

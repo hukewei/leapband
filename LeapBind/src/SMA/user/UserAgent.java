@@ -52,13 +52,14 @@ public class UserAgent extends GuiAgent{
 	public static String drum = "1";
 	public static String guitar = "2";
 	private MenuView menu_view;
+
 	private GameView game_view;
 	private InstrumentSelectView instrument_view;
 	private RoomSelectView room_view;
 	private MultiwaitRoom wait_view;
 	private boolean single_mode = false;
 	private boolean multiple_mode = false;
-	private Cordinates pointer = new Cordinates();
+	public Cordinates pointer = new Cordinates();
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
@@ -93,9 +94,9 @@ public class UserAgent extends GuiAgent{
         controller = new Controller();
         
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        //controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+        //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
         //listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);
