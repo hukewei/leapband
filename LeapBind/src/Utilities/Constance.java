@@ -16,6 +16,7 @@ public class Constance {
 	
 	public static int Gesture_Interval = 600000;
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
+	static public int click_delay = 2000;
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String ROOM_ENTERED = "ROOM_ENTERED";

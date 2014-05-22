@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
+import Utilities.ImageFlowItem;
 
 @SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame{
@@ -73,8 +74,12 @@ public class InstrumentSelectView extends JAgentFrame{
  				imageFlow.scrollAndAnimateBy(-1);
  			} else if ((String)evt.getNewValue() == "RIGHT") {
  				imageFlow.scrollAndAnimateBy(1);
+ 			} else if ((String)evt.getNewValue() == "REAR") {
+ 				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_INSTRUMENT_EVENT);
+				ev.addParameter(UserAgent.instrument_Mode);
+				ev.addParameter(((ImageFlowItem)imageFlow.getSelectedValue()).getLabel());
+				myAgent.postGuiEvent(ev);
  			}
- 			
  		}
 	}
 

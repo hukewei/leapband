@@ -22,6 +22,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -45,6 +46,7 @@ public class MenuView extends JAgentFrame {
 	//private JPanel buttonPane;
 	private JButton single;
 	private JButton multiple;
+	Timer click_task = null;
 	JButton exit;
 
 	public MenuView(UserAgent agent) {
@@ -98,25 +100,42 @@ public class MenuView extends JAgentFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
+				//selectSingleMode();
 				single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
-				selectSingleMode();
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				single.setBorder(new RoundedBorder(new Color(0,128,255,150)));
+				System.out.println("mouse pressed...");
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				changeCursorImage("src/images/cursor.png");
 				single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
+				System.out.println("mouse exit...");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	selectSingleMode(); 
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				single.setBorder(new RoundedBorder(new Color(0,128,255,50)));
 				
 			}
@@ -255,6 +274,14 @@ public class MenuView extends JAgentFrame {
 //					((Cordinates) evt.getNewValue()).y);
 //		}
 
+	}
+	
+	public void changeCursorImage(String new_image) {
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image cursorImage = toolkit.getImage(new_image);
+		Point cursorHotSpot = new Point((int)myAgent.pointer.x,(int)myAgent.pointer.y);
+		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+		setCursor(customCursor);
 	}
 
 
