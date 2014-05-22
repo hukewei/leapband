@@ -293,7 +293,7 @@ public class LeapListener extends Listener {
 			        // if the user is not pointing at the screen all components of
 			        // the returned vector will be Not A Number (NaN)
 			        // isValid() returns true only if all components are finite
-			        //if (!intersection.isValid()) return;
+			        if (!intersection.isValid()) return;
 
 			        float x = s.widthPixels() * intersection.getX();
 			        // flip y coordinate to standard top-left origin
@@ -406,7 +406,16 @@ public class LeapListener extends Listener {
 			        pointables = hand2.pointables();
 
 	                if(pointables.isEmpty()) return;
-	                firstPointable = pointables.get(0);
+	                firstPointable = null;
+	                for (int i = 0; i < pointables.count(); i++) {
+	                	if (pointables.get(i).isExtended()) {
+	                		firstPointable = pointables.get(i);
+	                		break;
+	                	}
+					}
+	                if (firstPointable == null) {
+	                	return;
+	                }
 	                intersection = s.intersect(
 	                        firstPointable,
 	                        true, // normalize
