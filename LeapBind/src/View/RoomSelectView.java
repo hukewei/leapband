@@ -5,9 +5,6 @@ import jade.gui.GuiEvent;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
@@ -30,7 +27,6 @@ public class RoomSelectView extends JAgentFrame {
 	private JButton create_room;
 	private JButton enter_room;
 	
-	@SuppressWarnings("unchecked")
 	public RoomSelectView(UserAgent agent) {
 		super(agent);
 		this.setTitle("Room View");
