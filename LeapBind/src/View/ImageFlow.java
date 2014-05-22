@@ -31,6 +31,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -133,8 +134,15 @@ public class ImageFlow extends JPanel {
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
+//		this.hideCursor();
     }
-
+    
+    public void hideCursor() {
+		Image image = Toolkit.getDefaultToolkit().createImage(
+				new MemoryImageSource(0, 0, new int[0], 0, 0));
+		this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(image,
+				new Point(0, 0), null));
+	}
 
 
     public void setAmount(int amount) {
