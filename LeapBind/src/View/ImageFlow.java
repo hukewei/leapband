@@ -31,6 +31,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.MemoryImageSource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,10 +47,12 @@ import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CrystalCaseFactory;
 import Utilities.ImageFlowItem;
+import Utilities.RoundedBorder;
 
 public class ImageFlow extends JPanel {
 	
 	private UserAgent myAgent;
+	java.util.Timer click_task = null;
 	
     private static final double ANIM_SCROLL_DELAY = 450;
     private static final int CD_SIZE = 400;
@@ -131,8 +134,15 @@ public class ImageFlow extends JPanel {
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
+//		this.hideCursor();
     }
-
+    
+    public void hideCursor() {
+		Image image = Toolkit.getDefaultToolkit().createImage(
+				new MemoryImageSource(0, 0, new int[0], 0, 0));
+		this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(image,
+				new Point(0, 0), null));
+	}
 
 
     public void setAmount(int amount) {
@@ -923,5 +933,45 @@ public class ImageFlow extends JPanel {
                 }
             }
         }
+//        
+//        @Override
+//		public void mouseExited(MouseEvent e) {
+//        	setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+//			System.out.println("mouse exit...");
+//			if (click_task != null) {
+//				click_task.cancel();
+//				click_task = null;
+//			}
+//			
+//		}
+//		
+//		@Override
+//		public void mouseEntered(MouseEvent e) {
+//			if ((scrollerTimer == null || !scrollerTimer.isRunning()) &&
+//	                drawableAvatars != null) {
+//	                if (true || e.getButton() == MouseEvent.BUTTON1) {
+//	                    DrawableAvatar avatar = getHitAvatar(e.getX(), e.getY());
+//	                    if (avatar != null && avatar.getIndex() == avatarIndex) {
+//		                    System.out.println("i'm here...");
+//	            			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//	            			click_task = new java.util.Timer();
+//	            			click_task.schedule( 
+//	            			        new java.util.TimerTask() {
+//	            			            @Override
+//	            			            public void run() {
+//	            			            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_INSTRUMENT_EVENT);
+//	            	    					ev.addParameter(UserAgent.instrument_Mode);
+//	            	    					ev.addParameter(avatarText);
+//	            	    					myAgent.postGuiEvent(ev);
+//	            			            }
+//	            			        }, 
+//	            			        Constance.click_delay 
+//	            			);
+//	                    	
+//	    					
+//	                    }
+//	                }
+//	            }
+//		}
     }
 }

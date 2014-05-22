@@ -94,6 +94,8 @@ public class LeapListener extends Listener {
         	int down_count = 0;
         	int left_count = 0;
         	int right_count = 0;
+        	int front_count = 0;
+        	int rear_count = 0;
         	int circle_count = 0;
         	int screen_tap_count = 0;
         	if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
@@ -117,27 +119,48 @@ public class LeapListener extends Listener {
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
         	        ENABLE_MOUSE = false;
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
-        	    	if (swipe.speed() > 500) {
-        	    		boolean is_horizontal = (Math.abs(swipe.direction().getX()) > Math.abs(swipe.direction().getY()));
-        	    		if (!is_horizontal) {
-        	    			if(swipe.direction().getY() > 0){
-          	                  //swipeDirection = "up";
-          	                  up_count++;
-          	              	} else {
-          	                  //swipeDirection = "down";
-          	                  down_count++;
-          	              	}          
-        	    		} else {
-        	    			if(swipe.direction().getX() > 0){
-        	                  //swipeDirection = "right";
-        	                  right_count++;
-        	              	} else {
-        	                  //swipeDirection = "left";
-        	                  left_count++;
-        	              	}  
-        	    		}
-        	    		       
-        	    		
+        	    	if (swipe.speed() > 400) {
+        	    		float x_direction = Math.abs(swipe.direction().getX());
+        	    		float y_direction = Math.abs(swipe.direction().getY());
+        	    		float z_direction = Math.abs(swipe.direction().getZ());
+        	    		float [] xyz_direction = {x_direction, y_direction, z_direction};
+                		float largest_direction = xyz_direction[0];  
+                	    for(int k=1; k < xyz_direction.length; k++){  
+                	    	if(xyz_direction[k] > largest_direction){  
+                	    		largest_direction = xyz_direction[k];  
+                	    	}  
+                	    }
+                	    if (largest_direction > 0.75) {
+                	        if (x_direction == largest_direction) {
+                	          if(swipe.direction().getX() > 0){
+                	                  //swipeDirection = "right";
+                	                  right_count++;
+                	                  
+                	              } else {
+                	                  //swipeDirection = "left";
+                	                  left_count++;
+                	                  
+                	              }
+                	        } else if (y_direction == largest_direction) {
+                	          if(swipe.direction().getY()  > 0){
+                	                  //swipeDirection = "up";
+                	                  up_count++;
+                	                  
+                	              } else {
+                	                  //swipeDirection = "down";
+                	                  down_count++;
+                	              }
+                	        } else {
+                	          if(swipe.direction().getZ() > 0){
+                	                  //swipeDirection = "up";
+                	                  front_count++;
+                	                  
+                	              } else {
+                	                  //swipeDirection = "down";
+                	                  rear_count++;
+                	              }
+                	        }
+                	    }
         	    	}
 //                    System.out.println("Swipe id: " + swipe.id()
 //                               + ", " + swipe.state()
@@ -175,7 +198,6 @@ public class LeapListener extends Listener {
         	    	
         	    	slow();	
         	    }  else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SCREEN_TAP) {
-        	    	System.out.println("screen tap");
         	    	screen_tap_count++;
         	    } else
         	    {
@@ -187,7 +209,7 @@ public class LeapListener extends Listener {
         	}
         	
         	if (Swype || Circle) {
-        		int [] direction_count = {left_count, right_count, up_count, down_count, circle_count, screen_tap_count};
+        		int [] direction_count = {left_count, right_count, up_count, down_count, front_count, rear_count, circle_count, screen_tap_count};
         		int maxValue = direction_count[0];  
         	    for(int i=1;i < direction_count.length;i++){  
         	    	if(direction_count[i] > maxValue){  
@@ -197,16 +219,31 @@ public class LeapListener extends Listener {
 
         		if (maxValue > 0 ) {
         		      if (maxValue == left_count) {
+        		    	  System.out.println("SWIPE LEFI");
         		    	  myAgent.doSwipe("LEFT");
         		      } else if (maxValue == right_count) {
+        		    	  System.out.println("SWIPE RIGHT");
         		    	  myAgent.doSwipe("RIGHT");
         		      } else if (maxValue == up_count) {
+        		    	  System.out.println("SWIPE UP");
         		    	  myAgent.doSwipe("UP");
         		      } else if (maxValue == down_count) {
+        		    	  System.out.println("SWIPE DOWN");
         		    	  myAgent.doSwipe("DOWN");
+        		      } else if (maxValue == front_count) {
+        		    	  System.out.println("SWIPE FRONT");
+        		    	  myAgent.doSwipe("FRONT");
+        		      } else if (maxValue == rear_count) {
+        		    	  System.out.println("SWIPE REAR");
+        		    	  myAgent.doSwipe("REAR");
         		      } else if (maxValue == screen_tap_count ) {
+        		    	  System.out.println("screen tap");
         		    	  clickMouse(0);
         		    	  releaseMouse(0);
+        		      } else if (maxValue == circle_count ) {
+        		    	  System.out.println("circle");
+//        		    	  clickMouse(0);
+//        		    	  releaseMouse(0);
         		      }
         		      last_timestamp = frame.timestamp();
         		}
@@ -270,50 +307,50 @@ public class LeapListener extends Listener {
                 }
 
                 // Left Click hold
-                if(fingers.count() == 2 && !LHold && avgPos.getZ()<=-70)
-                {
-                	clickMouse(0);
-                	LHold = true;
-                	
-                    if(DEBUG)
-                    {
-                    	System.out.println("LHold");
-                    }
-                	
-                }
-                
-                else if(fingers.count() != 2 || avgPos.getZ()>0)
-                {
-                	if(LHold)
-                		releaseMouse(0);
-                	LHold = false;
-                	slow();
-                	
-                }
-                
-                
-                
-                // Right Click
-                if(fingers.count() == 3 && !Rclicked && avgPos.getZ()<=-70)
-                {
-                	clickMouse(1);
-                	releaseMouse(1);
-                	
-                	Rclicked = true;
-                	
-                    if(DEBUG)
-                    {
-                    	System.out.println("RClicked");
-                    }
-
-                }
-                
-                else if(fingers.count() != 3 ||  avgPos.getZ()>0)
-                {
-                	Rclicked = false;
-                	slow();
-                	
-                }
+//                if(fingers.count() == 2 && !LHold && avgPos.getZ()<=-70)
+//                {
+//                	clickMouse(0);
+//                	LHold = true;
+//                	
+//                    if(DEBUG)
+//                    {
+//                    	System.out.println("LHold");
+//                    }
+//                	
+//                }
+//                
+//                else if(fingers.count() != 2 || avgPos.getZ()>0)
+//                {
+//                	if(LHold)
+//                		releaseMouse(0);
+//                	LHold = false;
+//                	slow();
+//                	
+//                }
+//                
+//                
+//                
+//                // Right Click
+//                if(fingers.count() == 3 && !Rclicked && avgPos.getZ()<=-70)
+//                {
+//                	clickMouse(1);
+//                	releaseMouse(1);
+//                	
+//                	Rclicked = true;
+//                	
+//                    if(DEBUG)
+//                    {
+//                    	System.out.println("RClicked");
+//                    }
+//
+//                }
+//                
+//                else if(fingers.count() != 3 ||  avgPos.getZ()>0)
+//                {
+//                	Rclicked = false;
+//                	slow();
+//                	
+//                }
 
                 
                 // Place both hands on device
@@ -349,7 +386,7 @@ public class LeapListener extends Listener {
 			        // flip y coordinate to standard top-left origin
 			        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
 			        float z_1 = firstPointable.tipPosition().getZ();
-			        System.out.println("z1 = " + z_1);
+			        //System.out.println("z1 = " + z_1);
 			        pointables = hand2.pointables();
 
 	                if(pointables.isEmpty()) return;
@@ -505,7 +542,7 @@ public class LeapListener extends Listener {
     	 
     	
 				try {
-
+					System.out.println("here...");
 					mouseHandler = new Robot();
 					mouseHandler.mousePress(input);
 
