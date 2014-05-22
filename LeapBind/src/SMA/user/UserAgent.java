@@ -89,17 +89,17 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-//		listener = new LeapListener(this);
-//        controller = new Controller();
-//        
-//        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-//        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
-//        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-//        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
-//        //listener.setDebug(true);
-//        listener.setClickType(1);
-//        listener.setCalibratedScren(true);
-//        controller.addListener(listener);
+		listener = new LeapListener(this);
+        controller = new Controller();
+        
+        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+        //listener.setDebug(true);
+        listener.setClickType(1);
+        listener.setCalibratedScren(true);
+        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -112,13 +112,6 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
-	public MultiwaitRoom getWait_view() {
-		return wait_view;
-	}
-
-	public void setWait_view(MultiwaitRoom wait_view) {
-		this.wait_view = wait_view;
-	}
 
 	public void setRoomId(String id) {
 		current_room_id = id;
