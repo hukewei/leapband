@@ -56,11 +56,6 @@ public class RoomSelectView extends JAgentFrame {
 		list_room.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_room);
 		
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/images/cursor.png");
-		Point cursorHotSpot = new Point(0,0);
-		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-		imagePanel.setCursor(customCursor);
 		//this.setLayout(null);
 		create_room = new JButton("create room");
 		create_room.setBounds(950,150,300, 150);
@@ -85,6 +80,7 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				System.out.println("mouse exit");
 				changeCursorImage("src/images/cursor.png");
 				if (click_task != null) {
 					click_task.cancel();
@@ -96,6 +92,7 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				System.out.println("mouse entered");
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
 				click_task.schedule( 
@@ -110,7 +107,6 @@ public class RoomSelectView extends JAgentFrame {
 				        Constance.click_delay 
 				);
 				create_room.setBorder(new RoundedBorder(new Color(224,224,224,50)));
-				
 			}
 			
 			@Override

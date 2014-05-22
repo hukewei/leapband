@@ -3,29 +3,17 @@ package View;
 //import musicview;
 import jade.gui.GuiEvent;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Random;
+import java.awt.event.MouseListener;
+import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -33,14 +21,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
-import Utilities.RoundedBorder;
 
 
 public class ControlPane extends JPanel{
@@ -49,6 +33,7 @@ public class ControlPane extends JPanel{
 	private Boolean propietaire = true;
 	private int width;
 	private int height;
+	Timer click_task = null;
 	
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
@@ -69,13 +54,54 @@ public class ControlPane extends JPanel{
 		home.setBounds((int) (width*0.1),(int) (height*0.05),100,100);
 		home.setIcon(icon);
 		home.setBackground(Color.WHITE);
-		home.addActionListener(new ActionListener() {			
+		home.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseExited(MouseEvent e) {
+				Toolkit toolkit = Toolkit.getDefaultToolkit();
+				Image cursorImage = toolkit.getImage("src/images/cursor.png");
+				Point cursorHotSpot = new Point(0,0);
+				Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+				setCursor(customCursor);
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
+								ev.addParameter(UserAgent.return_Menu);
+								myAgent.postGuiEvent(ev);
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
-				ev.addParameter(UserAgent.return_Menu);
-				myAgent.postGuiEvent(ev);
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 		/*JLabel userId=new JLabel("player1");
