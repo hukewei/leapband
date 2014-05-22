@@ -134,7 +134,6 @@ public class UserAgent extends GuiAgent{
 			System.out.println(selected_instrument);
 			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
-			this.addBehaviour(new UpdateMultiPlayBehaviour(this));//ESTCE QUE CEST ICI LE BON ENDROIT?
 		}else if(arg0.getType()==0){
 			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoie la demande\n");
