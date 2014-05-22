@@ -1,14 +1,12 @@
 package SMA.user;
 
-import Utilities.Constance;
 import jade.core.AID;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
+import Utilities.Constance;
 
 @SuppressWarnings("serial")
-public class StartGameBehaviour extends Behaviour{
+public class StartGameBehaviour extends OneShotBehaviour{
 	
 	private ACLMessage msg;
 	private UserAgent myAgent;
@@ -23,8 +21,6 @@ public class StartGameBehaviour extends Behaviour{
 		System.out.println("start game behaviour created");
 
 	}
-
-
 
 	@Override
 	public void action() {
@@ -41,26 +37,6 @@ public class StartGameBehaviour extends Behaviour{
 			} else {
 				System.out.println("server not found");
 			}
-		}else{
-			MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchConversationId(myAgent.getRoomId())), 
-					MessageTemplate.MatchContent(Constance.CONFIRM_START));
-			
-			ACLMessage message=myAgent.receive(mt);
-			
-			if(message != null){
-				System.out.println("game will start");
-				myAgent.addBehaviour(new LocalGameDaemonBehaviour(myAgent));
-				done=true;
-				
-			}
 		}
-		
-	}
-
-
-
-	@Override
-	public boolean done() {
-		return done;
 	}
 }
