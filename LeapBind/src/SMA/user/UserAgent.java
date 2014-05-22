@@ -118,25 +118,6 @@ public class UserAgent extends GuiAgent{
 
         // Remove the listener when done
         //controller.removeListener(listener);
-        addBehaviour(new updatesBehaviour());
-	}
-	
-	public class updatesBehaviour extends CyclicBehaviour{
-
-		@Override
-		public void action() {
-			MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),MessageTemplate.MatchConversationId("updateDICT"));
-			ACLMessage update_message = myAgent.receive(mt);
-			if(update_message!=null){
-				try {
-					setDict((DefaultListModel<String>)update_message.getContentObject());
-				} catch (UnreadableException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
 	}
 	
 	public void setRoomId(String id) {
@@ -153,6 +134,7 @@ public class UserAgent extends GuiAgent{
 			System.out.println(selected_instrument);
 			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
+			this.addBehaviour(new UpdateMultiPlayBehaviour(this));//ESTCE QUE CEST ICI LE BON ENDROIT?
 		}else if(arg0.getType()==0){
 			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoie la demande\n");

@@ -11,6 +11,7 @@ public class ExitGroupBehaviour extends Behaviour{
 	
 	private UserAgent myAgent;
 	private ACLMessage msg;
+	private ACLMessage sub_msg;
 	private boolean first = true;
 	private boolean done = false;
 	private String msg_conversation = null;
@@ -43,6 +44,14 @@ public class ExitGroupBehaviour extends Behaviour{
 			ACLMessage message=myAgent.receive(mt);
 			
 			if(message != null){
+				
+				sub_msg = new ACLMessage(ACLMessage.SUBSCRIBE);
+				sub_msg.setSender(myAgent.getAID());
+				sub_msg.addReceiver(myAgent.getServerName());
+				sub_msg.setConversationId("unregister");
+				sub_msg.setContent("getting out");
+				myAgent.send(sub_msg);
+				
 				myAgent.addBehaviour(new ModeSelectBehaviour(myAgent, UserAgent.Exit_Room_Mode));
 				done = true;
 				System.out.println("room quitted, behaviour done");

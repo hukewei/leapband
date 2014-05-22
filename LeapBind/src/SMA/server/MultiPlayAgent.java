@@ -19,6 +19,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 @SuppressWarnings("serial")
 public class MultiPlayAgent extends Agent{
 	
+	private List<AID> MultiPlayUsers;
 	private DefaultListModel<String> dict;
 	private int room_ids = 0;
 
@@ -38,6 +39,8 @@ public class MultiPlayAgent extends Agent{
 		super.setup();
 		System.out.println(getLocalName()+"--> Installed");
 		
+		MultiPlayUsers = new ArrayList<AID>();
+		
 		DFAgentDescription dfd=new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd=new ServiceDescription();
@@ -49,7 +52,8 @@ public class MultiPlayAgent extends Agent{
 		}catch(FIPAException fe){
 			fe.printStackTrace();
 		}
-		//addBehaviour(new GetListGameBehaviour(this));
+		
+		addBehaviour(new MultiPlayRegisterBehaviour(this));
 		addBehaviour(new GameDaemonBehaviour(this));
 		
 	}
@@ -64,9 +68,11 @@ public class MultiPlayAgent extends Agent{
 		}
 		return dict;
 	}
+	
 	public void setDict(String item){
 		if(!dict.contains(item))dict.addElement(item); 
 	}
+	
 	public List<AID> getUsersName() {
 		List<AID> users = new ArrayList<AID>();
 		DFAgentDescription template=new DFAgentDescription();
@@ -85,5 +91,13 @@ public class MultiPlayAgent extends Agent{
 			fe.printStackTrace();
 		}
 		return users;
+	}
+	
+	public List<AID> getMultiPlayUsers(){
+		return MultiPlayUsers;
+	}
+	
+	public void setMultiPlayUsers(List<AID> Users){
+		MultiPlayUsers = Users;
 	}
 }

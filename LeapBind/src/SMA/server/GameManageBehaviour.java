@@ -54,7 +54,7 @@ public class GameManageBehaviour extends Behaviour{
 					host_name = host_msg.getSender();
 					answer_host_ack();
 					info_all_player();
-					info_all_users();
+					info_all_MPusers();
 				}
 			}else if (message.getPerformative() == ACLMessage.SUBSCRIBE&&message.getConversationId().equals("Room" + room_id)) {
 				System.out.println("asking for entering an existing room");
@@ -73,7 +73,7 @@ public class GameManageBehaviour extends Behaviour{
 					if (list_member.size() == 0) {
 						game_over = true;
 						myAgent.getDict().removeElement(conversation_id);
-						info_all_users();
+						info_all_MPusers();
 					} else {
 						//change host to the next one
 						host_name = list_member.get(0);
@@ -128,21 +128,22 @@ public class GameManageBehaviour extends Behaviour{
 		info_player_change.setConversationId(Constance.MEMBER_CHANGE);
 		myAgent.send(info_player_change);
 	}
-	private void info_all_users(){
-		ACLMessage info_all_users = new ACLMessage(ACLMessage.INFORM);
-		List<AID> users = myAgent.getUsersName();
-		for(AID aid:users){
-			info_all_users.addReceiver(aid);
+	private void info_all_MPusers(){
+		ACLMessage info_all_MPusers = new ACLMessage(ACLMessage.INFORM);
+		
+		for(AID aid:myAgent.getMultiPlayUsers()){
+			info_all_MPusers.addReceiver(aid);
 		}
-		info_all_users.setSender(myAgent.getAID());
-		info_all_users.setConversationId("updateDICT");
+		
+		info_all_MPusers.setSender(myAgent.getAID());
+		info_all_MPusers.setConversationId("updateDICT");
 		try {
-			info_all_users.setContentObject(myAgent.getDict());
+			info_all_MPusers.setContentObject(myAgent.getDict());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		myAgent.send(info_all_users);
+		myAgent.send(info_all_MPusers);
 	}
 	public void answer(){
 		
