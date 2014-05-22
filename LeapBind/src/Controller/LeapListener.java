@@ -100,26 +100,10 @@ public class LeapListener extends Listener {
         	int screen_tap_count = 0;
         	if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
         	for (int i=0; i < numGestures; i++) {
-        	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
-        	    	//If Key Tap Mode enabled 
-        	    	//Left Click
-        	    	if(CLICK_TYPE == 0)
-        	    	{	
-                		Lclicked = true;
-	                    if(DEBUG)
-	                    {
-	                    	System.out.println("LClicked - Key Tap");
-	                    }
-        	    	}
-        	    	
-        	    	
-                	if(DEBUG)
-                		System.out.println("key tap");
-        	    	slow();
-        	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
+        	    if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
         	        ENABLE_MOUSE = false;
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
-        	    	if (swipe.speed() > 400) {
+        	    	if (swipe.speed() > 200) {
         	    		float x_direction = Math.abs(swipe.direction().getX());
         	    		float y_direction = Math.abs(swipe.direction().getY());
         	    		float z_direction = Math.abs(swipe.direction().getZ());
@@ -252,7 +236,13 @@ public class LeapListener extends Listener {
           
             // Get fingers
             FingerList fingers = frame.fingers();
-            fingers_count = frame.fingers().count();
+            fingers_count = 0;
+            //fingers_count = frame.fingers().count();
+            for (int i = 0; i < frame.fingers().count(); i++) {
+				if(frame.fingers().get(i).isExtended()) {
+					fingers_count++;
+				}
+			}
             
             if(fingers_count != prev_fingers_count)
             {
@@ -284,7 +274,16 @@ public class LeapListener extends Listener {
 	                PointableList pointables = frame.hands().get(0).pointables();
 
 	                if(pointables.isEmpty()) return;
-	                Pointable firstPointable = pointables.get(0);
+	                Pointable firstPointable = null;
+	                for (int i = 0; i < pointables.count(); i++) {
+	                	if (pointables.get(i).isExtended()) {
+	                		firstPointable = pointables.get(i);
+	                		break;
+	                	}
+					}
+	                if (firstPointable == null) {
+	                	return;
+	                }
 	                Vector intersection = s.intersect(
 	                        firstPointable,
 	                        true, // normalize
@@ -294,7 +293,7 @@ public class LeapListener extends Listener {
 			        // if the user is not pointing at the screen all components of
 			        // the returned vector will be Not A Number (NaN)
 			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
+			        //if (!intersection.isValid()) return;
 
 			        float x = s.widthPixels() * intersection.getX();
 			        // flip y coordinate to standard top-left origin
@@ -351,7 +350,15 @@ public class LeapListener extends Listener {
 //                	slow();
 //                	
 //                }
-
+                if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
+                if (frame.hands().count() == 1) {
+                	Hand hand = frame.hands().get(0);
+                	if (hand.grabStrength() > 0.8) {
+                		myAgent.doSwipe("REAR");
+                		last_timestamp = frame.timestamp();
+                	}
+                }
+                }
                 
                 // Place both hands on device
                 if(frame.hands().count()>1){
@@ -370,7 +377,16 @@ public class LeapListener extends Listener {
 	                PointableList pointables = hand1.pointables();
 
 	                if(pointables.isEmpty()) return;
-	                Pointable firstPointable = pointables.get(0);
+	                Pointable firstPointable = null;
+	                for (int i = 0; i < pointables.count(); i++) {
+	                	if (pointables.get(i).isExtended()) {
+	                		firstPointable = pointables.get(i);
+	                		break;
+	                	}
+					}
+	                if (firstPointable == null) {
+	                	return;
+	                }
 	                Vector intersection = s.intersect(
 	                        firstPointable,
 	                        true, // normalize
@@ -502,10 +518,11 @@ public class LeapListener extends Listener {
     {
     	if (!ENABLE_MOUSE)
     		return;
+
     	 Robot mouseHandler;
     	 
     	 if(cur_x != x || cur_y != y){
-
+		       
     		 cur_x = x;
 	    	 cur_y = y;
 
