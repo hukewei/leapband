@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="lib/jfugue-4.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/LeapJava.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="lib"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="LeapBand/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
