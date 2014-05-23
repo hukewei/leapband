@@ -3,12 +3,10 @@ package Controller;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
 
-import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.FingerList;
@@ -38,24 +36,17 @@ public class LeapListener extends Listener {
 
 	boolean USE_CALIBRATED_SCREEN = true;
 
-	//Just to control the speed, it can be changed accordingly to needs
-	int SLOW = 0;
-
 	//Screen resolution, it should match the current screen resolution for more precise movements
 	int SCREEN_X = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 	int SCREEN_Y = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 
 
-	float cur_x = 0, cur_y = 0;
+	float cur_x = 500, cur_y = 500;
 
 	int fingers_count = 0;
 	int prev_fingers_count = 0;
 
-	boolean Lclicked = false;
-	boolean Rclicked = false;
-	boolean keystroke = false;
-	boolean LHold = false;
-	boolean ENABLE_MOUSE = false;
+	boolean ENABLE_MOUSE = true;
 
 	boolean Swype = false;
 	boolean Circle = false;
@@ -158,29 +149,29 @@ public class LeapListener extends Listener {
         	    	if(DEBUG)
         	    		System.out.println("swype");
         	    	
-        	    	slow();
+        	    	//slow();
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_CIRCLE && !Circle) {
       	    		if(DEBUG)
     	    		System.out.println("Circle");
       	    		circle_count++;
         	    	Circle = true; 	
-        	    	CircleGesture circle = new CircleGesture(frame.gestures().get(i));
-        	        float progress = circle.progress();
-        	        if (progress >= 1.0f) {
-        	        	
-        	        	//copy();
-          	    		if(DEBUG)
-        	    		System.out.println("Circle - Copy");
-        	        }
-        	        else
-        	        {
-        	        	paste();
-              	    	if(DEBUG)
-            	    		System.out.println("Circle - Paste");
-        	        }
+//        	    	CircleGesture circle = new CircleGesture(frame.gestures().get(i));
+//        	        float progress = circle.progress();
+//        	        if (progress >= 1.0f) {
+//        	        	
+//        	        	//copy();
+//          	    		if(DEBUG)
+//        	    		System.out.println("Circle - Copy");
+//        	        }
+//        	        else
+//        	        {
+//        	        	//paste();
+//              	    	if(DEBUG)
+//            	    		System.out.println("Circle - Paste");
+//        	        }
         	    	
         	    	
-        	    	slow();	
+        	    	//slow();	
         	    }  else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SCREEN_TAP) {
         	    	screen_tap_count++;
         	    } else
@@ -304,56 +295,10 @@ public class LeapListener extends Listener {
                 {
                     moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
                 }
-
-                // Left Click hold
-//                if(fingers.count() == 2 && !LHold && avgPos.getZ()<=-70)
-//                {
-//                	clickMouse(0);
-//                	LHold = true;
-//                	
-//                    if(DEBUG)
-//                    {
-//                    	System.out.println("LHold");
-//                    }
-//                	
-//                }
-//                
-//                else if(fingers.count() != 2 || avgPos.getZ()>0)
-//                {
-//                	if(LHold)
-//                		releaseMouse(0);
-//                	LHold = false;
-//                	slow();
-//                	
-//                }
-//                
-//                
-//                
-//                // Right Click
-//                if(fingers.count() == 3 && !Rclicked && avgPos.getZ()<=-70)
-//                {
-//                	clickMouse(1);
-//                	releaseMouse(1);
-//                	
-//                	Rclicked = true;
-//                	
-//                    if(DEBUG)
-//                    {
-//                    	System.out.println("RClicked");
-//                    }
-//
-//                }
-//                
-//                else if(fingers.count() != 3 ||  avgPos.getZ()>0)
-//                {
-//                	Rclicked = false;
-//                	slow();
-//                	
-//                }
                 if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
                 if (frame.hands().count() == 1) {
                 	Hand hand = frame.hands().get(0);
-                	if (hand.grabStrength() > 0.8) {
+                	if (hand.grabStrength() > 0.7) {
                 		myAgent.doSwipe("REAR");
                 		last_timestamp = frame.timestamp();
                 	}
@@ -475,52 +420,10 @@ public class LeapListener extends Listener {
                 			z_1,
                 			z_2
                 			);
-                	
-
-//	                if(hand1.fingers().count() >= 5 && !keystroke && avgPos.getZ()<=-70 && (normal1.roll() <5 || normal1.roll() > -5) && (normal2.roll() <5 || normal2.roll() > -5))
-//	                {
-//
-//	                	showHideDesktop();
-//
-//	                    if(DEBUG)
-//	                    {
-//	                    	System.out.println("Show/Hide Desktop");
-//	                    }
-//
-//	                	keystroke = true;
-//
-//	                	// To slow down the framerate, I found this would help avoid any sort of incorrect behaviour 
-//	                	try {
-//							Thread.sleep(200);
-//						} catch (InterruptedException e) {
-//							e.printStackTrace();
-//						}
-//	                }
-//	                else
-//	                {
-//	                	keystroke = false;
-//
-//	                }
-
-
-
-
 	            }
 
             }
-            
-            //slow();
         }
-    }
-    
-    
-    // Slows down the frame rate
-    private void slow(){
-    	try {
-			Thread.sleep(SLOW);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
     }
     
     public void moveMouse(float x, float y)
@@ -529,12 +432,10 @@ public class LeapListener extends Listener {
     		return;
 
     	 Robot mouseHandler;
-    	 
-    	 if(cur_x != x || cur_y != y){
-		       
+    	 //if(cur_x != x || cur_y != y){
+    	 if(Math.abs(cur_x - x) > 1 || Math.abs(cur_y - y) > 1){
     		 cur_x = x;
 	    	 cur_y = y;
-
 				try {
 					//model.updatePosition(x, y);
 					mouseHandler = new Robot();
@@ -611,89 +512,6 @@ public class LeapListener extends Listener {
     	 
     	 
     }   
-    
-    
-    public void showHideDesktop()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_WINDOWS);
-					keyHandler.keyPress(KeyEvent.VK_D);
-					keyHandler.keyRelease(KeyEvent.VK_WINDOWS);
-					keyHandler.keyRelease(KeyEvent.VK_D);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-    	 
-    	 
-    }
-
-    public void copy()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_CONTROL);
-					keyHandler.keyPress(KeyEvent.VK_C);
-					keyHandler.keyRelease(KeyEvent.VK_CONTROL);
-					keyHandler.keyRelease(KeyEvent.VK_V);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-
-    	 
-    	 
-    }
-
-    public void paste()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_CONTROL);
-					keyHandler.keyPress(KeyEvent.VK_V);
-					keyHandler.keyRelease(KeyEvent.VK_CONTROL);
-					keyHandler.keyRelease(KeyEvent.VK_V);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-
-    	 
-    	 
-    }
-    public void switchApplication()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_ALT);
-					keyHandler.keyPress(KeyEvent.VK_TAB);
-					keyHandler.keyRelease(KeyEvent.VK_ALT);
-					keyHandler.keyRelease(KeyEvent.VK_TAB);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-
-    	 
-    	 
-    }
     
     public void setDebug(boolean d){
     	DEBUG = d;

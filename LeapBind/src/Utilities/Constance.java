@@ -14,7 +14,7 @@ public class Constance {
 	public static int Hand_width = 80;
 	public static int Hand_height = 45;
 	
-	public static int Gesture_Interval = 600000;
+	public static int Gesture_Interval = 750000;
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
 	static public int click_delay = 1800;
 	static public int Minimun_Distance = 3;

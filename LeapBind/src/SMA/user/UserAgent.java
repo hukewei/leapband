@@ -324,6 +324,7 @@ public class UserAgent extends GuiAgent{
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
 		room_view.getList_room().setModel(this.dict);
+		room_view.getList_room().setSelectedIndex(0);
 		System.out.println("update dict");
 	}
 	
