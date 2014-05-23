@@ -80,7 +80,6 @@ public class LeapListener extends Listener {
         Frame frame = controller.frame();
         int numGestures = frame.gestures().count();
         
-        
         	int up_count = 0;
         	int down_count = 0;
         	int left_count = 0;
@@ -128,11 +127,11 @@ public class LeapListener extends Listener {
                 	        } else {
                 	          if(swipe.direction().getZ() > 0){
                 	                  //swipeDirection = "up";
-                	                  front_count++;
+                	                  //front_count++;
                 	                  
                 	              } else {
                 	                  //swipeDirection = "down";
-                	                  rear_count++;
+                	                  //rear_count++;
                 	              }
                 	        }
                 	    }
@@ -234,152 +233,156 @@ public class LeapListener extends Listener {
 					fingers_count++;
 				}
 			}
+            if(fingers_count > 1) {
+            	ENABLE_MOUSE = false;
+            } else {
+                ENABLE_MOUSE = true;
+            }
+//            
+//            if(fingers_count != prev_fingers_count)
+//            {
+//            	if (DEBUG)System.out.println("Currently " + fingers_count + " fingers visible.\n");
+//            	prev_fingers_count = fingers_count;
+//            	if (fingers_count > 1) {
+//            		ENABLE_MOUSE = false;
+//            	} else {
+//            		ENABLE_MOUSE = true;
+//            	}
+//            }
             
-            if(fingers_count != prev_fingers_count)
+            
+            // Calculate the hand's average finger tip position
+            Vector avgPos = Vector.zero();
+            for (Finger finger : fingers) {
+                avgPos = avgPos.plus(finger.tipPosition());
+            }
+            avgPos = avgPos.divide(fingers.count());
+          
+            
+            if(USE_CALIBRATED_SCREEN){
+                //New Pointing System using first calibrated screen. Thanks to wooster @ freenode IRC
+                ScreenList screens = controller.locatedScreens();
+
+                if (screens.isEmpty()) return;
+                Screen s = screens.get(0);
+                PointableList pointables = frame.hands().get(0).pointables();
+
+                if(pointables.isEmpty()) return;
+                Pointable firstPointable = null;
+                for (int i = 0; i < pointables.count(); i++) {
+                	if (pointables.get(i).isExtended()) {
+                		firstPointable = pointables.get(i);
+                		break;
+                	}
+				}
+                if (firstPointable == null) {
+                	return;
+                }
+                Vector intersection = s.intersect(
+                        firstPointable,
+                        true, // normalize
+                        1.0f // clampRatio
+                        );
+
+		        // if the user is not pointing at the screen all components of
+		        // the returned vector will be Not A Number (NaN)
+		        // isValid() returns true only if all components are finite
+		        if (!intersection.isValid()) return;
+
+		        float x = s.widthPixels() * intersection.getX();
+		        // flip y coordinate to standard top-left origin
+		        float y = s.heightPixels() * (1.0f - intersection.getY());
+		        moveMouse(x, y);
+
+            } else
             {
-            	if (DEBUG)System.out.println("Currently " + fingers_count + " fingers visible.\n");
-            	prev_fingers_count = fingers_count;
-            	if (fingers_count > 1) {
-            		ENABLE_MOUSE = false;
-            	} else {
-            		ENABLE_MOUSE = true;
+                moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
+            }
+            if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
+            if (frame.hands().count() == 1) {
+            	Hand hand = frame.hands().get(0);
+            	if (hand.grabStrength() > 0.7) {
+            		myAgent.doSwipe("REAR");
+            		last_timestamp = frame.timestamp();
             	}
             }
+            }
             
+            // Place both hands on device
+            if(frame.hands().count()>1){
             
-            if (!fingers.isEmpty()) {
-                // Calculate the hand's average finger tip position
-                Vector avgPos = Vector.zero();
-                for (Finger finger : fingers) {
-                    avgPos = avgPos.plus(finger.tipPosition());
-                }
-                avgPos = avgPos.divide(fingers.count());
-              
-                
-                if(USE_CALIBRATED_SCREEN){
-	                //New Pointing System using first calibrated screen. Thanks to wooster @ freenode IRC
-	                ScreenList screens = controller.locatedScreens();
-
-	                if (screens.isEmpty()) return;
-	                Screen s = screens.get(0);
-	                PointableList pointables = frame.hands().get(0).pointables();
-
-	                if(pointables.isEmpty()) return;
-	                Pointable firstPointable = null;
-	                for (int i = 0; i < pointables.count(); i++) {
-	                	if (pointables.get(i).isExtended()) {
-	                		firstPointable = pointables.get(i);
-	                		break;
-	                	}
-					}
-	                if (firstPointable == null) {
-	                	return;
-	                }
-	                Vector intersection = s.intersect(
-	                        firstPointable,
-	                        true, // normalize
-	                        1.0f // clampRatio
-	                        );
-
-			        // if the user is not pointing at the screen all components of
-			        // the returned vector will be Not A Number (NaN)
-			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
-
-			        float x = s.widthPixels() * intersection.getX();
-			        // flip y coordinate to standard top-left origin
-			        float y = s.heightPixels() * (1.0f - intersection.getY());
-			        moveMouse(x, y);
-
-                } else
-                {
-                    moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
-                }
-                if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
-                if (frame.hands().count() == 1) {
-                	Hand hand = frame.hands().get(0);
-                	if (hand.grabStrength() > 0.7) {
-                		myAgent.doSwipe("REAR");
-                		last_timestamp = frame.timestamp();
-                	}
-                }
-                }
-                
-                // Place both hands on device
-                if(frame.hands().count()>1){
-                
-                	Hand hand1 = frame.hands().get(0);
+            	Hand hand1 = frame.hands().get(0);
 //                	Vector normal1 = hand1.palmNormal();
-                	Hand hand2 = frame.hands().get(1);
+            	Hand hand2 = frame.hands().get(1);
 //                	Vector normal2 = hand2.palmNormal();
-                	
-                	ScreenList screens = controller.locatedScreens();
+            	
+            	ScreenList screens = controller.locatedScreens();
 
-	                if (screens.isEmpty()) return;
-	                Screen s = screens.get(0);
-	                
+                if (screens.isEmpty()) return;
+                Screen s = screens.get(0);
+                
 
-	                PointableList pointables = hand1.pointables();
+                PointableList pointables = hand1.pointables();
 
-	                if(pointables.isEmpty()) return;
-	                Pointable firstPointable = null;
-	                for (int i = 0; i < pointables.count(); i++) {
-	                	if (pointables.get(i).isExtended()) {
-	                		firstPointable = pointables.get(i);
-	                		break;
-	                	}
-					}
-	                if (firstPointable == null) {
-	                	return;
-	                }
-	                Vector intersection = s.intersect(
-	                        firstPointable,
-	                        true, // normalize
-	                        1.0f // clampRatio
-	                        );
+                if(pointables.isEmpty()) return;
+                Pointable firstPointable = null;
+                for (int i = 0; i < pointables.count(); i++) {
+                	if (pointables.get(i).isExtended()) {
+                		firstPointable = pointables.get(i);
+                		break;
+                	}
+				}
+                if (firstPointable == null) {
+                	return;
+                }
+                Vector intersection = s.intersect(
+                        firstPointable,
+                        true, // normalize
+                        1.0f // clampRatio
+                        );
 
-			        // if the user is not pointing at the screen all components of
-			        // the returned vector will be Not A Number (NaN)
-			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
+		        // if the user is not pointing at the screen all components of
+		        // the returned vector will be Not A Number (NaN)
+		        // isValid() returns true only if all components are finite
+		        if (!intersection.isValid()) return;
 
-			        float x_1 = s.widthPixels() * intersection.getX();
-			        // flip y coordinate to standard top-left origin
-			        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
-			        float z_1 = firstPointable.tipPosition().getZ();
-			        //System.out.println("z1 = " + z_1);
-			        pointables = hand2.pointables();
+		        float x_1 = s.widthPixels() * intersection.getX();
+		        // flip y coordinate to standard top-left origin
+		        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
+		        float z_1 = firstPointable.tipPosition().getZ();
+		        //System.out.println("z1 = " + z_1);
+		        pointables = hand2.pointables();
 
-	                if(pointables.isEmpty()) return;
-	                firstPointable = null;
-	                for (int i = 0; i < pointables.count(); i++) {
-	                	if (pointables.get(i).isExtended()) {
-	                		firstPointable = pointables.get(i);
-	                		break;
-	                	}
-					}
-	                if (firstPointable == null) {
-	                	return;
-	                }
-	                intersection = s.intersect(
-	                        firstPointable,
-	                        true, // normalize
-	                        1.0f // clampRatio
-	                        );
+                if(pointables.isEmpty()) return;
+                firstPointable = null;
+                for (int i = 0; i < pointables.count(); i++) {
+                	if (pointables.get(i).isExtended()) {
+                		firstPointable = pointables.get(i);
+                		break;
+                	}
+				}
+                if (firstPointable == null) {
+                	return;
+                }
+                intersection = s.intersect(
+                        firstPointable,
+                        true, // normalize
+                        1.0f // clampRatio
+                        );
 
-			        // if the user is not pointing at the screen all components of
-			        // the returned vector will be Not A Number (NaN)
-			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
+		        // if the user is not pointing at the screen all components of
+		        // the returned vector will be Not A Number (NaN)
+		        // isValid() returns true only if all components are finite
+		        if (!intersection.isValid()) return;
 
-			        float x_2 = s.widthPixels() * intersection.getX();
-			        // flip y coordinate to standard top-left origin
-			        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
-			        float z_2 = firstPointable.tipPosition().getZ();
+		        float x_2 = s.widthPixels() * intersection.getX();
+		        // flip y coordinate to standard top-left origin
+		        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
+		        float z_2 = firstPointable.tipPosition().getZ();
 
-			        
-			        
-			        // track hands position
+		        
+		        
+		        // track hands position
 //			        Vector palm = hand1.palmPosition();
 //			        Vector direction = hand1.direction();
 //			        Vector intersect = s.intersect(palm, direction, true);
@@ -411,18 +414,17 @@ public class LeapListener extends Listener {
 //                			xNor_2,
 //                			yNorm_2
 //                	);
-                	
-			        myAgent.updateHands(
-                			x_1,
-                			y_1,
-                			x_2,
-                			y_2,
-                			z_1,
-                			z_2
-                			);
-	            }
-
+            	
+		        myAgent.updateHands(
+            			x_1,
+            			y_1,
+            			x_2,
+            			y_2,
+            			z_1,
+            			z_2
+            			);
             }
+
         }
     }
     
