@@ -34,7 +34,7 @@ public class LeapListener extends Listener {
 	int CLICK_TYPE = 0;
 
 
-	boolean USE_CALIBRATED_SCREEN = true;
+	boolean USE_CALIBRATED_SCREEN = false;
 
 	//Screen resolution, it should match the current screen resolution for more precise movements
 	int SCREEN_X = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
@@ -79,7 +79,7 @@ public class LeapListener extends Listener {
         // Get the most recent frame and report some basic information
         Frame frame = controller.frame();
         int numGestures = frame.gestures().count();
-        
+        if (numGestures > 0) {
         	int up_count = 0;
         	int down_count = 0;
         	int left_count = 0;
@@ -89,6 +89,7 @@ public class LeapListener extends Listener {
         	int circle_count = 0;
         	int screen_tap_count = 0;
         	if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
+        		ENABLE_MOUSE = true;
         	for (int i=0; i < numGestures; i++) {
         	    if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
         	        ENABLE_MOUSE = false;
@@ -222,17 +223,19 @@ public class LeapListener extends Listener {
         		      last_timestamp = frame.timestamp();
         		}
         	}
-        if (!frame.fingers().isEmpty()) {
-          
-            // Get fingers
-            FingerList fingers = frame.fingers();
-            fingers_count = 0;
-            //fingers_count = frame.fingers().count();
-            for (int i = 0; i < frame.fingers().count(); i++) {
-				if(frame.fingers().get(i).isExtended()) {
-					fingers_count++;
-				}
+        }
+        // Get fingers
+        FingerList fingers = frame.fingers();
+        fingers_count = 0;
+        //fingers_count = frame.fingers().count();
+        for (int i = 0; i < frame.fingers().count(); i++) {
+			if(frame.fingers().get(i).isExtended()) {
+				fingers_count++;
 			}
+		}
+        if (fingers_count > 0) {
+          
+           
             if(fingers_count > 1) {
             	ENABLE_MOUSE = false;
             } else {
@@ -254,12 +257,41 @@ public class LeapListener extends Listener {
             // Calculate the hand's average finger tip position
             Vector avgPos = Vector.zero();
             for (Finger finger : fingers) {
-                avgPos = avgPos.plus(finger.tipPosition());
+            	if(finger.isExtended()) {
+            		avgPos = avgPos.plus(finger.tipPosition());
+            	}
             }
+            //redure deviation
             avgPos = avgPos.divide(fingers.count());
           
             
             if(USE_CALIBRATED_SCREEN){
+//            	Screen screen = controller.locatedScreens().get(0);
+//            	PointableList pointables = frame.hands().get(0).pointables();
+//                if(pointables.isEmpty()) return;
+//                Pointable firstPointable = null;
+//                for (int i = 0; i < pointables.count(); i++) {
+//                	if (pointables.get(i).isExtended()) {
+//                		firstPointable = pointables.get(i);
+//                		break;
+//                	}
+//				}
+//                if (firstPointable == null) {
+//                	return;
+//                }
+//            	 Vector point = firstPointable.tipPosition().minus(screen.bottomLeftCorner());
+//            	 Vector xAxis = screen.horizontalAxis();
+//            	 Vector yAxis = screen.verticalAxis();
+//
+//            	Vector xProj = xAxis.times(xAxis.dot(point)/xAxis.magnitudeSquared()); 
+//            	Vector yProj = yAxis.times(yAxis.dot(point)/yAxis.magnitudeSquared()); 
+//
+//            	float xLeap = xProj.magnitude();
+//            	float yLeap = yProj.magnitude();
+//
+//            	float x = screen.widthPixels() * xLeap/xAxis.magnitude();
+//            	float y = screen.heightPixels() - screen.heightPixels() * yLeap/yAxis.magnitude();
+            	//System.out.println("X: " + x + ", Y: " + y );
                 //New Pointing System using first calibrated screen. Thanks to wooster @ freenode IRC
                 ScreenList screens = controller.locatedScreens();
 
@@ -282,7 +314,7 @@ public class LeapListener extends Listener {
                         firstPointable,
                         true, // normalize
                         1.0f // clampRatio
-                        );
+                );
 
 		        // if the user is not pointing at the screen all components of
 		        // the returned vector will be Not A Number (NaN)
@@ -320,109 +352,114 @@ public class LeapListener extends Listener {
 
                 if (screens.isEmpty()) return;
                 Screen s = screens.get(0);
-                
-
-                PointableList pointables = hand1.pointables();
-
-                if(pointables.isEmpty()) return;
-                Pointable firstPointable = null;
-                for (int i = 0; i < pointables.count(); i++) {
-                	if (pointables.get(i).isExtended()) {
-                		firstPointable = pointables.get(i);
-                		break;
-                	}
-				}
-                if (firstPointable == null) {
-                	return;
-                }
-                Vector intersection = s.intersect(
-                        firstPointable,
-                        true, // normalize
-                        1.0f // clampRatio
-                        );
-
-		        // if the user is not pointing at the screen all components of
-		        // the returned vector will be Not A Number (NaN)
-		        // isValid() returns true only if all components are finite
-		        if (!intersection.isValid()) return;
-
-		        float x_1 = s.widthPixels() * intersection.getX();
-		        // flip y coordinate to standard top-left origin
-		        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
-		        float z_1 = firstPointable.tipPosition().getZ();
-		        //System.out.println("z1 = " + z_1);
-		        pointables = hand2.pointables();
-
-                if(pointables.isEmpty()) return;
-                firstPointable = null;
-                for (int i = 0; i < pointables.count(); i++) {
-                	if (pointables.get(i).isExtended()) {
-                		firstPointable = pointables.get(i);
-                		break;
-                	}
-				}
-                if (firstPointable == null) {
-                	return;
-                }
-                intersection = s.intersect(
-                        firstPointable,
-                        true, // normalize
-                        1.0f // clampRatio
-                        );
-
-		        // if the user is not pointing at the screen all components of
-		        // the returned vector will be Not A Number (NaN)
-		        // isValid() returns true only if all components are finite
-		        if (!intersection.isValid()) return;
-
-		        float x_2 = s.widthPixels() * intersection.getX();
-		        // flip y coordinate to standard top-left origin
-		        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
-		        float z_2 = firstPointable.tipPosition().getZ();
+//                
+//
+//                PointableList pointables = hand1.pointables();
+//
+//                if(pointables.isEmpty()) return;
+//                Pointable firstPointable = null;
+//                for (int i = 0; i < pointables.count(); i++) {
+//                	if (pointables.get(i).isExtended()) {
+//                		firstPointable = pointables.get(i);
+//                		break;
+//                	}
+//				}
+//                if (firstPointable == null) {
+//                	return;
+//                }
+//                Vector intersection = s.intersect(
+//                        firstPointable,
+//                        true, // normalize
+//                        1.0f // clampRatio
+//                        );
+//
+//		        // if the user is not pointing at the screen all components of
+//		        // the returned vector will be Not A Number (NaN)
+//		        // isValid() returns true only if all components are finite
+//		        if (!intersection.isValid()) return;
+//
+//		        float x_1 = s.widthPixels() * intersection.getX();
+//		        // flip y coordinate to standard top-left origin
+//		        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
+//		        float z_1 = firstPointable.tipPosition().getZ();
+//		        //System.out.println("z1 = " + z_1);
+//		        pointables = hand2.pointables();
+//
+//                if(pointables.isEmpty()) return;
+//                firstPointable = null;
+//                for (int i = 0; i < pointables.count(); i++) {
+//                	if (pointables.get(i).isExtended()) {
+//                		firstPointable = pointables.get(i);
+//                		break;
+//                	}
+//				}
+//                if (firstPointable == null) {
+//                	return;
+//                }
+//                intersection = s.intersect(
+//                        firstPointable,
+//                        true, // normalize
+//                        1.0f // clampRatio
+//                        );
+//
+//		        // if the user is not pointing at the screen all components of
+//		        // the returned vector will be Not A Number (NaN)
+//		        // isValid() returns true only if all components are finite
+//		        if (!intersection.isValid()) return;
+//
+//		        float x_2 = s.widthPixels() * intersection.getX();
+//		        // flip y coordinate to standard top-left origin
+//		        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
+//		        float z_2 = firstPointable.tipPosition().getZ();
 
 		        
 		        
 		        // track hands position
-//			        Vector palm = hand1.palmPosition();
-//			        Vector direction = hand1.direction();
-//			        Vector intersect = s.intersect(palm, direction, true);
-//			              // intersection is in screen coordinates
-//
-//			       
-//			        // test for NaN (not-a-number) result of intersection
-//			        if (Float.isNaN(intersect.getX()) || Float.isNaN(intersect.getY()))
-//			          return;
-//
-//			        float xNor_1 = s.widthPixels() * intersect.getX();
-//			        float yNorm_1 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
-//			        
-//			        palm = hand2.palmPosition();
-//			        direction = hand2.direction();
-//			        intersect = s.intersect(palm, direction, true);
-//			              // intersection is in screen coordinates
-//
-//			        // test for NaN (not-a-number) result of intersection
-//			        if (Float.isNaN(intersect.getX()) || Float.isNaN(intersect.getY()))
-//			          return;
-//
-//			        float xNor_2 = s.widthPixels() * intersect.getX();
-//			        float yNorm_2 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
-//
-//                	myAgent.updateHands(
-//                			xNor_1,
-//                			yNorm_1,
-//                			xNor_2,
-//                			yNorm_2
-//                	);
+			        Vector palm = hand1.palmPosition();
+			        Vector direction = hand1.direction();
+			        Vector intersect = s.intersect(palm, direction, true);
+			              // intersection is in screen coordinates
+
+			       
+			        // test for NaN (not-a-number) result of intersection
+			        if (Float.isNaN(intersect.getX()) || Float.isNaN(intersect.getY()))
+			          return;
+
+			        float xNor_1 = s.widthPixels() * intersect.getX();
+			        float yNorm_1 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
+		        	float zNorm_1 = (float) (intersect.getZ());
+			        
+			        palm = hand2.palmPosition();
+			        direction = hand2.direction();
+			        intersect = s.intersect(palm, direction, true);
+			              // intersection is in screen coordinates
+
+			        // test for NaN (not-a-number) result of intersection
+			        if (Float.isNaN(intersect.getX()) || Float.isNaN(intersect.getY()))
+			          return;
+
+			        float xNor_2 = s.widthPixels() * intersect.getX();
+			        float yNorm_2 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
+		        
+		        	float zNorm_2 = (float) (intersect.getZ());
+
+                	myAgent.updateHands(
+                			xNor_1,
+                			yNorm_1,
+                			xNor_2,
+                			yNorm_2,
+		        			zNorm_1,
+		        			zNorm_2
+                	);
             	
-		        myAgent.updateHands(
-            			x_1,
-            			y_1,
-            			x_2,
-            			y_2,
-            			z_1,
-            			z_2
-            			);
+//		        myAgent.updateHands(
+//            			x_1,
+//            			y_1,
+//            			x_2,
+//            			y_2,
+//            			z_1,
+//            			z_2
+//            			);
             }
 
         }
@@ -435,7 +472,7 @@ public class LeapListener extends Listener {
 
     	 Robot mouseHandler;
     	 //if(cur_x != x || cur_y != y){
-    	 if(Math.abs(cur_x - x) > 1 || Math.abs(cur_y - y) > 1){
+    	 if(Math.abs(cur_x - x) > 1 && Math.abs(cur_y - y) > 1){
     		 cur_x = x;
 	    	 cur_y = y;
 				try {
