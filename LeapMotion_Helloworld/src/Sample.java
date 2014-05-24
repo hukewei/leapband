@@ -11,14 +11,13 @@ import java.lang.Math;
 import com.leapmotion.leap.*;
 import com.leapmotion.leap.Gesture.State;
 
-
 class SampleListener extends Listener {
     public void onInit(Controller controller) {
         System.out.println("Initialized");
     }
 
     public void onConnect(Controller controller) {
-        System.out.println("Connected here");
+        System.out.println("Connected");
         controller.enableGesture(Gesture.Type.TYPE_SWIPE);
         controller.enableGesture(Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture(Gesture.Type.TYPE_SCREEN_TAP);
