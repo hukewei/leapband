@@ -18,7 +18,7 @@ public class ScaleLabel extends JLabel{
     BufferedImage originalBufImage;
     Graphics2D bufImageG; 
     public double scaleX = 1.0; 
-    public double scaleY = 1.0; 
+    public double scaleY = 1.0;
     
 
     
@@ -58,7 +58,7 @@ public class ScaleLabel extends JLabel{
             Graphics2D g2 = (Graphics2D) g;  
             g2.drawImage(bufImage, (this.getWidth() - bufImage.getWidth()) / 2, (this.getHeight() - bufImage.getHeight()) / 2, this);  
         }  
-    }  
+    }
 
 
 }
