@@ -3,34 +3,21 @@ package View;
 
 import jade.gui.GuiEvent;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
-import java.io.IOException;
+import java.util.Timer;
 
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import SMA.user.UserAgent;
@@ -45,6 +32,7 @@ public class MenuView extends JAgentFrame {
 	//private JPanel buttonPane;
 	private JButton single;
 	private JButton multiple;
+	Timer click_task = null;
 	JButton exit;
 
 	public MenuView(UserAgent agent) {
@@ -98,27 +86,42 @@ public class MenuView extends JAgentFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				
+				//selectSingleMode();
 				single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
-				selectSingleMode();
 			}
 			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				single.setBorder(new RoundedBorder(new Color(0,128,255,150)));
+				System.out.println("mouse pressed...");
 				
 			}
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				changeCursorImage("src/images/cursor.png");
 				single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
-				
+				System.out.println("mouse exit...");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	selectSingleMode(); 
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				single.setBorder(new RoundedBorder(new Color(0,128,255,50)));
-				
 			}
 			
 			@Override
@@ -138,11 +141,7 @@ public class MenuView extends JAgentFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				multiple.setBorder(new RoundedBorder(new Color(255,102,178,100)));
-				selectMultiMode();
-				GuiEvent ev = new GuiEvent(this,UserAgent.TEXT_EVENT);
-				ev.addParameter("listGroup");
-				myAgent.postGuiEvent(ev);
-				System.out.println("envoyer listGroup\n");
+				
 			}
 			
 			@Override
@@ -154,11 +153,32 @@ public class MenuView extends JAgentFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				multiple.setBorder(new RoundedBorder(new Color(255,102,178,100)));
-				
+				changeCursorImage("src/images/cursor.png");
+				single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
+				System.out.println("mouse exit...");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	selectMultiMode();
+								GuiEvent ev = new GuiEvent(this,UserAgent.TEXT_EVENT);
+								ev.addParameter("listGroup");
+								myAgent.postGuiEvent(ev);
+								System.out.println("envoyer listGroup\n");
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				multiple.setBorder(new RoundedBorder(new Color(255,102,178,50)));
 				
 			}
@@ -179,7 +199,6 @@ public class MenuView extends JAgentFrame {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				exit.setBorder(new RoundedBorder(new Color(51,255,51,100)));
-				 System.exit(1);  
 			}
 			
 			@Override
@@ -191,13 +210,27 @@ public class MenuView extends JAgentFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				exit.setBorder(new RoundedBorder(new Color(51,255,51,100)));
-				
+				changeCursorImage("src/images/cursor.png");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+								 System.exit(1);
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				exit.setBorder(new RoundedBorder(new Color(51,255,51,50)));
-				
 			}
 			
 			@Override

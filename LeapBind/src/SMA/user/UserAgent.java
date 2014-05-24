@@ -18,6 +18,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
 import Controller.LeapListener;
+import Utilities.Constance;
 import Utilities.Cordinates;
 import View.GameView;
 import View.InstrumentSelectView;
@@ -52,13 +53,14 @@ public class UserAgent extends GuiAgent{
 	public static String drum = "1";
 	public static String guitar = "2";
 	private MenuView menu_view;
+
 	private GameView game_view;
 	private InstrumentSelectView instrument_view;
 	private RoomSelectView room_view;
 	private MultiwaitRoom wait_view;
 	private boolean single_mode = false;
 	private boolean multiple_mode = false;
-	private Cordinates pointer = new Cordinates();
+	public Cordinates pointer = new Cordinates();
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
@@ -89,17 +91,17 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-//		listener = new LeapListener(this);
-//        controller = new Controller();
-//        
-//        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-//        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
-//        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-//        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
-//        //listener.setDebug(true);
-//        listener.setClickType(1);
-//        listener.setCalibratedScren(true);
-//        controller.addListener(listener);
+		listener = new LeapListener(this);
+        controller = new Controller();
+        
+        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        //controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+        //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+        //listener.setDebug(true);
+        listener.setClickType(1);
+        listener.setCalibratedScren(true);
+        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -112,13 +114,6 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
-	public MultiwaitRoom getWait_view() {
-		return wait_view;
-	}
-
-	public void setWait_view(MultiwaitRoom wait_view) {
-		this.wait_view = wait_view;
-	}
 
 	public void setRoomId(String id) {
 		current_room_id = id;
@@ -279,14 +274,19 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2) {
+		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
+		
 		hand_1.x = x_1;
 		hand_1.y = y_1;
 		hand_2.x = x_2;
 		hand_2.y = y_2;
 		hand_1.z = z_1;
 		hand_2.z = z_2;
-		changes.firePropertyChange("hand1", null, hand_1);
-		changes.firePropertyChange("hand2", null, hand_2);
+		//if(d1 > Constance.Minimun_Distance)
+			changes.firePropertyChange("hand1", null, hand_1);
+		//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
+		//if (d2 > Constance.Minimun_Distance)
+			changes.firePropertyChange("hand2", null, hand_2);
 	}
 	
 	public void doSwipe(String direction) {
@@ -324,6 +324,7 @@ public class UserAgent extends GuiAgent{
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
 		room_view.getList_room().setModel(this.dict);
+		room_view.getList_room().setSelectedIndex(0);
 		System.out.println("update dict");
 	}
 	

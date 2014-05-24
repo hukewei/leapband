@@ -111,27 +111,29 @@ public class GameView extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("hand1")) {
+		if (isVisible()) {
+			if (evt.getPropertyName().equals("hand1")) {
 //			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
 //					+ " y = " + ((Cordinates) evt.getNewValue()).y);
-			hands.setHand1(((Cordinates) evt.getNewValue()).x,
-					((Cordinates) evt.getNewValue()).y,
-					((Cordinates) evt.getNewValue()).z);
-		} else if (evt.getPropertyName().equals("hand2")) {
-//			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
-//					+ " y = " + ((Cordinates) evt.getNewValue()).y);
-			hands.setHand2(((Cordinates) evt.getNewValue()).x,
-					((Cordinates) evt.getNewValue()).y,
-					((Cordinates) evt.getNewValue()).z);
-		} else if (evt.getPropertyName().equals("swipe")) {
-			if ((String)evt.getNewValue() == "DOWN") {
-				Rhythm rhythm = new Rhythm();
-				//Bang out your drum beat  
-				rhythm.setLayer(1, "O..oO...O..oOO.."); 
-				rhythm.addSubstitution('o', "Rs [BASS_DRUM]s"); 
-				Pattern pattern = rhythm.getPattern(); 
-				pattern.repeat(1); 
-				player.play(pattern);
+				hands.setHand1(((Cordinates) evt.getNewValue()).x,
+						((Cordinates) evt.getNewValue()).y,
+						((Cordinates) evt.getNewValue()).z);
+			} else if (evt.getPropertyName().equals("hand2")) {
+	//			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
+	//					+ " y = " + ((Cordinates) evt.getNewValue()).y);
+				hands.setHand2(((Cordinates) evt.getNewValue()).x,
+						((Cordinates) evt.getNewValue()).y,
+						((Cordinates) evt.getNewValue()).z);
+			} else if (evt.getPropertyName().equals("swipe")) {
+				if ((String)evt.getNewValue() == "DOWN") {
+					Rhythm rhythm = new Rhythm();
+					//Bang out your drum beat  
+					rhythm.setLayer(1, "O..oO...O..oOO.."); 
+					rhythm.addSubstitution('o', "Rs [BASS_DRUM]s"); 
+					Pattern pattern = rhythm.getPattern(); 
+					pattern.repeat(1); 
+					player.play(pattern);
+				}
 			}
 		}
 

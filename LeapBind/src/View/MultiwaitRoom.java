@@ -8,18 +8,11 @@ import jade.gui.GuiEvent;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Timer;
 
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -37,7 +30,6 @@ public class MultiwaitRoom extends JAgentFrame {
 	private JButton start;
 	private JButton exit;
 	
-	@SuppressWarnings("unchecked")
 	public MultiwaitRoom(UserAgent agent) {
 		super(agent);
 		this.setTitle("Waiting View");
@@ -60,11 +52,6 @@ public class MultiwaitRoom extends JAgentFrame {
 		list_player.setFixedCellHeight(80);
 		list_player.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_player);
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/images/cursor.png");
-		Point cursorHotSpot = new Point(0,0);
-		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-		imagePanel.setCursor(customCursor);
 		//this.setLayout(null);
 		
 		start = new JButton("Start");
@@ -76,13 +63,8 @@ public class MultiwaitRoom extends JAgentFrame {
 		start.addMouseListener(new MouseListener() {
 			
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				
+			public void mouseReleased(MouseEvent e) {		
 				start.setBorder(new RoundedBorder(new Color(224,224,224,100)));
-				GuiEvent ev = new GuiEvent(this,UserAgent.CONFIRM_ROOM_EVENT);
-				ev.addParameter(UserAgent.wait_Mode);
-				myAgent.postGuiEvent(ev);
-				
 			}
 			
 			@Override
@@ -94,11 +76,28 @@ public class MultiwaitRoom extends JAgentFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				start.setBorder(new RoundedBorder(new Color(224,224,224,100)));
-				
+				changeCursorImage("src/images/cursor.png");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	GuiEvent ev = new GuiEvent(this,UserAgent.CONFIRM_ROOM_EVENT);
+								ev.addParameter(UserAgent.wait_Mode);
+								myAgent.postGuiEvent(ev);
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				start.setBorder(new RoundedBorder(new Color(224,224,224,50)));
 				
 			}
@@ -119,13 +118,8 @@ public class MultiwaitRoom extends JAgentFrame {
 		exit.addMouseListener(new MouseListener() {
 			
 			@Override
-			public void mouseReleased(MouseEvent e) {
-				
+			public void mouseReleased(MouseEvent e) {			
 				exit.setBorder(new RoundedBorder(new Color(224,224,224,100)));
-				GuiEvent ev = new GuiEvent(this,UserAgent.EXIT_ROOM_EVENT);
-				//ev.addParameter(UserAgent.instrument_Mode);
-				myAgent.postGuiEvent(ev);
-				
 			}
 			
 			@Override
@@ -137,13 +131,29 @@ public class MultiwaitRoom extends JAgentFrame {
 			@Override
 			public void mouseExited(MouseEvent e) {
 				exit.setBorder(new RoundedBorder(new Color(224,224,224,100)));
+				changeCursorImage("src/images/cursor.png");
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
 				
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	GuiEvent ev = new GuiEvent(this,UserAgent.EXIT_ROOM_EVENT);
+								myAgent.postGuiEvent(ev);
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
 				exit.setBorder(new RoundedBorder(new Color(224,224,224,50)));
-				
 			}
 			
 			@Override
@@ -168,19 +178,19 @@ public class MultiwaitRoom extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("swipe")) {
-			int current_index = list_player.getSelectedIndex();
-			if (current_index > -1 ) {
-				if ((String)evt.getNewValue() == "UP") {
-					current_index--;
-				} else if ((String)evt.getNewValue() == "DOWN") {
-					current_index++;
+		if (isVisible()) {
+			if (evt.getPropertyName().equals("swipe")) {
+				int current_index = list_player.getSelectedIndex();
+				if (current_index > -1 ) {
+					if ((String)evt.getNewValue() == "UP") {
+						current_index--;
+					} else if ((String)evt.getNewValue() == "DOWN") {
+						current_index++;
+					}
 				}
+				list_player.setSelectedIndex(current_index);
+				
 			}
-			list_player.setSelectedIndex(current_index);
-			
 		}
-		
 	}
-
 }

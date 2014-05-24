@@ -3,12 +3,10 @@ package Controller;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
 
-import com.leapmotion.leap.CircleGesture;
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Finger;
 import com.leapmotion.leap.FingerList;
@@ -38,24 +36,17 @@ public class LeapListener extends Listener {
 
 	boolean USE_CALIBRATED_SCREEN = true;
 
-	//Just to control the speed, it can be changed accordingly to needs
-	int SLOW = 0;
-
 	//Screen resolution, it should match the current screen resolution for more precise movements
 	int SCREEN_X = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().width;
 	int SCREEN_Y = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().height;
 
 
-	float cur_x = 0, cur_y = 0;
+	float cur_x = 500, cur_y = 500;
 
 	int fingers_count = 0;
 	int prev_fingers_count = 0;
 
-	boolean Lclicked = false;
-	boolean Rclicked = false;
-	boolean keystroke = false;
-	boolean LHold = false;
-	boolean ENABLE_MOUSE = false;
+	boolean ENABLE_MOUSE = true;
 
 	boolean Swype = false;
 	boolean Circle = false;
@@ -89,55 +80,61 @@ public class LeapListener extends Listener {
         Frame frame = controller.frame();
         int numGestures = frame.gestures().count();
         
-        
         	int up_count = 0;
         	int down_count = 0;
         	int left_count = 0;
         	int right_count = 0;
+        	int front_count = 0;
+        	int rear_count = 0;
         	int circle_count = 0;
         	int screen_tap_count = 0;
         	if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
         	for (int i=0; i < numGestures; i++) {
-        	    if(frame.gestures().get(i).type() == Gesture.Type.TYPE_KEY_TAP && !Lclicked) {
-        	    	//If Key Tap Mode enabled 
-        	    	//Left Click
-        	    	if(CLICK_TYPE == 0)
-        	    	{	
-                		Lclicked = true;
-	                    if(DEBUG)
-	                    {
-	                    	System.out.println("LClicked - Key Tap");
-	                    }
-        	    	}
-        	    	
-        	    	
-                	if(DEBUG)
-                		System.out.println("key tap");
-        	    	slow();
-        	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
+        	    if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
         	        ENABLE_MOUSE = false;
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
-        	    	if (swipe.speed() > 500) {
-        	    		boolean is_horizontal = (Math.abs(swipe.direction().getX()) > Math.abs(swipe.direction().getY()));
-        	    		if (!is_horizontal) {
-        	    			if(swipe.direction().getY() > 0){
-          	                  //swipeDirection = "up";
-          	                  up_count++;
-          	              	} else {
-          	                  //swipeDirection = "down";
-          	                  down_count++;
-          	              	}          
-        	    		} else {
-        	    			if(swipe.direction().getX() > 0){
-        	                  //swipeDirection = "right";
-        	                  right_count++;
-        	              	} else {
-        	                  //swipeDirection = "left";
-        	                  left_count++;
-        	              	}  
-        	    		}
-        	    		       
-        	    		
+        	    	if (swipe.speed() > 200) {
+        	    		float x_direction = Math.abs(swipe.direction().getX());
+        	    		float y_direction = Math.abs(swipe.direction().getY());
+        	    		float z_direction = Math.abs(swipe.direction().getZ());
+        	    		float [] xyz_direction = {x_direction, y_direction, z_direction};
+                		float largest_direction = xyz_direction[0];  
+                	    for(int k=1; k < xyz_direction.length; k++){  
+                	    	if(xyz_direction[k] > largest_direction){  
+                	    		largest_direction = xyz_direction[k];  
+                	    	}  
+                	    }
+                	    if (largest_direction > 0.75) {
+                	        if (x_direction == largest_direction) {
+                	          if(swipe.direction().getX() > 0){
+                	                  //swipeDirection = "right";
+                	                  right_count++;
+                	                  
+                	              } else {
+                	                  //swipeDirection = "left";
+                	                  left_count++;
+                	                  
+                	              }
+                	        } else if (y_direction == largest_direction) {
+                	          if(swipe.direction().getY()  > 0){
+                	                  //swipeDirection = "up";
+                	                  up_count++;
+                	                  
+                	              } else {
+                	                  //swipeDirection = "down";
+                	                  down_count++;
+                	              }
+                	        } else {
+                	          if(swipe.direction().getZ() > 0){
+                	                  //swipeDirection = "up";
+                	                  //front_count++;
+                	                  
+                	              } else {
+                	                  //swipeDirection = "down";
+                	                  //rear_count++;
+                	              }
+                	        }
+                	    }
         	    	}
 //                    System.out.println("Swipe id: " + swipe.id()
 //                               + ", " + swipe.state()
@@ -151,31 +148,30 @@ public class LeapListener extends Listener {
         	    	if(DEBUG)
         	    		System.out.println("swype");
         	    	
-        	    	slow();
+        	    	//slow();
         	    } else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_CIRCLE && !Circle) {
       	    		if(DEBUG)
     	    		System.out.println("Circle");
       	    		circle_count++;
         	    	Circle = true; 	
-        	    	CircleGesture circle = new CircleGesture(frame.gestures().get(i));
-        	        float progress = circle.progress();
-        	        if (progress >= 1.0f) {
-        	        	
-        	        	//copy();
-          	    		if(DEBUG)
-        	    		System.out.println("Circle - Copy");
-        	        }
-        	        else
-        	        {
-        	        	paste();
-              	    	if(DEBUG)
-            	    		System.out.println("Circle - Paste");
-        	        }
+//        	    	CircleGesture circle = new CircleGesture(frame.gestures().get(i));
+//        	        float progress = circle.progress();
+//        	        if (progress >= 1.0f) {
+//        	        	
+//        	        	//copy();
+//          	    		if(DEBUG)
+//        	    		System.out.println("Circle - Copy");
+//        	        }
+//        	        else
+//        	        {
+//        	        	//paste();
+//              	    	if(DEBUG)
+//            	    		System.out.println("Circle - Paste");
+//        	        }
         	    	
         	    	
-        	    	slow();	
+        	    	//slow();	
         	    }  else if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SCREEN_TAP) {
-        	    	System.out.println("screen tap");
         	    	screen_tap_count++;
         	    } else
         	    {
@@ -187,7 +183,7 @@ public class LeapListener extends Listener {
         	}
         	
         	if (Swype || Circle) {
-        		int [] direction_count = {left_count, right_count, up_count, down_count, circle_count, screen_tap_count};
+        		int [] direction_count = {left_count, right_count, up_count, down_count, front_count, rear_count, circle_count, screen_tap_count};
         		int maxValue = direction_count[0];  
         	    for(int i=1;i < direction_count.length;i++){  
         	    	if(direction_count[i] > maxValue){  
@@ -197,16 +193,31 @@ public class LeapListener extends Listener {
 
         		if (maxValue > 0 ) {
         		      if (maxValue == left_count) {
+        		    	  System.out.println("SWIPE LEFI");
         		    	  myAgent.doSwipe("LEFT");
         		      } else if (maxValue == right_count) {
+        		    	  System.out.println("SWIPE RIGHT");
         		    	  myAgent.doSwipe("RIGHT");
         		      } else if (maxValue == up_count) {
+        		    	  System.out.println("SWIPE UP");
         		    	  myAgent.doSwipe("UP");
         		      } else if (maxValue == down_count) {
+        		    	  System.out.println("SWIPE DOWN");
         		    	  myAgent.doSwipe("DOWN");
+        		      } else if (maxValue == front_count) {
+        		    	  System.out.println("SWIPE FRONT");
+        		    	  myAgent.doSwipe("FRONT");
+        		      } else if (maxValue == rear_count) {
+        		    	  System.out.println("SWIPE REAR");
+        		    	  myAgent.doSwipe("REAR");
         		      } else if (maxValue == screen_tap_count ) {
+        		    	  System.out.println("screen tap");
         		    	  clickMouse(0);
         		    	  releaseMouse(0);
+        		      } else if (maxValue == circle_count ) {
+        		    	  System.out.println("circle");
+//        		    	  clickMouse(0);
+//        		    	  releaseMouse(0);
         		      }
         		      last_timestamp = frame.timestamp();
         		}
@@ -215,164 +226,163 @@ public class LeapListener extends Listener {
           
             // Get fingers
             FingerList fingers = frame.fingers();
-            fingers_count = frame.fingers().count();
+            fingers_count = 0;
+            //fingers_count = frame.fingers().count();
+            for (int i = 0; i < frame.fingers().count(); i++) {
+				if(frame.fingers().get(i).isExtended()) {
+					fingers_count++;
+				}
+			}
+            if(fingers_count > 1) {
+            	ENABLE_MOUSE = false;
+            } else {
+                ENABLE_MOUSE = true;
+            }
+//            
+//            if(fingers_count != prev_fingers_count)
+//            {
+//            	if (DEBUG)System.out.println("Currently " + fingers_count + " fingers visible.\n");
+//            	prev_fingers_count = fingers_count;
+//            	if (fingers_count > 1) {
+//            		ENABLE_MOUSE = false;
+//            	} else {
+//            		ENABLE_MOUSE = true;
+//            	}
+//            }
             
-            if(fingers_count != prev_fingers_count)
+            
+            // Calculate the hand's average finger tip position
+            Vector avgPos = Vector.zero();
+            for (Finger finger : fingers) {
+                avgPos = avgPos.plus(finger.tipPosition());
+            }
+            avgPos = avgPos.divide(fingers.count());
+          
+            
+            if(USE_CALIBRATED_SCREEN){
+                //New Pointing System using first calibrated screen. Thanks to wooster @ freenode IRC
+                ScreenList screens = controller.locatedScreens();
+
+                if (screens.isEmpty()) return;
+                Screen s = screens.get(0);
+                PointableList pointables = frame.hands().get(0).pointables();
+
+                if(pointables.isEmpty()) return;
+                Pointable firstPointable = null;
+                for (int i = 0; i < pointables.count(); i++) {
+                	if (pointables.get(i).isExtended()) {
+                		firstPointable = pointables.get(i);
+                		break;
+                	}
+				}
+                if (firstPointable == null) {
+                	return;
+                }
+                Vector intersection = s.intersect(
+                        firstPointable,
+                        true, // normalize
+                        1.0f // clampRatio
+                        );
+
+		        // if the user is not pointing at the screen all components of
+		        // the returned vector will be Not A Number (NaN)
+		        // isValid() returns true only if all components are finite
+		        if (!intersection.isValid()) return;
+
+		        float x = s.widthPixels() * intersection.getX();
+		        // flip y coordinate to standard top-left origin
+		        float y = s.heightPixels() * (1.0f - intersection.getY());
+		        moveMouse(x, y);
+
+            } else
             {
-            	if (DEBUG)System.out.println("Currently " + fingers_count + " fingers visible.\n");
-            	prev_fingers_count = fingers_count;
-            	if (fingers_count > 1) {
-            		ENABLE_MOUSE = false;
-            	} else {
-            		ENABLE_MOUSE = true;
+                moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
+            }
+            if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
+            if (frame.hands().count() == 1) {
+            	Hand hand = frame.hands().get(0);
+            	if (hand.grabStrength() > 0.7) {
+            		myAgent.doSwipe("REAR");
+            		last_timestamp = frame.timestamp();
             	}
             }
+            }
             
+            // Place both hands on device
+            if(frame.hands().count()>1){
             
-            if (!fingers.isEmpty()) {
-                // Calculate the hand's average finger tip position
-                Vector avgPos = Vector.zero();
-                for (Finger finger : fingers) {
-                    avgPos = avgPos.plus(finger.tipPosition());
-                }
-                avgPos = avgPos.divide(fingers.count());
-              
-                
-                if(USE_CALIBRATED_SCREEN){
-	                //New Pointing System using first calibrated screen. Thanks to wooster @ freenode IRC
-	                ScreenList screens = controller.locatedScreens();
-
-	                if (screens.isEmpty()) return;
-	                Screen s = screens.get(0);
-	                PointableList pointables = frame.hands().get(0).pointables();
-
-	                if(pointables.isEmpty()) return;
-	                Pointable firstPointable = pointables.get(0);
-	                Vector intersection = s.intersect(
-	                        firstPointable,
-	                        true, // normalize
-	                        1.0f // clampRatio
-	                        );
-
-			        // if the user is not pointing at the screen all components of
-			        // the returned vector will be Not A Number (NaN)
-			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
-
-			        float x = s.widthPixels() * intersection.getX();
-			        // flip y coordinate to standard top-left origin
-			        float y = s.heightPixels() * (1.0f - intersection.getY());
-			        moveMouse(x, y);
-
-                } else
-                {
-                    moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
-                }
-
-                // Left Click hold
-                if(fingers.count() == 2 && !LHold && avgPos.getZ()<=-70)
-                {
-                	clickMouse(0);
-                	LHold = true;
-                	
-                    if(DEBUG)
-                    {
-                    	System.out.println("LHold");
-                    }
-                	
-                }
-                
-                else if(fingers.count() != 2 || avgPos.getZ()>0)
-                {
-                	if(LHold)
-                		releaseMouse(0);
-                	LHold = false;
-                	slow();
-                	
-                }
-                
-                
-                
-                // Right Click
-                if(fingers.count() == 3 && !Rclicked && avgPos.getZ()<=-70)
-                {
-                	clickMouse(1);
-                	releaseMouse(1);
-                	
-                	Rclicked = true;
-                	
-                    if(DEBUG)
-                    {
-                    	System.out.println("RClicked");
-                    }
-
-                }
-                
-                else if(fingers.count() != 3 ||  avgPos.getZ()>0)
-                {
-                	Rclicked = false;
-                	slow();
-                	
-                }
-
-                
-                // Place both hands on device
-                if(frame.hands().count()>1){
-                
-                	Hand hand1 = frame.hands().get(0);
+            	Hand hand1 = frame.hands().get(0);
 //                	Vector normal1 = hand1.palmNormal();
-                	Hand hand2 = frame.hands().get(1);
+            	Hand hand2 = frame.hands().get(1);
 //                	Vector normal2 = hand2.palmNormal();
-                	
-                	ScreenList screens = controller.locatedScreens();
+            	
+            	ScreenList screens = controller.locatedScreens();
 
-	                if (screens.isEmpty()) return;
-	                Screen s = screens.get(0);
-	                
+                if (screens.isEmpty()) return;
+                Screen s = screens.get(0);
+                
 
-	                PointableList pointables = hand1.pointables();
+                PointableList pointables = hand1.pointables();
 
-	                if(pointables.isEmpty()) return;
-	                Pointable firstPointable = pointables.get(0);
-	                Vector intersection = s.intersect(
-	                        firstPointable,
-	                        true, // normalize
-	                        1.0f // clampRatio
-	                        );
+                if(pointables.isEmpty()) return;
+                Pointable firstPointable = null;
+                for (int i = 0; i < pointables.count(); i++) {
+                	if (pointables.get(i).isExtended()) {
+                		firstPointable = pointables.get(i);
+                		break;
+                	}
+				}
+                if (firstPointable == null) {
+                	return;
+                }
+                Vector intersection = s.intersect(
+                        firstPointable,
+                        true, // normalize
+                        1.0f // clampRatio
+                        );
 
-			        // if the user is not pointing at the screen all components of
-			        // the returned vector will be Not A Number (NaN)
-			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
+		        // if the user is not pointing at the screen all components of
+		        // the returned vector will be Not A Number (NaN)
+		        // isValid() returns true only if all components are finite
+		        if (!intersection.isValid()) return;
 
-			        float x_1 = s.widthPixels() * intersection.getX();
-			        // flip y coordinate to standard top-left origin
-			        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
-			        float z_1 = firstPointable.tipPosition().getZ();
-			        System.out.println("z1 = " + z_1);
-			        pointables = hand2.pointables();
+		        float x_1 = s.widthPixels() * intersection.getX();
+		        // flip y coordinate to standard top-left origin
+		        float y_1 = s.heightPixels() * (1.0f - intersection.getY());
+		        float z_1 = firstPointable.tipPosition().getZ();
+		        //System.out.println("z1 = " + z_1);
+		        pointables = hand2.pointables();
 
-	                if(pointables.isEmpty()) return;
-	                firstPointable = pointables.get(0);
-	                intersection = s.intersect(
-	                        firstPointable,
-	                        true, // normalize
-	                        1.0f // clampRatio
-	                        );
+                if(pointables.isEmpty()) return;
+                firstPointable = null;
+                for (int i = 0; i < pointables.count(); i++) {
+                	if (pointables.get(i).isExtended()) {
+                		firstPointable = pointables.get(i);
+                		break;
+                	}
+				}
+                if (firstPointable == null) {
+                	return;
+                }
+                intersection = s.intersect(
+                        firstPointable,
+                        true, // normalize
+                        1.0f // clampRatio
+                        );
 
-			        // if the user is not pointing at the screen all components of
-			        // the returned vector will be Not A Number (NaN)
-			        // isValid() returns true only if all components are finite
-			        if (!intersection.isValid()) return;
+		        // if the user is not pointing at the screen all components of
+		        // the returned vector will be Not A Number (NaN)
+		        // isValid() returns true only if all components are finite
+		        if (!intersection.isValid()) return;
 
-			        float x_2 = s.widthPixels() * intersection.getX();
-			        // flip y coordinate to standard top-left origin
-			        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
-			        float z_2 = firstPointable.tipPosition().getZ();
+		        float x_2 = s.widthPixels() * intersection.getX();
+		        // flip y coordinate to standard top-left origin
+		        float y_2 = s.heightPixels() * (1.0f - intersection.getY());
+		        float z_2 = firstPointable.tipPosition().getZ();
 
-			        
-			        
-			        // track hands position
+		        
+		        
+		        // track hands position
 //			        Vector palm = hand1.palmPosition();
 //			        Vector direction = hand1.direction();
 //			        Vector intersect = s.intersect(palm, direction, true);
@@ -404,74 +414,30 @@ public class LeapListener extends Listener {
 //                			xNor_2,
 //                			yNorm_2
 //                	);
-                	
-			        myAgent.updateHands(
-                			x_1,
-                			y_1,
-                			x_2,
-                			y_2,
-                			z_1,
-                			z_2
-                			);
-                	
-
-//	                if(hand1.fingers().count() >= 5 && !keystroke && avgPos.getZ()<=-70 && (normal1.roll() <5 || normal1.roll() > -5) && (normal2.roll() <5 || normal2.roll() > -5))
-//	                {
-//
-//	                	showHideDesktop();
-//
-//	                    if(DEBUG)
-//	                    {
-//	                    	System.out.println("Show/Hide Desktop");
-//	                    }
-//
-//	                	keystroke = true;
-//
-//	                	// To slow down the framerate, I found this would help avoid any sort of incorrect behaviour 
-//	                	try {
-//							Thread.sleep(200);
-//						} catch (InterruptedException e) {
-//							e.printStackTrace();
-//						}
-//	                }
-//	                else
-//	                {
-//	                	keystroke = false;
-//
-//	                }
-
-
-
-
-	            }
-
+            	
+		        myAgent.updateHands(
+            			x_1,
+            			y_1,
+            			x_2,
+            			y_2,
+            			z_1,
+            			z_2
+            			);
             }
-            
-            //slow();
+
         }
-    }
-    
-    
-    // Slows down the frame rate
-    private void slow(){
-    	try {
-			Thread.sleep(SLOW);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
     }
     
     public void moveMouse(float x, float y)
     {
     	if (!ENABLE_MOUSE)
     		return;
-    	 Robot mouseHandler;
-    	 
-    	 if(cur_x != x || cur_y != y){
 
+    	 Robot mouseHandler;
+    	 //if(cur_x != x || cur_y != y){
+    	 if(Math.abs(cur_x - x) > 1 || Math.abs(cur_y - y) > 1){
     		 cur_x = x;
 	    	 cur_y = y;
-
 				try {
 					//model.updatePosition(x, y);
 					mouseHandler = new Robot();
@@ -505,7 +471,7 @@ public class LeapListener extends Listener {
     	 
     	
 				try {
-
+					System.out.println("here...");
 					mouseHandler = new Robot();
 					mouseHandler.mousePress(input);
 
@@ -548,89 +514,6 @@ public class LeapListener extends Listener {
     	 
     	 
     }   
-    
-    
-    public void showHideDesktop()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_WINDOWS);
-					keyHandler.keyPress(KeyEvent.VK_D);
-					keyHandler.keyRelease(KeyEvent.VK_WINDOWS);
-					keyHandler.keyRelease(KeyEvent.VK_D);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-    	 
-    	 
-    }
-
-    public void copy()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_CONTROL);
-					keyHandler.keyPress(KeyEvent.VK_C);
-					keyHandler.keyRelease(KeyEvent.VK_CONTROL);
-					keyHandler.keyRelease(KeyEvent.VK_V);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-
-    	 
-    	 
-    }
-
-    public void paste()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_CONTROL);
-					keyHandler.keyPress(KeyEvent.VK_V);
-					keyHandler.keyRelease(KeyEvent.VK_CONTROL);
-					keyHandler.keyRelease(KeyEvent.VK_V);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-
-    	 
-    	 
-    }
-    public void switchApplication()
-    {
-    	 Robot keyHandler;
-    	 
-    	
-				try {
-
-					keyHandler = new Robot();
-					keyHandler.keyPress(KeyEvent.VK_ALT);
-					keyHandler.keyPress(KeyEvent.VK_TAB);
-					keyHandler.keyRelease(KeyEvent.VK_ALT);
-					keyHandler.keyRelease(KeyEvent.VK_TAB);
-
-				} catch (AWTException e) {
-					e.printStackTrace();
-				}
-
-    	 
-    	 
-    }
     
     public void setDebug(boolean d){
     	DEBUG = d;
