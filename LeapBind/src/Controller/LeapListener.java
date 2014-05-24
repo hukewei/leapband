@@ -464,7 +464,11 @@ public class LeapListener extends Listener {
                 			xNor_2,
                 			yNorm_2,
 		        			zNorm_1,
-		        			zNorm_2
+		        			zNorm_2,
+		        			hand1.palmVelocity().getY(),
+		        			hand2.palmVelocity().getY(),
+		        			hand1.direction(),
+		        			hand2.direction()
                 	);
             	
 //		        myAgent.updateHands(

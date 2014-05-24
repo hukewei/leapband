@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -68,7 +69,7 @@ public class GameView extends JAgentFrame {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				 play.scaleX = 1.0; 
-				 play.scaleY = 1.0;   
+				 play.scaleY = 1.0;
 				 play.applyFilter();  
 				 play.repaint();   
 	             
@@ -139,16 +140,52 @@ public class GameView extends JAgentFrame {
 				hands.setHand2(((Cordinates) evt.getNewValue()).x,
 						((Cordinates) evt.getNewValue()).y,
 						((Cordinates) evt.getNewValue()).z);
-			} else if (evt.getPropertyName().equals("swipe")) {
-				if ((String)evt.getNewValue() == "DOWN") {
-					Rhythm rhythm = new Rhythm();
-					//Bang out your drum beat  
-					rhythm.setLayer(1, "O..oO...O..oOO.."); 
-					rhythm.addSubstitution('o', "Rs [BASS_DRUM]s"); 
-					Pattern pattern = rhythm.getPattern(); 
-					pattern.repeat(1); 
-					player.play(pattern);
-				}
+//			} else if (evt.getPropertyName().equals("swipe")) {
+//				if ((String)evt.getNewValue() == "DOWN") {
+//					Rhythm rhythm = new Rhythm();
+//					//Bang out your drum beat  
+//					rhythm.setLayer(1, "O..oO...O..oOO.."); 
+//					rhythm.addSubstitution('o', "Rs [BASS_DRUM]s"); 
+//					Pattern pattern = rhythm.getPattern(); 
+//					pattern.repeat(1); 
+//					player.play(pattern);
+//				}
+			} else if (evt.getPropertyName().equals("drum_left")) {
+				System.out.println("property change for drum_left");
+				playDrumLeft.scaleX = 1.3; 
+				playDrumLeft.scaleY = 1.3;
+				playDrumLeft.applyFilter();  
+				playDrumLeft.repaint();
+				 new Timer().schedule( 
+					        new java.util.TimerTask() {
+					            @Override
+					            public void run() {
+					            	playDrumLeft.scaleX = 1.0; 
+					            	playDrumLeft.scaleY = 1.0;
+					            	playDrumLeft.applyFilter();  
+					            	playDrumLeft.repaint(); 
+					            }
+					        }, 
+					        200 
+				);
+			} else if (evt.getPropertyName().equals("drum_right")) {
+				System.out.println("property change for drum_right");
+				playDrumRight.scaleX = 1.3; 
+				playDrumRight.scaleY = 1.3;
+				playDrumRight.applyFilter();  
+				playDrumRight.repaint();
+				 new Timer().schedule( 
+					        new java.util.TimerTask() {
+					            @Override
+					            public void run() {
+					            	playDrumRight.scaleX = 1.0; 
+					            	playDrumRight.scaleY = 1.0;
+					            	playDrumRight.applyFilter();  
+					            	playDrumRight.repaint(); 
+					            }
+					        }, 
+					        200 
+				);
 			}
 		}
 
