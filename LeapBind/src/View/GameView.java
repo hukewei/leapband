@@ -53,14 +53,14 @@ public class GameView extends JAgentFrame {
 //		JPanel hand_pane = new JPanel();
 //		hand_pane.add(hands);
 		playDrumLeft = new ScaleLabel();
-		instrumentX1=(int)(Constance.Windows_width*0.08);
-		instrumentY1= (int)(Constance.Windows_height*0.62);
+		instrumentX1=(int)(Constance.Windows_width*0.05);
+		instrumentY1= (int)(Constance.Windows_height*0.66);
 		playDrumLeft.setBounds(instrumentX1,instrumentY1, Constance.Windows_width/2, 300);
 		//hands.add(playDrumLeft);
 		
 		playDrumRight = new ScaleLabel();
-		instrumentX2=(int)(Constance.Windows_width*0.5);
-		instrumentY2= (int)(Constance.Windows_width*0.335);
+		instrumentX2=(int)(Constance.Windows_width*0.47);
+		instrumentY2= (int)(Constance.Windows_height*0.66);
 		playDrumRight.setBounds(instrumentX2,instrumentY2, Constance.Windows_width/2, 300);
 		//hands.add(playDrumRight);
 		

@@ -35,7 +35,7 @@ public class ControlPane extends JPanel{
 	private int height;
 	JLabel player;
 	Timer click_task = null;
-	
+	private JButton home;
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
 		this.height=Constance.Windows_height;
@@ -49,16 +49,19 @@ public class ControlPane extends JPanel{
 		this.setBackground(new Color(255,255,204,200));
 		
 		
-		JButton home = new JButton();
+		home = new JButton();
 		Icon icon = new ImageIcon("src/images/home.png");
 		//home.setPreferredSize(new Dimension(100,100));
 		home.setBounds((int) (width*0.1),(int) (height*0.05),100,100);
 		home.setIcon(icon);
-		home.setBackground(Color.WHITE);
+		//home.setBackground(Color.WHITE);
+		home.setOpaque(false);
+		home.setBorderPainted(false);
 		home.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				home.setBorderPainted(false);
 				Toolkit toolkit = Toolkit.getDefaultToolkit();
 				Image cursorImage = toolkit.getImage("src/images/cursor.png");
 				Point cursorHotSpot = new Point(0,0);
@@ -72,6 +75,7 @@ public class ControlPane extends JPanel{
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				home.setBorderPainted(true);
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
 				click_task.schedule( 
