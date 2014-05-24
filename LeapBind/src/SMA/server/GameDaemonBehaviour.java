@@ -2,6 +2,7 @@ package SMA.server;
 import Utilities.Constance;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 
 @SuppressWarnings("serial")
@@ -18,8 +19,12 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 
 	@Override
 	public void action() {
+		MessageTemplate mt = MessageTemplate.or(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
+				MessageTemplate.MatchContent("listGroup")), 
+				MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE), 
+						MessageTemplate.MatchContent(Constance.roomselect_Mode)));
 		
-		ACLMessage message=myAgent.receive();
+		ACLMessage message=myAgent.receive(mt);
 		
 		if(message!=null && message.getPerformative()==ACLMessage.REQUEST){
 			//isPrint=true;

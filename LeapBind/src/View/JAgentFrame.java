@@ -2,14 +2,10 @@ package View;
 
 
 
-import jade.gui.GuiEvent;
-
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.MemoryImageSource;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,7 +14,6 @@ import java.util.Timer;
 import javax.swing.JFrame;
 
 import SMA.user.UserAgent;
-import Utilities.Constance;
 
 
 public abstract class JAgentFrame extends JFrame implements PropertyChangeListener{

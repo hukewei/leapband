@@ -36,10 +36,10 @@ public class UserMain {
 //			c2.start();
 //			AgentController c3 = operationContainer.createNewAgent(
 //					"User_3",
-//					"SMA.UserAgent",
+//					"SMA.user.UserAgent",
 //					null);
 //			c3.start();
-		
+//		
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}

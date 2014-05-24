@@ -24,12 +24,14 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
-				MessageTemplate.MatchConversationId(Constance.MEMBER_CHANGE));
+		MessageTemplate mt = MessageTemplate.or(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchConversationId(myAgent.getRoomId())), 
+				MessageTemplate.MatchContent(Constance.CONFIRM_START)),
+				MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
+				MessageTemplate.MatchConversationId(Constance.MEMBER_CHANGE)));
 		ACLMessage message= myAgent.receive(mt);
 
 		if(message!=null){
-			if (message.getConversationId().equals(Constance.MEMBER_CHANGE)) {
+			if (message.getPerformative() == ACLMessage.INFORM) {
 				try {
 					myAgent.setDictPlayer((DefaultListModel<String>)message.getContentObject());
 					if (!myAgent.getDictPlayer().contains(myAgent.getName())) {
@@ -39,7 +41,9 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 				} catch (UnreadableException e) {
 					e.printStackTrace();
 				}
-			}			
+			} else if(message.getPerformative() == ACLMessage.CONFIRM){
+				myAgent.changeToGameView();
+			}
 		}
 		
 	}

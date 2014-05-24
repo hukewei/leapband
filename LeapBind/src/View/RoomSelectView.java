@@ -3,24 +3,18 @@ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JList;
 
 import SMA.user.UserAgent;
@@ -32,8 +26,8 @@ public class RoomSelectView extends JAgentFrame {
 	private JList<String> list_room;
 	private JButton create_room;
 	private JButton enter_room;
+	private JButton home;
 	
-	@SuppressWarnings("unchecked")
 	public RoomSelectView(UserAgent agent) {
 		super(agent);
 		this.setTitle("Room View");
@@ -45,21 +39,20 @@ public class RoomSelectView extends JAgentFrame {
 		this.add(imagePanel);
 		
 		//load model to list
+		
 		list_room = new JList<String>();
+		
 		//list_room.setModel(myAgent.getDict());
 		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
-		list_room.setOpaque(false);
+		list_room.setOpaque(false);	
+		((JComponent) list_room.getCellRenderer()).setOpaque(false);
 		list_room.setBackground(new Color(255,255,204,100));
 		//list_room.setBackground(Color.LIGHT_GRAY);
-		list_room.setBounds(300,150,500,500);
+		list_room.setBounds((int) (Constance.Windows_width*0.3),(int) (Constance.Windows_height*0.2),(int) (Constance.Windows_width*0.35),(int) (Constance.Windows_height*0.7));
 		list_room.setFixedCellHeight(80);
 		list_room.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_room);
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		Image cursorImage = toolkit.getImage("src/images/cursor.png");
-		Point cursorHotSpot = new Point(0,0);
-		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-		this.setCursor(customCursor);
+		
 		//this.setLayout(null);
 		create_room = new JButton("create room");
 		create_room.setBounds(950,150,300, 150);
@@ -84,6 +77,7 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				System.out.println("mouse exit");
 				changeCursorImage("src/images/cursor.png");
 				if (click_task != null) {
 					click_task.cancel();
@@ -95,6 +89,7 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				System.out.println("mouse entered");
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
 				click_task.schedule( 
@@ -109,7 +104,6 @@ public class RoomSelectView extends JAgentFrame {
 				        Constance.click_delay 
 				);
 				create_room.setBorder(new RoundedBorder(new Color(224,224,224,50)));
-				
 			}
 			
 			@Override
@@ -177,12 +171,14 @@ public class RoomSelectView extends JAgentFrame {
 			}
 		});
 		imagePanel.add(enter_room);
-		JButton home = new JButton();
+		home = new JButton();
 		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
-		home.setContentAreaFilled(false);
-		home.addMouseListener(new HomeMouseListener(this));
+		//home.setContentAreaFilled(false);
+		home.setOpaque(false);
+		home.setBorderPainted(false);
+		home.addMouseListener(new HomeMouseListener(this,home));
 		imagePanel.add(home);
 		
 		/*create_room.addActionListener(new ActionListener() {
@@ -213,17 +209,19 @@ public class RoomSelectView extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("swipe")) {
-			int current_index = list_room.getSelectedIndex();
-			if (current_index > -1 ) {
-				if ((String)evt.getNewValue() == "UP") {
-					current_index--;
-				} else if ((String)evt.getNewValue() == "DOWN") {
-					current_index++;
+		if (isVisible()) {
+			if (evt.getPropertyName().equals("swipe")) {
+				int current_index = list_room.getSelectedIndex();
+				if (current_index > -1 ) {
+					if ((String)evt.getNewValue() == "UP") {
+						current_index--;
+					} else if ((String)evt.getNewValue() == "DOWN") {
+						current_index++;
+					}
 				}
+				list_room.setSelectedIndex(current_index);
+				
 			}
-			list_room.setSelectedIndex(current_index);
-			
 		}
 	}
 	
