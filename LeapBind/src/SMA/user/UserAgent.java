@@ -3,32 +3,22 @@ package SMA.user;
 
 
 import jade.core.AID;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
-import jade.gui.GuiEvent;
-import jade.lang.acl.ACLMessage;
 
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 
 import Controller.LeapListener;
-import Utilities.Constance;
 import Utilities.Cordinates;
 import View.GameView;
 import View.InstrumentSelectView;
+import View.JAgentFrame;
 import View.MenuView;
 import View.MultiwaitRoom;
 import View.RoomSelectView;
-import View.JAgentFrame;
 
 import com.leapmotion.leap.Controller;
-import com.leapmotion.leap.Gesture;
 
 
 
@@ -91,7 +81,7 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-		/*listener = new LeapListener(this);
+		listener = new LeapListener(this);
         controller = new Controller();
         
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
@@ -101,7 +91,7 @@ public class UserAgent extends GuiAgent{
         //listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);
-        controller.addListener(listener);*/
+        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {
