@@ -236,7 +236,7 @@ public class LeapListener extends Listener {
         if (fingers_count > 0) {
           
            
-            if(fingers_count > 5) {
+            if(frame.hands().count()>1) {
             	ENABLE_MOUSE = false;
             } else {
                 ENABLE_MOUSE = true;
@@ -442,7 +442,7 @@ public class LeapListener extends Listener {
 
 			        float xNor_1 = s.widthPixels() * intersect.getX();
 			        float yNorm_1 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
-		        	float zNorm_1 = (float) (intersect.getZ());
+		        	float zNorm_1 = (float) (palm.getZ());
 			        
 			        palm = hand2.palmPosition();
 			        direction = hand2.direction();
@@ -456,7 +456,7 @@ public class LeapListener extends Listener {
 			        float xNor_2 = s.widthPixels() * intersect.getX();
 			        float yNorm_2 = (float) (s.heightPixels() * (1.0f - intersect.getY())/1.3);
 		        
-		        	float zNorm_2 = (float) (intersect.getZ());
+		        	float zNorm_2 = (float) (palm.getZ());
 
                 	myAgent.updateHands(
                 			xNor_1,
