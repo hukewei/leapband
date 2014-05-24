@@ -1,0 +1,5 @@
+main=false
+gui=false
+container-name = LeapBandServer
+host = 172.1.1.1
+local-port=1099

@@ -1,0 +1,277 @@
+package test;
+
+import com.sun.j3d.utils.universe.SimpleUniverse;
+
+import com.sun.j3d.utils.geometry.ColorCube;
+
+import javax.media.j3d.BranchGroup;
+
+/*public class Hello3d {
+
+public Hello3d()
+
+{
+
+   SimpleUniverse universe = new SimpleUniverse();
+
+   BranchGroup group = new BranchGroup();
+
+   group.addChild(new ColorCube(0.3));
+
+   universe.getViewingPlatform().setNominalViewingTransform();
+
+   universe.addBranchGraph(group);
+
+}
+
+public static void main( String[] args ) {
+
+   new Hello3d();
+
+}
+
+} // end of class Hello3d*/
+
+
+
+import com.sun.j3d.utils.universe.*;
+import com.sun.j3d.utils.geometry.ColorCube;
+import javax.media.j3d.*;
+import javax.vecmath.*;
+import java.awt.*;
+import javax.swing.*;
+   
+/**
+ * Simple Java 3D example to display a rotating color cube.
+ */
+/*public class HelloUniverse extends JFrame {
+   
+   // Constructor
+   public HelloUniverse() {
+      // Setup a SimpleUniverse by referencing a Canvas3D
+      GraphicsConfiguration config = SimpleUniverse.getPreferredConfiguration();
+      Canvas3D canvas = new Canvas3D(config);
+      Container cp = this.getContentPane();
+      cp.setLayout(new BorderLayout());
+      cp.add(canvas, BorderLayout.CENTER);
+      SimpleUniverse universe = new SimpleUniverse(canvas);
+   
+      // Set up the viewer looking into the scene.
+      universe.getViewingPlatform().setNominalViewingTransform();
+   
+      // Create the content branch and add it to the universe
+      BranchGroup scene = createSceneGraph();
+      universe.addBranchGraph(scene);
+   
+      // Configure this JFrame
+      this.setSize(250, 250);
+      this.setTitle("Hello Universe");
+      this.setVisible(true);
+   }
+   
+   // Create the content branch
+   public BranchGroup createSceneGraph() {
+      // Create the root node of the content branch
+      BranchGroup nodeRoot = new BranchGroup();
+   
+      // Create the TransformGroup node, which is writable to support
+      // animation, and add it under the root
+      TransformGroup nodeTrans = new TransformGroup();
+      nodeTrans.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+      nodeRoot.addChild(nodeTrans);
+   
+      // Create a visual object node (color cube) and add it to the scene.
+      nodeTrans.addChild(new ColorCube(0.4));
+  
+      // Create a Behavior node to rotate the cube add it to the scene.
+      Transform3D yAxis = new Transform3D();
+      Alpha timing = new Alpha(-1, 4000);
+      RotationInterpolator nodeRotator = new RotationInterpolator(timing,
+            nodeTrans, yAxis, 0.0f, (float)Math.PI * 2.0f);
+      BoundingSphere bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0), 100.0);
+      nodeRotator.setSchedulingBounds(bounds);
+      nodeRoot.addChild(nodeRotator);
+   
+      // Compile to perform optimizations on this content branch.
+      nodeRoot.compile();
+  
+      return nodeRoot;
+   }
+   
+   // Entry main method to invoke the constructor on the event dispatcher thread.
+   public static void main(String args[]) {
+      java.awt.EventQueue.invokeLater(new Runnable() {
+         public void run() {
+            new HelloUniverse();
+         }
+      });
+   }
+}*/
+
+
+import java.awt.Color;
+import com.sun.j3d.utils.geometry.GeometryInfo;
+import com.sun.j3d.utils.geometry.NormalGenerator;
+import com.sun.j3d.utils.universe.SimpleUniverse;
+import javax.media.j3d.*;
+import javax.vecmath.*;
+
+// An Egyptian pyramid
+// Base divided into two triangles
+
+/*public class PyramidExample {
+	public static void main(String[] args) {
+		SimpleUniverse universe = new SimpleUniverse();
+		BranchGroup group = new BranchGroup();
+
+		Point3f e = new Point3f(1.0f, 0.0f, 0.0f); // east
+		Point3f s = new Point3f(0.0f, 0.0f, 1.0f); // south
+		Point3f w = new Point3f(-1.0f, 0.0f, 0.0f); // west
+		Point3f n = new Point3f(0.0f, 0.0f, -1.0f); // north
+		Point3f t = new Point3f(0.0f, 0.721f, 0.0f); // top
+
+		TriangleArray pyramidGeometry = new TriangleArray(18,
+				TriangleArray.COORDINATES);
+		pyramidGeometry.setCoordinate(0, e);
+		pyramidGeometry.setCoordinate(1, t);
+		pyramidGeometry.setCoordinate(2, s);
+
+		pyramidGeometry.setCoordinate(3, s);
+		pyramidGeometry.setCoordinate(4, t);
+		pyramidGeometry.setCoordinate(5, w);
+
+		pyramidGeometry.setCoordinate(6, w);
+		pyramidGeometry.setCoordinate(7, t);
+		pyramidGeometry.setCoordinate(8, n);
+
+		pyramidGeometry.setCoordinate(9, n);
+		pyramidGeometry.setCoordinate(10, t);
+		pyramidGeometry.setCoordinate(11, e);
+
+		pyramidGeometry.setCoordinate(12, e);
+		pyramidGeometry.setCoordinate(13, s);
+		pyramidGeometry.setCoordinate(14, w);
+
+		pyramidGeometry.setCoordinate(15, w);
+		pyramidGeometry.setCoordinate(16, n);
+		pyramidGeometry.setCoordinate(17, e);
+		GeometryInfo geometryInfo = new GeometryInfo(pyramidGeometry);
+		NormalGenerator ng = new NormalGenerator();
+		ng.generateNormals(geometryInfo);
+
+		GeometryArray result = geometryInfo.getGeometryArray();
+		
+		// yellow appearance
+		Appearance appearance = new Appearance();
+		Color3f color = new Color3f(Color.yellow);
+		Color3f black = new Color3f(0.0f, 0.0f, 0.0f);
+		Color3f white = new Color3f(1.0f, 1.0f, 1.0f);
+		Texture texture = new Texture2D();
+		TextureAttributes texAttr = new TextureAttributes();
+		texAttr.setTextureMode(TextureAttributes.MODULATE);
+		texture.setBoundaryModeS(Texture.WRAP);
+		texture.setBoundaryModeT(Texture.WRAP);
+		texture.setBoundaryColor(new Color4f(0.0f, 1.0f, 0.0f, 0.0f));
+		Material mat = new Material(color, black, color, white, 70f);
+		appearance.setTextureAttributes(texAttr);
+		appearance.setMaterial(mat);
+		appearance.setTexture(texture);
+		Shape3D shape = new Shape3D(result, appearance);
+		group.addChild(shape);
+
+		// above pyramid
+		Vector3f viewTranslation = new Vector3f();
+		viewTranslation.z = 3;
+		viewTranslation.x = 0f;
+		viewTranslation.y = .3f;
+		Transform3D viewTransform = new Transform3D();
+		viewTransform.setTranslation(viewTranslation);
+		Transform3D rotation = new Transform3D();
+		rotation.rotX(-Math.PI / 12.0d);
+		rotation.mul(viewTransform);
+		universe.getViewingPlatform().getViewPlatformTransform().setTransform(
+				rotation);
+		universe.getViewingPlatform().getViewPlatformTransform().getTransform(
+				viewTransform);
+		
+		// lights
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0, 0.0, 0.0),
+				1000.0);
+		Color3f light1Color = new Color3f(.7f, .7f, .7f);
+		Vector3f light1Direction = new Vector3f(4.0f, -7.0f, -12.0f);
+		DirectionalLight light1 = new DirectionalLight(light1Color, light1Direction);
+		light1.setInfluencingBounds(bounds);
+		group.addChild(light1);
+		Color3f ambientColor = new Color3f(.4f, .4f, .4f);
+		AmbientLight ambientLightNode = new AmbientLight(ambientColor);
+		ambientLightNode.setInfluencingBounds(bounds);
+		group.addChild(ambientLightNode);
+		
+		universe.addBranchGraph(group);
+	}
+}
+*/
+
+
+
+import javax.media.j3d.Appearance;
+import javax.media.j3d.Transform3D;
+import javax.media.j3d.TransformGroup;
+import javax.vecmath.AxisAngle4f;
+import javax.vecmath.Vector3f;
+import com.sun.j3d.utils.geometry.Cylinder;
+
+public class PyramidExample {
+           
+    private Vector3f tempVec = new Vector3f();
+    private Vector3f crossVec = new Vector3f();
+    private static final Vector3f YAXIS = new Vector3f(0, 1, 0);
+    private Transform3D tempTrans = new Transform3D();
+    private Transform3D tempTrans2 = new Transform3D();
+    private AxisAngle4f tempAA = new AxisAngle4f();
+    private TransformGroup bondGroup=new TransformGroup();
+    private TransformGroup bondsGroup=new TransformGroup();
+      
+    public TransformGroup drawBonds(double[][] coordsBond,Appearance appBond,float radious){
+
+                        // coordsBond = {x1,y1,z1,x2,y2,z2}
+                        float x,y,z;
+                        double dx,dy,dz,length;
+                       
+            for(int i=0;i                    
+                       
+                        x=(float)(coordsBond[i][0]+coordsBond[i][3]);
+                        y=(float)(coordsBond[i][1]+coordsBond[i][4]);
+                        z=(float)(coordsBond[i][2]+coordsBond[i][5]);
+                        dx=(coordsBond[i][3]-coordsBond[i][0]);
+                        dy=(coordsBond[i][4]-coordsBond[i][1]);
+                        dz=(coordsBond[i][5]-coordsBond[i][2]);
+                       
+                        length=Math.sqrt(dx*dx+dy*dy+dz*dz);
+                       
+                        tempVec.set((float)dx, (float)dy,(float) dz);
+                       
+                         // Find axis of rotation
+            tempVec.normalize();
+            crossVec.cross(YAXIS, tempVec);
+           
+         // Find amount of rotation and put into matrix
+            tempAA.set(crossVec, (float)Math.acos(YAXIS.dot(tempVec)));
+            tempTrans.set(tempAA);
+           
+           
+         // Transform to midpoint between two nodes
+            tempTrans2.setIdentity();
+            tempTrans2.setTranslation(new Vector3f(x/2, y/2, z/2));
+           
+            tempTrans2.mul(tempTrans);         
+          
+            bondGroup=new TransformGroup(tempTrans2);          
+            Cylinder bond=new Cylinder(radious, (float)length,appBond);
+             bondGroup.addChild(bond);
+             bondsGroup.addChild(bondGroup);            
+                       
+            }//End of for loop
+                        return bondsGroup;
+            }
+}

@@ -1,0 +1,358 @@
+!SESSION 2014-05-24 21:59:00.574 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_55
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 21:59:45.988
+!MESSAGE Invalid ZIP archive: libs/libLeap.dylib [in LeapBind]
+
+!ENTRY org.apache.log4j 4 0 2014-05-24 21:59:46.234
+!MESSAGE org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl  - <default> [in libs/libLeap.dylib [in LeapBind]] does not exist
+
+!STACK 1
+Java Model Exception: Java Model Status [<default> [in libs/libLeap.dylib [in LeapBind]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:495)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.buildStructure(JarPackageFragment.java:50)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:258)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:518)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:255)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:241)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.storedNonJavaResources(JarPackageFragment.java:206)
+	at org.eclipse.jdt.internal.core.JarPackageFragmentRoot.getNonJavaResources(JarPackageFragmentRoot.java:169)
+	at org.eclipse.xtext.ui.resource.PackageFragmentRootWalker.traverse(PackageFragmentRootWalker.java:52)
+	at org.eclipse.xtext.ui.resource.SourceAttachmentPackageFragmentRootWalker.traverse(SourceAttachmentPackageFragmentRootWalker.java:168)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeData(Storage2UriMapperJavaImpl.java:284)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.getCachedData(Storage2UriMapperJavaImpl.java:222)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.updateCache(Storage2UriMapperJavaImpl.java:373)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeCache(Storage2UriMapperJavaImpl.java:417)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperImpl.initializeCache(Storage2UriMapperImpl.java:154)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.load(AbstractBuilderState.java:62)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.ensureLoaded(AbstractBuilderState.java:69)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.getExportedObjects(AbstractBuilderState.java:178)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.isDerived(DeltaConverter.java:279)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertRemovedType(DeltaConverter.java:229)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertRemovedTypes(DeltaConverter.java:403)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertRemovedTypes(DeltaConverter.java:395)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnit(DeltaConverter.java:150)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:353)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convert(DeltaConverter.java:133)
+	at org.eclipse.xtext.builder.impl.javasupport.JavaChangeQueueFiller.elementChanged(JavaChangeQueueFiller.java:37)
+	at org.eclipse.jdt.internal.core.DeltaProcessor$4.run(DeltaProcessor.java:1670)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.notifyListeners(DeltaProcessor.java:1660)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.firePostChangeDelta(DeltaProcessor.java:1494)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.fire(DeltaProcessor.java:1470)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.resourceChanged(DeltaProcessor.java:2082)
+	at org.eclipse.jdt.internal.core.DeltaProcessingState.resourceChanged(DeltaProcessingState.java:470)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.checkpoint(Workspace.java:557)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation$1.run(PerformChangeOperation.java:263)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:306)
+	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:92)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:218)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:87)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2014-05-24 21:59:46.234
+!MESSAGE <default> [in libs/libLeap.dylib [in LeapBind]] does not exist
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 21:59:46.241
+!MESSAGE Invalid ZIP archive: libs/libLeapJava.dylib [in LeapBind]
+
+!ENTRY org.apache.log4j 4 0 2014-05-24 21:59:46.244
+!MESSAGE org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl  - <default> [in libs/libLeapJava.dylib [in LeapBind]] does not exist
+
+!STACK 1
+Java Model Exception: Java Model Status [<default> [in libs/libLeapJava.dylib [in LeapBind]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:495)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.buildStructure(JarPackageFragment.java:50)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:258)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:518)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:255)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:241)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.storedNonJavaResources(JarPackageFragment.java:206)
+	at org.eclipse.jdt.internal.core.JarPackageFragmentRoot.getNonJavaResources(JarPackageFragmentRoot.java:169)
+	at org.eclipse.xtext.ui.resource.PackageFragmentRootWalker.traverse(PackageFragmentRootWalker.java:52)
+	at org.eclipse.xtext.ui.resource.SourceAttachmentPackageFragmentRootWalker.traverse(SourceAttachmentPackageFragmentRootWalker.java:168)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeData(Storage2UriMapperJavaImpl.java:284)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.getCachedData(Storage2UriMapperJavaImpl.java:222)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.updateCache(Storage2UriMapperJavaImpl.java:373)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeCache(Storage2UriMapperJavaImpl.java:417)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperImpl.initializeCache(Storage2UriMapperImpl.java:154)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.load(AbstractBuilderState.java:62)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.ensureLoaded(AbstractBuilderState.java:69)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.getExportedObjects(AbstractBuilderState.java:178)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.isDerived(DeltaConverter.java:279)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertRemovedType(DeltaConverter.java:229)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertRemovedTypes(DeltaConverter.java:403)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertRemovedTypes(DeltaConverter.java:395)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnit(DeltaConverter.java:150)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:353)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:357)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convert(DeltaConverter.java:133)
+	at org.eclipse.xtext.builder.impl.javasupport.JavaChangeQueueFiller.elementChanged(JavaChangeQueueFiller.java:37)
+	at org.eclipse.jdt.internal.core.DeltaProcessor$4.run(DeltaProcessor.java:1670)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.notifyListeners(DeltaProcessor.java:1660)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.firePostChangeDelta(DeltaProcessor.java:1494)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.fire(DeltaProcessor.java:1470)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.resourceChanged(DeltaProcessor.java:2082)
+	at org.eclipse.jdt.internal.core.DeltaProcessingState.resourceChanged(DeltaProcessingState.java:470)
+	at org.eclipse.core.internal.events.NotificationManager$1.run(NotificationManager.java:291)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.NotificationManager.notify(NotificationManager.java:285)
+	at org.eclipse.core.internal.events.NotificationManager.broadcastChanges(NotificationManager.java:149)
+	at org.eclipse.core.internal.resources.Workspace.broadcastPostChange(Workspace.java:395)
+	at org.eclipse.core.internal.resources.Workspace.checkpoint(Workspace.java:557)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation$1.run(PerformChangeOperation.java:263)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:306)
+	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:92)
+	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:218)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2344)
+	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:87)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:121)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2014-05-24 21:59:46.244
+!MESSAGE <default> [in libs/libLeapJava.dylib [in LeapBind]] does not exist
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 23:45:00.172
+!MESSAGE Invalid ZIP archive: libs/libLeap.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 23:45:00.184
+!MESSAGE Invalid ZIP archive: libs/libLeapJava.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 23:45:27.596
+!MESSAGE Invalid ZIP archive: libs/libLeap.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 23:45:27.602
+!MESSAGE Invalid ZIP archive: libs/libLeapJava.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 23:51:28.172
+!MESSAGE Invalid ZIP archive: libs/libLeap.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-24 23:51:28.174
+!MESSAGE Invalid ZIP archive: libs/libLeapJava.dylib [in LeapBind]
+!SESSION 2014-05-25 00:54:06.141 -----------------------------------------------
+eclipse.buildId=M20120208-0800
+java.version=1.7.0_55
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=zh_CN
+Command-line arguments:  -os win32 -ws win32 -arch x86
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-25 00:54:18.819
+!MESSAGE Invalid ZIP archive: libs/libLeap.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-25 00:54:18.834
+!MESSAGE Invalid ZIP archive: libs/libLeapJava.dylib [in LeapBind]
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-25 01:08:08.943
+!MESSAGE Invalid ZIP archive: libs/libLeap.dylib [in LeapBind]
+
+!ENTRY org.apache.log4j 4 0 2014-05-25 01:08:08.965
+!MESSAGE org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl  - <default> [in libs/libLeap.dylib [in LeapBind]] does not exist
+
+!STACK 1
+Java Model Exception: Java Model Status [<default> [in libs/libLeap.dylib [in LeapBind]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:495)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.buildStructure(JarPackageFragment.java:50)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:258)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:518)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:255)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:241)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.storedNonJavaResources(JarPackageFragment.java:206)
+	at org.eclipse.jdt.internal.core.JarPackageFragmentRoot.getNonJavaResources(JarPackageFragmentRoot.java:169)
+	at org.eclipse.xtext.ui.resource.PackageFragmentRootWalker.traverse(PackageFragmentRootWalker.java:52)
+	at org.eclipse.xtext.ui.resource.SourceAttachmentPackageFragmentRootWalker.traverse(SourceAttachmentPackageFragmentRootWalker.java:168)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeData(Storage2UriMapperJavaImpl.java:284)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.getCachedData(Storage2UriMapperJavaImpl.java:222)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.updateCache(Storage2UriMapperJavaImpl.java:373)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeCache(Storage2UriMapperJavaImpl.java:417)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperImpl.initializeCache(Storage2UriMapperImpl.java:154)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.load(AbstractBuilderState.java:62)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.ensureLoaded(AbstractBuilderState.java:69)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.getExportedObjects(AbstractBuilderState.java:178)
+	at org.eclipse.xtext.builder.impl.DirtyStateAwareResourceDescriptions.getExportedObjects(DirtyStateAwareResourceDescriptions.java:149)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.isDerived(DeltaConverter.java:279)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.isDerived(DeltaConverter.java:271)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertChangedType(DeltaConverter.java:194)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertChangedCompilationUnit(DeltaConverter.java:177)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnit(DeltaConverter.java:152)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:353)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convert(DeltaConverter.java:133)
+	at org.eclipse.xtext.common.types.ui.notification.TypeResourceUnloader.getAsResourceDescriptionChange(TypeResourceUnloader.java:48)
+	at org.eclipse.xtext.common.types.ui.notification.TypeResourceUnloader.elementChanged(TypeResourceUnloader.java:42)
+	at org.eclipse.jdt.internal.core.DeltaProcessor$4.run(DeltaProcessor.java:1670)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.notifyListeners(DeltaProcessor.java:1660)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.fireReconcileDelta(DeltaProcessor.java:1512)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.fire(DeltaProcessor.java:1471)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:769)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:788)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1244)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1205)
+	at org.eclipse.jdt.core.refactoring.CompilationUnitChange.releaseDocument(CompilationUnitChange.java:98)
+	at org.eclipse.ltk.core.refactoring.TextChange.perform(TextChange.java:248)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.ChangeCorrectionProposal.performChange(ChangeCorrectionProposal.java:172)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.CUCorrectionProposal.performChange(CUCorrectionProposal.java:334)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.AddImportCorrectionProposal.performChange(AddImportCorrectionProposal.java:47)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.CUCorrectionProposal.apply(CUCorrectionProposal.java:311)
+	at org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover$AnnotationInformationControl.apply(AbstractAnnotationHover.java:537)
+	at org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover$AnnotationInformationControl.access$2(AbstractAnnotationHover.java:514)
+	at org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover$AnnotationInformationControl$5.widgetSelected(AbstractAnnotationHover.java:508)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:240)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1077)
+	at org.eclipse.swt.widgets.Widget.sendSelectionEvent(Widget.java:1094)
+	at org.eclipse.swt.widgets.Link.wmNotifyChild(Link.java:1071)
+	at org.eclipse.swt.widgets.Control.wmNotify(Control.java:5534)
+	at org.eclipse.swt.widgets.Composite.wmNotify(Composite.java:1896)
+	at org.eclipse.swt.widgets.Control.WM_NOTIFY(Control.java:5086)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4584)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4985)
+	at org.eclipse.swt.internal.win32.OS.CallWindowProcW(Native Method)
+	at org.eclipse.swt.internal.win32.OS.CallWindowProc(OS.java:2425)
+	at org.eclipse.swt.widgets.Link.callWindowProc(Link.java:172)
+	at org.eclipse.swt.widgets.Widget.wmLButtonUp(Widget.java:2057)
+	at org.eclipse.swt.widgets.Control.WM_LBUTTONUP(Control.java:4912)
+	at org.eclipse.swt.widgets.Link.WM_LBUTTONUP(Link.java:909)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4565)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessageW(Native Method)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(OS.java:2531)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:2701)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2665)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2499)
+	at org.eclipse.ui.internal.Workbench$7.run(Workbench.java:679)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:668)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:123)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:344)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:622)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:577)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1410)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2014-05-25 01:08:08.966
+!MESSAGE <default> [in libs/libLeap.dylib [in LeapBind]] does not exist
+
+!ENTRY org.eclipse.jdt.core 4 0 2014-05-25 01:08:08.968
+!MESSAGE Invalid ZIP archive: libs/libLeapJava.dylib [in LeapBind]
+
+!ENTRY org.apache.log4j 4 0 2014-05-25 01:08:08.972
+!MESSAGE org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl  - <default> [in libs/libLeapJava.dylib [in LeapBind]] does not exist
+
+!STACK 1
+Java Model Exception: Java Model Status [<default> [in libs/libLeapJava.dylib [in LeapBind]] does not exist]
+	at org.eclipse.jdt.internal.core.JavaElement.newNotPresentException(JavaElement.java:495)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.buildStructure(JarPackageFragment.java:50)
+	at org.eclipse.jdt.internal.core.Openable.generateInfos(Openable.java:258)
+	at org.eclipse.jdt.internal.core.JavaElement.openWhenClosed(JavaElement.java:518)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:255)
+	at org.eclipse.jdt.internal.core.JavaElement.getElementInfo(JavaElement.java:241)
+	at org.eclipse.jdt.internal.core.JarPackageFragment.storedNonJavaResources(JarPackageFragment.java:206)
+	at org.eclipse.jdt.internal.core.JarPackageFragmentRoot.getNonJavaResources(JarPackageFragmentRoot.java:169)
+	at org.eclipse.xtext.ui.resource.PackageFragmentRootWalker.traverse(PackageFragmentRootWalker.java:52)
+	at org.eclipse.xtext.ui.resource.SourceAttachmentPackageFragmentRootWalker.traverse(SourceAttachmentPackageFragmentRootWalker.java:168)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeData(Storage2UriMapperJavaImpl.java:284)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.getCachedData(Storage2UriMapperJavaImpl.java:222)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.updateCache(Storage2UriMapperJavaImpl.java:373)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperJavaImpl.initializeCache(Storage2UriMapperJavaImpl.java:417)
+	at org.eclipse.xtext.ui.resource.Storage2UriMapperImpl.initializeCache(Storage2UriMapperImpl.java:154)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.load(AbstractBuilderState.java:62)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.ensureLoaded(AbstractBuilderState.java:69)
+	at org.eclipse.xtext.builder.builderState.AbstractBuilderState.getExportedObjects(AbstractBuilderState.java:178)
+	at org.eclipse.xtext.builder.impl.DirtyStateAwareResourceDescriptions.getExportedObjects(DirtyStateAwareResourceDescriptions.java:149)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.isDerived(DeltaConverter.java:279)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.isDerived(DeltaConverter.java:271)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertChangedType(DeltaConverter.java:194)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertChangedCompilationUnit(DeltaConverter.java:177)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnit(DeltaConverter.java:152)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convertCompilationUnits(DeltaConverter.java:353)
+	at org.eclipse.xtext.common.types.ui.notification.DeltaConverter.convert(DeltaConverter.java:133)
+	at org.eclipse.xtext.common.types.ui.notification.TypeResourceUnloader.getAsResourceDescriptionChange(TypeResourceUnloader.java:48)
+	at org.eclipse.xtext.common.types.ui.notification.TypeResourceUnloader.elementChanged(TypeResourceUnloader.java:42)
+	at org.eclipse.jdt.internal.core.DeltaProcessor$4.run(DeltaProcessor.java:1670)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.notifyListeners(DeltaProcessor.java:1660)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.fireReconcileDelta(DeltaProcessor.java:1512)
+	at org.eclipse.jdt.internal.core.DeltaProcessor.fire(DeltaProcessor.java:1471)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:769)
+	at org.eclipse.jdt.internal.core.JavaModelOperation.runOperation(JavaModelOperation.java:788)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1244)
+	at org.eclipse.jdt.internal.core.CompilationUnit.reconcile(CompilationUnit.java:1205)
+	at org.eclipse.jdt.core.refactoring.CompilationUnitChange.releaseDocument(CompilationUnitChange.java:98)
+	at org.eclipse.ltk.core.refactoring.TextChange.perform(TextChange.java:248)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.ChangeCorrectionProposal.performChange(ChangeCorrectionProposal.java:172)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.CUCorrectionProposal.performChange(CUCorrectionProposal.java:334)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.AddImportCorrectionProposal.performChange(AddImportCorrectionProposal.java:47)
+	at org.eclipse.jdt.internal.ui.text.correction.proposals.CUCorrectionProposal.apply(CUCorrectionProposal.java:311)
+	at org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover$AnnotationInformationControl.apply(AbstractAnnotationHover.java:537)
+	at org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover$AnnotationInformationControl.access$2(AbstractAnnotationHover.java:514)
+	at org.eclipse.jdt.internal.ui.text.java.hover.AbstractAnnotationHover$AnnotationInformationControl$5.widgetSelected(AbstractAnnotationHover.java:508)
+	at org.eclipse.swt.widgets.TypedListener.handleEvent(TypedListener.java:240)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1053)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1077)
+	at org.eclipse.swt.widgets.Widget.sendSelectionEvent(Widget.java:1094)
+	at org.eclipse.swt.widgets.Link.wmNotifyChild(Link.java:1071)
+	at org.eclipse.swt.widgets.Control.wmNotify(Control.java:5534)
+	at org.eclipse.swt.widgets.Composite.wmNotify(Composite.java:1896)
+	at org.eclipse.swt.widgets.Control.WM_NOTIFY(Control.java:5086)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4584)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4985)
+	at org.eclipse.swt.internal.win32.OS.CallWindowProcW(Native Method)
+	at org.eclipse.swt.internal.win32.OS.CallWindowProc(OS.java:2425)
+	at org.eclipse.swt.widgets.Link.callWindowProc(Link.java:172)
+	at org.eclipse.swt.widgets.Widget.wmLButtonUp(Widget.java:2057)
+	at org.eclipse.swt.widgets.Control.WM_LBUTTONUP(Control.java:4912)
+	at org.eclipse.swt.widgets.Link.WM_LBUTTONUP(Link.java:909)
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4565)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:4972)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessageW(Native Method)
+	at org.eclipse.swt.internal.win32.OS.DispatchMessage(OS.java:2531)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3752)
+	at org.eclipse.ui.internal.Workbench.runEventLoop(Workbench.java:2701)
+	at org.eclipse.ui.internal.Workbench.runUI(Workbench.java:2665)
+	at org.eclipse.ui.internal.Workbench.access$4(Workbench.java:2499)
+	at org.eclipse.ui.internal.Workbench$7.run(Workbench.java:679)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:668)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:149)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:123)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:110)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:79)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:344)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:179)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:622)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:577)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1410)
+!SUBENTRY 1 org.eclipse.jdt.core 4 969 2014-05-25 01:08:08.973
+!MESSAGE <default> [in libs/libLeapJava.dylib [in LeapBind]] does not exist

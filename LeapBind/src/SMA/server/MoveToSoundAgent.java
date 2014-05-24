@@ -20,6 +20,10 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
@@ -28,11 +32,23 @@ import jade.lang.acl.MessageTemplate;
 public class MoveToSoundAgent extends Agent{
 	
 	protected void setup() {
-		
+		DFAgentDescription dfd = new DFAgentDescription();
+		dfd.setName(getAID());
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Organisation");
+		sd.setName("MoveToNote");
+		dfd.addServices(sd);
+		try {
+		DFService.register(this, dfd);
+		}
+		catch (FIPAException fe) {
+		fe.printStackTrace();
+		}
 		
 		this.addBehaviour(new SoundMessageDaemonBehaviour() );	
 		
 	}
+	
 
 	public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 
@@ -48,8 +64,8 @@ public class MoveToSoundAgent extends Agent{
 					NoteInformData data = new NoteInformData();
 					try {
 						MoveInformData moveData = mapper.readValue(message.getContent(), MoveInformData.class);
-/*	
- 						//TEST POUR AGENT
+	
+ 				/*		//TEST POUR AGENT
 						MoveInformData moveData= new MoveInformData();
 						Point3d p3d= new Point3d(375,270,0);
 						Movement move= new Movement();
@@ -91,9 +107,8 @@ public class MoveToSoundAgent extends Agent{
 
 					//AID aid = (AID)message.getAllReplyTo().next();
 					
-					AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);
-
-					
+					//AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);		
+					AID aid=getReceiver();
 					addBehaviour(new SenderInformBehaviour(data, aid));
 					
 				
@@ -174,4 +189,26 @@ public class MoveToSoundAgent extends Agent{
 		}
 	}
 
+	public AID getReceiver() {
+		AID rec = null;
+		DFAgentDescription template =
+		new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Sound");
+		sd.setName("SoundPlay");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(this, template);
+			
+			if (result.length > 0) {
+				System.out.println("Nombre de resultat : " + String.valueOf(result.length));
+				int i = (int)(Math.random() * result.length);
+				System.out.println("Valeur de i : " + String.valueOf(i));
+				rec = result[i].getName();
+			}
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return rec;
+	}
 }
