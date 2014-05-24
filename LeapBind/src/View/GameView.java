@@ -1,6 +1,8 @@
 package View;
 
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -18,6 +20,7 @@ import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.Cordinates;
 import Utilities.CustomImgPanel;
+import Utilities.ScaleLabel;
 
 public class GameView extends JAgentFrame {
 	
@@ -25,7 +28,7 @@ public class GameView extends JAgentFrame {
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
 	private Player player = new Player();
-	public JLabel play;
+	public ScaleLabel play;
 	public int instrumentX;
 	public int instrumentY;
 	
@@ -45,11 +48,51 @@ public class GameView extends JAgentFrame {
 		control_pane.setLayout(null);
 //		JPanel hand_pane = new JPanel();
 //		hand_pane.add(hands);
-		play = new JLabel();
+		play = new ScaleLabel();
 		instrumentX=(int)(Constance.Windows_width*0.08);
 		instrumentY= (int)(Constance.Windows_height*0.3);
 		play.setBounds(instrumentX,instrumentY, Constance.Windows_width, 300);
 		hands.add(play);
+		
+		play.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				 play.scaleX = 1.0; 
+				 play.scaleY = 1.0;   
+				 play.applyFilter();  
+				 play.repaint();   
+	             
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				 play.scaleX *= 1.2; 
+				 play.scaleY *= 1.2;   
+				 play.applyFilter();  
+				 play.repaint();   
+	               
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		
 
 		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/drumBack.jpg");

@@ -49,6 +49,7 @@ public class ControlPane extends JPanel{
 	private Boolean propietaire = true;
 	private int width;
 	private int height;
+	JLabel player;
 	
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
@@ -81,7 +82,7 @@ public class ControlPane extends JPanel{
 		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
-		JLabel player = new JLabel(new ImageIcon("src/images/person2.jpg"));
+		player = new JLabel(new ImageIcon("src/images/person2.jpg"));
 		//player.setPreferredSize(new Dimension(100,100));
 		player.setBounds((int) (width*0.2), (int) (height*0.05), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
