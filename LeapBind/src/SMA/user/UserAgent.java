@@ -3,8 +3,14 @@ package SMA.user;
 
 
 import jade.core.AID;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
+import jade.gui.GuiEvent;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
@@ -19,6 +25,7 @@ import View.MultiwaitRoom;
 import View.RoomSelectView;
 
 import com.leapmotion.leap.Controller;
+import com.leapmotion.leap.Gesture;
 
 
 
