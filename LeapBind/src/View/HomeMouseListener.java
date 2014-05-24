@@ -2,21 +2,29 @@ package View;
 
 import jade.gui.GuiEvent;
 
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Timer;
+
+import javax.swing.JButton;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
 
 public class HomeMouseListener implements MouseListener {
 	JAgentFrame myFrame = null;
-	public HomeMouseListener(JAgentFrame frame) {
+	JButton home = null;
+	public HomeMouseListener(JAgentFrame frame, JButton c) {
 		myFrame = frame;
+		this.home = c;
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
+		if(home!=null){
+			home.setBorderPainted(false);
+		}
 		myFrame.changeCursorImage("src/images/cursor.png");
 		if (myFrame.click_task != null) {
 			myFrame.click_task.cancel();
@@ -26,6 +34,9 @@ public class HomeMouseListener implements MouseListener {
 	
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		if(home!=null){
+			home.setBorderPainted(true);
+		}
 		myFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		myFrame.click_task = new Timer();
 		myFrame.click_task.schedule( 
