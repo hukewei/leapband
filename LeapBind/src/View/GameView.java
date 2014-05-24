@@ -28,9 +28,12 @@ public class GameView extends JAgentFrame {
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
 	private Player player = new Player();
-	public ScaleLabel play;
-	public int instrumentX;
-	public int instrumentY;
+	public ScaleLabel playDrumLeft;
+	public ScaleLabel playDrumRight;
+	public int instrumentX1;
+	public int instrumentY1;
+	public int instrumentX2;
+	public int instrumentY2;
 	
 	public GameView(UserAgent agent) {
 		super(agent);
@@ -48,13 +51,19 @@ public class GameView extends JAgentFrame {
 		control_pane.setLayout(null);
 //		JPanel hand_pane = new JPanel();
 //		hand_pane.add(hands);
-		play = new ScaleLabel();
-		instrumentX=(int)(Constance.Windows_width*0.08);
-		instrumentY= (int)(Constance.Windows_height*0.3);
-		play.setBounds(instrumentX,instrumentY, Constance.Windows_width, 300);
-		hands.add(play);
+		playDrumLeft = new ScaleLabel();
+		instrumentX1=(int)(Constance.Windows_width*0.08);
+		instrumentY1= (int)(Constance.Windows_height*0.62);
+		playDrumLeft.setBounds(instrumentX1,instrumentY1, Constance.Windows_width/2, 300);
+		//hands.add(playDrumLeft);
 		
-		play.addMouseListener(new MouseListener() {
+		playDrumRight = new ScaleLabel();
+		instrumentX2=(int)(Constance.Windows_width*0.5);
+		instrumentY2= (int)(Constance.Windows_width*0.335);
+		playDrumRight.setBounds(instrumentX2,instrumentY2, Constance.Windows_width/2, 300);
+		//hands.add(playDrumRight);
+		
+		/*play.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -92,12 +101,14 @@ public class GameView extends JAgentFrame {
 				
 			}
 		});
-		
+*/		
 		
 
 		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "src/images/drumBack.jpg");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
+		
+		
 		
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
@@ -105,6 +116,10 @@ public class GameView extends JAgentFrame {
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
 		split_pane.setOpaque(false);
 		imagePanel.add(split_pane);
+		
+		imagePanel.add(playDrumLeft);
+		imagePanel.add(playDrumRight);
+		
 	}
 
 

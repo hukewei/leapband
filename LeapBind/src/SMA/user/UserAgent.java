@@ -91,7 +91,7 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-		listener = new LeapListener(this);
+		/*listener = new LeapListener(this);
         controller = new Controller();
         
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
@@ -101,7 +101,7 @@ public class UserAgent extends GuiAgent{
         //listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);
-        controller.addListener(listener);
+        controller.addListener(listener);*/
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -334,7 +334,9 @@ public class UserAgent extends GuiAgent{
 		System.out.println("update dict player");
 	}
 	public int[] getInstrumentPosition(){
-		return new int[]{game_view.instrumentX,game_view.instrumentY};
+		return null;
+		//return new int[]{game_view.instrumentX,game_view.instrumentY};
+		
 		
 	}
 }

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import Utilities.Constance;
 
 
+@SuppressWarnings("serial")
 class HandsTrackPane extends JPanel {
 	private int x_1;
 	private int y_1;
