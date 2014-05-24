@@ -92,7 +92,7 @@ public class LeapListener extends Listener {
         		ENABLE_MOUSE = true;
         	for (int i=0; i < numGestures; i++) {
         	    if (frame.gestures().get(i).type() == Gesture.Type.TYPE_SWIPE && !Swype) {
-        	        ENABLE_MOUSE = false;
+        	        //ENABLE_MOUSE = false;
         	    	SwipeGesture swipe = new SwipeGesture(frame.gestures().get(i));
         	    	if (swipe.speed() > 200) {
         	    		float x_direction = Math.abs(swipe.direction().getX());
@@ -236,7 +236,7 @@ public class LeapListener extends Listener {
         if (fingers_count > 0) {
           
            
-            if(fingers_count > 1) {
+            if(fingers_count > 5) {
             	ENABLE_MOUSE = false;
             } else {
                 ENABLE_MOUSE = true;
@@ -297,38 +297,53 @@ public class LeapListener extends Listener {
 
                 if (screens.isEmpty()) return;
                 Screen s = screens.get(0);
-                PointableList pointables = frame.hands().get(0).pointables();
+//                PointableList pointables = frame.hands().get(0).pointables();
+//
+//                if(pointables.isEmpty()) return;
+//                Pointable firstPointable = null;
+//                for (int i = 0; i < pointables.count(); i++) {
+//                	if (pointables.get(i).isExtended()) {
+//                		firstPointable = pointables.get(i);
+//                		break;
+//                	}
+//				}
+//                if (firstPointable == null) {
+//                	return;
+//                }
+//                Vector intersection = s.intersect(
+//                        firstPointable,
+//                        true, // normalize
+//                        0.95f // clampRatio
+//                );
+//                if (Float.isNaN(intersection.getX()) || Float.isNaN(intersection.getY()))
+//			          return;
+//		        // if the user is not pointing at the screen all components of
+//		        // the returned vector will be Not A Number (NaN)
+//		        // isValid() returns true only if all components are finite
+//		        if (!intersection.isValid()) return;
+//		        float x = s.widthPixels() * intersection.getX();
+//		        // flip y coordinate to standard top-left origin
+//		        float y = (float)(s.heightPixels() * (1.0f - intersection.getY()));
+		        
+		        Vector palm = frame.hands().get(0).palmPosition();
+		        Vector direction = frame.hands().get(0).direction();
+		        Vector intersect = s.intersect(palm, direction, true);
+		              // intersection is in screen coordinates
 
-                if(pointables.isEmpty()) return;
-                Pointable firstPointable = null;
-                for (int i = 0; i < pointables.count(); i++) {
-                	if (pointables.get(i).isExtended()) {
-                		firstPointable = pointables.get(i);
-                		break;
-                	}
-				}
-                if (firstPointable == null) {
-                	return;
-                }
-                Vector intersection = s.intersect(
-                        firstPointable,
-                        true, // normalize
-                        1.0f // clampRatio
-                );
+		       
+		        // test for NaN (not-a-number) result of intersection
+		        if (Float.isNaN(intersect.getX()) || Float.isNaN(intersect.getY()))
+		          return;
 
-		        // if the user is not pointing at the screen all components of
-		        // the returned vector will be Not A Number (NaN)
-		        // isValid() returns true only if all components are finite
-		        if (!intersection.isValid()) return;
-
-		        float x = s.widthPixels() * intersection.getX();
-		        // flip y coordinate to standard top-left origin
-		        float y = s.heightPixels() * (1.0f - intersection.getY());
+		        float x = s.widthPixels() * intersect.getX();
+		        float y = (float) (s.heightPixels() * (1.0f - intersect.getY()));
+		        
 		        moveMouse(x, y);
 
             } else
             {
-                moveMouse(avgPos.getX()*15, SCREEN_Y - avgPos.getY()*5);
+            	//System.out.println("herhe");
+                moveMouse(avgPos.getX() * 15, (SCREEN_Y - avgPos.getY()) * 5);
             }
             if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
             if (frame.hands().count() == 1) {
@@ -472,7 +487,7 @@ public class LeapListener extends Listener {
 
     	 Robot mouseHandler;
     	 //if(cur_x != x || cur_y != y){
-    	 if(Math.abs(cur_x - x) > 1 && Math.abs(cur_y - y) > 1){
+    	 if(Math.abs(cur_x - x) > 5 || Math.abs(cur_y - y) > 5){
     		 cur_x = x;
 	    	 cur_y = y;
 				try {
