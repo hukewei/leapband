@@ -33,11 +33,8 @@ public class ControlPane extends JPanel{
 	private Boolean propietaire = true;
 	private int width;
 	private int height;
-<<<<<<< HEAD
 	JLabel player;
-=======
 	Timer click_task = null;
->>>>>>> 04c9070b45cbe37ff7ac446fc7107b6ad4d4c516
 	
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
