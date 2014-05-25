@@ -7,11 +7,24 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import SMA.user.UserAgent;
+import Utilities.CustomImgPanel;
+import Utilities.ImageFlowItem;
+import Utilities.SongFlowItem;
 
 
 public class musicview extends JFrame{
@@ -19,90 +32,121 @@ public class musicview extends JFrame{
 	private JLabel label;
 	private JLabel labelup;
 	private JLabel labeldown;
-	public musicview(){
-		getContentPane().setBackground(Color.BLACK);
-		final String[] choix = new String[3];
-		final String[] choixmini = new String[3];
-		choix[0]= "-----------------------Canon----------------------";
-		choix[1]= "----------------------Good Life--------------------";
-		choix[2]= "------------------How to save a life-----------------";
-		choixmini[0]= "                                            Canon";
-		choixmini[1]= "                                          Good Life";
-		choixmini[2]= "                                    How to save a life";
+	private String temptext = null;
+	private List<SongFlowItem> songs = new ArrayList<SongFlowItem>();
+	private UserAgent myAgent;
+	
+	public musicview(List<SongFlowItem> loadFromDirectory) {
+		songs=loadFromDirectory;
+	}
+	
+	public musicview(File directory,UserAgent agent){
+		
+		this(SongFlowItem.loadFromDirectory(directory));
+	    this.myAgent=agent;
+		
+		/*String path = "src/songs.txt";
+		BufferedReader br = null;
+		String temp = null;
+		try {
+			br = new BufferedReader(new FileReader(path));
+			while ((temp = br.readLine()) != null) {
+				songs.add(temp);
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("file not exite");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(br!=null) {
+					br.close();
+					br = null;
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}*/
 		this.setTitle("SONGS");
-		this.setSize(500,450);
+		this.setSize(700,500);
 		this.setLocationRelativeTo(null);		
 		this.setLayout(null);
+		CustomImgPanel background=new CustomImgPanel(700, 500,"src/images/musicBackground.jpg");
+		this.add(background);
+		background.setLayout(null);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
-		label = new JLabel(choix[0]);
-		label.setBounds(0, 80, 400, 160);
-    	label.setFont(new Font("Chalkboard", Font.PLAIN, 20));
+		label = new JLabel(getFileName(songs.get(i+1).getLabel()));
+		label.setBounds(0, 120, 500, 160);
+    	label.setFont(new Font("Chalkboard", Font.PLAIN, 50));
+    	label.setHorizontalAlignment(SwingConstants.CENTER);
     	label.setForeground(Color.WHITE);
+    	//label.getComponent(0).getClass().getTypeName();
+    	//System.out.println(label.getComponent(0).getClass().getTypeName());
 
-		labelup = new JLabel(choixmini[1]);
-		labelup.setBounds(0, 0, 400, 160);
+		labelup = new JLabel(getFileName(songs.get(i+2).getLabel()));
+		labelup.setBounds(50, 40, 400, 160);
     	labelup.setFont(new Font("Chalkboard", Font.PLAIN, 20));
-    	labelup.setForeground(Color.WHITE);
+    	labelup.setHorizontalAlignment(SwingConstants.CENTER);
+    	labelup.setForeground(new Color(255,255,255,150));
     	
-		labeldown = new JLabel(choixmini[2]);
-		labeldown.setBounds(0, 160, 400, 160);
+		labeldown = new JLabel(getFileName(songs.get(i).getLabel()));
+		labeldown.setBounds(50, 200, 400, 160);
     	labeldown.setFont(new Font("Chalkboard", Font.PLAIN, 20));
-    	labeldown.setForeground(Color.WHITE);
+    	labeldown.setHorizontalAlignment(SwingConstants.CENTER);
+    	labeldown.setForeground(new Color(255,255,255,150));
 		
 		JButton precedent = new JButton("avant");
-		precedent.setBounds(20,300,100,80);
+		precedent.setBounds(30,350,100,40);
 		JButton suivant = new JButton("next");
-		suivant.setBounds(140,300,100,80);
+		suivant.setBounds(160,350,100,40);
 		JButton valider = new JButton("OK");
-		valider.setBounds(260,290,125,100);
-		suivant.addActionListener(new ActionListener(){
-			int left = 0;
-			int right = 0;
+		valider.setBounds(300,350,125,50);
+		
+		suivant.addActionListener(new ActionListener(){			
 			public void actionPerformed(ActionEvent e) {
 				++i;
-				if(i<0){
-					i=i+1;
-				}
-				if(i==choix.length){
+				if(i==songs.size()){
 					i=0;
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(i+1).getLabel()));
+					labelup.setText(getFileName(songs.get(i+2).getLabel()));					
 				}
-				if(i-1 < 0){
-					left = choix.length-1;
+				else if(i+1 == songs.size()){
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(0).getLabel()));
+					labelup.setText(getFileName(songs.get(1).getLabel()));
 				}
-				else{left = i-1;}
-				if(i+1 == choix.length){
-					right = 0;
+				else if(i+2 == songs.size()){
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(i+1).getLabel()));
+					labelup.setText(getFileName(songs.get(0).getLabel()));
 				}
-				else {right = i+1;}
-				label.setText(choix[i]);
-				labelup.setText(choixmini[left]);
-				labeldown.setText(choixmini[right]);
-				//System.out.println("suivant" +i);
+				else{
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(i+1).getLabel()));
+					labelup.setText(getFileName(songs.get(i+2).getLabel()));
+				}
 			}
 		});
 		precedent.addActionListener(new ActionListener(){
-			int left = 0;
-			int right = 0;
 			public void actionPerformed(ActionEvent e) {
 				--i;
-				if(i == choix.length){
-					i=i-1;
-				}
 				if(i < 0){
-					i=choix.length-1;
+					i = songs.size()-1;
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(0).getLabel()));
+					labelup.setText(getFileName(songs.get(1).getLabel()));
 				}
-				if(i-1 < 0){
-					left = choix.length-1;
+				else if(i == songs.size()-2){
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(i+1).getLabel()));
+					labelup.setText(getFileName(songs.get(0).getLabel()));
 				}
-				else{left = i-1;}
-				if(i+1 == choix.length){
-					right = 0;
+				else{
+					labeldown.setText(getFileName(songs.get(i).getLabel()));
+					label.setText(getFileName(songs.get(i+1).getLabel()));
+					labelup.setText(getFileName(songs.get(i+2).getLabel()));
 				}
-				else {right = i+1;}
-				label.setText(choix[i]);
-				labelup.setText(choixmini[left]);
-				labeldown.setText(choixmini[right]);
-				//System.out.println("precedent "+i);
 			}
 		});
 		valider.addActionListener(new ActionListener(){
@@ -111,12 +155,12 @@ public class musicview extends JFrame{
 				setVisible(false);
 			}
 		});
-		this.add(label);
-		this.add(labelup);
-		this.add(labeldown);
-		this.add(suivant);
-		this.add(precedent);
-		this.add(valider);
+		background.add(label);
+		background.add(labelup);
+		background.add(labeldown);
+		background.add(suivant);
+		background.add(precedent);
+		background.add(valider);
 		this.setVisible(true);
 		
 		// personnel cursor
@@ -125,6 +169,11 @@ public class musicview extends JFrame{
 		Image cursorImage = toolkit.getImage("src/images/cursor.png");
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-		this.setCursor(customCursor);
+		background.setCursor(customCursor);
 	}
+	
+	private String getFileName(String filePath){
+		return filePath.substring(0, filePath.lastIndexOf("."));
+	}
+	
 }

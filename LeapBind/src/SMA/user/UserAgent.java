@@ -98,7 +98,7 @@ public class UserAgent extends GuiAgent{
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
         //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
         //listener.setDebug(true);
-        listener.setClickType(1);
+        listener.setClickType(1); 
         listener.setCalibratedScren(true);
         controller.addListener(listener);
         
