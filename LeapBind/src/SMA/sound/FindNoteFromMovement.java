@@ -1,7 +1,6 @@
 package SMA.sound;
 
 import javax.vecmath.Point3d;
-
 import com.sun.j3d.utils.geometry.Cylinder;
 
 import Utilities.Movement;
@@ -12,6 +11,7 @@ public abstract class FindNoteFromMovement extends OneShotBehaviour {
 	protected Movement movement;
 	protected int note;
 	// speed 400-2000
+
 	
 	public FindNoteFromMovement(Movement movement) {
 		this.movement = movement;
@@ -41,4 +41,5 @@ public abstract class FindNoteFromMovement extends OneShotBehaviour {
 		
 	
 	
+
 }

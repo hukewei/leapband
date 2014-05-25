@@ -3,19 +3,6 @@ package SMA.server;
 
 
 
-import java.io.StringWriter;
-import java.util.UUID;
-
-import javax.vecmath.Point3d;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import SMA.sound.FindNoteTambourFromMovement;
-import Utilities.InstrumentType;
-import Utilities.MoveInformData;
-import Utilities.Movement;
-import Utilities.NoteInformData;
-import Utilities.NoteInformData.NoteActionType;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -26,6 +13,16 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.io.StringWriter;
+import java.util.UUID;
+
+import SMA.sound.FindNoteTambourFromMovement;
+import Utilities.MoveInformData;
+import Utilities.NoteInformData;
+import Utilities.NoteInformData.NoteActionType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @SuppressWarnings("serial")
@@ -44,6 +41,7 @@ public class MoveToSoundAgent extends Agent{
 		catch (FIPAException fe) {
 		fe.printStackTrace();
 		}
+
 		
 		this.addBehaviour(new SoundMessageDaemonBehaviour() );	
 		
@@ -89,8 +87,7 @@ public class MoveToSoundAgent extends Agent{
 								data.setVelocity(volume);
 								int i= drum.matchNote();
 								System.out.println("NOTE " + String.valueOf(i));
-								data.setNote(i);
-								
+								data.setNote(i);								
 								break;
 							case PIANO:
 								break;
@@ -98,6 +95,7 @@ public class MoveToSoundAgent extends Agent{
 								break;
 							case DEFAULT:
 								break;
+
 						}
 						
 					} catch (Exception e) {
@@ -109,9 +107,7 @@ public class MoveToSoundAgent extends Agent{
 					
 					//AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);		
 					AID aid=getReceiver();
-					addBehaviour(new SenderInformBehaviour(data, aid));
-					
-				
+					addBehaviour(new SenderInformBehaviour(data, aid));	
 			}
 			else block();
 		}	

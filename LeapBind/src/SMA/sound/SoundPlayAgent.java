@@ -38,7 +38,8 @@ public class SoundPlayAgent extends Agent{
 		sd.setName("SoundPlay");
 		dfd.addServices(sd);
 		try {
-		DFService.register(this, dfd);
+			DFService.register(this, dfd);
+			System.out.println("soundplayAgent registed");
 		}
 		catch (FIPAException fe) {
 		fe.printStackTrace();
@@ -57,6 +58,7 @@ public class SoundPlayAgent extends Agent{
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
 		}
+
 	}
 	
 	public class WaitNoteRequestBehaviour extends CyclicBehaviour {

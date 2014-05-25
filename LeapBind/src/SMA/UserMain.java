@@ -23,10 +23,13 @@ public class UserMain {
 		try{
 			p = new ProfileImpl(SECONDARY_PROPERTIES_FILE);
 			AgentContainer operationContainer = rt.createAgentContainer(p);
+			AgentController ac = operationContainer.createNewAgent("SoundPlayer_1", 
+					"SMA.sound.SoundPlayAgent", null);
+			ac.start();
 			AgentController c1 = operationContainer.createNewAgent(
 					"User_1",
 					"SMA.user.UserAgent",
-					null);
+					new Object[] {new String("SoundPlayer_1")});
 			c1.start();
 //
 //			AgentController c2 = operationContainer.createNewAgent(

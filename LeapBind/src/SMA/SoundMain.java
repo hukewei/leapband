@@ -16,9 +16,7 @@ public class SoundMain {
 		try {
 			p = new ProfileImpl(SECOND_PROPERTIES_FILE);
 			ContainerController cc = rt.createAgentContainer(p);
-			AgentController ac = cc.createNewAgent("SoundPlayer", "SMA.sound.SoundPlayAgent", null);
 			AgentController ac2 = cc.createNewAgent("MoveToSound", "SMA.server.MoveToSoundAgent", null);
-			ac.start();
 			ac2.start();
 
 		}

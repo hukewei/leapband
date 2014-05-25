@@ -23,7 +23,7 @@ public class FindNoteTambourFromMovement  {
 	int note;
 	Movement movement;
 
-	//£¨x-x1)^2/A^2+(y-y1)^2/B^2 <0 EXICTE
+	//ï¿½ï¿½x-x1)^2/A^2+(y-y1)^2/B^2 <0 EXICTE
 	
 	public FindNoteTambourFromMovement(Movement movement) {
 		
@@ -120,25 +120,6 @@ public	int matchNote(){
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*public class FindNoteTambourFromMovement extends FindNoteFromMovement {
 
 	//private Vector<>
@@ -155,7 +136,7 @@ public	int matchNote(){
 	float hightHighY=420;
 	int note;
 
-	//£¨x-x1)^2/A^2+(y-y1)^2/B^2 <0 EXICTE
+	//ï¿½ï¿½x-x1)^2/A^2+(y-y1)^2/B^2 <0 EXICTE
 	
 	public FindNoteTambourFromMovement(Movement movement) {
 		super(movement);
@@ -164,10 +145,22 @@ public	int matchNote(){
 
 		cylinder=new Cylinder(150,245);   //Cylinder(float height, float radius)
 		
+=======
+import Utilities.Movement;
+
+public class FindNoteTambourFromMovement extends FindNoteFromMovement {
+
+	//private Vector<>
+	
+	
+	public FindNoteTambourFromMovement(Movement movement) {
+		super(movement);
+>>>>>>> keweihu/SendMoveBehaviour
 	}
 
 	@Override
 	public void action() {
+<<<<<<< HEAD
 		
 		Point3d pos=movement.getPos();
 
@@ -235,9 +228,3 @@ public	int matchNote(){
 	}
 	
 }*/
-
-
-
-
-
-

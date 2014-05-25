@@ -7,6 +7,7 @@ public class MoveInformData {
 	private AID host_AID;
 	private InstrumentType instrumentType;
 	
+
 	public MoveInformData() {
 		move = null;
 		host_AID = null;
