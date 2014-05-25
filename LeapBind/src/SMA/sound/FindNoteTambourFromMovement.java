@@ -4,6 +4,7 @@ import javax.vecmath.Point3d;
 
 import com.sun.j3d.utils.geometry.Cylinder;
 
+import Utilities.Constance;
 import Utilities.Movement;
 
 public class FindNoteTambourFromMovement  {
@@ -14,12 +15,12 @@ public class FindNoteTambourFromMovement  {
 	Cylinder cylinder;
 	Point3d center_right;// center is the bottom of the circle
 	
-	float AXLow = 150;
+	float AXLow = 150; //150
 	float BZLow = 50;
 	float AXHi = 250;
 	float BZHi = 100;
-	float hightLowY=270;
-	float hightHighY=420;
+	float hightLowY=(float) (Constance.Windows_height * 0.65);//270;
+	float hightHighY=(float) (Constance.Windows_height * 0.72);//420;
 	int note;
 	Movement movement;
 
@@ -27,10 +28,9 @@ public class FindNoteTambourFromMovement  {
 	
 	public FindNoteTambourFromMovement(Movement movement) {
 		
-		center_left=new Point3d(375,270,0); //270-420 high //left point top:130x y350, right: x620 y350
-		center_right=new Point3d(970,270,0);//  z== -100 100 // // LEFTx 720 RIGHT x 1220 
+		center_left=new Point3d((Constance.Windows_width * 0.3),(Constance.Windows_height * 0.65),0); //270-420 high //left point top:130x y350, right: x620 y350
+		center_right=new Point3d((Constance.Windows_width * 0.7),(Constance.Windows_height * 0.65),0);//  z== -100 100 // // LEFTx 720 RIGHT x 1220 
 
-		cylinder=new Cylinder(150,245);   //Cylinder(float height, float radius)
 		this.movement=movement;
 	}
 
@@ -60,7 +60,7 @@ public	int matchNote(){
 	//	int note = matchNote();
 		
 	//	 volume= matchVolume();
-		return note;
+		return 48;
 		
 	}
 	
@@ -112,7 +112,7 @@ public	int matchNote(){
 		if (volume>100){
 			volume=100;
 		}
-		if (movement.getSpeed() <50){
+		if (movement.getSpeed() <30){
 			volume=0;
 		}
 		

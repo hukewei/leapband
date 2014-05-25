@@ -113,7 +113,7 @@ public class GameView extends JAgentFrame {
 		
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		split_pane.setDividerLocation(250);
+		split_pane.setDividerLocation(170);
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
 		split_pane.setOpaque(false);
 		imagePanel.add(split_pane);

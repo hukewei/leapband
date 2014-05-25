@@ -1,5 +1,6 @@
 package SMA.user;
 
+import jade.core.AID;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
@@ -36,8 +37,9 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 		pos.z = position.z;
 		move.setPos(pos);
 		my_data.setMove(move);
-		System.out.println("sound agent aid = " + myAgent.getSoundAgentName());
-		my_data.setHost_AID(myAgent.getSoundAgentName());
+		message.clearAllReplyTo();
+		message.addReplyTo(myAgent.getSoundAgentName());
+		//my_data.setHost_AID(myAgent.getSoundAgentName());
 		my_data.setInstrumentType(myAgent.getSelectedInstrument());
 
 		ObjectMapper mapper = new ObjectMapper();

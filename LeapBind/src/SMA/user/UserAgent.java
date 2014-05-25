@@ -386,8 +386,8 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumLeft(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
-			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+		if ((hand.direction.getY()  < - 0.15) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
 		}
@@ -397,8 +397,8 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumRight(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
-			if (hand.x > Constance.Windows_width * 0.55 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+		if ((hand.direction.getY()  < - 0.15) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.52 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
 		}
