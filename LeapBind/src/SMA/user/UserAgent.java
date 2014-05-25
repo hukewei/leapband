@@ -85,7 +85,6 @@ public class UserAgent extends GuiAgent{
 	protected void setup() {
 		super.setup();
 		SoundPlayAgentNickName = (String) getArguments()[0];
-		my_sound_name = getMySoundAgent();
 		System.out.println("SoundPlayAgentNickName = " + SoundPlayAgentNickName);
 		System.out.println(getLocalName()+"--> Installed");
 		changes = new PropertyChangeSupport(this);
@@ -137,16 +136,11 @@ public class UserAgent extends GuiAgent{
 		return multiple_mode;
 	}
 
-	public AID getMy_sound_name() {
-		return my_sound_name;
-	}
-
-
 	public AID getSoundAgentName() {
 		if (multiple_mode) {
 			return host_sound_name;
 		} else {
-			return my_sound_name;
+			return getMySoundAgent();
 		}
 	}
 	
@@ -246,7 +240,8 @@ public class UserAgent extends GuiAgent{
 			DFAgentDescription[] result=DFService.search(this, template);
 			if(result.length>0){
 				for (int i = 0; i < result.length; i++) {
-					if (result[i].getName().getName().equals(SoundPlayAgentNickName)) {
+					System.out.println("possible name = " + result[i].getName().getName());
+					if (result[i].getName().getName().contains(SoundPlayAgentNickName)) {
 						my_sound_name = result[i].getName();
 						break;
 					}
@@ -391,8 +386,8 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumLeft(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
-			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+		if ((hand.direction.getY()  < - 0.15) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
 		}
@@ -402,8 +397,8 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumRight(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
-			if (hand.x > Constance.Windows_width * 0.55 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+		if ((hand.direction.getY()  < - 0.15) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.52 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
 		}

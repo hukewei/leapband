@@ -3,37 +3,50 @@ package SMA.server;
 
 
 
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.UUID;
-
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import Utilities.MoveInformData;
-import Utilities.NoteInformData;
-import Utilities.NoteInformData.NoteActionType;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.Timer;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.io.StringWriter;
+import java.util.UUID;
 
+import SMA.sound.FindNoteTambourFromMovement;
+import Utilities.MoveInformData;
+import Utilities.NoteInformData;
+import Utilities.NoteInformData.NoteActionType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+@SuppressWarnings("serial")
 public class MoveToSoundAgent extends Agent{
 	
 	protected void setup() {
-		
+		DFAgentDescription dfd = new DFAgentDescription();
+		dfd.setName(getAID());
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Organisation");
+		sd.setName("MoveToNote");
+		dfd.addServices(sd);
+		try {
+		DFService.register(this, dfd);
+		}
+		catch (FIPAException fe) {
+		fe.printStackTrace();
+		}
+
 		
 		this.addBehaviour(new SoundMessageDaemonBehaviour() );	
 		
 	}
+	
 
 	public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 
@@ -42,19 +55,47 @@ public class MoveToSoundAgent extends Agent{
 			MessageTemplate filtre = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
 			ACLMessage message = myAgent.receive(filtre);
 			
+			
 			if(message != null)
 			{
 					ObjectMapper mapper = new ObjectMapper();
+					NoteInformData data = new NoteInformData();
 					try {
 						MoveInformData moveData = mapper.readValue(message.getContent(), MoveInformData.class);
+	
+ 				/*		//TEST POUR AGENT
+						MoveInformData moveData= new MoveInformData();
+						Point3d p3d= new Point3d(375,270,0);
+						Movement move= new Movement();
+						move.setPos(p3d);
+						move.setSpeed(2000);
+						moveData.setMove(move);
+						moveData.setInstrumentType(InstrumentType.TAMBOUR);*/
+						
 						
 						switch(moveData.getInstrumentType()) {
 							case TAMBOUR:
+								
+								System.out.println("Tambour");
+								
+								data.setAction(NoteActionType.START_NOTE);
+								
+								data.setChannel(9);
+								 FindNoteTambourFromMovement drum=new FindNoteTambourFromMovement(moveData.getMove());
+								// addBehaviour(be);
+								int volume =drum.matchVolume();
+								data.setVelocity(volume);
+								int i= drum.matchNote();
+								System.out.println("NOTE " + String.valueOf(i));
+								data.setNote(i);								
 								break;
 							case PIANO:
 								break;
 							case GUITAR:
 								break;
+							case DEFAULT:
+								break;
+
 						}
 						
 					} catch (Exception e) {
@@ -63,19 +104,11 @@ public class MoveToSoundAgent extends Agent{
 					
 
 					//AID aid = (AID)message.getAllReplyTo().next();
-					/*
-					AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);
-					int index =(int) ((Math.random()*9)+60);
 					
-					NoteInformData data = new NoteInformData();
-					data.setAction(NoteActionType.START_NOTE);
-					data.setVelocity(255);
-					data.setChannel(0);
-					data.setNote(index);
-					
-					addBehaviour(new SenderInformBehaviour(data, aid));
-					*/
-				
+					//AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);		
+					//AID aid=getReceiver();
+					AID aid = (AID) message.getAllReplyTo().next();
+					addBehaviour(new SenderInformBehaviour(data, aid));	
 			}
 			else block();
 		}	
@@ -149,16 +182,30 @@ public class MoveToSoundAgent extends Agent{
 			} catch (Exception e) {
 
 				e.printStackTrace();
-			}
-
-
-			
+			}			
 		}
-	
-		
-
-		
-
 	}
 
+	public AID getReceiver() {
+		AID rec = null;
+		DFAgentDescription template =
+		new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("Sound");
+		sd.setName("SoundPlay");
+		template.addServices(sd);
+		try {
+			DFAgentDescription[] result = DFService.search(this, template);
+			
+			if (result.length > 0) {
+				System.out.println("Nombre de resultat : " + String.valueOf(result.length));
+				int i = (int)(Math.random() * result.length);
+				System.out.println("Valeur de i : " + String.valueOf(i));
+				rec = result[i].getName();
+			}
+		} catch(FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return rec;
+	}
 }

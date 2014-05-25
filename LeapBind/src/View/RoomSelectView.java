@@ -178,41 +178,9 @@ public class RoomSelectView extends JAgentFrame {
 		//home.setContentAreaFilled(false);
 		home.setOpaque(false);
 		home.setBorderPainted(false);
-		home.addMouseListener(new HomeMouseListener(this));
+		home.addMouseListener(new HomeMouseListener(this,home));
 		imagePanel.add(home);
 		
-		home.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				home.setBorderPainted(false);
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				home.setBorderPainted(true);
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		/*create_room.addActionListener(new ActionListener() {
 			
 			@Override

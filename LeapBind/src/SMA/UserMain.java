@@ -20,16 +20,17 @@ public class UserMain {
 	public static void main(String[] args) {
 		Runtime rt = Runtime.instance();
 		Profile p = null;
+		String sound_agent_name = "SoundPlayer_1";
 		try{
 			p = new ProfileImpl(SECONDARY_PROPERTIES_FILE);
 			AgentContainer operationContainer = rt.createAgentContainer(p);
-			AgentController ac = operationContainer.createNewAgent("SoundPlayer_1", 
+			AgentController ac = operationContainer.createNewAgent(sound_agent_name, 
 					"SMA.sound.SoundPlayAgent", null);
 			ac.start();
 			AgentController c1 = operationContainer.createNewAgent(
 					"User_1",
 					"SMA.user.UserAgent",
-					new Object[] {new String("SoundPlayer_1")});
+					new Object[] {new String(sound_agent_name)});
 			c1.start();
 //
 //			AgentController c2 = operationContainer.createNewAgent(
