@@ -139,13 +139,17 @@ public class UserAgent extends GuiAgent{
 	public boolean isMultipleMode() {
 		return multiple_mode;
 	}
-
+	
 	public AID getSoundAgentName() {
 		if (multiple_mode) {
 			return host_sound_name;
 		} else {
 			return getMySoundAgent();
 		}
+	}
+	
+	public void setHostSoundName(AID host) {
+		host_sound_name = host;
 	}
 	
 	public void setRoomId(String id) {

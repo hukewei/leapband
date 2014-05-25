@@ -1,6 +1,7 @@
 package SMA.user;
 
 import Utilities.Constance;
+import Utilities.MyAID;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -32,6 +33,8 @@ public class EnterGroupBehaviour extends Behaviour{
 				msg.addReceiver(server_name);
 				msg.setContent(Constance.EnterGroupMode);
 				msg.setConversationId(msg_conversation);
+				MyAID sound_agent = new MyAID(myAgent.getMySoundAgent().getName(), myAgent.getMySoundAgent().getAddressesArray()[0]);	
+				msg.setReplyWith(sound_agent.toJSON());	
 				myAgent.send(msg);
 				first = false;
 				System.out.println("Ask for entring a room sent");

@@ -1,5 +1,6 @@
 package SMA.user;
 
+import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -8,6 +9,7 @@ import jade.lang.acl.UnreadableException;
 import javax.swing.DefaultListModel;
 
 import Utilities.Constance;
+import Utilities.MyAID;
 
 
 public class LocalGameDaemonBehaviour extends Behaviour{
@@ -42,6 +44,7 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 					e.printStackTrace();
 				}
 			} else if(message.getPerformative() == ACLMessage.CONFIRM){
+				myAgent.setHostSoundName(MyAID.toAID(message.getReplyWith()));
 				myAgent.changeToGameView();
 			}
 		}
