@@ -1,5 +1,0 @@
-main=false
-gui=false
-container-name = LeapBandUser
-host = localhost
-local-port=1099
