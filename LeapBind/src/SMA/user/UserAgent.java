@@ -43,6 +43,7 @@ public class UserAgent extends GuiAgent{
 	public static int JOINT_ROOM_EVENT = 4;
 	public static int CONFIRM_ROOM_EVENT = 5;
 	public static int EXIT_ROOM_EVENT = 6;
+	public static int SELECT_MUSIC_EVENT = 7;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
@@ -69,6 +70,7 @@ public class UserAgent extends GuiAgent{
 	private AID host_sound_name = null;
 	private String selected_instrument = null;
 	private String current_room_id = null; //conversation id if in a group
+	private String selected_song = null;
 	private JAgentFrame current_frame = null;
 
 	
@@ -97,7 +99,7 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-		listener = new LeapListener(this);
+		/*listener = new LeapListener(this);
         controller = new Controller();
         
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
@@ -107,7 +109,7 @@ public class UserAgent extends GuiAgent{
         //listener.setDebug(true);
         listener.setClickType(1); 
         listener.setCalibratedScren(true);
-        controller.addListener(listener);
+        controller.addListener(listener);*/
         
         System.out.println("Press Enter to quit...");
 //        try {
@@ -183,6 +185,13 @@ public class UserAgent extends GuiAgent{
 		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
 			System.out.println("start game demande");
 			this.addBehaviour(new StartGameBehaviour(this));
+		}else if(arg0.getType()==SELECT_MUSIC_EVENT){
+			System.out.println("selected Song path:"+arg0.getParameter(0));
+			if(selected_song==null){
+				selected_song=(String) arg0.getParameter(0);
+			}else if(!selected_song.equals(arg0.getParameter(0))){
+				selected_song=(String) arg0.getParameter(0);
+			}
 		}
 		
 	}

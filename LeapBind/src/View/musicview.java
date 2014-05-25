@@ -1,4 +1,6 @@
 package View;
+import jade.gui.GuiEvent;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -35,12 +37,13 @@ public class musicview extends JFrame{
 	private String temptext = null;
 	private List<SongFlowItem> songs = new ArrayList<SongFlowItem>();
 	private UserAgent myAgent;
+	private int index=0;
 	
 	public musicview(List<SongFlowItem> loadFromDirectory) {
 		songs=loadFromDirectory;
 	}
 	
-	public musicview(File directory,UserAgent agent){
+	public musicview(final File directory,UserAgent agent){
 		
 		this(SongFlowItem.loadFromDirectory(directory));
 	    this.myAgent=agent;
@@ -76,7 +79,8 @@ public class musicview extends JFrame{
 		background.setLayout(null);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
 		label = new JLabel(getFileName(songs.get(i+1).getLabel()));
-		label.setBounds(0, 120, 500, 160);
+		index=i+1;
+		label.setBounds(100, 140, 500, 160);
     	label.setFont(new Font("Chalkboard", Font.PLAIN, 50));
     	label.setHorizontalAlignment(SwingConstants.CENTER);
     	label.setForeground(Color.WHITE);
@@ -84,13 +88,13 @@ public class musicview extends JFrame{
     	//System.out.println(label.getComponent(0).getClass().getTypeName());
 
 		labelup = new JLabel(getFileName(songs.get(i+2).getLabel()));
-		labelup.setBounds(50, 40, 400, 160);
+		labelup.setBounds(150, 40, 400, 160);
     	labelup.setFont(new Font("Chalkboard", Font.PLAIN, 20));
     	labelup.setHorizontalAlignment(SwingConstants.CENTER);
     	labelup.setForeground(new Color(255,255,255,150));
     	
 		labeldown = new JLabel(getFileName(songs.get(i).getLabel()));
-		labeldown.setBounds(50, 200, 400, 160);
+		labeldown.setBounds(150, 240, 400, 160);
     	labeldown.setFont(new Font("Chalkboard", Font.PLAIN, 20));
     	labeldown.setHorizontalAlignment(SwingConstants.CENTER);
     	labeldown.setForeground(new Color(255,255,255,150));
@@ -100,7 +104,7 @@ public class musicview extends JFrame{
 		JButton suivant = new JButton("next");
 		suivant.setBounds(160,350,100,40);
 		JButton valider = new JButton("OK");
-		valider.setBounds(300,350,125,50);
+		valider.setBounds(500,350,150,100);
 		
 		suivant.addActionListener(new ActionListener(){			
 			public void actionPerformed(ActionEvent e) {
@@ -109,21 +113,25 @@ public class musicview extends JFrame{
 					i=0;
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(i+1).getLabel()));
+					index=i+1;
 					labelup.setText(getFileName(songs.get(i+2).getLabel()));					
 				}
 				else if(i+1 == songs.size()){
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(0).getLabel()));
+					index=0;
 					labelup.setText(getFileName(songs.get(1).getLabel()));
 				}
 				else if(i+2 == songs.size()){
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(i+1).getLabel()));
+					index=i+1;
 					labelup.setText(getFileName(songs.get(0).getLabel()));
 				}
 				else{
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(i+1).getLabel()));
+					index=i+1;
 					labelup.setText(getFileName(songs.get(i+2).getLabel()));
 				}
 			}
@@ -135,16 +143,19 @@ public class musicview extends JFrame{
 					i = songs.size()-1;
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(0).getLabel()));
+					index=0;
 					labelup.setText(getFileName(songs.get(1).getLabel()));
 				}
 				else if(i == songs.size()-2){
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(i+1).getLabel()));
+					index=i+1;
 					labelup.setText(getFileName(songs.get(0).getLabel()));
 				}
 				else{
 					labeldown.setText(getFileName(songs.get(i).getLabel()));
 					label.setText(getFileName(songs.get(i+1).getLabel()));
+					index=i+1;
 					labelup.setText(getFileName(songs.get(i+2).getLabel()));
 				}
 			}
@@ -152,6 +163,9 @@ public class musicview extends JFrame{
 		valider.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
+				ev.addParameter(songs.get(index).getFile().getAbsolutePath());
+				myAgent.postGuiEvent(ev);
 				setVisible(false);
 			}
 		});
