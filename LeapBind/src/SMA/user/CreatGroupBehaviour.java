@@ -1,10 +1,19 @@
 package SMA.user;
 
-import Utilities.Constance;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.io.IOException;
+import java.io.StringWriter;
+
+import Utilities.Constance;
+import Utilities.MyAID;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("serial")
 public class CreatGroupBehaviour extends Behaviour{
@@ -30,6 +39,8 @@ public class CreatGroupBehaviour extends Behaviour{
 				msg.clearAllReceiver();
 				msg.addReceiver(server_name);
 				msg.setContent(Constance.roomselect_Mode);
+				MyAID sound_agent = new MyAID(myAgent.getMySoundAgent().getName(), myAgent.getMySoundAgent().getAddressesArray()[0]);	
+				msg.setReplyWith(sound_agent.toJSON());	
 				myAgent.send(msg);
 				first = false;
 				System.out.println("Ask for creating room sent");

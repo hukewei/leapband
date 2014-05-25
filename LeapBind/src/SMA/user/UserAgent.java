@@ -12,6 +12,8 @@ import jade.gui.GuiEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.Time;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 
@@ -70,6 +72,8 @@ public class UserAgent extends GuiAgent{
 	private String selected_instrument = null;
 	private String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;
+	private long last_fire_left_drum = 0;
+	private long last_fire_right_drum = 0;
 
 	
 	private DefaultListModel<String> dict = null;
@@ -135,13 +139,17 @@ public class UserAgent extends GuiAgent{
 	public boolean isMultipleMode() {
 		return multiple_mode;
 	}
-
+	
 	public AID getSoundAgentName() {
 		if (multiple_mode) {
 			return host_sound_name;
 		} else {
 			return getMySoundAgent();
 		}
+	}
+	
+	public void setHostSoundName(AID host) {
+		host_sound_name = host;
 	}
 	
 	public void setRoomId(String id) {
@@ -368,25 +376,50 @@ public class UserAgent extends GuiAgent{
 			changes.firePropertyChange("hand2", null, hand_2);
 			if (selected_instrument == drum) {
 				if(isCollisionForDrumLeft(hand_1) ){
-					changes.firePropertyChange("drum_left", null, null);
-					this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+					if(shouldFireChange("drum_left")) {
+						changes.firePropertyChange("drum_left", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+					}
 				} else if (isCollisionForDrumLeft(hand_2)) {
-					changes.firePropertyChange("drum_left", null, null);
-					this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+					if(shouldFireChange("drum_left")) {
+						changes.firePropertyChange("drum_left", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+					}
 				} else if(isCollisionForDrumRight(hand_1) ){
-					changes.firePropertyChange("drum_right", null, null);
-					this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+					if(shouldFireChange("drum_right")) {
+						changes.firePropertyChange("drum_right", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+					}
 				} else if (isCollisionForDrumRight(hand_2)) {
-					changes.firePropertyChange("drum_right", null, null);
-					this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+					if(shouldFireChange("drum_right")) {
+						changes.firePropertyChange("drum_right", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+					}
 				}
 			}
+	}
+	
+	private boolean shouldFireChange(String drum) {
+		boolean fire = false;
+		long current_time = new Date().getTime();
+		if (drum.equals("drum_left")) {
+			if (current_time - last_fire_left_drum > Constance.Minimun_Fire_interval) {
+				last_fire_left_drum = current_time;
+				fire = true;
+			}
+		} else if (drum.equals("drum_right")) {
+			if (current_time - last_fire_right_drum > Constance.Minimun_Fire_interval) {
+				last_fire_right_drum = current_time;
+				fire = true;
+			}
+		}
+		return fire;
 	}
 	
 	public boolean isCollisionForDrumLeft(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.15) && Math.abs(hand.speed) > 30 ) {
+		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 30 ) {
 			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
@@ -397,7 +430,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumRight(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.15) && Math.abs(hand.speed) > 30 ) {
+		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 30 ) {
 			if (hand.x > Constance.Windows_width * 0.52 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
