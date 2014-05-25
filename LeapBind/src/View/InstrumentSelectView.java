@@ -5,8 +5,8 @@ import jade.gui.GuiEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 
@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
+import Utilities.ImageFlowItem;
 
 @SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame{
@@ -39,8 +40,9 @@ public class InstrumentSelectView extends JAgentFrame{
 		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
-		home.setBackground(new Color(110, 110, 110));
-		
+		//home.setBackground(new Color(110, 110, 110));
+		home.setOpaque(false);
+		home.setBorderPainted(false);
 		imageFlowPanel.add(home);
 		
 		
@@ -56,26 +58,25 @@ public class InstrumentSelectView extends JAgentFrame{
     	imageFlowPanel.add(imageFlow);
     	this.add(imageFlowPanel);
     	
-    	home.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
-				ev.addParameter(UserAgent.return_Menu);
-				myAgent.postGuiEvent(ev);
-			}
-		});
+    	home.addMouseListener(new HomeMouseListener(this,home));
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("swipe")) {
- 			if ((String)evt.getNewValue() == "LEFT") {
- 				imageFlow.scrollAndAnimateBy(-1);
- 			} else if ((String)evt.getNewValue() == "RIGHT") {
- 				imageFlow.scrollAndAnimateBy(1);
- 			}
- 			
- 		}
+		if (isVisible()) {
+			if (evt.getPropertyName().equals("swipe")) {
+	 			if ((String)evt.getNewValue() == "LEFT") {
+	 				imageFlow.scrollAndAnimateBy(-1);
+	 			} else if ((String)evt.getNewValue() == "RIGHT") {
+	 				imageFlow.scrollAndAnimateBy(1);
+	 			} else if ((String)evt.getNewValue() == "REAR") {
+	 				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_INSTRUMENT_EVENT);
+					ev.addParameter(UserAgent.instrument_Mode);
+					ev.addParameter(((ImageFlowItem)imageFlow.getSelectedValue()).getLabel());
+					myAgent.postGuiEvent(ev);
+	 			}
+	 		}
+		}
 	}
 
 }

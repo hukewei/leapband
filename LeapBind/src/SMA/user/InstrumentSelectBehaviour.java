@@ -24,11 +24,16 @@ public class InstrumentSelectBehaviour extends OneShotBehaviour{
 	public void action() {
 		System.out.println("message is " + msg);
 		if(msg == UserAgent.drum){
-			myAgent.getGame_view().play.setIcon(new ImageIcon("src/images/play1.png"));
+//			myAgent.getGame_view().play.setIcon(new ImageIcon("src/images/play1.png"));
+			myAgent.getGame_view().playDrumLeft.loadImage("src/halfDrum.png");
+			myAgent.getGame_view().playDrumRight.loadImage("src/halfDrum.png");
+			
 		}else if(msg == UserAgent.guitar){
-			myAgent.getGame_view().play.setIcon(new ImageIcon("src/images/guitar.png"));
+			//myAgent.getGame_view().play.setIcon(new ImageIcon("src/images/guitar.png"));
+			//myAgent.getGame_view().play.loadImage("src/images/guitar.png");
 		}else if(msg == UserAgent.piano){
-			myAgent.getGame_view().play.setIcon(new ImageIcon("src/images/pianoniu.png"));
+			//myAgent.getGame_view().play.setIcon(new ImageIcon("src/images/pianoniu.png"));
+			//myAgent.getGame_view().play.loadImage("src/images/pianoniu.png");
 		}
 	
 	}

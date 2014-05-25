@@ -14,8 +14,10 @@ public class Constance {
 	public static int Hand_width = 80;
 	public static int Hand_height = 45;
 	
-	public static int Gesture_Interval = 600000;
+	public static int Gesture_Interval = 750000;
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
+	static public int click_delay = 1800;
+	static public int Minimun_Distance = 3;
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String ROOM_ENTERED = "ROOM_ENTERED";
@@ -25,4 +27,6 @@ public class Constance {
 	public static String ExitGroupMode = "109";
 	public static String MEMBER_CHANGE = "memberChangeInform";
 	public static String GROUP_CREATED = "groupCreatedInform";
+	public static String START_GAME = "Game_Start_Request";
+	public static String CONFIRM_START = "Game_Start_Confirmed";
 }

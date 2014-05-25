@@ -9,25 +9,25 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
-import jade.lang.acl.ACLMessage;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JFrame;
 
 import Controller.LeapListener;
+import Utilities.Constance;
 import Utilities.Cordinates;
 import View.GameView;
 import View.InstrumentSelectView;
+import View.JAgentFrame;
 import View.MenuView;
 import View.MultiwaitRoom;
 import View.RoomSelectView;
-import View.JAgentFrame;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Gesture;
+import com.leapmotion.leap.Vector;
 
 
 
@@ -52,13 +52,14 @@ public class UserAgent extends GuiAgent{
 	public static String drum = "1";
 	public static String guitar = "2";
 	private MenuView menu_view;
+
 	private GameView game_view;
 	private InstrumentSelectView instrument_view;
 	private RoomSelectView room_view;
 	private MultiwaitRoom wait_view;
 	private boolean single_mode = false;
 	private boolean multiple_mode = false;
-	private Cordinates pointer = new Cordinates();
+	public Cordinates pointer = new Cordinates();
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
@@ -93,9 +94,9 @@ public class UserAgent extends GuiAgent{
         controller = new Controller();
         
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        //controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-        controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+        //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
         //listener.setDebug(true);
         listener.setClickType(1);
         listener.setCalibratedScren(true);
@@ -112,8 +113,13 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
+
 	public void setRoomId(String id) {
 		current_room_id = id;
+	}
+	
+	public String getRoomId() {
+		return current_room_id;
 	}
 	
 	@Override
@@ -123,7 +129,7 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
 			selected_instrument = encodageInstrument(arg0.getParameter(1).toString());
-			System.out.println(selected_instrument);
+			System.out.println("selected instrument = " + selected_instrument);
 			this.addBehaviour(new InstrumentSelectBehaviour(this, selected_instrument));
 			this.addBehaviour(new ModeSelectBehaviour(this, arg0.getParameter(0).toString()));
 			
@@ -144,6 +150,9 @@ public class UserAgent extends GuiAgent{
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
 			this.addBehaviour(new GetListGroupBehaviour(this));
+		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
+			System.out.println("start game demande");
+			this.addBehaviour(new StartGameBehaviour(this));
 		}
 		
 	}
@@ -263,15 +272,61 @@ public class UserAgent extends GuiAgent{
 		changes.firePropertyChange("pos", null, pointer);
 	}
 	
-	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2) {
+	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2, float speed_1, float speed_2, Vector dir_1, Vector dir_2) {
+		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
+		
 		hand_1.x = x_1;
 		hand_1.y = y_1;
 		hand_2.x = x_2;
 		hand_2.y = y_2;
 		hand_1.z = z_1;
 		hand_2.z = z_2;
-		changes.firePropertyChange("hand1", null, hand_1);
-		changes.firePropertyChange("hand2", null, hand_2);
+		hand_1.speed = speed_1;
+		hand_1.direction = dir_1;
+		hand_2.speed = speed_2;
+		hand_2.direction = dir_2;
+		//if(d1 > Constance.Minimun_Distance)
+			changes.firePropertyChange("hand1", null, hand_1);
+		//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
+		//if (d2 > Constance.Minimun_Distance)
+			changes.firePropertyChange("hand2", null, hand_2);
+			if (selected_instrument == drum) {
+				if(isCollisionForDrumLeft(hand_1) ){
+					changes.firePropertyChange("drum_left", null, hand_1);
+					System.out.println("firing col-hand1");
+				} else if (isCollisionForDrumLeft(hand_2)) {
+					changes.firePropertyChange("drum_left", null, hand_2);
+					System.out.println("firing col-hand1");
+				} else if(isCollisionForDrumRight(hand_1) ){
+					changes.firePropertyChange("drum_right", null, hand_1);
+					System.out.println("firing col-hand2");
+				} else if (isCollisionForDrumRight(hand_2)) {
+					changes.firePropertyChange("drum_right", null, hand_2);
+					System.out.println("firing col-hand2");
+				}
+			}
+	}
+	
+	public boolean isCollisionForDrumLeft(Cordinates hand) {
+		boolean collision = false;
+		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
+		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+				return true;
+			}
+		}
+		return collision;
+	}
+	
+	public boolean isCollisionForDrumRight(Cordinates hand) {
+		boolean collision = false;
+		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
+		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.6 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+				return true;
+			}
+		}
+		return collision;
 	}
 	
 	public void doSwipe(String direction) {
@@ -309,6 +364,7 @@ public class UserAgent extends GuiAgent{
 	public void setDict(DefaultListModel<String> dict) {
 		this.dict = dict;
 		room_view.getList_room().setModel(this.dict);
+		room_view.getList_room().setSelectedIndex(0);
 		System.out.println("update dict");
 	}
 	
@@ -316,5 +372,11 @@ public class UserAgent extends GuiAgent{
 		this.dict_list_player = dict;
 		wait_view.getList_player().setModel(this.dict_list_player);
 		System.out.println("update dict player");
+	}
+	public int[] getInstrumentPosition(){
+		return null;
+		//return new int[]{game_view.instrumentX,game_view.instrumentY};
+		
+		
 	}
 }
