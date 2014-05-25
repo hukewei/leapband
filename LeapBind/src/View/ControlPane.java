@@ -4,25 +4,35 @@ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImagingOpException;
 import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
+import javax.swing.border.*;
+
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
@@ -37,6 +47,8 @@ public class ControlPane extends JPanel{
 	JLabel player;
 	Timer click_task = null;
 	private JButton home;
+	private JLabel play;
+	boolean isPlay=false;
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
 		this.height=Constance.Windows_height;
@@ -47,7 +59,8 @@ public class ControlPane extends JPanel{
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
 		this.setLayout(null);
-		this.setBackground(new Color(255,255,204,200));
+		//this.setBackground(new Color(255,255,204,200));
+		this.setBackground(Color.BLACK);
 		
 		
 		home = new JButton();
@@ -135,12 +148,56 @@ public class ControlPane extends JPanel{
 		if(!is_proprietaire()){
 			music.setEnabled(false);
 		}
-		JButton stop = new JButton();
-		Icon icone = new ImageIcon("src/images/stop.png");
+		play = new JLabel(new ImageIcon("src/images/play.png"));
+		play.setBackground(Color.BLACK);
+		
 		//stop.setPreferredSize(new Dimension(100,100));
-		stop.setBounds((int) (width*0.7), (int) (height*0.05), 100, 100);
-		stop.setIcon(icone);
-		stop.setBackground(Color.WHITE);
+		play.setBounds((int) (width*0.7), (int) (height*0.05), 100, 100);
+		
+		play.addMouseListener(new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			if(!isPlay){
+				
+        		play.setIcon(new ImageIcon("src/images/pause.png"));
+        		isPlay=true;
+        		
+        	}else{
+        		play.setIcon(new ImageIcon("src/images/play.png"));
+        		isPlay=false;
+        	}
+			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_EVENT);
+			ev.addParameter(isPlay);
+			myAgent.postGuiEvent(ev);
+			
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			 
+			 play.setBorder(null);		
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+            play.setBorder(new OvalBorder(play.getWidth(), play.getHeight(), new Color(153,153,255)));
+			//play.setBorder(BorderFactory.createBorder(Color.blue));			
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
 		
 		JLabel volume = new JLabel(new ImageIcon("src/images/volume.png"));
 		volume.setBounds((int) (width*0.9), (int) (height*0.05), 100, 100);
@@ -149,7 +206,7 @@ public class ControlPane extends JPanel{
 		this.add(home);
 		this.add(player);
 		this.add(music);
-		this.add(stop);
+		this.add(play);
 		this.add(volume);
 		
 		
@@ -164,6 +221,9 @@ public class ControlPane extends JPanel{
 	}
 	
 	
+    
+	
+		
 	
 	
 }

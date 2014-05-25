@@ -44,6 +44,7 @@ public class UserAgent extends GuiAgent{
 	public static int CONFIRM_ROOM_EVENT = 5;
 	public static int EXIT_ROOM_EVENT = 6;
 	public static int SELECT_MUSIC_EVENT = 7;
+	public static int CONTROL_MUSIC_EVENT =8;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
@@ -71,6 +72,7 @@ public class UserAgent extends GuiAgent{
 	private String selected_instrument = null;
 	private String current_room_id = null; //conversation id if in a group
 	private String selected_song = null;
+	private boolean isBackGroundMusicOn=false;
 	private JAgentFrame current_frame = null;
 
 	
@@ -191,6 +193,13 @@ public class UserAgent extends GuiAgent{
 				selected_song=(String) arg0.getParameter(0);
 			}else if(!selected_song.equals(arg0.getParameter(0))){
 				selected_song=(String) arg0.getParameter(0);
+			}
+		}else if(arg0.getType()==CONTROL_MUSIC_EVENT){
+			isBackGroundMusicOn=(boolean) arg0.getParameter(0);
+			if(isBackGroundMusicOn){
+				System.out.println("music on");
+			}else{
+				System.out.println("music off");
 			}
 		}
 		
