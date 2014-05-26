@@ -28,8 +28,13 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			//myAgent.changeToRoomSelectView();
 			myAgent.addBehaviour(new MultiPlayUpdateBehaviour(myAgent));
 		}else if(msg == UserAgent.return_Menu){
-			myAgent.setSingle_mode(false);
-			myAgent.setMultiple_mode(false);
+			if (myAgent.isMultiple_mode()) {
+				if (myAgent.current_room_id != null) {
+					System.out.println("quitting from current room : " + myAgent.current_room_id);
+					myAgent.addBehaviour(new ExitGroupBehaviour(myAgent, myAgent.current_room_id));
+				}
+			}
+			//myAgent.setNoMode();
 			myAgent.changeToMenuView();
 		}else if(msg == UserAgent.instrument_Mode){
 			if(myAgent.isSingle_mode()){

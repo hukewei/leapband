@@ -49,6 +49,7 @@ public class MultiPlayUpdateBehaviour extends Behaviour {
 									MessageTemplate.MatchPerformative(ACLMessage.INFORM));
 		ACLMessage update_message = myAgent.receive(mt);
 		if(update_message!=null){
+			System.out.println("receive update dict");
 			if(update_message.getPerformative()==ACLMessage.INFORM){
 				try {
 					 myAgent.setDict((DefaultListModel<String>)update_message.getContentObject());
