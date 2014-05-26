@@ -26,6 +26,7 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			myAgent.setMultiple_mode(true);
 			myAgent.changeToInstrumentView();
 			//myAgent.changeToRoomSelectView();
+			myAgent.addBehaviour(new MultiPlayUpdateBehaviour(myAgent));
 		}else if(msg == UserAgent.return_Menu){
 			myAgent.setSingle_mode(false);
 			myAgent.setMultiple_mode(false);

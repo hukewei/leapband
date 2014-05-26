@@ -63,10 +63,12 @@ public class GameManageBehaviour extends Behaviour{
 					removePlayerDict(message.getSender().getName());
 					list_member.remove(message.getSender());
 					answer_exit_req(message);
+					initialize=false;
 					player_changed = true;
 					if (list_member.size() == 0) {
 						game_over = true;
 						myAgent.getDict().removeElement(conversation_id);
+						info_multiplay_users();
 					} else {
 						//change host to the next one
 						host_name = list_member.get(0);
@@ -85,6 +87,7 @@ public class GameManageBehaviour extends Behaviour{
 			//update room list
 			conversation_id = "Room"+room_id;
 			myAgent.setDict(conversation_id);
+			info_multiplay_users();
 			setPlayerDict(host_msg.getSender().getName());
 			//info_all_player();
 			list_member.add(host_msg.getSender());
@@ -143,6 +146,22 @@ public class GameManageBehaviour extends Behaviour{
 		}
 		info_player_change.setConversationId(Constance.MEMBER_CHANGE);
 		myAgent.send(info_player_change);
+	}
+	
+	private void info_multiplay_users(){
+		ACLMessage info_multiplay_users = new ACLMessage(ACLMessage.INFORM);
+		for(int i=0; i<myAgent.getMultiPlayUsers().size();i++){
+			info_multiplay_users.addReceiver(myAgent.getMultiPlayUsers().get(i));
+		}
+		info_multiplay_users.setSender(myAgent.getAID());
+		try {
+			info_multiplay_users.setContentObject(myAgent.getDict());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		info_multiplay_users.setConversationId("updateDICT");
+		myAgent.send(info_multiplay_users);
 	}
 	
 	private void info_all_player_start_game(ACLMessage m) {

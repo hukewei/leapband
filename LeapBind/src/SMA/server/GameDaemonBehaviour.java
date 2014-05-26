@@ -19,10 +19,18 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.or(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
-				MessageTemplate.MatchContent("listGroup")), 
-				MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE), 
-						MessageTemplate.MatchContent(Constance.roomselect_Mode)));
+		MessageTemplate mt = 
+				MessageTemplate.or(
+						MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
+											MessageTemplate.MatchContent("listGroup")), 
+						MessageTemplate.or(
+								MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE), 
+													MessageTemplate.MatchContent(Constance.roomselect_Mode)),
+								MessageTemplate.or(
+										MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CANCEL), 
+															MessageTemplate.MatchContent(Constance.ExitGroupMode)),
+										MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
+															MessageTemplate.MatchContent(Constance.START_GAME)))));
 		
 		ACLMessage message=myAgent.receive(mt);
 		
@@ -32,6 +40,8 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 			if(message.getContent().equals("listGroup")){
 				System.out.println("oklistGruop\n");
 				myAgent.addBehaviour(new GetListGameBehaviour(myAgent,message));
+			}else if(message.getContent().equals(Constance.START_GAME)){
+				System.out.println("okStartGame\n");
 			}
 		} else if (message != null && message.getPerformative() == ACLMessage.SUBSCRIBE) {
 			System.out.println("subscrib received");
@@ -42,10 +52,18 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 				//UserAgent ask for creating a new room
 				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
+		}else if (message != null && message.getPerformative() == ACLMessage.CANCEL) {
+			System.out.println("subscrib received");
+			System.out.println(message.getContent());
+			if (message.getContent().equals(Constance.ExitGroupMode)) {
+				System.out.println("code 104 matched");
+				System.out.println("receive userAgent subscription");
+				//UserAgent ask for creating a new room
+				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
+			}
 			
 		}
-		
-		
+
 	}
 
 	/*@Override

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 
+
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
@@ -18,6 +20,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class MultiPlayAgent extends Agent{
 	
 	private DefaultListModel<String> dict;
+	private List<AID> MultiPlayUsers;
 	private int room_ids = 0;
 
 	public int getRoom_ids() {
@@ -34,6 +37,8 @@ public class MultiPlayAgent extends Agent{
 
 	protected void setup() {
 		super.setup();
+		MultiPlayUsers= new ArrayList<AID>();
+		
 		System.out.println(getLocalName()+"--> Installed");
 		
 		DFAgentDescription dfd=new DFAgentDescription();
@@ -58,6 +63,7 @@ public class MultiPlayAgent extends Agent{
 
 		}
 		//addBehaviour(new GetListGameBehaviour(this));
+		addBehaviour(new MultiPlayManageBehaviour(this));
 		addBehaviour(new GameDaemonBehaviour(this));
 		
 	}
@@ -72,10 +78,20 @@ public class MultiPlayAgent extends Agent{
 		}
 		return dict;
 	}
+	
 	public void setDict(String item){
 		dict.addElement(item); 
 	}
-
 	
-
+	public List<AID> getMultiPlayUsers(){
+		return MultiPlayUsers;
+	}
+	
+	public void addMultiPlayUser(AID user){
+		MultiPlayUsers.add(user);	
+	}
+	
+	public void removeMultiPlayUser(AID user){
+		if(MultiPlayUsers.contains(user)) MultiPlayUsers.remove(user);	
+	}
 }
