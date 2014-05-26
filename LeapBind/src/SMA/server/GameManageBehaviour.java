@@ -63,7 +63,6 @@ public class GameManageBehaviour extends Behaviour{
 					removePlayerDict(message.getSender().getName());
 					list_member.remove(message.getSender());
 					answer_exit_req(message);
-					initialize=false;
 					player_changed = true;
 					if (list_member.size() == 0) {
 						game_over = true;
