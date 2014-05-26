@@ -29,13 +29,16 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			myAgent.addBehaviour(new MultiPlayUpdateBehaviour(myAgent));
 		}else if(msg == UserAgent.return_Menu){
 			if (myAgent.isMultiple_mode()) {
+				//if some one exit from a group game, we have to create a ExitGroupBehaviour.
+				// ExitGroupBehaviour va s'occuper de la changement de vue
 				if (myAgent.current_room_id != null) {
 					System.out.println("quitting from current room : " + myAgent.current_room_id);
 					myAgent.addBehaviour(new ExitGroupBehaviour(myAgent, myAgent.current_room_id));
 				}
+			} else {
+				myAgent.setNoMode();
+				myAgent.changeToMenuView();
 			}
-			//myAgent.setNoMode();
-			myAgent.changeToMenuView();
 		}else if(msg == UserAgent.instrument_Mode){
 			if(myAgent.isSingle_mode()){
 				System.out.println("singlemode---game start");

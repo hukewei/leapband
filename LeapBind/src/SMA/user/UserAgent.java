@@ -97,7 +97,7 @@ public class UserAgent extends GuiAgent{
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
 		wait_view = new MultiwaitRoom(this);
-		menu_view.setVisible(true);
+		//menu_view.setVisible(true);
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
@@ -162,7 +162,7 @@ public class UserAgent extends GuiAgent{
 	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
-		if(arg0.getType()==1){
+		if(arg0.getType() == SELECT_EVENT){
 			String messageMode = arg0.getParameter(0).toString();
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
@@ -294,6 +294,7 @@ public class UserAgent extends GuiAgent{
 			changeCurrentViewTo(room_view);
 			//instrument_view.setVisible(false);
 			//menu_view.setVisible(false);
+			System.out.println("change to room select view");
 		}
 	}
 		
@@ -328,7 +329,8 @@ public class UserAgent extends GuiAgent{
 //		wait_view.setVisible(false);
 //		game_view.setVisible(false);
 //		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);	
+//		instrument_view.setVisible(false);
+		System.out.println("change to menu view");
 		changeCurrentViewTo(menu_view);
 	}
 	
