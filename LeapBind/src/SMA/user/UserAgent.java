@@ -70,7 +70,7 @@ public class UserAgent extends GuiAgent{
 	private AID my_sound_name = null;
 	private AID host_sound_name = null;
 	private String selected_instrument = null;
-	private String current_room_id = null; //conversation id if in a group
+	String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;
 	private long last_fire_left_drum = 0;
 	private long last_fire_right_drum = 0;
@@ -97,7 +97,7 @@ public class UserAgent extends GuiAgent{
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
 		wait_view = new MultiwaitRoom(this);
-		menu_view.setVisible(true);
+		//menu_view.setVisible(true);
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
@@ -162,7 +162,7 @@ public class UserAgent extends GuiAgent{
 	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
-		if(arg0.getType()==1){
+		if(arg0.getType() == SELECT_EVENT){
 			String messageMode = arg0.getParameter(0).toString();
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
@@ -187,7 +187,7 @@ public class UserAgent extends GuiAgent{
 		} else if(arg0.getType() == EXIT_ROOM_EVENT){
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
-			this.addBehaviour(new GetListGroupBehaviour(this));
+			//this.addBehaviour(new GetListGroupBehaviour(this));
 		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
 			System.out.println("start game demande");
 			this.addBehaviour(new StartGameBehaviour(this));
@@ -294,6 +294,7 @@ public class UserAgent extends GuiAgent{
 			changeCurrentViewTo(room_view);
 			//instrument_view.setVisible(false);
 			//menu_view.setVisible(false);
+			System.out.println("change to room select view");
 		}
 	}
 		
@@ -328,7 +329,8 @@ public class UserAgent extends GuiAgent{
 //		wait_view.setVisible(false);
 //		game_view.setVisible(false);
 //		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);	
+//		instrument_view.setVisible(false);
+		System.out.println("change to menu view");
 		changeCurrentViewTo(menu_view);
 	}
 	
@@ -339,6 +341,11 @@ public class UserAgent extends GuiAgent{
 	public void setSingle_mode(boolean single_mode) {
 		this.single_mode = single_mode;
 		this.multiple_mode = !single_mode;
+	}
+	
+	public void setNoMode() {
+		this.single_mode = false;
+		this.multiple_mode = false;
 	}
 
 	public boolean isMultiple_mode() {
