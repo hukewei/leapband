@@ -20,6 +20,7 @@ import javax.swing.JList;
 import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CustomImgPanel;
+import Utilities.ImageTimerTask;
 import Utilities.RoundedBorder;
 
 public class RoomSelectView extends JAgentFrame {
@@ -90,8 +91,8 @@ public class RoomSelectView extends JAgentFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				System.out.println("mouse entered");
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -144,8 +145,8 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override

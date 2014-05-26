@@ -12,6 +12,7 @@ import javax.swing.JButton;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
+import Utilities.ImageTimerTask;
 
 public class HomeMouseListener implements MouseListener {
 	JAgentFrame myFrame = null;
@@ -37,8 +38,8 @@ public class HomeMouseListener implements MouseListener {
 		if(home!=null){
 			home.setBorderPainted(true);
 		}
-		myFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		myFrame.click_task = new Timer();
+		myFrame.click_task.schedule(new ImageTimerTask(myFrame),0,Constance.click_delay/12);
 		myFrame.click_task.schedule( 
 		        new java.util.TimerTask() {
 		            @Override

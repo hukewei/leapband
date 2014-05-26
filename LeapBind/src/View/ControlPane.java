@@ -26,6 +26,7 @@ import javax.swing.border.Border;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
+import Utilities.ImageTimerTask;
 
 
 public class ControlPane extends JPanel{
@@ -77,8 +78,8 @@ public class ControlPane extends JPanel{
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				home.setBorderPainted(true);
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
