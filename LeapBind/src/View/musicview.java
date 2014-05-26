@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,6 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,8 +27,10 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import SMA.user.UserAgent;
+import Utilities.Constance;
 import Utilities.CustomImgPanel;
 import Utilities.ImageFlowItem;
+import Utilities.OvalBorder;
 import Utilities.SongFlowItem;
 
 
@@ -38,6 +43,8 @@ public class musicview extends JFrame{
 	private List<SongFlowItem> songs = new ArrayList<SongFlowItem>();
 	private UserAgent myAgent;
 	private int index=0;
+	Timer click_task = null;
+	private JLabel valider;
 	
 	public musicview(List<SongFlowItem> loadFromDirectory) {
 		songs=loadFromDirectory;
@@ -99,53 +106,111 @@ public class musicview extends JFrame{
     	labeldown.setHorizontalAlignment(SwingConstants.CENTER);
     	labeldown.setForeground(new Color(255,255,255,150));
 		
-    	ImageIcon avant = new ImageIcon("src/images/avant.jpg");
-		JButton precedent = new JButton(avant);
-		precedent.setBounds(100,360,100,100);
-    	ImageIcon next = new ImageIcon("src/images/next.png");
-		JButton suivant = new JButton(next);
-		suivant.setBounds(510,360,100,100);
-    	ImageIcon ok = new ImageIcon("src/images/ok.jpg");
-		JButton valider = new JButton(ok);
-		valider.setBounds(310,360,100,100);
+//    	ImageIcon avant = new ImageIcon("src/images/avant.jpg");
+//		JButton precedent = new JButton(avant);
+//		precedent.setBounds(100,360,100,100);
+//    	ImageIcon next = new ImageIcon("src/images/next.png");
+//		JButton suivant = new JButton(next);
+//		suivant.setBounds(510,360,100,100);
+    	
+		valider = new JLabel(new ImageIcon("src/images/ok.png"));
+		valider.setBounds(550,360,100,100);
+		valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
 		
-		suivant.addActionListener(new ActionListener(){			
-			public void actionPerformed(ActionEvent e) {
-				++i;
-				if(i==songs.size()){
-					i=0;
-				}
-				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
-				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
-				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));		
-			}
-		});
-		precedent.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				--i;
-				if(i<0){
-					i=songs.size()-1;
-				}
-				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
-				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
-				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));			
-			}
-		});
-		valider.addActionListener(new ActionListener(){
+//		suivant.addActionListener(new ActionListener(){			
+//			public void actionPerformed(ActionEvent e) {
+//				++i;
+//				if(i==songs.size()){
+//					i=0;
+//				}
+//				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
+//				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
+//				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));		
+//			}
+//		});
+//		precedent.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				--i;
+//				if(i<0){
+//					i=songs.size()-1;
+//				}
+//				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
+//				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
+//				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));			
+//			}
+//		});
+	valider.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
-				ev.addParameter(songs.get(index).getFile().getAbsolutePath());
-				myAgent.postGuiEvent(ev);
-				setVisible(false);
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
+
+				Toolkit toolkit = Toolkit.getDefaultToolkit();
+				Image cursorImage = toolkit.getImage("src/images/cursor.png");
+				Point cursorHotSpot = new Point(0,0);
+				Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+				setCursor(customCursor);
+				if (click_task != null) {
+					click_task.cancel();
+					click_task = null;
+				}
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), new Color(153,153,255)));
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				click_task = new Timer();
+				click_task.schedule( 
+				        new java.util.TimerTask() {
+				            @Override
+				            public void run() {
+				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
+								ev.addParameter(songs.get(index).getFile().getAbsolutePath());
+								myAgent.postGuiEvent(ev);
+								setVisible(false);
+				            }
+				        }, 
+				        Constance.click_delay 
+				);
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 		});
+//		valider.addActionListener(new ActionListener(){
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
+//				ev.addParameter(songs.get(index).getFile().getAbsolutePath());
+//				myAgent.postGuiEvent(ev);
+//				setVisible(false);
+//			}
+//		});
 		background.add(label);
 		background.add(labelup);
 		background.add(labeldown);
-		background.add(suivant);
-		background.add(precedent);
+//		background.add(suivant);
+//		background.add(precedent);
 		background.add(valider);
+		this.setResizable(false);
 		this.setVisible(true);
 		
 		// personnel cursor
