@@ -53,9 +53,12 @@ public class ControlPane extends JPanel{
 	JLabel rewind;
 	JLabel forward;
 	Timer click_task = null;
+
 	private JLabel home;
 	private JLabel play;
 	private JLabel volume;
+	private JButton music;
+	
 	boolean isPlay=false;
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
@@ -139,9 +142,10 @@ public class ControlPane extends JPanel{
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
-		JButton music = new JButton("Choose a music");
-		music.setFont(new Font("Serif", Font.PLAIN, 30));
+		music = new JButton("Choose a music");
+		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
 		//music.setPreferredSize(new Dimension(400,100));
+
 		music.setBounds((int) (width*0.3), (int) (height*0.05), 400, 100);
 		music.setBackground(Color.WHITE);
 		//music.setBorder(border);
