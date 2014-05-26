@@ -103,16 +103,17 @@ public	int matchNote(){
 	
 	
 	public int matchVolume() {
-		int volume = 80;
-
-		volume = (int) (volume + (movement.getSpeed()-1200)/80);
-		if (volume<60){
-			volume=60;
-		}
-		if (volume>100){
+		int volume = 180;
+		int current_speed = (int) Math.abs(movement.getSpeed());
+		volume = (int) (volume + (current_speed-1200)/80);
+		if (volume<100){
 			volume=100;
 		}
-		if (movement.getSpeed() <30){
+		if (volume>220){
+			volume=220;
+		}
+		if (current_speed <30){
+			System.out.println(current_speed + ": 0 volume for this note..");
 			volume=0;
 		}
 		

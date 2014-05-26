@@ -166,7 +166,7 @@ public class GameView extends JAgentFrame {
 					            	playDrumLeft.repaint(); 
 					            }
 					        }, 
-					        200 
+					        50 
 				);
 			} else if (evt.getPropertyName().equals("drum_right")) {
 				System.out.println("property change for drum_right");
@@ -184,7 +184,7 @@ public class GameView extends JAgentFrame {
 					            	playDrumRight.repaint(); 
 					            }
 					        }, 
-					        200 
+					        50 
 				);
 			}
 		}

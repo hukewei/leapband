@@ -10,7 +10,12 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import Utilities.Constance;
+import Utilities.MoveInformData;
+import Utilities.MyAID;
+import Utilities.NoteInformData;
 
 @SuppressWarnings("serial")
 /**
@@ -23,6 +28,7 @@ public class GameManageBehaviour extends Behaviour{
 	private MultiPlayAgent myAgent;
 	private ACLMessage msg = null;
 	private AID host_name = null;
+	private AID host_sound_name = null;
 	private ACLMessage host_msg = null;
 	private ArrayList<AID> list_member = new ArrayList<AID>();	
 	private DefaultListModel<String> dict_player = new DefaultListModel<>();
@@ -91,6 +97,8 @@ public class GameManageBehaviour extends Behaviour{
 			//info_all_player();
 			list_member.add(host_msg.getSender());
 			host_name = host_msg.getSender();
+			System.out.println(host_msg.getReplyWith());
+			host_sound_name = MyAID.toAID(host_msg.getReplyWith());
 			answer_host_ack();
 			player_changed = true;
 			initialize = false;	
@@ -114,11 +122,14 @@ public class GameManageBehaviour extends Behaviour{
 		ACLMessage reply=host_msg.createReply();
 		reply.setPerformative(ACLMessage.CONFIRM);
 		reply.setContent(conversation_id);
+		System.out.println("send host ack");
 		myAgent.send(reply);
 	}
 	
 	public void answer_guest_ack(ACLMessage message) {
 		ACLMessage reply=message.createReply();
+		reply.clearAllReceiver();
+		reply.addReceiver(message.getSender());
 		reply.setPerformative(ACLMessage.CONFIRM);
 		reply.setContent(Constance.ROOM_ENTERED);
 		myAgent.send(reply);
@@ -170,6 +181,8 @@ public class GameManageBehaviour extends Behaviour{
 		}
 		info_game_start.setConversationId(m.getConversationId());
 		info_game_start.setSender(myAgent.getAID());
+		MyAID sound_agent = new MyAID(host_sound_name.getName(), host_sound_name.getAddressesArray()[0]);
+		info_game_start.setReplyWith(sound_agent.toJSON());
 		info_game_start.setContent(Constance.CONFIRM_START);
 		myAgent.send(info_game_start);
 	}
