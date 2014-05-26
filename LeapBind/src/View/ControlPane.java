@@ -47,6 +47,7 @@ public class ControlPane extends JPanel{
 	JLabel player;
 	Timer click_task = null;
 	private JButton home;
+	private JButton music;
 	private JLabel play;
 	boolean isPlay=false;
 	public ControlPane(UserAgent agent) {
@@ -132,12 +133,14 @@ public class ControlPane extends JPanel{
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
-		JButton music = new JButton("Choose a music");
-		music.setFont(new Font("Serif", Font.PLAIN, 30));
+		music = new JButton("Choose a music");
+		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
 		//music.setPreferredSize(new Dimension(400,100));
 		music.setBounds((int) (width*0.35), (int) (height*0.05), 400, 100);
-		music.setBackground(Color.WHITE);
+		music.setForeground(Color.WHITE);
 		//music.setBorder(border);
+		music.setOpaque(false);
+		music.setBorderPainted(false);
 		music.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -148,6 +151,44 @@ public class ControlPane extends JPanel{
 		if(!is_proprietaire()){
 			music.setEnabled(false);
 		}
+		music.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				music.setForeground(Color.WHITE);
+				music.setBackground(Color.DARK_GRAY);
+				music.setOpaque(true);
+				music.setBorderPainted(false);
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				music.setForeground(Color.ORANGE);
+				music.setBackground(Color.GRAY);
+				music.setOpaque(true);
+				music.setBorderPainted(false);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		play = new JLabel(new ImageIcon("src/images/play.png"));
 		play.setBackground(Color.BLACK);
 		

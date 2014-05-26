@@ -80,7 +80,7 @@ public class musicview extends JFrame{
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
 		label = new JLabel(getFileName(songs.get(i+1).getLabel()));
 		index=i+1;
-		label.setBounds(100, 140, 500, 160);
+		label.setBounds(100, 120, 500, 160);
     	label.setFont(new Font("Chalkboard", Font.PLAIN, 50));
     	label.setHorizontalAlignment(SwingConstants.CENTER);
     	label.setForeground(Color.WHITE);
@@ -88,76 +88,47 @@ public class musicview extends JFrame{
     	//System.out.println(label.getComponent(0).getClass().getTypeName());
 
 		labelup = new JLabel(getFileName(songs.get(i+2).getLabel()));
-		labelup.setBounds(150, 40, 400, 160);
+		labelup.setBounds(150, 20, 400, 160);
     	labelup.setFont(new Font("Chalkboard", Font.PLAIN, 20));
     	labelup.setHorizontalAlignment(SwingConstants.CENTER);
     	labelup.setForeground(new Color(255,255,255,150));
     	
 		labeldown = new JLabel(getFileName(songs.get(i).getLabel()));
-		labeldown.setBounds(150, 240, 400, 160);
+		labeldown.setBounds(150, 220, 400, 160);
     	labeldown.setFont(new Font("Chalkboard", Font.PLAIN, 20));
     	labeldown.setHorizontalAlignment(SwingConstants.CENTER);
     	labeldown.setForeground(new Color(255,255,255,150));
 		
-		JButton precedent = new JButton("avant");
-		precedent.setBounds(30,350,100,40);
-		JButton suivant = new JButton("next");
-		suivant.setBounds(160,350,100,40);
-		JButton valider = new JButton("OK");
-		valider.setBounds(500,350,150,100);
+    	ImageIcon avant = new ImageIcon("src/images/avant.jpg");
+		JButton precedent = new JButton(avant);
+		precedent.setBounds(100,360,100,100);
+    	ImageIcon next = new ImageIcon("src/images/next.png");
+		JButton suivant = new JButton(next);
+		suivant.setBounds(510,360,100,100);
+    	ImageIcon ok = new ImageIcon("src/images/ok.jpg");
+		JButton valider = new JButton(ok);
+		valider.setBounds(310,360,100,100);
 		
 		suivant.addActionListener(new ActionListener(){			
 			public void actionPerformed(ActionEvent e) {
 				++i;
 				if(i==songs.size()){
 					i=0;
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(i+1).getLabel()));
-					index=i+1;
-					labelup.setText(getFileName(songs.get(i+2).getLabel()));					
 				}
-				else if(i+1 == songs.size()){
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(0).getLabel()));
-					index=0;
-					labelup.setText(getFileName(songs.get(1).getLabel()));
-				}
-				else if(i+2 == songs.size()){
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(i+1).getLabel()));
-					index=i+1;
-					labelup.setText(getFileName(songs.get(0).getLabel()));
-				}
-				else{
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(i+1).getLabel()));
-					index=i+1;
-					labelup.setText(getFileName(songs.get(i+2).getLabel()));
-				}
+				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
+				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
+				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));		
 			}
 		});
 		precedent.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				--i;
-				if(i < 0){
-					i = songs.size()-1;
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(0).getLabel()));
-					index=0;
-					labelup.setText(getFileName(songs.get(1).getLabel()));
+				if(i<0){
+					i=songs.size()-1;
 				}
-				else if(i == songs.size()-2){
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(i+1).getLabel()));
-					index=i+1;
-					labelup.setText(getFileName(songs.get(0).getLabel()));
-				}
-				else{
-					labeldown.setText(getFileName(songs.get(i).getLabel()));
-					label.setText(getFileName(songs.get(i+1).getLabel()));
-					index=i+1;
-					labelup.setText(getFileName(songs.get(i+2).getLabel()));
-				}
+				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
+				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
+				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));			
 			}
 		});
 		valider.addActionListener(new ActionListener(){
