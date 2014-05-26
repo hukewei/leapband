@@ -26,6 +26,7 @@ public class RoomSelectView extends JAgentFrame {
 	private JList<String> list_room;
 	private JButton create_room;
 	private JButton enter_room;
+	private JButton home;
 	
 	public RoomSelectView(UserAgent agent) {
 		super(agent);
@@ -170,12 +171,14 @@ public class RoomSelectView extends JAgentFrame {
 			}
 		});
 		imagePanel.add(enter_room);
-		JButton home = new JButton();
+		home = new JButton();
 		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
-		home.setContentAreaFilled(false);
-		home.addMouseListener(new HomeMouseListener(this));
+		//home.setContentAreaFilled(false);
+		home.setOpaque(false);
+		home.setBorderPainted(false);
+		home.addMouseListener(new HomeMouseListener(this,home));
 		imagePanel.add(home);
 		
 		/*create_room.addActionListener(new ActionListener() {
@@ -206,17 +209,19 @@ public class RoomSelectView extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("swipe")) {
-			int current_index = list_room.getSelectedIndex();
-			if (current_index > -1 ) {
-				if ((String)evt.getNewValue() == "UP") {
-					current_index--;
-				} else if ((String)evt.getNewValue() == "DOWN") {
-					current_index++;
+		if (isVisible()) {
+			if (evt.getPropertyName().equals("swipe")) {
+				int current_index = list_room.getSelectedIndex();
+				if (current_index > -1 ) {
+					if ((String)evt.getNewValue() == "UP") {
+						current_index--;
+					} else if ((String)evt.getNewValue() == "DOWN") {
+						current_index++;
+					}
 				}
+				list_room.setSelectedIndex(current_index);
+				
 			}
-			list_room.setSelectedIndex(current_index);
-			
 		}
 	}
 	

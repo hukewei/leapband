@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.util.Timer;
 
 import javax.swing.BorderFactory;
@@ -33,8 +34,9 @@ public class ControlPane extends JPanel{
 	private Boolean propietaire = true;
 	private int width;
 	private int height;
+	JLabel player;
 	Timer click_task = null;
-	
+	private JButton home;
 	public ControlPane(UserAgent agent) {
 		this.width=Constance.Windows_width;
 		this.height=Constance.Windows_height;
@@ -48,16 +50,19 @@ public class ControlPane extends JPanel{
 		this.setBackground(new Color(255,255,204,200));
 		
 		
-		JButton home = new JButton();
+		home = new JButton();
 		Icon icon = new ImageIcon("src/images/home.png");
 		//home.setPreferredSize(new Dimension(100,100));
 		home.setBounds((int) (width*0.1),(int) (height*0.05),100,100);
 		home.setIcon(icon);
-		home.setBackground(Color.WHITE);
+		//home.setBackground(Color.WHITE);
+		home.setOpaque(false);
+		home.setBorderPainted(false);
 		home.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
+				home.setBorderPainted(false);
 				Toolkit toolkit = Toolkit.getDefaultToolkit();
 				Image cursorImage = toolkit.getImage("src/images/cursor.png");
 				Point cursorHotSpot = new Point(0,0);
@@ -71,6 +76,7 @@ public class ControlPane extends JPanel{
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
+				home.setBorderPainted(true);
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
 				click_task.schedule( 
@@ -107,7 +113,7 @@ public class ControlPane extends JPanel{
 		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
-		JLabel player = new JLabel(new ImageIcon("src/images/person2.jpg"));
+		player = new JLabel(new ImageIcon("src/images/person2.jpg"));
 		//player.setPreferredSize(new Dimension(100,100));
 		player.setBounds((int) (width*0.2), (int) (height*0.05), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
@@ -123,7 +129,7 @@ public class ControlPane extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				new musicview();
+				new musicview(new File("src/songs/"),myAgent);
 			}
 		});
 		if(!is_proprietaire()){

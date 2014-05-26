@@ -5,6 +5,8 @@ import jade.gui.GuiEvent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
 
@@ -38,8 +40,9 @@ public class InstrumentSelectView extends JAgentFrame{
 		Icon icon = new ImageIcon("src/images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
-		home.setBackground(new Color(110, 110, 110));
-		
+		//home.setBackground(new Color(110, 110, 110));
+		home.setOpaque(false);
+		home.setBorderPainted(false);
 		imageFlowPanel.add(home);
 		
 		
@@ -55,7 +58,7 @@ public class InstrumentSelectView extends JAgentFrame{
     	imageFlowPanel.add(imageFlow);
     	this.add(imageFlowPanel);
     	
-    	home.addMouseListener(new HomeMouseListener(this));
+    	home.addMouseListener(new HomeMouseListener(this,home));
 	}
 
 	@Override
