@@ -45,6 +45,7 @@ public class UserAgent extends GuiAgent{
 	public static int EXIT_ROOM_EVENT = 6;
 	public static int SELECT_MUSIC_EVENT = 7;
 	public static int CONTROL_MUSIC_EVENT =8;
+	public static int CONTROL_MUSIC_RHYTHM =9;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
@@ -201,6 +202,8 @@ public class UserAgent extends GuiAgent{
 			}else{
 				System.out.println("music off");
 			}
+		}else if(arg0.getType()==CONTROL_MUSIC_RHYTHM){
+			System.out.println(arg0.getParameter(0));
 		}
 		
 	}

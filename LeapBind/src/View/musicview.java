@@ -1,4 +1,4 @@
-package View;
+ package View;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
@@ -42,7 +42,7 @@ public class musicview extends JFrame{
 	public musicview(List<SongFlowItem> loadFromDirectory) {
 		songs=loadFromDirectory;
 	}
-	
+	 
 	public musicview(final File directory,UserAgent agent){
 		
 		this(SongFlowItem.loadFromDirectory(directory));
