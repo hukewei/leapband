@@ -58,6 +58,7 @@ public class ControlPane extends JPanel{
 	private JLabel play;
 	private JLabel volume;
 	private JButton music;
+	private double current_rotation = 0;
 	
 	boolean isPlay=false;
 	public ControlPane(UserAgent agent) {
@@ -411,14 +412,13 @@ public class ControlPane extends JPanel{
 			public void mouseWheelMoved(MouseWheelEvent e) {
 				int notches = e.getWheelRotation();
 				if (notches < 0) {
-					volume.setIcon(new RotatedIcon(volume.getIcon(), 30));
+					current_rotation += 30;
 					System.out.println("up");
 			       } else {
-			    	   volume.setIcon(new RotatedIcon(volume.getIcon(), -30));
+			    	   current_rotation -= 30;
 			    	   System.out.println("down");
 			       }
-
-				
+				volume.setIcon(new RotatedIcon(new ImageIcon("src/images/volume.png"), current_rotation));
 			}
 		});
 		
