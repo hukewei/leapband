@@ -45,6 +45,9 @@ public class UserAgent extends GuiAgent{
 	public static int JOINT_ROOM_EVENT = 4;
 	public static int CONFIRM_ROOM_EVENT = 5;
 	public static int EXIT_ROOM_EVENT = 6;
+	public static int SELECT_MUSIC_EVENT = 7;
+	public static int CONTROL_MUSIC_EVENT =8;
+	public static int CONTROL_MUSIC_RHYTHM =9;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
@@ -70,6 +73,8 @@ public class UserAgent extends GuiAgent{
 	private AID my_sound_name = null;
 	private AID host_sound_name = null;
 	private String selected_instrument = null;
+	private String selected_song = null;
+	private boolean isBackGroundMusicOn=false;
 	String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;
 	private long last_fire_left_drum = 0;
@@ -124,6 +129,10 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
+	public JAgentFrame getCurrent_frame() {
+		return current_frame;
+	}
+
 	public InstrumentType getSelectedInstrument() {
 		InstrumentType instrument = InstrumentType.DEFAULT;
 		if (selected_instrument == drum) {
@@ -191,6 +200,22 @@ public class UserAgent extends GuiAgent{
 		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
 			System.out.println("start game demande");
 			this.addBehaviour(new StartGameBehaviour(this));
+		}else if(arg0.getType()==SELECT_MUSIC_EVENT){
+			System.out.println("selected Song path:"+arg0.getParameter(0));
+			if(selected_song==null){
+				selected_song=(String) arg0.getParameter(0);
+			}else if(!selected_song.equals(arg0.getParameter(0))){
+				selected_song=(String) arg0.getParameter(0);
+			}
+		}else if(arg0.getType()==CONTROL_MUSIC_EVENT){
+			isBackGroundMusicOn=(boolean) arg0.getParameter(0);
+			if(isBackGroundMusicOn){
+				System.out.println("music on");
+			}else{
+				System.out.println("music off");
+			}
+		}else if(arg0.getType()==CONTROL_MUSIC_RHYTHM){
+			System.out.println(arg0.getParameter(0));
 		}
 		
 	}

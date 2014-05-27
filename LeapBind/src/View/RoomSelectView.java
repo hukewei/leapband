@@ -15,11 +15,13 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CustomImgPanel;
+import Utilities.ImageTimerTask;
 import Utilities.RoundedBorder;
 
 public class RoomSelectView extends JAgentFrame {
@@ -90,8 +92,8 @@ public class RoomSelectView extends JAgentFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				System.out.println("mouse entered");
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -144,8 +146,8 @@ public class RoomSelectView extends JAgentFrame {
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -176,9 +178,10 @@ public class RoomSelectView extends JAgentFrame {
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
 		//home.setContentAreaFilled(false);
-		home.setOpaque(false);
-		home.setBorderPainted(false);
+		
 		home.addMouseListener(new HomeMouseListener(this,home));
+		home.setContentAreaFilled(false);
+		home.setOpaque(false);
 		imagePanel.add(home);
 		
 		/*create_room.addActionListener(new ActionListener() {

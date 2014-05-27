@@ -59,6 +59,9 @@ public class SongFlowItem {
 	    {
 	        return label;
 	    }
+	    public File getFile(){
+	    	return file;
+	    }
 
 	
 
