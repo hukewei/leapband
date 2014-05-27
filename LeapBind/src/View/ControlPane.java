@@ -49,7 +49,7 @@ public class ControlPane extends JPanel{
 	private Boolean propietaire = true;
 	private int width;
 	private int height;
-	JLabel player;
+	public JLabel player;
 	JLabel rewind;
 	JLabel forward;
 	Timer click_task = null;
@@ -136,12 +136,13 @@ public class ControlPane extends JPanel{
 		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
-		player = new JLabel(new ImageIcon("src/images/person2.jpg"));
+		player = new JLabel(new ImageIcon("src/Avatars/person2.jpg"));
 		//player.setPreferredSize(new Dimension(100,100));
 		player.setBounds((int) (width*0.2), (int) (height*0.05), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
+		
 		music = new JButton("Choose a music");
 		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
 		//music.setPreferredSize(new Dimension(400,100));

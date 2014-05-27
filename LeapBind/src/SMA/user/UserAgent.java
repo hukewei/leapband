@@ -74,6 +74,7 @@ public class UserAgent extends GuiAgent{
 	private AID host_sound_name = null;
 	private String selected_instrument = null;
 	private String selected_song = null;
+	//private String selected_avatar=null;
 	private boolean isBackGroundMusicOn=false;
 	String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;
@@ -106,17 +107,17 @@ public class UserAgent extends GuiAgent{
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
-		listener = new LeapListener(this);
-        controller = new Controller();
-        
-        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-        //controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
-        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
-        //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
-        //listener.setDebug(true);
-        listener.setClickType(1); 
-        listener.setCalibratedScren(true);
-        controller.addListener(listener);
+//		listener = new LeapListener(this);
+//        controller = new Controller();
+//        
+//        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+//        //controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+//        controller.enableGesture( Gesture.Type.TYPE_SWIPE);
+//        //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
+//        //listener.setDebug(true);
+//        listener.setClickType(1); 
+//        listener.setCalibratedScren(true);
+//        controller.addListener(listener);
         
         System.out.println("Press Enter to quit...");
 //        try {

@@ -27,7 +27,7 @@ public class GameView extends JAgentFrame {
 	
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
-	private ControlPane control_pane;
+	public ControlPane control_pane;
 	private Player player = new Player();
 	public ScaleLabel playDrumLeft;
 	public ScaleLabel playDrumRight;
