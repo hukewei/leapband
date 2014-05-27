@@ -4,11 +4,16 @@ import jade.gui.GuiEvent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.Timer;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -20,6 +25,7 @@ import javax.swing.SwingConstants;
 import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.ImageFlowItem;
+import Utilities.OvalBorder;
 
 @SuppressWarnings("serial")
 public class InstrumentSelectView extends JAgentFrame{
@@ -41,8 +47,6 @@ public class InstrumentSelectView extends JAgentFrame{
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
 		//home.setBackground(new Color(110, 110, 110));
-		home.setOpaque(false);
-		home.setBorderPainted(false);
 		imageFlowPanel.add(home);
 		
 		
@@ -59,6 +63,11 @@ public class InstrumentSelectView extends JAgentFrame{
     	this.add(imageFlowPanel);
     	
     	home.addMouseListener(new HomeMouseListener(this,home));
+    	home.setContentAreaFilled(false);
+    	home.setOpaque(false);
+    	home.setBorderPainted(false);
+    	
+		
 	}
 
 	@Override
