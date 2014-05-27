@@ -1,6 +1,7 @@
 package SMA.user;
 
 import Utilities.Constance;
+import View.GameView;
 import jade.core.behaviours.OneShotBehaviour;
 
 
@@ -28,7 +29,7 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 			//myAgent.changeToRoomSelectView();
 			myAgent.addBehaviour(new MultiPlayUpdateBehaviour(myAgent));
 		}else if(msg == UserAgent.return_Menu){
-			if (myAgent.isMultiple_mode()) {
+			if (myAgent.isMultiple_mode() && myAgent.getCurrent_frame().getClass() == GameView.class) {
 				//if some one exit from a group game, we have to create a ExitGroupBehaviour.
 				// ExitGroupBehaviour va s'occuper de la changement de vue
 				if (myAgent.current_room_id != null) {

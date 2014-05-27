@@ -41,6 +41,7 @@ import javax.swing.plaf.basic.BasicSliderUI;
 import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.OvalBorder;
+import Utilities.ImageTimerTask;
 
 
 public class ControlPane extends JPanel{
@@ -103,6 +104,7 @@ public class ControlPane extends JPanel{
 				home.setBorder(new OvalBorder(home.getWidth(),home.getHeight(),new Color(153,153,255)));
 				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override

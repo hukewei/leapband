@@ -5,11 +5,11 @@ import jade.core.Runtime;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
 
-public class SoundMain {
+public class SoundContainer {
 	public static String SECOND_PROPERTIES_FILE = "containerSound.cfg";
 	
 	
-	public static void main(String[] args) {
+	public static void run(String[] args) {
 		Runtime rt = Runtime.instance();
 		ProfileImpl p = null;
 		

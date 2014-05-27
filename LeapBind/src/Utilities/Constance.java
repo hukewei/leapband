@@ -16,7 +16,7 @@ public class Constance {
 	
 	public static int Gesture_Interval = 750000;
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
-	static public int click_delay = 1800;
+	static public int click_delay = 1600;
 	static public int Minimun_Distance = 3;
 	static public int Minimun_Fire_interval = 200;
 	

@@ -129,6 +129,10 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
+	public JAgentFrame getCurrent_frame() {
+		return current_frame;
+	}
+
 	public InstrumentType getSelectedInstrument() {
 		InstrumentType instrument = InstrumentType.DEFAULT;
 		if (selected_instrument == drum) {
