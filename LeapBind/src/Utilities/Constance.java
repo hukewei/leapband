@@ -30,4 +30,6 @@ public class Constance {
 	public static String GROUP_CREATED = "groupCreatedInform";
 	public static String START_GAME = "Game_Start_Request";
 	public static String CONFIRM_START = "Game_Start_Confirmed";
+	public static String Volume_Up = "Volume_Up";
+	public static String Volume_Down = "Volume_Down";
 }

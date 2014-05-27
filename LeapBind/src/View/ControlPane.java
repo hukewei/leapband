@@ -44,7 +44,7 @@ import Utilities.OvalBorder;
 import Utilities.ImageTimerTask;
 
 
-public class ControlPane extends JPanel{
+public class ControlPane extends JPanel {
 	// personnel cursor
 	private UserAgent myAgent;
 	private Boolean propietaire = true;
@@ -59,7 +59,6 @@ public class ControlPane extends JPanel{
 	private JLabel play;
 	private JLabel volume;
 	private JButton music;
-	private double current_rotation = 0;
 	
 	boolean isPlay=false;
 	public ControlPane(UserAgent agent) {
@@ -102,7 +101,6 @@ public class ControlPane extends JPanel{
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				home.setBorder(new OvalBorder(home.getWidth(),home.getHeight(),new Color(153,153,255)));
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
 				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
@@ -136,6 +134,8 @@ public class ControlPane extends JPanel{
 				
 			}
 		}); 
+		
+		
 		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
@@ -190,13 +190,13 @@ public class ControlPane extends JPanel{
 			
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
 				            public void run() {
-				            	new musicview(new File("src/songs/"),myAgent);
+				            	new MusicSelectView(new File("src/songs/"),myAgent);
 				            }
 				        }, 
 				        Constance.click_delay 
@@ -254,11 +254,9 @@ public class ControlPane extends JPanel{
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
             play.setBorder(new OvalBorder(play.getWidth(), play.getHeight(), new Color(153,153,255)));
-			//play.setBorder(BorderFactory.createBorder(Color.blue));	
-    		
-			
-			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+			//play.setBorder(BorderFactory.createBorder(Color.blue));				
 			click_task = new Timer();
+			click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 			click_task.schedule( 
 			        new java.util.TimerTask() {
 			            @Override
@@ -321,10 +319,8 @@ public class ControlPane extends JPanel{
 			public void mouseEntered(MouseEvent arg0) {
 	            forward.setBorder(new OvalBorder(forward.getWidth(), forward.getHeight(), new Color(153,153,255)));
 				//play.setBorder(BorderFactory.createBorder(Color.blue));	
-	    		
-				
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -379,10 +375,8 @@ public class ControlPane extends JPanel{
 			public void mouseEntered(MouseEvent arg0) {
 	            rewind.setBorder(new OvalBorder(rewind.getWidth(), rewind.getHeight(), new Color(153,153,255)));
 				//play.setBorder(BorderFactory.createBorder(Color.blue));	
-	    		
-				
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -407,22 +401,6 @@ public class ControlPane extends JPanel{
 		
 		volume = new JLabel(new ImageIcon("src/images/volume.png"));
 		volume.setBounds((int) (width*0.9), (int) (height*0.05), 100, 100);
-		//volume.setPreferredSize(new Dimension(100,100));
-		volume.addMouseWheelListener(new MouseWheelListener() {
-			
-			@Override
-			public void mouseWheelMoved(MouseWheelEvent e) {
-				int notches = e.getWheelRotation();
-				if (notches < 0) {
-					current_rotation += 30;
-					System.out.println("up");
-			       } else {
-			    	   current_rotation -= 30;
-			    	   System.out.println("down");
-			       }
-				volume.setIcon(new RotatedIcon(new ImageIcon("src/images/volume.png"), current_rotation));
-			}
-		});
 		
 		this.add(home);
 		this.add(player);
@@ -435,6 +413,9 @@ public class ControlPane extends JPanel{
 		
 		//this.add(userId);
 		//this.add(play);
+	}
+	public JLabel getVolume() {
+		return volume;
 	}
 	public Boolean is_proprietaire(){
 		return propietaire;

@@ -110,7 +110,7 @@ public class UserAgent extends GuiAgent{
         controller = new Controller();
         
         controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
-        //controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
+        controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
         //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
         //listener.setDebug(true);
@@ -451,7 +451,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumLeft(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 30 ) {
+		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 50 ) {
 			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
@@ -462,7 +462,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumRight(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 30 ) {
+		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 50 ) {
 			if (hand.x > Constance.Windows_width * 0.52 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
@@ -472,6 +472,15 @@ public class UserAgent extends GuiAgent{
 	
 	public void doSwipe(String direction) {
 		changes.firePropertyChange("swipe", null, direction);
+	}
+	
+	public void doCircle(String direction) {
+		if (direction == "clockwise") {
+			changes.firePropertyChange("Circle", null, Constance.Volume_Up);
+		}
+		if (direction == "anticlockwise") {
+			changes.firePropertyChange("Circle", null, Constance.Volume_Down);
+		}
 	}
 
 	public GameView getGame_view() {

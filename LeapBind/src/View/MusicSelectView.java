@@ -7,54 +7,40 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedReader;
+import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import SMA.user.UserAgent;
 import Utilities.Constance;
 import Utilities.CustomImgPanel;
-import Utilities.ImageFlowItem;
+import Utilities.ImageTimerTask;
 import Utilities.OvalBorder;
 import Utilities.SongFlowItem;
 
 
-public class musicview extends JFrame{
+public class MusicSelectView extends JAgentFrame{
 	private int i = 0;
 	private JLabel label;
 	private JLabel labelup;
 	private JLabel labeldown;
 	private String temptext = null;
 	private List<SongFlowItem> songs = new ArrayList<SongFlowItem>();
-	private UserAgent myAgent;
 	private int index=0;
 	Timer click_task = null;
 	private JLabel valider;
 	
-	public musicview(List<SongFlowItem> loadFromDirectory) {
-		songs=loadFromDirectory;
-	}
-	 
-	public musicview(final File directory,UserAgent agent){
-		
-		this(SongFlowItem.loadFromDirectory(directory));
-	    this.myAgent=agent;
-		
+	public MusicSelectView(final File directory,UserAgent agent){
+		super(agent);
+		songs = SongFlowItem.loadFromDirectory(directory);
 		/*String path = "src/songs.txt";
 		BufferedReader br = null;
 		String temp = null;
@@ -117,29 +103,7 @@ public class musicview extends JFrame{
 		valider.setBounds(550,360,100,100);
 		valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
 		
-//		suivant.addActionListener(new ActionListener(){			
-//			public void actionPerformed(ActionEvent e) {
-//				++i;
-//				if(i==songs.size()){
-//					i=0;
-//				}
-//				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
-//				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
-//				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));		
-//			}
-//		});
-//		precedent.addActionListener(new ActionListener(){
-//			public void actionPerformed(ActionEvent e) {
-//				--i;
-//				if(i<0){
-//					i=songs.size()-1;
-//				}
-//				labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
-//				label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
-//				labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));			
-//			}
-//		});
-	valider.addMouseListener(new MouseListener() {
+		valider.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -172,8 +136,8 @@ public class musicview extends JFrame{
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), new Color(153,153,255)));
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
+				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -224,6 +188,40 @@ public class musicview extends JFrame{
 	
 	private String getFileName(String filePath){
 		return filePath.substring(0, filePath.lastIndexOf("."));
+	}
+	
+	public void selectNextMusic() {
+		++i;
+		if(i==songs.size()){
+			i=0;
+		}
+		labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
+		label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
+		labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));		
+	}
+	
+	public void selectLastMusic() {
+		--i;
+		if(i<0){
+			i=songs.size()-1;
+		}
+		labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
+		label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
+		labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));			
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (isVisible()) {
+			if (evt.getPropertyName().equals("swipe")) {
+				if ((String)evt.getNewValue() == "UP") {
+					selectLastMusic();
+				} else if ((String)evt.getNewValue() == "DOWN") {
+					selectNextMusic();
+				}				
+			}
+		}
+		
 	}
 	
 }
