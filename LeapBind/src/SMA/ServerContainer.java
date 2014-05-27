@@ -9,14 +9,14 @@ import jade.wrapper.AgentController;
 
 
 
-public class ServerMain {
+public class ServerContainer {
 	
 	public static String SECONDARY_PROPERTIES_FILE = "containerServer.cfg";
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void run(String[] args) {
 		Runtime rt = Runtime.instance();
 		Profile p = null;
 		try{

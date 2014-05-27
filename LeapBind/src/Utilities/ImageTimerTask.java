@@ -26,7 +26,6 @@ public class ImageTimerTask extends TimerTask{
 	@Override
 	public void run(){
 		String image = "src/images/loading"+ String.valueOf(imagenow) + ".gif";
-		System.out.println(image);
 		current_frame.changeCursorImage(image);
 		imagenow++;
 		if (imagenow == 12) {
