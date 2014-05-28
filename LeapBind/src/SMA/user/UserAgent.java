@@ -12,12 +12,15 @@ import jade.gui.GuiEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.sql.Time;
+import java.util.Date;
 
 import javax.swing.DefaultListModel;
 
 import Controller.LeapListener;
 import Utilities.Constance;
 import Utilities.Cordinates;
+import Utilities.InstrumentType;
 import View.GameView;
 import View.InstrumentSelectView;
 import View.JAgentFrame;
@@ -42,6 +45,9 @@ public class UserAgent extends GuiAgent{
 	public static int JOINT_ROOM_EVENT = 4;
 	public static int CONFIRM_ROOM_EVENT = 5;
 	public static int EXIT_ROOM_EVENT = 6;
+	public static int SELECT_MUSIC_EVENT = 7;
+	public static int CONTROL_MUSIC_EVENT =8;
+	public static int CONTROL_MUSIC_RHYTHM =9;
 	public static String Single_Mode = "100";
 	public static String Multiple_Mode = "101";
 	public static String return_Menu = "102";
@@ -63,13 +69,22 @@ public class UserAgent extends GuiAgent{
 	private Cordinates hand_1 = new Cordinates();
 	private Cordinates hand_2 = new Cordinates();
 	private AID server_name = null;
+	private AID note_agent_name = null;
+	private AID my_sound_name = null;
+	private AID host_sound_name = null;
 	private String selected_instrument = null;
-	private String current_room_id = null; //conversation id if in a group
+	private String selected_song = null;
+	//private String selected_avatar=null;
+	private boolean isBackGroundMusicOn=false;
+	String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;
+	private long last_fire_left_drum = 0;
+	private long last_fire_right_drum = 0;
 
 	
 	private DefaultListModel<String> dict = null;
 	private DefaultListModel<String> dict_list_player = null;
+	private String SoundPlayAgentNickName = null;
 
 	
 	private LeapListener listener;
@@ -79,6 +94,8 @@ public class UserAgent extends GuiAgent{
 	
 	protected void setup() {
 		super.setup();
+		SoundPlayAgentNickName = (String) getArguments()[0];
+		System.out.println("SoundPlayAgentNickName = " + SoundPlayAgentNickName);
 		System.out.println(getLocalName()+"--> Installed");
 		changes = new PropertyChangeSupport(this);
 		menu_view = new MenuView(this);
@@ -86,7 +103,7 @@ public class UserAgent extends GuiAgent{
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
 		wait_view = new MultiwaitRoom(this);
-		menu_view.setVisible(true);
+		//menu_view.setVisible(true);
 		changeCurrentViewTo(menu_view);
 		//game_view.setVisible(true);
 		
@@ -98,7 +115,7 @@ public class UserAgent extends GuiAgent{
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
         //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
         //listener.setDebug(true);
-        listener.setClickType(1);
+        listener.setClickType(1); 
         listener.setCalibratedScren(true);
         controller.addListener(listener);
         
@@ -113,7 +130,34 @@ public class UserAgent extends GuiAgent{
         //controller.removeListener(listener);
 	}
 	
-
+	public InstrumentType getSelectedInstrument() {
+		InstrumentType instrument = InstrumentType.DEFAULT;
+		if (selected_instrument == drum) {
+			instrument = InstrumentType.TAMBOUR;
+		} else if (selected_instrument == piano) {
+			instrument = InstrumentType.PIANO;
+		} else if (selected_instrument == guitar) {
+			instrument = InstrumentType.GUITAR;
+		}
+		return instrument;
+	}
+	
+	public boolean isMultipleMode() {
+		return multiple_mode;
+	}
+	
+	public AID getSoundAgentName() {
+		if (multiple_mode) {
+			return host_sound_name;
+		} else {
+			return getMySoundAgent();
+		}
+	}
+	
+	public void setHostSoundName(AID host) {
+		host_sound_name = host;
+	}
+	
 	public void setRoomId(String id) {
 		current_room_id = id;
 	}
@@ -124,7 +168,7 @@ public class UserAgent extends GuiAgent{
 	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
-		if(arg0.getType()==1){
+		if(arg0.getType() == SELECT_EVENT){
 			String messageMode = arg0.getParameter(0).toString();
 			this.addBehaviour(new ModeSelectBehaviour(this, messageMode));
 		}else if(arg0.getType()==2){
@@ -149,10 +193,26 @@ public class UserAgent extends GuiAgent{
 		} else if(arg0.getType() == EXIT_ROOM_EVENT){
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
-			this.addBehaviour(new GetListGroupBehaviour(this));
+			//this.addBehaviour(new GetListGroupBehaviour(this));
 		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
 			System.out.println("start game demande");
 			this.addBehaviour(new StartGameBehaviour(this));
+		}else if(arg0.getType()==SELECT_MUSIC_EVENT){
+			System.out.println("selected Song path:"+arg0.getParameter(0));
+			if(selected_song==null){
+				selected_song=(String) arg0.getParameter(0);
+			}else if(!selected_song.equals(arg0.getParameter(0))){
+				selected_song=(String) arg0.getParameter(0);
+			}
+		}else if(arg0.getType()==CONTROL_MUSIC_EVENT){
+			isBackGroundMusicOn=(boolean) arg0.getParameter(0);
+			if(isBackGroundMusicOn){
+				System.out.println("music on");
+			}else{
+				System.out.println("music off");
+			}
+		}else if(arg0.getType()==CONTROL_MUSIC_RHYTHM){
+			System.out.println(arg0.getParameter(0));
 		}
 		
 	}
@@ -175,6 +235,52 @@ public class UserAgent extends GuiAgent{
 			fe.printStackTrace();
 		}
 		return server_name;
+	}
+	
+	public AID getNoteAgentName() {
+		if (note_agent_name != null) {
+			return note_agent_name;
+		}
+		DFAgentDescription template=new DFAgentDescription();
+		ServiceDescription sd=new ServiceDescription();
+		sd.setType("Organisation");
+		sd.setName("MoveToNote");
+		template.addServices(sd);
+		try{
+			DFAgentDescription[] result=DFService.search(this, template);
+			if(result.length>0){
+				note_agent_name = result[0].getName();
+			}
+		}catch(FIPAException fe){
+			fe.printStackTrace();
+		}
+		return note_agent_name;
+	}
+	
+	public AID getMySoundAgent() {
+		if (my_sound_name != null) {
+			return my_sound_name;
+		}
+		DFAgentDescription template=new DFAgentDescription();
+		ServiceDescription sd=new ServiceDescription();
+		sd.setType("Sound");
+		sd.setName("SoundPlay");
+		template.addServices(sd);
+		try{
+			DFAgentDescription[] result=DFService.search(this, template);
+			if(result.length>0){
+				for (int i = 0; i < result.length; i++) {
+					System.out.println("possible name = " + result[i].getName().getName());
+					if (result[i].getName().getName().contains(SoundPlayAgentNickName)) {
+						my_sound_name = result[i].getName();
+						break;
+					}
+				}
+			}
+		}catch(FIPAException fe){
+			fe.printStackTrace();
+		}
+		return my_sound_name;
 	}
 	
 
@@ -210,6 +316,7 @@ public class UserAgent extends GuiAgent{
 			changeCurrentViewTo(room_view);
 			//instrument_view.setVisible(false);
 			//menu_view.setVisible(false);
+			System.out.println("change to room select view");
 		}
 	}
 		
@@ -244,7 +351,8 @@ public class UserAgent extends GuiAgent{
 //		wait_view.setVisible(false);
 //		game_view.setVisible(false);
 //		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);	
+//		instrument_view.setVisible(false);
+		System.out.println("change to menu view");
 		changeCurrentViewTo(menu_view);
 	}
 	
@@ -255,6 +363,11 @@ public class UserAgent extends GuiAgent{
 	public void setSingle_mode(boolean single_mode) {
 		this.single_mode = single_mode;
 		this.multiple_mode = !single_mode;
+	}
+	
+	public void setNoMode() {
+		this.single_mode = false;
+		this.multiple_mode = false;
 	}
 
 	public boolean isMultiple_mode() {
@@ -292,26 +405,51 @@ public class UserAgent extends GuiAgent{
 			changes.firePropertyChange("hand2", null, hand_2);
 			if (selected_instrument == drum) {
 				if(isCollisionForDrumLeft(hand_1) ){
-					changes.firePropertyChange("drum_left", null, hand_1);
-					System.out.println("firing col-hand1");
+					if(shouldFireChange("drum_left")) {
+						changes.firePropertyChange("drum_left", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+					}
 				} else if (isCollisionForDrumLeft(hand_2)) {
-					changes.firePropertyChange("drum_left", null, hand_2);
-					System.out.println("firing col-hand1");
+					if(shouldFireChange("drum_left")) {
+						changes.firePropertyChange("drum_left", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+					}
 				} else if(isCollisionForDrumRight(hand_1) ){
-					changes.firePropertyChange("drum_right", null, hand_1);
-					System.out.println("firing col-hand2");
+					if(shouldFireChange("drum_right")) {
+						changes.firePropertyChange("drum_right", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+					}
 				} else if (isCollisionForDrumRight(hand_2)) {
-					changes.firePropertyChange("drum_right", null, hand_2);
-					System.out.println("firing col-hand2");
+					if(shouldFireChange("drum_right")) {
+						changes.firePropertyChange("drum_right", null, null);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+					}
 				}
 			}
+	}
+	
+	private boolean shouldFireChange(String drum) {
+		boolean fire = false;
+		long current_time = new Date().getTime();
+		if (drum.equals("drum_left")) {
+			if (current_time - last_fire_left_drum > Constance.Minimun_Fire_interval) {
+				last_fire_left_drum = current_time;
+				fire = true;
+			}
+		} else if (drum.equals("drum_right")) {
+			if (current_time - last_fire_right_drum > Constance.Minimun_Fire_interval) {
+				last_fire_right_drum = current_time;
+				fire = true;
+			}
+		}
+		return fire;
 	}
 	
 	public boolean isCollisionForDrumLeft(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
-			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.10 && hand.x < Constance.Windows_width * 0.5 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
 		}
@@ -321,8 +459,8 @@ public class UserAgent extends GuiAgent{
 	public boolean isCollisionForDrumRight(Cordinates hand) {
 		boolean collision = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < - 0.2) && Math.abs(hand.speed) > 30 ) {
-			if (hand.x > Constance.Windows_width * 0.6 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.62 && hand.y < Constance.Windows_height * 0.7) {
+		if ((hand.direction.getY()  < - 0.1) && Math.abs(hand.speed) > 30 ) {
+			if (hand.x > Constance.Windows_width * 0.52 && hand.x < Constance.Windows_width * 0.9 && hand.y > Constance.Windows_height * 0.65 && hand.y < Constance.Windows_height * 0.72) {
 				return true;
 			}
 		}

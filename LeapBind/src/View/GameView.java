@@ -28,6 +28,8 @@ public class GameView extends JAgentFrame {
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
+
+
 	private Player player = new Player();
 	public ScaleLabel playDrumLeft;
 	public ScaleLabel playDrumRight;
@@ -113,7 +115,7 @@ public class GameView extends JAgentFrame {
 		
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		split_pane.setDividerLocation(250);
+		split_pane.setDividerLocation(170);
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
 		split_pane.setOpaque(false);
 		imagePanel.add(split_pane);
@@ -166,7 +168,7 @@ public class GameView extends JAgentFrame {
 					            	playDrumLeft.repaint(); 
 					            }
 					        }, 
-					        200 
+					        50 
 				);
 			} else if (evt.getPropertyName().equals("drum_right")) {
 				System.out.println("property change for drum_right");
@@ -184,11 +186,22 @@ public class GameView extends JAgentFrame {
 					            	playDrumRight.repaint(); 
 					            }
 					        }, 
-					        200 
+					        50 
 				);
 			}
 		}
 
 	}
+	
+	public ControlPane getControl_pane() {
+		return control_pane;
+	}
+
+
+
+	public void setControl_pane(ControlPane control_pane) {
+		this.control_pane = control_pane;
+	}
+
 
 }
