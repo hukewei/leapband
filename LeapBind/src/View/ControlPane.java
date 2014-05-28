@@ -136,12 +136,14 @@ public class ControlPane extends JPanel{
 		/*JLabel userId=new JLabel("player1");
 		userId.setBounds(220, 20, 100, 20);
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
-		player = new JLabel(new ImageIcon("src/Avatars/person2.jpg"));
+		player = new JLabel(new ImageIcon("src/images/person2.jpg"));
 		//player.setPreferredSize(new Dimension(100,100));
 		player.setBounds((int) (width*0.2), (int) (height*0.05), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
+		
+		
 		
 		music = new JButton("Choose a music");
 		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
@@ -389,6 +391,7 @@ public class ControlPane extends JPanel{
 				    			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_RHYTHM);
 				    			ev.addParameter("rewind");
 				    			myAgent.postGuiEvent(ev);
+				    			
 				            }
 				        }, 
 				        Constance.click_delay 
@@ -441,6 +444,8 @@ public class ControlPane extends JPanel{
 	public void set_proprietaire(boolean b){
 		propietaire = b;
 	}
+	
+	
 	
 	   
 	

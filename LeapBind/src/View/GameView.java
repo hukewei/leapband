@@ -27,7 +27,9 @@ public class GameView extends JAgentFrame {
 	
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
-	public ControlPane control_pane;
+	private ControlPane control_pane;
+
+
 	private Player player = new Player();
 	public ScaleLabel playDrumLeft;
 	public ScaleLabel playDrumRight;
@@ -190,5 +192,16 @@ public class GameView extends JAgentFrame {
 		}
 
 	}
+	
+	public ControlPane getControl_pane() {
+		return control_pane;
+	}
+
+
+
+	public void setControl_pane(ControlPane control_pane) {
+		this.control_pane = control_pane;
+	}
+
 
 }
