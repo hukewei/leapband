@@ -3,6 +3,7 @@ package View;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Timer;
@@ -28,6 +29,8 @@ public class GameView extends JAgentFrame {
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
+
+
 	private Player player = new Player();
 	public ScaleLabel playDrumLeft;
 	public ScaleLabel playDrumRight;
@@ -35,6 +38,8 @@ public class GameView extends JAgentFrame {
 	public int instrumentY1;
 	public int instrumentX2;
 	public int instrumentY2;
+	private double current_rotation = 0;
+
 	
 	public GameView(UserAgent agent) {
 		super(agent);
@@ -122,6 +127,15 @@ public class GameView extends JAgentFrame {
 		imagePanel.add(playDrumRight);
 		
 	}
+	
+	public void changeVolume(String up_or_down) {
+		if ( up_or_down == Constance.Volume_Up) {
+			current_rotation += 30;
+	    } else if (up_or_down == Constance.Volume_Down) {
+	    	   current_rotation -= 30;
+	       }
+		control_pane.getVolume().setIcon(new RotatedIcon(new ImageIcon("src/images/volume.png"), current_rotation));
+	}
 
 
 
@@ -140,16 +154,6 @@ public class GameView extends JAgentFrame {
 				hands.setHand2(((Cordinates) evt.getNewValue()).x,
 						((Cordinates) evt.getNewValue()).y,
 						((Cordinates) evt.getNewValue()).z);
-//			} else if (evt.getPropertyName().equals("swipe")) {
-//				if ((String)evt.getNewValue() == "DOWN") {
-//					Rhythm rhythm = new Rhythm();
-//					//Bang out your drum beat  
-//					rhythm.setLayer(1, "O..oO...O..oOO.."); 
-//					rhythm.addSubstitution('o', "Rs [BASS_DRUM]s"); 
-//					Pattern pattern = rhythm.getPattern(); 
-//					pattern.repeat(1); 
-//					player.play(pattern);
-//				}
 			} else if (evt.getPropertyName().equals("drum_left")) {
 				System.out.println("property change for drum_left");
 				playDrumLeft.scaleX = 1.3; 
@@ -186,9 +190,28 @@ public class GameView extends JAgentFrame {
 					        }, 
 					        50 
 				);
+			} else if (evt.getPropertyName().equals("Circle")) {
+				if ((String) evt.getNewValue() == Constance.Volume_Up) {
+					System.out.println("volume up");
+					changeVolume(Constance.Volume_Up);
+				} else if  ((String) evt.getNewValue() == Constance.Volume_Down) {
+					System.out.println("volume down");
+					changeVolume(Constance.Volume_Down);
+				}
 			}
 		}
 
 	}
+	
+	public ControlPane getControl_pane() {
+		return control_pane;
+	}
+
+
+
+	public void setControl_pane(ControlPane control_pane) {
+		this.control_pane = control_pane;
+	}
+
 
 }

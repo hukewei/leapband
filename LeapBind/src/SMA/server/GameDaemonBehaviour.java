@@ -1,8 +1,8 @@
 package SMA.server;
-import Utilities.Constance;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import Utilities.Constance;
 
 
 @SuppressWarnings("serial")
@@ -20,9 +20,9 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 	@Override
 	public void action() {
 		MessageTemplate mt = MessageTemplate.or(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.REQUEST), 
-				MessageTemplate.MatchContent("listGroup")), 
-				MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE), 
-						MessageTemplate.MatchContent(Constance.roomselect_Mode)));
+				 		MessageTemplate.MatchContent("listGroup")), 
+				 		MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.SUBSCRIBE), 
+				 					MessageTemplate.MatchContent(Constance.roomselect_Mode)));
 		
 		ACLMessage message=myAgent.receive(mt);
 		
@@ -42,10 +42,10 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 				//UserAgent ask for creating a new room
 				myAgent.addBehaviour(new GameManageBehaviour(myAgent, message));
 			}
+		}
 			
 		}
-		
-		
+
 	}
 
 	/*@Override
@@ -56,5 +56,3 @@ public class GameDaemonBehaviour extends CyclicBehaviour{
 			return false;
 		}
 	}*/
-
-}
