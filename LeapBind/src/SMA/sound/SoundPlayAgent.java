@@ -54,7 +54,8 @@ public class SoundPlayAgent extends Agent{
 	        sequencer = MidiSystem.getSequencer();
 	        sequencer.open();
 	        
-	        addBehaviour(new WaitNoteRequestBehaviour());	        
+	        addBehaviour(new WaitNoteRequestBehaviour());
+	        addBehaviour(new WaitBackgroundRequestBehaviour());
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
 		}
@@ -102,6 +103,7 @@ public class SoundPlayAgent extends Agent{
 			ACLMessage request = myAgent.receive(filtre);
 			
 			if(request != null) {
+				System.out.println("bg message received");
 				ObjectMapper mapper = new ObjectMapper();
 				try {
 					BackgroundMusicData data = mapper.readValue(request.getContent(), BackgroundMusicData.class);

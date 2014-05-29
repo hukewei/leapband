@@ -18,6 +18,7 @@ import java.util.Date;
 import javax.swing.DefaultListModel;
 
 import Controller.LeapListener;
+import Utilities.BackgroundMusicData.BackgroundMusicActionType;
 import Utilities.Constance;
 import Utilities.Cordinates;
 import Utilities.InstrumentType;
@@ -205,18 +206,29 @@ public class UserAgent extends GuiAgent{
 			System.out.println("selected Song path:"+arg0.getParameter(0));
 			if(selected_song==null){
 				selected_song=(String) arg0.getParameter(0);
+				System.out.println("first select");
+				this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 			}else if(!selected_song.equals(arg0.getParameter(0))){
 				selected_song=(String) arg0.getParameter(0);
+				this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
+			}
+			if (isBackGroundMusicOn) {
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}
 		}else if(arg0.getType()==CONTROL_MUSIC_EVENT){
 			isBackGroundMusicOn=(boolean) arg0.getParameter(0);
 			if(isBackGroundMusicOn){
 				System.out.println("music on");
+				if (selected_song == null) {
+					this.addBehaviour(new SendBgMusicBehaviour(this, "src/songs/test2.mid", BackgroundMusicActionType.CHANGE_BACKGROUND));
+				}
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}else{
 				System.out.println("music off");
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
 			}
 		}else if(arg0.getType()==CONTROL_MUSIC_RHYTHM){
-			System.out.println(arg0.getParameter(0));
+			System.out.println("here" + arg0.getParameter(0));
 		}
 		
 	}
