@@ -3,6 +3,19 @@ package SMA.server;
 
 
 
+import java.io.StringWriter;
+import java.util.UUID;
+
+import javax.vecmath.Point3d;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import SMA.sound.FindNoteTambourFromMovement;
+import Utilities.InstrumentType;
+import Utilities.MoveInformData;
+import Utilities.Movement;
+import Utilities.NoteInformData;
+import Utilities.NoteInformData.NoteActionType;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -13,16 +26,6 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-
-import java.io.StringWriter;
-import java.util.UUID;
-
-import SMA.sound.FindNoteTambourFromMovement;
-import Utilities.MoveInformData;
-import Utilities.NoteInformData;
-import Utilities.NoteInformData.NoteActionType;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 @SuppressWarnings("serial")
@@ -41,7 +44,6 @@ public class MoveToSoundAgent extends Agent{
 		catch (FIPAException fe) {
 		fe.printStackTrace();
 		}
-
 		
 		this.addBehaviour(new SoundMessageDaemonBehaviour() );	
 		
@@ -74,29 +76,29 @@ public class MoveToSoundAgent extends Agent{
 						
 						
 						switch(moveData.getInstrumentType()) {
-							case TAMBOUR:
-								
-								System.out.println("Tambour");
-								
-								data.setAction(NoteActionType.START_NOTE);
-								
-								data.setChannel(9);
-								 FindNoteTambourFromMovement drum=new FindNoteTambourFromMovement(moveData.getMove());
-								// addBehaviour(be);
-								int volume =drum.matchVolume();
-								data.setVelocity(volume);
-								int i= drum.matchNote();
-								System.out.println("NOTE " + String.valueOf(i));
-								data.setNote(i);								
-								break;
-							case PIANO:
-								break;
-							case GUITAR:
-								break;
-							case DEFAULT:
-								break;
-
-						}
+						case TAMBOUR:
+							
+							System.out.println("Tambour");
+							
+							data.setAction(NoteActionType.START_NOTE);
+							
+							data.setChannel(9);
+							 FindNoteTambourFromMovement drum=new FindNoteTambourFromMovement(moveData.getMove());
+							// addBehaviour(be);
+							int volume =drum.matchVolume();
+							data.setVelocity(volume);
+							int i= drum.matchNote();
+							System.out.println("NOTE " + String.valueOf(i));
+							data.setNote(i);
+							
+							break;
+						case PIANO:
+							break;
+						case GUITAR:
+							break;
+						case DEFAULT:
+							break;
+					}
 						
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -106,11 +108,10 @@ public class MoveToSoundAgent extends Agent{
 					//AID aid = (AID)message.getAllReplyTo().next();
 					
 					//AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);		
-					//AID aid=getReceiver();
-					AID aid = (AID) message.getAllReplyTo().next();
-					System.out.println("aid = " + aid);
-					System.out.println("from = " + message.getSender());
-					addBehaviour(new SenderInformBehaviour(data, aid));	
+					AID aid=getReceiver();
+					addBehaviour(new SenderInformBehaviour(data, aid));
+					
+				
 			}
 			else block();
 		}	

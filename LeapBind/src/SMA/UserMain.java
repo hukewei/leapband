@@ -28,20 +28,20 @@ public class UserMain {
 			AgentController ac = operationContainer.createNewAgent(sound_agent_name, 
 					"SMA.sound.SoundPlayAgent", null);
 			ac.start();
-			AgentController ac2 = operationContainer.createNewAgent(sound_agent_name_2, 
+/*			AgentController ac2 = operationContainer.createNewAgent(sound_agent_name_2, 
 					"SMA.sound.SoundPlayAgent", null);
-			ac2.start();
+			ac2.start();*/
 			AgentController c1 = operationContainer.createNewAgent(
 					"User_1",
 					"SMA.user.UserAgent",
 					new Object[] {new String(sound_agent_name)});
 			c1.start();
 //
-			AgentController c2 = operationContainer.createNewAgent(
+			/*AgentController c2 = operationContainer.createNewAgent(
 					"User_2",
 					"SMA.user.UserAgent",
 					new Object[] {new String(sound_agent_name_2)});
-			c2.start();
+			c2.start();*/
 //			AgentController c3 = operationContainer.createNewAgent(
 //					"User_3",
 //					"SMA.user.UserAgent",

@@ -1,6 +1,7 @@
 package SMA;
 
 
+import Utilities.Constance;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.core.Runtime;
@@ -16,6 +17,8 @@ public class MainBoot {
 		try{
 			p = new ProfileImpl(MAIN_PROPERTIES_FILE);
 			AgentContainer mainContainer = rt.createMainContainer(p);
+			System.out.println(Constance.Windows_height);
+			System.out.println(Constance.Windows_width);
 			
 		}
 		catch(Exception ex) {
