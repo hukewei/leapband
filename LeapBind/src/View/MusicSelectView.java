@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Timer;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
@@ -30,13 +31,13 @@ import Utilities.SongFlowItem;
 
 
 public class MusicSelectView extends JAgentFrame{
-	private int i = 0;
+	private int i=1;
 	private JLabel label;
 	private JLabel labelup;
 	private JLabel labeldown;
-	private String temptext = null;
+//	private JButton precedent;
+//	private JButton suivant;	
 	private List<SongFlowItem> songs = new ArrayList<SongFlowItem>();
-	private int index=0;
 	Timer click_task = null;
 	private JLabel valider;
 	
@@ -73,8 +74,7 @@ public class MusicSelectView extends JAgentFrame{
 		this.add(background);
 		background.setLayout(null);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
-		label = new JLabel(getFileName(songs.get(i+1).getLabel()));
-		index=i+1;
+		label = new JLabel(getFileName(songs.get(i).getLabel()));
 		label.setBounds(100, 120, 500, 160);
     	label.setFont(new Font("Chalkboard", Font.PLAIN, 50));
     	label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -82,13 +82,13 @@ public class MusicSelectView extends JAgentFrame{
     	//label.getComponent(0).getClass().getTypeName();
     	//System.out.println(label.getComponent(0).getClass().getTypeName());
 
-		labelup = new JLabel(getFileName(songs.get(i+2).getLabel()));
+		labelup = new JLabel(getFileName(songs.get(i+1).getLabel()));
 		labelup.setBounds(150, 20, 400, 160);
     	labelup.setFont(new Font("Chalkboard", Font.PLAIN, 20));
     	labelup.setHorizontalAlignment(SwingConstants.CENTER);
     	labelup.setForeground(new Color(255,255,255,150));
     	
-		labeldown = new JLabel(getFileName(songs.get(i).getLabel()));
+		labeldown = new JLabel(getFileName(songs.get(i-1).getLabel()));
 		labeldown.setBounds(150, 220, 400, 160);
     	labeldown.setFont(new Font("Chalkboard", Font.PLAIN, 20));
     	labeldown.setHorizontalAlignment(SwingConstants.CENTER);
@@ -115,7 +115,7 @@ public class MusicSelectView extends JAgentFrame{
 				// TODO Auto-generated method stub
 				selectNextMusic();
 			}
-		});*/
+		}); */
 		valider = new JLabel(new ImageIcon("src/images/ok.png"));
 		valider.setBounds(550,360,100,100);
 		valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
@@ -159,8 +159,12 @@ public class MusicSelectView extends JAgentFrame{
 				        new java.util.TimerTask() {
 				            @Override
 				            public void run() {
+				            	if(i==songs.size()){
+				            		i=0;
+				            	}
+				            	System.out.println(i);
 				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
-								ev.addParameter(songs.get(index).getFile().getAbsolutePath());
+								ev.addParameter(songs.get(i).getFile().getAbsolutePath());
 								myAgent.postGuiEvent(ev);
 								setVisible(false);
 				            }
