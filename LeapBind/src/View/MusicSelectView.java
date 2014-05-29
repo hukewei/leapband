@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
@@ -92,13 +94,28 @@ public class MusicSelectView extends JAgentFrame{
     	labeldown.setHorizontalAlignment(SwingConstants.CENTER);
     	labeldown.setForeground(new Color(255,255,255,150));
 		
-//    	ImageIcon avant = new ImageIcon("src/images/avant.jpg");
-//		JButton precedent = new JButton(avant);
-//		precedent.setBounds(100,360,100,100);
+/*    	ImageIcon avant = new ImageIcon("src/images/avant.jpg");
+		JButton precedent = new JButton("avant");
+		precedent.setBounds(100,360,100,100);
+		precedent.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				selectLastMusic();
+			}
+		});
 //    	ImageIcon next = new ImageIcon("src/images/next.png");
-//		JButton suivant = new JButton(next);
-//		suivant.setBounds(510,360,100,100);
-    	
+		JButton suivant = new JButton("next");
+		suivant.setBounds(510,360,100,100);
+    	suivant.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				selectNextMusic();
+			}
+		});*/
 		valider = new JLabel(new ImageIcon("src/images/ok.png"));
 		valider.setBounds(550,360,100,100);
 		valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
@@ -192,22 +209,22 @@ public class MusicSelectView extends JAgentFrame{
 	
 	public void selectNextMusic() {
 		++i;
-		if(i==songs.size()){
-			i=0;
+		if(i-1==songs.size()){
+			i=1;
 		}
-		labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
-		label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
-		labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));		
+		labeldown.setText(getFileName(songs.get(i-1%songs.size()).getLabel()));
+		label.setText(getFileName(songs.get((i)%songs.size()).getLabel()));
+		labelup.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));		
 	}
 	
 	public void selectLastMusic() {
 		--i;
-		if(i<0){
-			i=songs.size()-1;
+		if(i<1){
+			i=songs.size();
 		}
-		labeldown.setText(getFileName(songs.get(i%songs.size()).getLabel()));
-		label.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));
-		labelup.setText(getFileName(songs.get((i+2)%songs.size()).getLabel()));			
+		labeldown.setText(getFileName(songs.get((i-1)%songs.size()).getLabel()));
+		label.setText(getFileName(songs.get((i)%songs.size()).getLabel()));
+		labelup.setText(getFileName(songs.get((i+1)%songs.size()).getLabel()));			
 	}
 
 	@Override
