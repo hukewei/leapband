@@ -74,6 +74,7 @@ public class UserAgent extends GuiAgent{
 	private AID host_sound_name = null;
 	private String selected_instrument = null;
 	private String selected_song = null;
+	//private String selected_avatar=null;
 	private boolean isBackGroundMusicOn=false;
 	String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;

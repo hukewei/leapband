@@ -50,7 +50,7 @@ public class ControlPane extends JPanel {
 	private Boolean propietaire = true;
 	private int width;
 	private int height;
-	JLabel player;
+	public JLabel player;
 	JLabel rewind;
 	JLabel forward;
 	Timer click_task = null;
@@ -145,6 +145,9 @@ public class ControlPane extends JPanel {
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
+		
+		
+		
 		music = new JButton("Choose a music");
 		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
 		//music.setPreferredSize(new Dimension(400,100));
@@ -385,6 +388,7 @@ public class ControlPane extends JPanel {
 				    			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_RHYTHM);
 				    			ev.addParameter("rewind");
 				    			myAgent.postGuiEvent(ev);
+				    			
 				            }
 				        }, 
 				        Constance.click_delay 
@@ -423,6 +427,8 @@ public class ControlPane extends JPanel {
 	public void set_proprietaire(boolean b){
 		propietaire = b;
 	}
+	
+	
 	
 	   
 	
