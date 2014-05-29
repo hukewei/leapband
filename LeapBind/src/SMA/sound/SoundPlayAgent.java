@@ -55,11 +55,7 @@ public class SoundPlayAgent extends Agent{
 	        sequencer = MidiSystem.getSequencer();
 	        sequencer.open();
 	        
-<<<<<<< HEAD
 	        addBehaviour(new WaitNoteRequestBehaviour());	
-=======
-	        addBehaviour(new WaitNoteRequestBehaviour());
->>>>>>> 7799a04ca91c738b2c2bc113b151f402234ee655
 	        addBehaviour(new WaitBackgroundRequestBehaviour());
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
