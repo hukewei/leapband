@@ -220,7 +220,7 @@ public class UserAgent extends GuiAgent{
 			if(isBackGroundMusicOn){
 				System.out.println("music on");
 				if (selected_song == null) {
-					this.addBehaviour(new SendBgMusicBehaviour(this, "src/songs/test2.mid", BackgroundMusicActionType.CHANGE_BACKGROUND));
+					this.addBehaviour(new SendBgMusicBehaviour(this, "src/songs/test2.mp3", BackgroundMusicActionType.CHANGE_BACKGROUND));
 				}
 				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}else{
