@@ -11,9 +11,9 @@ Eclipse IDE
 
 Leap Motion sensor
 
-Leap Motion SDK V2.0, you can download from
+Leap Motion SDK V2.0, you can download from  
 
- https://developer.leapmotion.com/
+https://developer.leapmotion.com ( need to sign in)
 
 (beta version, need to sign in)
 
