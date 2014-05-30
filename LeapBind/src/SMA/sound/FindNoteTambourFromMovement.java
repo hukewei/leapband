@@ -60,7 +60,7 @@ public	int matchNote(){
 			
 		}
 		
-		if (IsRight(pos)){
+		else{
 			// 47 Low-Mid Tom, 48HIGH-Mid Tom 
 			pos.x-=Constance.Windows_width*0.5;
 			note = 48;

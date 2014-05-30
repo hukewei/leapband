@@ -364,7 +364,7 @@ public class LeapListener extends Listener {
 			if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
 				if (frame.hands().count() == 1) {
 					Hand hand = frame.hands().get(0);
-					if (hand.grabStrength() > 0.4) {
+					if (hand.grabStrength() > 0.3) {
 						myAgent.doSwipe("REAR");
 						last_timestamp = frame.timestamp();
 					}

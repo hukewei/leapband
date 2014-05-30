@@ -105,10 +105,10 @@ public class MoveToSoundAgent extends Agent{
 					}
 					
 
-					//AID aid = (AID)message.getAllReplyTo().next();
+					AID aid = (AID)message.getAllReplyTo().next();
 					
 					//AID aid=new AID("SoundPlayer", AID.ISLOCALNAME);		
-					AID aid=getReceiver();
+					//AID aid=getReceiver();
 					addBehaviour(new SenderInformBehaviour(data, aid));
 					
 				
