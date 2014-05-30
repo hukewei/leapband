@@ -134,8 +134,8 @@ public class MusicSelectView extends JAgentFrame{
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
 				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), new Color(153,153,255)));
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
-				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override

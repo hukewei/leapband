@@ -84,8 +84,8 @@ public class ControlPane extends JPanel {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				home.setBorder(new OvalBorder(home.getWidth(),home.getHeight(),new Color(153,153,255)));
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
-				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -176,8 +176,8 @@ public class ControlPane extends JPanel {
 			
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 				click_task = new Timer();
-				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -240,9 +240,9 @@ public class ControlPane extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
             play.setBorder(new OvalBorder(play.getWidth(), play.getHeight(), new Color(153,153,255)));
-			//play.setBorder(BorderFactory.createBorder(Color.blue));				
+			//play.setBorder(BorderFactory.createBorder(Color.blue));
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 			click_task = new Timer();
-			click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
 			click_task.schedule( 
 			        new java.util.TimerTask() {
 			            @Override
@@ -305,8 +305,8 @@ public class ControlPane extends JPanel {
 			public void mouseEntered(MouseEvent arg0) {
 	            forward.setBorder(new OvalBorder(forward.getWidth(), forward.getHeight(), new Color(153,153,255)));
 				//play.setBorder(BorderFactory.createBorder(Color.blue));	
-				click_task = new Timer();
-				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
+	            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+	            click_task = new Timer();
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
@@ -361,8 +361,8 @@ public class ControlPane extends JPanel {
 			public void mouseEntered(MouseEvent arg0) {
 	            rewind.setBorder(new OvalBorder(rewind.getWidth(), rewind.getHeight(), new Color(153,153,255)));
 				//play.setBorder(BorderFactory.createBorder(Color.blue));	
-				click_task = new Timer();
-				click_task.schedule(new ImageTimerTask(myAgent),0,Constance.click_delay/12);
+	            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+	            click_task = new Timer();
 				click_task.schedule( 
 				        new java.util.TimerTask() {
 				            @Override
