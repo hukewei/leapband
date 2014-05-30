@@ -15,8 +15,6 @@ Leap Motion SDK V2.0, you can download from
 
 https://developer.leapmotion.com ( need to sign in)
 
-(beta version, need to sign in)
-
 * Download leapband project from Github
 
 You may download the latest beta version from github :
