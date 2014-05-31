@@ -5,12 +5,20 @@ public class MoveInformData {
 	private Movement move;
 	//private AID host_AID;
 	private InstrumentType instrumentType;
+	private float velocity_multiplier;
 	
-
 	public MoveInformData() {
 		move = null;
 		//host_AID = null;
 		instrumentType = InstrumentType.DEFAULT;
+	}
+	
+	public float getVelocity_multiplier() {
+		return velocity_multiplier;
+	}
+
+	public void setVelocity_multiplier(float velocity_multiplier) {
+		this.velocity_multiplier = velocity_multiplier;
 	}
 	
 	public Movement getMove() {

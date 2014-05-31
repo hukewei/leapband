@@ -155,20 +155,19 @@ public boolean IsDrumLow(Point3d pos){
 	
 	
 	public int matchVolume() {
-		int volume = 180;
+		int volume = 30;
 		int current_speed = (int) Math.abs(movement.getSpeed());
-		volume = (int) (volume + (current_speed-1200)/80);
-		if (volume<100){
-			volume=100;
+		volume = (int) (volume + (current_speed-400)/2);
+		if (volume<70){
+			volume=70;
 		}
-		if (volume>220){
-			volume=220;
+		if (volume>240){
+			volume=240;
 		}
 		if (current_speed <30){
 			System.out.println(current_speed + ": 0 volume for this note..");
 			volume=0;
 		}
-		
 		return volume;
 	}
 	

@@ -19,10 +19,12 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 	MoveInformData my_data = new MoveInformData();
 	Movement move = new Movement();
 	Point3d pos = new Point3d();
+	float velocity;
 	
-	public SendMoveBehaviour(UserAgent agent, Cordinates pos) {
+	public SendMoveBehaviour(UserAgent agent, Cordinates pos, float vel) {
 		myAgent = agent;
 		position = pos;
+		velocity = vel;
 	}
 
 	@Override
@@ -36,6 +38,7 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 		pos.z = position.z;
 		move.setPos(pos);
 		my_data.setMove(move);
+		my_data.setVelocity_multiplier(velocity);
 		message.clearAllReplyTo();
 		message.addReplyTo(myAgent.getSoundAgentName());
 		//my_data.setHost_AID(myAgent.getSoundAgentName());

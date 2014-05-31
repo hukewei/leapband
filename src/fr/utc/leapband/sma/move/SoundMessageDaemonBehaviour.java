@@ -51,7 +51,9 @@ public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 						data.setChannel(9);
 						 FindNoteTambourFromMovement drum=new FindNoteTambourFromMovement(moveData.getMove());
 						// addBehaviour(be);
-						int volume =drum.matchVolume();
+						int volume =(int) (drum.matchVolume() * moveData.getVelocity_multiplier());
+						System.out.println("inside volume = " + drum.matchVolume());
+						System.out.println("final volume = " + volume);
 						data.setVelocity(volume);
 						int i= drum.matchNote();
 						System.out.println("NOTE " + String.valueOf(i));

@@ -30,7 +30,6 @@ public class GameView extends JAgentFrame {
 	public int instrumentY1;
 	public int instrumentX2;
 	public int instrumentY2;
-	private double current_rotation = 0;
 
 	
 	public GameView(UserAgent agent) {
@@ -121,15 +120,20 @@ public class GameView extends JAgentFrame {
 	}
 	
 	public void changeVolume(String up_or_down) {
+    	double current = myAgent.getCurrent_rotation();
 		if ( up_or_down == Constance.Volume_Up) {
-			current_rotation += 30;
+			myAgent.setCurrent_rotation(current + 30);
+			if (myAgent.getCurrent_rotation() > 180) {
+				myAgent.setCurrent_rotation(180);
+			}
 	    } else if (up_or_down == Constance.Volume_Down) {
-	    	   current_rotation -= 30;
-	       }
-		control_pane.getVolume().setIcon(new RotatedIcon(new ImageIcon("images/volume.png"), current_rotation));
+	    	myAgent.setCurrent_rotation(current - 30);
+	    	   if (myAgent.getCurrent_rotation() < -180) {
+					myAgent.setCurrent_rotation(-180);
+				}
+	    }
+		control_pane.getVolume().setIcon(new RotatedIcon(new ImageIcon("images/volume.png"), myAgent.getCurrent_rotation()));
 	}
-
-
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

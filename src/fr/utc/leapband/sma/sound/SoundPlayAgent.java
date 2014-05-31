@@ -16,10 +16,8 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.utc.leapband.utilities.BackgroundMusicData;
 import fr.utc.leapband.utilities.NoteInformData;
 
 
