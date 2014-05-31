@@ -210,7 +210,9 @@ public class UserAgent extends GuiAgent{
 				this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 			}else if(!selected_song.equals(arg0.getParameter(0))){
 				selected_song=(String) arg0.getParameter(0);
-				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
+				if (isBackGroundMusicOn) {
+					this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
+				}
 				this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 			}
 			if (isBackGroundMusicOn) {

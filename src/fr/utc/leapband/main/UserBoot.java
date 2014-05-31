@@ -12,5 +12,4 @@ public class UserBoot {
 	public static void main(String[] args) {
 		UserContainer.run(args);
 	}
-
 }

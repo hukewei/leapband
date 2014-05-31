@@ -16,7 +16,7 @@ public class SoundContainer {
 		try {
 			p = new ProfileImpl(SECOND_PROPERTIES_FILE);
 			ContainerController cc = rt.createAgentContainer(p);
-			AgentController ac2 = cc.createNewAgent("MoveToSound", "fr.utc.leapband.sma.server.MoveToSoundAgent", null);
+			AgentController ac2 = cc.createNewAgent("MoveToSound", "fr.utc.leapband.sma.move.MoveToSoundAgent", null);
 			ac2.start();
 
 		}

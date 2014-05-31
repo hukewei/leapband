@@ -63,6 +63,7 @@ public class MultiPlayAgent extends Agent{
 		//addBehaviour(new GetListGameBehaviour(this));
 		addBehaviour(new MultiPlayManageBehaviour(this));
 		addBehaviour(new GameDaemonBehaviour(this));
+		addBehaviour(new SubscribeManageBehaviour(this));
 		
 	}
 

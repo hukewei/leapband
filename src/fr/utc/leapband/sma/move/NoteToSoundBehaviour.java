@@ -1,4 +1,4 @@
-package fr.utc.leapband.sma.server;
+package fr.utc.leapband.sma.move;
 
 import jade.core.behaviours.OneShotBehaviour;
 
