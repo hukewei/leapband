@@ -81,8 +81,10 @@ public class UserAgent extends GuiAgent{
 	private JAgentFrame current_frame = null;
 	private long last_fire_left_drum = 0;
 	private long last_fire_right_drum = 0;
+	private double current_rotation = 0;//roration for volume
 
 	
+
 	private DefaultListModel<String> dict = null;
 	private DefaultListModel<String> dict_list_player = null;
 	private String SoundPlayAgentNickName = null;
@@ -169,6 +171,14 @@ public class UserAgent extends GuiAgent{
 	
 	public String getRoomId() {
 		return current_room_id;
+	}
+	
+	public double getCurrent_rotation() {
+		return current_rotation;
+	}
+
+	public void setCurrent_rotation(double current_rotation) {
+		this.current_rotation = current_rotation;
 	}
 	
 	@Override
@@ -427,25 +437,57 @@ public class UserAgent extends GuiAgent{
 				if(isCollisionForDrumLeft(hand_1) ){
 					if(shouldFireChange("drum_left")) {
 						changes.firePropertyChange("drum_left", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
 					}
 				} else if (isCollisionForDrumLeft(hand_2)) {
 					if(shouldFireChange("drum_left")) {
 						changes.firePropertyChange("drum_left", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+						this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
 					}
 				} else if(isCollisionForDrumRight(hand_1) ){
 					if(shouldFireChange("drum_right")) {
 						changes.firePropertyChange("drum_right", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_1));
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
 					}
 				} else if (isCollisionForDrumRight(hand_2)) {
 					if(shouldFireChange("drum_right")) {
 						changes.firePropertyChange("drum_right", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_2));
+						this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
 					}
 				}
 			}
+	}
+	
+	public float getVolumeMultiplier() {
+		float multiplier = 1;
+		if (current_rotation <= -180) {
+			multiplier = 0;
+		} else if (current_rotation< -120) {
+			multiplier = 0.6f;
+		} else if (current_rotation< -90) {
+			multiplier = 0.7f;
+		} else if (current_rotation< -60) {
+			multiplier = 0.8f;
+		} else if (current_rotation< -30) {
+			multiplier = 0.9f;
+		} else if (current_rotation< 0) {
+			multiplier = 0.95f;
+		} else if (current_rotation <= 0) {
+			multiplier = 1;
+		} else if (current_rotation< 30) {
+			multiplier = 1.05f;
+		} else if (current_rotation< 60) {
+			multiplier = 1.1f;
+		} else if (current_rotation< 90) {
+			multiplier = 1.2f;
+		} else if (current_rotation< 120) {
+			multiplier = 1.3f;
+		} else if (current_rotation< 180) {
+			multiplier = 1.4f;
+		} else {
+			multiplier = 1.8f;
+		}
+		return multiplier;
 	}
 	
 	private boolean shouldFireChange(String drum) {
