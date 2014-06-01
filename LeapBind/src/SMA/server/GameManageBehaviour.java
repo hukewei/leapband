@@ -12,12 +12,8 @@ import java.util.Map;
 
 import javax.swing.DefaultListModel;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import Utilities.Constance;
-import Utilities.MoveInformData;
 import Utilities.MyAID;
-import Utilities.NoteInformData;
 
 @SuppressWarnings("serial")
 /**
@@ -32,8 +28,8 @@ public class GameManageBehaviour extends Behaviour{
 	private AID host_name = null;
 	private AID host_sound_name = null;
 	private ACLMessage host_msg = null;
-	//private ArrayList<AID> list_member = new ArrayList<AID>();	
-	private Map<AID,AID> list_member = new HashMap<AID,AID>();
+	private ArrayList<AID> list_member = new ArrayList<AID>();	
+	private Map<AID,AID> list_member_map = new HashMap<AID,AID>();
 	private DefaultListModel<String> dict_player = new DefaultListModel<>();
 	private boolean player_changed = false;
 	private int room_id = 0;
@@ -62,7 +58,8 @@ public class GameManageBehaviour extends Behaviour{
 				System.out.println("asking for entering a existed room");
 				if (message.getContent().equals(Constance.EnterGroupMode)){
 					setPlayerDict(message.getSender().getName());
-					list_member.put(message.getSender(),MyAID.toAID(message.getReplyWith()));
+					list_member.add(message.getSender());
+					list_member_map.put(message.getSender(),MyAID.toAID(message.getReplyWith()));
 					answer_guest_ack(message);
 					player_changed = true;
 				}
@@ -71,19 +68,29 @@ public class GameManageBehaviour extends Behaviour{
 				if (message.getContent().equals(Constance.ExitGroupMode)){
 					removePlayerDict(message.getSender().getName());
 					list_member.remove(message.getSender());
+					list_member_map.remove(message.getSender());
 					answer_exit_req(message);
 					player_changed = true;
 					if (list_member.size() == 0) {
 						game_over = true;
 						myAgent.getDict().removeElement(conversation_id);
-					} else {
+					} else if(message.getSender().equals(host_name)){
 						//change host to the next one
 						host_name = list_member.get(0);
+						
+						ACLMessage inform_host = new ACLMessage(ACLMessage.INFORM);
+						inform_host.addReceiver(host_name);
+						inform_host.setConversationId("StartVisibility");
+						inform_host.setContent("true");
+						myAgent.send(inform_host);
+						
 					}
 				}
 			} else if(message.getPerformative()==ACLMessage.REQUEST){
-				if(message.getContent().equals(Constance.START_GAME)){
+				if(message.getContent().equals(Constance.START_GAME) && message.getSender().equals(host_name)){
 					info_all_player_start_game(message);
+					myAgent.getDict().removeElement(conversation_id);
+					//DANS CETTE VERSION JE N'AI PAS LA FONCTION QUI MET A JOUR LE DICT DES AGENTS QUI SONT DANS MODE MULTIPLAY. IL FAUT APPELER LA FONCTION INFO_ALL_MULTIPLAY_USERS ICI
 				}
 			}
 		}
@@ -96,7 +103,8 @@ public class GameManageBehaviour extends Behaviour{
 			myAgent.setDict(conversation_id);
 			setPlayerDict(host_msg.getSender().getName());
 			//info_all_player();
-			list_member.put(host_msg.getSender(),MyAID.toAID(host_msg.getReplyWith()));
+			list_member.add(host_msg.getSender());
+			list_member_map.put(host_msg.getSender(),MyAID.toAID(host_msg.getReplyWith()));
 			host_name = host_msg.getSender();
 			System.out.println(host_msg.getReplyWith());
 			host_sound_name = MyAID.toAID(host_msg.getReplyWith());

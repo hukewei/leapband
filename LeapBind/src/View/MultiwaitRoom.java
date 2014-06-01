@@ -163,11 +163,14 @@ public class MultiwaitRoom extends JAgentFrame {
 			}
 		});
 		imagePanel.add(exit);
-	
 		
 	
 	}
-
+	
+	public JButton getStartButton(){
+		return start;
+	}
+	
 	public JList<String> getList_player() {
 		return list_player;
 	}

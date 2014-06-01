@@ -12,12 +12,12 @@ import jade.gui.GuiEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.sql.Time;
 import java.util.Date;
 
 import javax.swing.DefaultListModel;
 
 import Controller.LeapListener;
+//import SMA.server.UserAgent;
 import Utilities.Constance;
 import Utilities.Cordinates;
 import Utilities.InstrumentType;
@@ -184,6 +184,7 @@ public class UserAgent extends GuiAgent{
 			this.addBehaviour(new CreatGroupBehaviour(this));
 		} else if(arg0.getType() == JOINT_ROOM_EVENT){
 			this.addBehaviour(new EnterGroupBehaviour(this, arg0.getParameter(0).toString()));
+			changeStartVisibility(false);
 		} else if(arg0.getType() == EXIT_ROOM_EVENT){
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
@@ -485,7 +486,8 @@ public class UserAgent extends GuiAgent{
 	public int[] getInstrumentPosition(){
 		return null;
 		//return new int[]{game_view.instrumentX,game_view.instrumentY};
-		
-		
+	}
+	public void changeStartVisibility(boolean vis){
+		wait_view.getStartButton().setVisible(vis);
 	}
 }

@@ -1,6 +1,5 @@
 package SMA.user;
 
-import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -12,6 +11,7 @@ import Utilities.Constance;
 import Utilities.MyAID;
 
 
+@SuppressWarnings("serial")
 public class LocalGameDaemonBehaviour extends Behaviour{
 
 	private UserAgent myAgent;
@@ -26,22 +26,35 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 	
 	@Override
 	public void action() {
-		MessageTemplate mt = MessageTemplate.or(MessageTemplate.and(MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), MessageTemplate.MatchConversationId(myAgent.getRoomId())), 
-				MessageTemplate.MatchContent(Constance.CONFIRM_START)),
-				MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM), 
-				MessageTemplate.MatchConversationId(Constance.MEMBER_CHANGE)));
+		MessageTemplate mt = MessageTemplate.or(
+												MessageTemplate.and(
+																	MessageTemplate.and(
+																						MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), 
+																						MessageTemplate.MatchConversationId(myAgent.getRoomId())), 
+																	MessageTemplate.MatchContent(Constance.CONFIRM_START)),
+												MessageTemplate.and(
+																	MessageTemplate.MatchPerformative(ACLMessage.INFORM),
+																	MessageTemplate.or(
+																						MessageTemplate.MatchConversationId(Constance.MEMBER_CHANGE),
+																						MessageTemplate.MatchConversationId("StartVisibility"))));
 		ACLMessage message= myAgent.receive(mt);
 
 		if(message!=null){
 			if (message.getPerformative() == ACLMessage.INFORM) {
-				try {
-					myAgent.setDictPlayer((DefaultListModel<String>)message.getContentObject());
-					if (!myAgent.getDictPlayer().contains(myAgent.getName())) {
-						System.out.println("Agent name not found after member change, localGameBehaviour done");
-						done = true;
+				if(message.getConversationId().equals("StartVisibility")){
+					if(message.getContent().equals("true")){
+						myAgent.changeStartVisibility(true);
 					}
-				} catch (UnreadableException e) {
-					e.printStackTrace();
+				}else{
+					try {
+						myAgent.setDictPlayer((DefaultListModel<String>)message.getContentObject());
+						if (!myAgent.getDictPlayer().contains(myAgent.getName())) {
+							System.out.println("Agent name not found after member change, localGameBehaviour done");
+							done = true;
+						}
+					} catch (UnreadableException e) {
+						e.printStackTrace();
+					}
 				}
 			} else if(message.getPerformative() == ACLMessage.CONFIRM){
 				myAgent.setHostSoundName(MyAID.toAID(message.getReplyWith()));
