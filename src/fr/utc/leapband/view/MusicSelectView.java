@@ -41,9 +41,9 @@ public class MusicSelectView extends JAgentFrame{
 	Timer click_task = null;
 	private JLabel valider;
 	
-	public MusicSelectView(final File directory,UserAgent agent){
+	public MusicSelectView(UserAgent agent){
 		super(agent);
-		songs = SongFlowItem.loadFromDirectory(directory);
+		songs = myAgent.getSongs();
 		/*String path = "src/songs.txt";
 		BufferedReader br = null;
 		String temp = null;
