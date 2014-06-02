@@ -12,7 +12,9 @@ import jade.gui.GuiEvent;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 
@@ -25,6 +27,7 @@ import fr.utc.leapband.utilities.BackgroundMusicData.BackgroundMusicActionType;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.Cordinates;
 import fr.utc.leapband.utilities.InstrumentType;
+import fr.utc.leapband.utilities.SongFlowItem;
 import fr.utc.leapband.view.GameView;
 import fr.utc.leapband.view.InstrumentSelectView;
 import fr.utc.leapband.view.JAgentFrame;
@@ -81,8 +84,10 @@ public class UserAgent extends GuiAgent{
 	private long last_fire_left_drum = 0;
 	private long last_fire_right_drum = 0;
 	private double current_rotation = 0;//roration for volume
+	private List<SongFlowItem> songs = SongFlowItem.loadFromDirectory(new File(Constance.Sound_Directory));
 
 	
+
 
 	private DefaultListModel<String> dict = null;
 	private DefaultListModel<String> dict_list_player = null;
@@ -91,6 +96,36 @@ public class UserAgent extends GuiAgent{
 	
 	private LeapListener listener;
 	private Controller controller;
+	
+	public String getNextSong() {
+		String next_song = null;
+		for (int i = 0; i < songs.size(); i++) {
+			if(songs.get(i).getFile().getPath().equals(selected_song)) {
+				if(i + 1 < songs.size()) {
+					next_song = songs.get(i+1).getFile().getPath(); 
+				} else {
+					next_song = songs.get(0).getFile().getPath(); 
+				}
+				break;
+			} 
+		}
+		return next_song;
+	}
+	
+	public String getBeforeSong() {
+		String before_song = null;
+		for (int i = 0; i < songs.size(); i++) {
+			if(songs.get(i).getFile().getPath().equals(selected_song)) {
+				if(i - 1 >= 0) {
+					before_song = songs.get(i-1).getFile().getPath(); 
+				} else {
+					before_song = songs.get(songs.size()-1).getFile().getPath(); 
+				}
+				break;
+			} 
+		}
+		return before_song;
+	}
 		
 
 	
@@ -180,6 +215,10 @@ public class UserAgent extends GuiAgent{
 		this.current_rotation = current_rotation;
 	}
 	
+	public List<SongFlowItem> getSongs() {
+		return songs;
+	}
+	
 	@Override
 	protected void onGuiEvent(GuiEvent arg0) {
 		if(arg0.getType() == SELECT_EVENT){
@@ -242,7 +281,29 @@ public class UserAgent extends GuiAgent{
 				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
 			}
 		}else if(arg0.getType()==CONTROL_MUSIC_RHYTHM){
+			
 			System.out.println("here" + arg0.getParameter(0));
+			if (arg0.getParameter(0).equals(Constance.Forward)) {
+				String next_song = getNextSong();
+				System.out.println("next song is " + next_song);
+				if(next_song != null) {
+					if (isBackGroundMusicOn) {
+						this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
+					}
+					selected_song = next_song;
+					this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
+				}
+			} else if (arg0.getParameter(0).equals(Constance.Rewind)) {
+				String before_song = getBeforeSong();
+				if(before_song != null) {
+					if (isBackGroundMusicOn) {
+						this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
+					}
+					selected_song = before_song;
+				}
+			}
+			this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
+			this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 		}
 		
 	}
