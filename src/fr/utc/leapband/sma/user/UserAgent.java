@@ -272,11 +272,11 @@ public class UserAgent extends GuiAgent{
 			isBackGroundMusicOn=(boolean) arg0.getParameter(0);
 			if(isBackGroundMusicOn){
 				System.out.println("music on");
-				if (selected_song == null) {
-					this.addBehaviour(new SendBgMusicBehaviour(this, "songs/Life Is Like A Song.mp3", BackgroundMusicActionType.CHANGE_BACKGROUND));
-					selected_song = "songs/Life Is Like A Song.mp3";
+				if (selected_song == null && getSongs().size() > 0) {
+					this.addBehaviour(new SendBgMusicBehaviour(this, getSongs().get(0).getFile().getPath(), BackgroundMusicActionType.CHANGE_BACKGROUND));
+					selected_song = getSongs().get(0).getFile().getPath();
+					this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 				}
-				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}else{
 				System.out.println("music off");
 				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
