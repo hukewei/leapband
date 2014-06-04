@@ -476,25 +476,24 @@ public class UserAgent extends GuiAgent{
 	
 	public int getChord(float x) {
 		int chord = 0;
-		if (x < Constance.Windows_width * 0.25) {
+		if (x < Constance.Windows_width * 0.14) {
 			chord = 1;
-		} else if (x < Constance.Windows_width * 0.35) {
+		} else if (x < Constance.Windows_width * 0.27) {
 			chord = 2;
-		} else if (x < Constance.Windows_width * 0.45) {
+		} else if (x < Constance.Windows_width * 0.4) {
 			chord = 3;
-		} else if (x < Constance.Windows_width * 0.55) {
+		} else if (x < Constance.Windows_width * 0.53) {
 			chord = 4;
-		} else if (x < Constance.Windows_width * 0.65) {
+		} else if (x < Constance.Windows_width * 0.66) {
 			chord = 5;
-		} else if (x < Constance.Windows_width * 0.75) {
+		} else if (x < Constance.Windows_width * 0.79) {
 			chord = 6;
-		} else if (x < Constance.Windows_width * 0.85) {
+		} else if (x < Constance.Windows_width * 0.9) {
 			chord = 7;
-		} else if (x < Constance.Windows_width * 0.95) {
+		} else if (x < Constance.Windows_width) {
 			chord = 8;
 		}
 		return chord;
-		
 	}
 	
 	public float getVolumeMultiplier() {
@@ -576,7 +575,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isTriggeredGuitar(Cordinates hand) {
 		boolean trigger = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < 0) && Math.abs(hand.speed) > 150 ) {
+		if ((hand.direction.getY()  < 0) && Math.abs(hand.speed) > 200 ) {
 			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.75) {
 				return true;
 			}
