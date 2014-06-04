@@ -42,7 +42,7 @@ public class Piano extends JPanel implements MouseListener {
 
 
       public Piano() {  
-    	  this.setBounds(20, (int)(Constance.Windows_height*0.4), 14*kw, kh);
+    	  this.setBounds(20, (int)(Constance.Windows_height*0.4),14*kw, kh);
           setLayout(new BorderLayout());  
          // setPreferredSize(new Dimension(42*kw, kh+1));  
           int transpose = 24;    
@@ -125,7 +125,7 @@ public class Piano extends JPanel implements MouseListener {
           g2.clearRect(0, 0, d.width, d.height);  
 
           g2.setColor(Color.white);  
-          g2.fillRect(0, 0, 42*kw, kh);  
+          g2.fillRect(0, 0, 14*kw, kh);  
 
           for (int i = 0; i < whiteKeys.size(); i++) {  
               Key key = (Key) whiteKeys.get(i);  

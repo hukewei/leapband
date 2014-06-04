@@ -45,7 +45,8 @@ public class MenuView extends JAgentFrame {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/back.jpg");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
+		imagePanel.setImagePath( "images/back.jpg");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		

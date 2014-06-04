@@ -31,14 +31,14 @@ public class Guitar extends JLabel{
  		GuitarWidgetView widget8=new GuitarWidgetView("Bdim", 8, myAgent);
  		
  		
- 		widget1.setBounds((int)(x*0.15),100,width,height);
- 		widget2.setBounds((int)(x*0.25),100,width,height);
- 		widget3.setBounds((int)(x*0.35),100,width,height);
- 		widget4.setBounds((int)(x*0.45),100,width,height);
- 		widget5.setBounds((int)(x*0.55),100,width,height);
- 		widget6.setBounds((int)(x*0.65),100,width,height);
+ 		widget1.setBounds((int)(x*0.09),100,width,height);
+ 		widget2.setBounds((int)(x*0.2),100,width,height);
+ 		widget3.setBounds((int)(x*0.31),100,width,height);
+ 		widget4.setBounds((int)(x*0.42),100,width,height);
+ 		widget5.setBounds((int)(x*0.53),100,width,height);
+ 		widget6.setBounds((int)(x*0.64),100,width,height);
  		widget7.setBounds((int)(x*0.75),100,width,height);
- 		widget8.setBounds((int)(x*0.85),100,width,height);
+ 		widget8.setBounds((int)(x*0.86),100,width,height);
  		
  		this.add(widget1);
  		this.add(widget2);

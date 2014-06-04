@@ -20,15 +20,21 @@ public class CustomImgPanel extends JPanel{
 //        setSize(width,height);  
 //        setVisible(true);  
 //    }  
+    
+   
       
-    public CustomImgPanel(double _width,double _height,String _imgPath){
+    public CustomImgPanel(double _width,double _height){
     	//this.setLayout(new BorderLayout());
         width = (int)_width;  
         height = (int)_height;  
-        imgPath = _imgPath;  
+         
         setSize(width,height);  
         setVisible(true);  
-    }  
+    }
+    public void setImagePath(String _imgPath){
+    	 imgPath = _imgPath;
+    }
+    
   
     @Override  
     public void paintComponent(Graphics gs) {  
