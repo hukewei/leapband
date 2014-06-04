@@ -32,7 +32,10 @@ public class GameView extends JAgentFrame {
 	public int instrumentY1;
 	public int instrumentX2;
 	public int instrumentY2;
-	CustomImgPanel imagePanel;
+	private CustomImgPanel imagePanel;
+
+	
+
 
 	public Piano pianoPane=new Piano();
 	public Guitar guitarPane=new Guitar();
@@ -114,7 +117,7 @@ public class GameView extends JAgentFrame {
 */		
 		
 
-		imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/drumBack.jpg");
+		imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
@@ -227,6 +230,15 @@ public class GameView extends JAgentFrame {
 	public void setControl_pane(ControlPane control_pane) {
 		this.control_pane = control_pane;
 	}
+	
+	public CustomImgPanel getImagePanel() {
+		return imagePanel;
+	}
+
+	public void setImagePanel(CustomImgPanel imagePanel) {
+		this.imagePanel = imagePanel;
+	}
+
 	
 //	public void setGuitar(){
 //		GuitarWidgetView widget1=new GuitarWidgetView("EM");

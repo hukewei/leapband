@@ -70,7 +70,8 @@ public class MusicSelectView extends JAgentFrame{
 		this.setSize(700,500);
 		this.setLocationRelativeTo(null);		
 		this.setLayout(null);
-		CustomImgPanel background=new CustomImgPanel(700, 500,"images/musicBackground.jpg");
+		CustomImgPanel background=new CustomImgPanel(700, 500);
+		background.setImagePath("images/musicBackground.jpg");
 		this.add(background);
 		background.setLayout(null);
 		//this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //arret du programme
