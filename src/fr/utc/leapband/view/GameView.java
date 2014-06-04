@@ -23,6 +23,7 @@ public class GameView extends JAgentFrame {
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
+	private boolean hide_split_pane = false;
 
 
 	private Player player = new Player();
@@ -38,7 +39,7 @@ public class GameView extends JAgentFrame {
 
 
 	public Piano pianoPane=new Piano();
-	public Guitar guitarPane=new Guitar();
+	public Guitar guitarPane=new Guitar(myAgent);
 	
 
 //	public static double x=Constance.Windows_width;
@@ -160,7 +161,17 @@ public class GameView extends JAgentFrame {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (isVisible()) {
-			if (evt.getPropertyName().equals("hand1")) {
+			if (evt.getPropertyName().equals("swipe")) {
+	 			if ((String)evt.getNewValue() == "GRAB") {
+	 				if(hide_split_pane) {
+	 					split_pane.setDividerLocation(170);
+	 					hide_split_pane = false;
+	 				} else {
+	 					split_pane.setDividerLocation(0);
+	 					hide_split_pane = true;
+	 				}
+	 			}
+			} else if (evt.getPropertyName().equals("hand1")) {
 //			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
 //					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 				hands.setHand1(((Cordinates) evt.getNewValue()).x,
