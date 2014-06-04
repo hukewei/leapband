@@ -1,5 +1,6 @@
 package fr.utc.leapband.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.beans.PropertyChangeEvent;
@@ -32,8 +33,13 @@ public class GameView extends JAgentFrame {
 	public int instrumentX2;
 	public int instrumentY2;
 	CustomImgPanel imagePanel;
-	public static double x=Constance.Windows_width;
-	public static double y=Constance.Windows_height*0.3;
+
+	public Piano pianoPane=new Piano();
+	public Guitar guitarPane=new Guitar();
+	
+
+//	public static double x=Constance.Windows_width;
+//	public static double y=Constance.Windows_height*0.3;
 
 	
 	public GameView(UserAgent agent) {
@@ -124,7 +130,9 @@ public class GameView extends JAgentFrame {
 		imagePanel.add(playDrumLeft);
 		imagePanel.add(playDrumRight);
 		
-		setGuitar();
+		//setGuitar();
+		imagePanel.add(pianoPane);
+		imagePanel.add(guitarPane);
 		
 		
 		
@@ -220,41 +228,41 @@ public class GameView extends JAgentFrame {
 		this.control_pane = control_pane;
 	}
 	
-	public void setGuitar(){
-		GuitarWidgetView widget1=new GuitarWidgetView("EM");
-		GuitarWidgetView widget2=new GuitarWidgetView("AM");
-		GuitarWidgetView widget3=new GuitarWidgetView("DM");
-		GuitarWidgetView widget4=new GuitarWidgetView("G");
-		GuitarWidgetView widget5=new GuitarWidgetView("C");
-		GuitarWidgetView widget6=new GuitarWidgetView("F");
-		GuitarWidgetView widget7=new GuitarWidgetView("Bb");
-		GuitarWidgetView widget8=new GuitarWidgetView("Bdim");
-		
-		int widths=widget1.getWidth();
-		int heights=widget1.getHeight();
-		
-		widget1.setBounds((int)(x*0.15),(int)y,widths,heights);
-		widget2.setBounds((int)(x*0.25),(int)y,widths,heights);
-		widget3.setBounds((int)(x*0.35),(int)y,widths,heights);
-		widget4.setBounds((int)(x*0.45),(int)y,widths,heights);
-		widget5.setBounds((int)(x*0.55),(int)y,widths,heights);
-		widget6.setBounds((int)(x*0.65),(int)y,widths,heights);
-		widget7.setBounds((int)(x*0.75),(int)y,widths,heights);
-		widget8.setBounds((int)(x*0.85),(int)y,widths,heights);
-		
-		imagePanel.add(widget1);
-		imagePanel.add(widget2);
-		imagePanel.add(widget3);
-		imagePanel.add(widget4);
-		imagePanel.add(widget5);
-		imagePanel.add(widget6);
-		imagePanel.add(widget7);
-		imagePanel.add(widget8);
-		
-		
-		
-		
-	}
+//	public void setGuitar(){
+//		GuitarWidgetView widget1=new GuitarWidgetView("EM");
+//		GuitarWidgetView widget2=new GuitarWidgetView("AM");
+//		GuitarWidgetView widget3=new GuitarWidgetView("DM");
+//		GuitarWidgetView widget4=new GuitarWidgetView("G");
+//		GuitarWidgetView widget5=new GuitarWidgetView("C");
+//		GuitarWidgetView widget6=new GuitarWidgetView("F");
+//		GuitarWidgetView widget7=new GuitarWidgetView("Bb");
+//		GuitarWidgetView widget8=new GuitarWidgetView("Bdim");
+//		
+//		int widths=widget1.getWidth();
+//		int heights=widget1.getHeight();
+//		
+//		widget1.setBounds((int)(x*0.15),(int)y,widths,heights);
+//		widget2.setBounds((int)(x*0.25),(int)y,widths,heights);
+//		widget3.setBounds((int)(x*0.35),(int)y,widths,heights);
+//		widget4.setBounds((int)(x*0.45),(int)y,widths,heights);
+//		widget5.setBounds((int)(x*0.55),(int)y,widths,heights);
+//		widget6.setBounds((int)(x*0.65),(int)y,widths,heights);
+//		widget7.setBounds((int)(x*0.75),(int)y,widths,heights);
+//		widget8.setBounds((int)(x*0.85),(int)y,widths,heights);
+//		
+//		imagePanel.add(widget1);
+//		imagePanel.add(widget2);
+//		imagePanel.add(widget3);
+//		imagePanel.add(widget4);
+//		imagePanel.add(widget5);
+//		imagePanel.add(widget6);
+//		imagePanel.add(widget7);
+//		imagePanel.add(widget8);
+//		
+//		
+//		
+//		
+//	}
 	
 
 

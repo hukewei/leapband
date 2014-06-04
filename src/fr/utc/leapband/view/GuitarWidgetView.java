@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.RectBorder;
+import fr.utc.leapband.utilities.RoundedBorder;
 
 @SuppressWarnings("serial")
 public class GuitarWidgetView extends JButton implements MouseListener{
@@ -27,7 +28,7 @@ public class GuitarWidgetView extends JButton implements MouseListener{
 		this.setVerticalAlignment(SwingConstants.TOP);
 		this.setFont(new Font("Chalkboard", Font.PLAIN, 30));
 		this.setForeground(Color.WHITE);
-		this.setBorder(new RectBorder(new Color(87,52,10,150)));
+		this.setBorder(new RoundedBorder(new Color(87,52,10,150)));
 		this.setSize((int)width,(int)height);
 		
 		this.setContentAreaFilled(false);
@@ -64,6 +65,7 @@ public class GuitarWidgetView extends JButton implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 	
 }
