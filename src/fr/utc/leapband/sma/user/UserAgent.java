@@ -603,7 +603,7 @@ public class UserAgent extends GuiAgent{
 				fire = true;
 			}
 		} else if (instrument.equals("guitar")) {
-			if (current_time - last_fire_guitar > Constance.Minimun_Fire_interval) {
+			if (current_time - last_fire_guitar > Constance.Minimun_Guitar_Fire_interval) {
 				last_fire_guitar = current_time;
 				fire = true;
 			}

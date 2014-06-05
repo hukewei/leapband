@@ -22,6 +22,7 @@ import javax.sound.midi.Synthesizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.utc.leapband.utilities.Constance;
+import fr.utc.leapband.utilities.GuitarChordDemo;
 import fr.utc.leapband.utilities.GuitarChordSequence;
 import fr.utc.leapband.utilities.GuitarTuning;
 import fr.utc.leapband.utilities.InstrumentType;
@@ -167,8 +168,9 @@ public class SoundPlayAgent extends Agent{
 			    			
 			    			final int instrument = Constance.Guitar_Type; // SEE http://soundprogramming.net/file_formats/general_midi_instrument_list
 			    			
-			    		        GuitarChordSequence mini = new GuitarChordSequence();
-			    		        mini.playChords(instrument, chords);
+			    		        //GuitarChordSequence mini = new GuitarChordSequence();
+			    			GuitarChordDemo mini = new GuitarChordDemo();
+			    		        mini.playChord(instrument, eMajor, velocity);
 			    			}
 			        }, 
 			        0 
