@@ -33,5 +33,5 @@ public class Constance {
 	public static String Volume_Up = "Volume_Up";
 	public static String Volume_Down = "Volume_Down";
 	
-	public static int Guitar_Type = 26;
+	public static int Guitar_Type = 25;
 }

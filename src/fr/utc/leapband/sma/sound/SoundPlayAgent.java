@@ -21,9 +21,12 @@ import javax.sound.midi.Synthesizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.GuitarChordSequence;
 import fr.utc.leapband.utilities.GuitarTuning;
+import fr.utc.leapband.utilities.InstrumentType;
 import fr.utc.leapband.utilities.NoteInformData;
+import fr.utc.leapband.view.GuitarWidgetView;
 
 
 @SuppressWarnings("serial")
@@ -148,38 +151,21 @@ public class SoundPlayAgent extends Agent{
 
 		@Override
 		public void action() {
+		if (instrument!=Constance.Guitar_Type){
 			channels[channel].programChange(bank, instrument);
 			channels[channel].noteOn(note, velocity);
+		}else
+		{
+			
 			new Timer().schedule( 
 			        new java.util.TimerTask() {
 			            @Override
 			            public void run() {
-			            	GuitarTuning gt = new GuitarTuning();
-			    			
-			    			ArrayList<Integer> eMajor = new ArrayList<Integer>();
-			    			
-			    			eMajor.add(gt.midiNum(6,0));
-			    			eMajor.add(gt.midiNum(5,2));
-			    			eMajor.add(gt.midiNum(4,2));
-			    			eMajor.add(gt.midiNum(3,1));
-			    			eMajor.add(gt.midiNum(2,0));
-			    			eMajor.add(gt.midiNum(1,0));
-			    			
-			    			ArrayList<Integer> aMajor = new ArrayList<Integer>();
-			    			
-			    			aMajor.add(gt.midiNum(6,0));
-			    			aMajor.add(gt.midiNum(5,0));
-			    			aMajor.add(gt.midiNum(4,2));
-			    			aMajor.add(gt.midiNum(3,2));
-			    			aMajor.add(gt.midiNum(2,2));
-			    			aMajor.add(gt.midiNum(1,0));
-			    			
-			    			
-			    			ArrayList<ArrayList<Integer>> chords = new ArrayList<ArrayList<Integer>>();
-			    			
+			            	ArrayList<Integer> eMajor =GetSound (note);
+			            	ArrayList<ArrayList<Integer>> chords = new ArrayList<ArrayList<Integer>>();
 			    			chords.add(eMajor);// chords.add(aMajor);
 			    			
-			    			final int instrument = 25; // SEE http://soundprogramming.net/file_formats/general_midi_instrument_list
+			    			final int instrument = Constance.Guitar_Type; // SEE http://soundprogramming.net/file_formats/general_midi_instrument_list
 			    			
 			    		        GuitarChordSequence mini = new GuitarChordSequence();
 			    		        mini.playChords(instrument, chords);
@@ -187,7 +173,105 @@ public class SoundPlayAgent extends Agent{
 			        }, 
 			        0 
 			);
+		}
+			
 			
 		}
+
+	private ArrayList<Integer> GetSound(int note){
+    	GuitarTuning gt = new GuitarTuning();
+		ArrayList<Integer> eMajor = new ArrayList<Integer>();
+		switch (note){
+
+		case 63: //"EM"
+		
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,2));
+			eMajor.add(gt.midiNum(4,3));
+			eMajor.add(gt.midiNum(3,0));
+			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		
+		case 66://AM
+		
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,3));
+			eMajor.add(gt.midiNum(2,1));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		case 62://DM
+			
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(4,0));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,3));
+			eMajor.add(gt.midiNum(1,1));
+			break;
+		case 65: //G
+			
+			eMajor.add(gt.midiNum(6,3));
+			eMajor.add(gt.midiNum(5,2));
+			eMajor.add(gt.midiNum(4,0));
+			eMajor.add(gt.midiNum(3,0));
+			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(1,4));
+			break;
+		case 61://C"
+			
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(4,1));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		case 64://F
+			
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(4,3));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,1));
+			eMajor.add(gt.midiNum(1,1));
+			break;
+		case 67://Bb
+			
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(4,3));
+			eMajor.add(gt.midiNum(3,4));
+			eMajor.add(gt.midiNum(2,2));
+			eMajor.add(gt.midiNum(1,1));
+			break;
+		case 68://Bdim
+			
+			eMajor.add(gt.midiNum(6,1));
+			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(4,4));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		case 60:
+			
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,2));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+			
+		}
+		
+		return eMajor;
+		
+	}
+	
+	
 	}
 }

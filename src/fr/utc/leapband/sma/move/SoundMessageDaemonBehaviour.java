@@ -66,7 +66,7 @@ public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 					case PIANO:					
 						break;
 					case GUITAR:
-						System.out.println("Piano");
+						System.out.println("Guitar");
 						
 						data.setAction(NoteActionType.CHANGE_INSTRUMENT);
 						
