@@ -42,13 +42,14 @@ public class UserContainer {
 					"fr.utc.leapband.sma.user.UserAgent",
 					new Object[] {new String(sound_agent_name_2)});
 			c2.start();
-//			
-//			AgentController c3 = operationContainer.createNewAgent(
-//					"User_3",
-//					"SMA.user.UserAgent",
-//					null);
-//			c3.start();
-//		
+			
+			AgentController c3 = operationContainer.createNewAgent(
+					"User_3",
+					"fr.utc.leapband.sma.user.UserAgent",
+					new Object[] {new String(sound_agent_name_2)});
+					
+			c3.start();
+		
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
