@@ -479,60 +479,61 @@ public class UserAgent extends GuiAgent{
 	
 	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2, float speed_1, float speed_2, Vector dir_1, Vector dir_2, boolean two_hand) {
 		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
-		
-		hand_1.x = x_1;
-		hand_1.y = y_1;
-		hand_1.z = z_1;
-		hand_1.speed = speed_1;
-		hand_1.direction = dir_1;
-		if (two_hand){
-			hand_2.x = x_2;
-			hand_2.y = y_2;
-			hand_2.z = z_2;
-			hand_2.speed = speed_2;
-			hand_2.direction = dir_2;
-		}
-		//if(d1 > Constance.Minimun_Distance)
-			changes.firePropertyChange("hand1", null, hand_1);
-		//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
-		//if (d2 > Constance.Minimun_Distance)
-			if (two_hand)changes.firePropertyChange("hand2", null, hand_2);
-			if (selected_instrument == drum) {
-				if(isCollisionForDrumLeft(hand_1) ){
-					if(shouldFireChange("drum_left")) {
-						changes.firePropertyChange("drum_left", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
-					}
-				} else if (two_hand && isCollisionForDrumLeft(hand_2)) {
-					if(shouldFireChange("drum_left")) {
-						changes.firePropertyChange("drum_left", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
-					}
-				} else if(isCollisionForDrumRight(hand_1) ){
-					if(shouldFireChange("drum_right")) {
-						changes.firePropertyChange("drum_right", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
-					}
-				} else if (two_hand && isCollisionForDrumRight(hand_2)) {
-					if(shouldFireChange("drum_right")) {
-						changes.firePropertyChange("drum_right", null, null);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
-					}
-				}
-			} else if (selected_instrument == guitar) {
-				int guitar_id = getChord(hand_1.x);
-				if(isTriggeredGuitar(hand_1) && shouldFireChange("guitar")) {
-					changes.firePropertyChange("chord", null, guitar_id);
-					this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
-				}
-				if (two_hand) {
-					guitar_id = getChord(hand_2.x);
-					if(isTriggeredGuitar(hand_2) && shouldFireChange("guitar")) {
-						changes.firePropertyChange("chord", null, guitar_id);
-						this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
-					}
-				}
+		if(game_view.isVisible()) {
+			hand_1.x = x_1;
+			hand_1.y = y_1 - 170;
+			hand_1.z = z_1;
+			hand_1.speed = speed_1;
+			hand_1.direction = dir_1;
+			if (two_hand){
+				hand_2.x = x_2;
+				hand_2.y = y_2 - 170;
+				hand_2.z = z_2;
+				hand_2.speed = speed_2;
+				hand_2.direction = dir_2;
 			}
+			//if(d1 > Constance.Minimun_Distance)
+				changes.firePropertyChange("hand1", null, hand_1);
+			//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
+			//if (d2 > Constance.Minimun_Distance)
+				if (two_hand)changes.firePropertyChange("hand2", null, hand_2);
+				if (selected_instrument == drum) {
+					if(isCollisionForDrumLeft(hand_1) ){
+						if(shouldFireChange("drum_left")) {
+							changes.firePropertyChange("drum_left", null, null);
+							this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
+						}
+					} else if (two_hand && isCollisionForDrumLeft(hand_2)) {
+						if(shouldFireChange("drum_left")) {
+							changes.firePropertyChange("drum_left", null, null);
+							this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
+						}
+					} else if(isCollisionForDrumRight(hand_1) ){
+						if(shouldFireChange("drum_right")) {
+							changes.firePropertyChange("drum_right", null, null);
+							this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
+						}
+					} else if (two_hand && isCollisionForDrumRight(hand_2)) {
+						if(shouldFireChange("drum_right")) {
+							changes.firePropertyChange("drum_right", null, null);
+							this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
+						}
+					}
+				} else if (selected_instrument == guitar) {
+					int guitar_id = getChord(hand_1.x);
+					if(isTriggeredGuitar(hand_1) && shouldFireChange("guitar")) {
+						changes.firePropertyChange("chord", null, guitar_id);
+						this.addBehaviour(new SendMoveBehaviour(this, hand_1, getVolumeMultiplier()));
+					}
+					if (two_hand) {
+						guitar_id = getChord(hand_2.x);
+						if(isTriggeredGuitar(hand_2) && shouldFireChange("guitar")) {
+							changes.firePropertyChange("chord", null, guitar_id);
+							this.addBehaviour(new SendMoveBehaviour(this, hand_2, getVolumeMultiplier()));
+						}
+					}
+				}
+		}
 	}
 	
 	public int getChord(float x) {
@@ -636,9 +637,9 @@ public class UserAgent extends GuiAgent{
 	public boolean isTriggeredGuitar(Cordinates hand) {
 		boolean trigger = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if ((hand.direction.getY()  < 0) && Math.abs(hand.speed) > 200 ) {
-			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.75) {
-				return true;
+		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 200) {
+			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.85) {
+				trigger =  true;
 			}
 		}
 		return trigger;

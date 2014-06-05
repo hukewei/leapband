@@ -20,6 +20,7 @@ public class Constance {
 	static public int Minimun_Distance = 3;
 	static public int Minimun_Fire_interval = 200;
 	static public int Minimun_Guitar_Fire_interval = 750;
+	public static int Control_Pane_height = 150;
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String ROOM_ENTERED = "ROOM_ENTERED";
