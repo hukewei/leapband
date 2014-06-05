@@ -283,7 +283,7 @@ public class LeapListener extends Listener {
 				moveMouse(avgPos.getX() * 15, (SCREEN_Y - avgPos.getY()) * 5);
 			}
 			if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
-				if (frame.hands().count() < 2) {
+				if (frame.hands().count() < 5) {
 					Hand hand = frame.hands().get(0);
 					if (hand.grabStrength() > 0.5) {
 						myAgent.doSwipe("GRAB");

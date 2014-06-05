@@ -66,6 +66,11 @@ public class GuitarChordDemo {   // this is the first one
         
 	 for (int i=0; i<chord.size(); i++) {
             ShortMessage a = new ShortMessage();
+            if (velocity < 0 ) {
+            	velocity = 0;
+            } else if (velocity >127) {
+            	velocity = 127;
+            }
             a.setMessage(ShortMessage.NOTE_ON, 1, chord.get(i), velocity);
             MidiEvent noteOn = new MidiEvent(a, i+1); 
             track.add(noteOn);
