@@ -226,7 +226,7 @@ public class LeapListener extends Listener {
 						clickMouse(0);
 						releaseMouse(0);
 					} else if (maxValue == circle_count) {
-						if (fingers_count < 3) {
+						if (fingers_count < 2) {
 							if (clockwise > anticlockwise) {
 								clockwiseness = "clockwise";
 							} else {
@@ -362,7 +362,7 @@ public class LeapListener extends Listener {
 			if ((frame.timestamp() - last_timestamp > Constance.Gesture_Interval)) {
 				if (frame.hands().count() == 1) {
 					Hand hand = frame.hands().get(0);
-					if (hand.grabStrength() > 0.3) {
+					if (hand.grabStrength() > 0.7) {
 						myAgent.doSwipe("GRAB");
 						last_timestamp = frame.timestamp();
 					}
@@ -544,7 +544,6 @@ public class LeapListener extends Listener {
 		Robot mouseHandler;
 
 		try {
-			System.out.println("here...");
 			mouseHandler = new Robot();
 			mouseHandler.mousePress(input);
 
