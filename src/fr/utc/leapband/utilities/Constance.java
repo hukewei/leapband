@@ -19,6 +19,7 @@ public class Constance {
 	static public int click_delay = 1600;
 	static public int Minimun_Distance = 3;
 	static public int Minimun_Fire_interval = 200;
+	public static int Control_Pane_height = 150;
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String ROOM_ENTERED = "ROOM_ENTERED";
