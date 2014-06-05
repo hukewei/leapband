@@ -30,36 +30,31 @@ public class FindNoteGuitarFromMovement  {
 
 public	int matchNote(){
 		
-		Point3d pos=movement.getPos();
-		System.out.println (pos.x);
-		System.out.println (pos.y );
-		System.out.println (pos.z);
-		note= 85;
+		double x=movement.getPos().x;
 
-		if (IsLeft(pos)){
-		//	62 Mute Hi Conga, 63 Open Hi Conga
-			note = 63;
-			if (IsDrumLow(pos)){					
-					note = 62;
-				}
-			
-		}
+		int chord = 60;
+		if (x < Constance.Windows_width * 0.14) {
+			chord = 61;
+		} else if (x < Constance.Windows_width * 0.27) {
+			chord = 62;
+		} else if (x < Constance.Windows_width * 0.4) {
+ 			chord = 63;
+ 		} else if (x < Constance.Windows_width * 0.53) {
+ 			chord = 64;
+ 		} else if (x < Constance.Windows_width * 0.66) {
+ 			chord = 65;
+ 		} else if (x < Constance.Windows_width * 0.79) {
+ 			chord = 66;
+ 		} else if (x < Constance.Windows_width * 0.9) {
+ 			chord = 67;
+ 		} else if (x < Constance.Windows_width) {
+ 			chord = 68;
+ 		}
+ 		return chord;
+ 	}
+
 		
-		else{
-			// 47 Low-Mid Tom, 48HIGH-Mid Tom 
-			pos.x-=Constance.Windows_width*0.5;
-			note = 48;
-			if (IsDrumLow(pos)){
-				note = 47;
-			}
-			
-		}
 
-
-		System.out.println("NOTE de behaviour: " + String.valueOf(note));
-		return note;
-		
-	}
 
 
 public boolean IsLeft(Point3d pos){
