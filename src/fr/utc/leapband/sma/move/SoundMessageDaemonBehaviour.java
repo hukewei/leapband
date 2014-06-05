@@ -7,7 +7,9 @@ import jade.lang.acl.MessageTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.utc.leapband.sma.sound.FindNoteGuitarFromMovement;
 import fr.utc.leapband.sma.sound.FindNoteTambourFromMovement;
+import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.MoveInformData;
 import fr.utc.leapband.utilities.NoteInformData;
 import fr.utc.leapband.utilities.NoteInformData.NoteActionType;
@@ -40,7 +42,8 @@ public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 					moveData.setMove(move);
 					moveData.setInstrumentType(InstrumentType.TAMBOUR);*/
 					
-					
+					int i;
+					int volume;
 					switch(moveData.getInstrumentType()) {
 					case TAMBOUR:
 						
@@ -51,18 +54,33 @@ public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 						data.setChannel(9);
 						 FindNoteTambourFromMovement drum=new FindNoteTambourFromMovement(moveData.getMove());
 						// addBehaviour(be);
-						int volume =(int) (drum.matchVolume() * moveData.getVelocity_multiplier());
+						volume =(int) (drum.matchVolume() * moveData.getVelocity_multiplier());
 						System.out.println("inside volume = " + drum.matchVolume());
 						System.out.println("final volume = " + volume);
 						data.setVelocity(volume);
-						int i= drum.matchNote();
+						i= drum.matchNote();
 						System.out.println("NOTE " + String.valueOf(i));
 						data.setNote(i);
 						
 						break;
-					case PIANO:
+					case PIANO:					
 						break;
 					case GUITAR:
+						System.out.println("Guitar");
+						
+						data.setAction(NoteActionType.CHANGE_INSTRUMENT);
+						
+						data.setChannel(0);
+						FindNoteGuitarFromMovement guitar=new FindNoteGuitarFromMovement(moveData.getMove());
+						volume =(int) (guitar.matchVolume() * moveData.getVelocity_multiplier());
+						System.out.println("inside volume = " + guitar.matchVolume());
+						System.out.println("final volume = " + volume);
+						data.setVelocity(volume);
+						i= guitar.matchNote();
+						System.out.println("NOTE " + String.valueOf(i));
+						data.setNote(i);
+						data.setInstrument(Constance.Guitar_Type);
+						data.setBank(0);
 						break;
 					case DEFAULT:
 						break;

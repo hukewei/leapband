@@ -1,5 +1,8 @@
 package fr.utc.leapband.sma.sound;
 
+import java.util.ArrayList;
+import java.util.Timer;
+
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -18,7 +21,13 @@ import javax.sound.midi.Synthesizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.utc.leapband.utilities.Constance;
+import fr.utc.leapband.utilities.GuitarChordDemo;
+import fr.utc.leapband.utilities.GuitarChordSequence;
+import fr.utc.leapband.utilities.GuitarTuning;
+import fr.utc.leapband.utilities.InstrumentType;
 import fr.utc.leapband.utilities.NoteInformData;
+import fr.utc.leapband.view.GuitarWidgetView;
 
 
 @SuppressWarnings("serial")
@@ -130,16 +139,133 @@ public class SoundPlayAgent extends Agent{
 		private int channel;
 		private int bank;
 		private int instrument;
+		private int note;
+		private int velocity;
 		
 		public ChangeSound(NoteInformData data) {
 			this.channel = data.getChannel();
 			this.bank = data.getBank();
 			this.instrument = data.getInstrument();
+			this.note = data.getNote();
+			this.velocity = data.getVelocity();
 		}
 
 		@Override
 		public void action() {
+		if (instrument!=Constance.Guitar_Type){
 			channels[channel].programChange(bank, instrument);
+			channels[channel].noteOn(note, velocity);
+		}else
+		{
+			
+			new Timer().schedule( 
+			        new java.util.TimerTask() {
+			            @Override
+			            public void run() {
+			            	ArrayList<Integer> eMajor =GetSound (note);
+			            	ArrayList<ArrayList<Integer>> chords = new ArrayList<ArrayList<Integer>>();
+			    			chords.add(eMajor);// chords.add(aMajor);
+			    			
+			    			final int instrument = Constance.Guitar_Type; // SEE http://soundprogramming.net/file_formats/general_midi_instrument_list
+			    			
+			    		        //GuitarChordSequence mini = new GuitarChordSequence();
+			    			GuitarChordDemo mini = new GuitarChordDemo();
+			    		        mini.playChord(instrument, eMajor, velocity);
+			    			}
+			        }, 
+			        0 
+			);
 		}
+			
+			
+		}
+
+	private ArrayList<Integer> GetSound(int note){
+    	GuitarTuning gt = new GuitarTuning();
+		ArrayList<Integer> eMajor = new ArrayList<Integer>();
+		switch (note){
+
+		case 63: //"EM"
+		
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,2));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,0));
+			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		
+		case 66://AM
+		
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,1));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		case 62://DM
+			
+			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(4,0));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,3));
+			eMajor.add(gt.midiNum(1,2));
+			break;
+		case 65: //G
+			
+			eMajor.add(gt.midiNum(6,3));
+			eMajor.add(gt.midiNum(5,2));
+			eMajor.add(gt.midiNum(4,0));
+			eMajor.add(gt.midiNum(3,0));
+			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(1,3));
+			break;
+		case 61://C"
+			
+			eMajor.add(gt.midiNum(6,3));
+			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,0));
+			eMajor.add(gt.midiNum(2,1));
+			eMajor.add(gt.midiNum(1,0));
+			break;
+		case 64://F
+			
+			eMajor.add(gt.midiNum(6,1));
+			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(4,3));
+			eMajor.add(gt.midiNum(3,2));
+			eMajor.add(gt.midiNum(2,1));
+			eMajor.add(gt.midiNum(1,1));
+			break;
+		case 67://Bb
+			
+			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(4,3));
+			eMajor.add(gt.midiNum(3,4));
+			eMajor.add(gt.midiNum(2,2));
+			eMajor.add(gt.midiNum(1,1));
+			break;
+		case 68://Bdim
+			
+			eMajor.add(gt.midiNum(6,1));
+			eMajor.add(gt.midiNum(5,2));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,1));
+			eMajor.add(gt.midiNum(2,2));
+			eMajor.add(gt.midiNum(1,1));
+			break;
+		case 60:
+			break;
+			
+		}
+		
+		return eMajor;
+		
+	}
+	
+	
 	}
 }
