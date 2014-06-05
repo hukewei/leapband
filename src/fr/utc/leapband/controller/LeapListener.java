@@ -363,19 +363,18 @@ public class LeapListener extends Listener {
 				if (frame.hands().count() == 1) {
 					Hand hand = frame.hands().get(0);
 					if (hand.grabStrength() > 0.3) {
-						myAgent.doSwipe("REAR");
+						myAgent.doSwipe("GRAB");
 						last_timestamp = frame.timestamp();
 					}
 				}
 			}
 
 			// Place both hands on device
-			if (frame.hands().count() > 1) {
+			if (frame.hands().count() >= 1) {
 
 				Hand hand1 = frame.hands().get(0);
 				// Vector normal1 = hand1.palmNormal();
-				Hand hand2 = frame.hands().get(1);
-				// Vector normal2 = hand2.palmNormal();
+				
 
 				ScreenList screens = controller.locatedScreens();
 
@@ -459,7 +458,9 @@ public class LeapListener extends Listener {
 				float yNorm_1 = (float) (s.heightPixels()
 						* (1.0f - intersect.getY()) / 1.3);
 				float zNorm_1 = (float) (palm.getZ());
-
+				if (frame.hands().count() == 2) {
+					Hand hand2 = frame.hands().get(1);
+					// Vector normal2 = hand2.palmNormal();
 				palm = hand2.palmPosition();
 				direction = hand2.direction();
 				intersect = s.intersect(palm, direction, true);
@@ -475,12 +476,15 @@ public class LeapListener extends Listener {
 						* (1.0f - intersect.getY()) / 1.3);
 
 				float zNorm_2 = (float) (palm.getZ());
-
 				myAgent.updateHands(xNor_1, yNorm_1, xNor_2, yNorm_2, zNorm_1,
 						zNorm_2, hand1.palmVelocity().getY(), hand2
 								.palmVelocity().getY(), hand1.direction(),
-						hand2.direction());
-
+						hand2.direction(), true);
+				} else {
+					myAgent.updateHands(xNor_1, yNorm_1, 0f, 0f, zNorm_1,
+							0f, hand1.palmVelocity().getY(), hand1.palmVelocity().getY(), hand1.direction(),
+							hand1.direction(), false);
+				}
 				// myAgent.updateHands(
 				// x_1,
 				// y_1,
