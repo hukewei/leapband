@@ -71,50 +71,6 @@ public class GameView extends JAgentFrame {
 		instrumentY2= (int)(Constance.Windows_height*0.66);
 		playDrumRight.setBounds(instrumentX2,instrumentY2, Constance.Windows_width/2, 300);
 		//hands.add(playDrumRight);
-		
-		
-		
-		
-		/*play.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				 play.scaleX = 1.0; 
-				 play.scaleY = 1.0;
-				 play.applyFilter();  
-				 play.repaint();   
-	             
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				 play.scaleX *= 1.2; 
-				 play.scaleY *= 1.2;   
-				 play.applyFilter();  
-				 play.repaint();   
-	               
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-*/		
-		
 
 		imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
 		imagePanel.setLayout(null);
@@ -159,17 +115,7 @@ public class GameView extends JAgentFrame {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (isVisible()) {
-			if (evt.getPropertyName().equals("swipe")) {
-//	 			if ((String)evt.getNewValue() == "GRAB") {
-//	 				if(hide_split_pane) {
-//	 					split_pane.setDividerLocation(Constance.Control_Pane_height);
-//	 					hide_split_pane = false;
-//	 				} else {
-//	 					split_pane.setDividerLocation(0);
-//	 					hide_split_pane = true;
-//	 				}
-//	 			}
-			} else if (evt.getPropertyName().equals("hand1")) {
+			if (evt.getPropertyName().equals("hand1")) {
 //			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
 //					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 				hands.setHand1(((Cordinates) evt.getNewValue()).x,

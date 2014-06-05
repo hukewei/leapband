@@ -317,7 +317,7 @@ public class LeapListener extends Listener {
 
 				float xNor_1 = s.widthPixels() * intersect.getX();
 				float yNorm_1 = (float) (s.heightPixels()
-						* (1.0f - intersect.getY()) / 1.3);
+						* (1.0f - intersect.getY()));
 				float zNorm_1 = (float) (palm.getZ());
 				if (frame.hands().count() == 2) {
 					Hand hand2 = frame.hands().get(1);
@@ -334,7 +334,7 @@ public class LeapListener extends Listener {
 
 				float xNor_2 = s.widthPixels() * intersect.getX();
 				float yNorm_2 = (float) (s.heightPixels()
-						* (1.0f - intersect.getY()) / 1.3);
+						* (1.0f - intersect.getY()));
 
 				float zNorm_2 = (float) (palm.getZ());
 				myAgent.updateHands(xNor_1, yNorm_1, xNor_2, yNorm_2, zNorm_1,

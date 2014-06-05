@@ -69,23 +69,25 @@ public class GameManageBehaviour extends Behaviour{
 					removePlayerDict(message.getSender().getName());
 					list_member.remove(message.getSender());
 					list_member_map.remove(message.getSender());
-					answer_exit_req(message);
 					player_changed = true;
 					if (list_member.size() == 0) {
 						game_over = true;
+						System.out.println("game over, game manager done");
 						myAgent.getDict().removeElement(conversation_id);
+						info_multiplay_users();
 					} else if(message.getSender().equals(host_name)){
 						info_multiplay_users();
 						//change host to the next one
 						host_name = list_member.get(0);
-						
+						host_sound_name = list_member_map.get(host_name);
+						info_all_player_change_sound_name(message);
 						ACLMessage inform_host = new ACLMessage(ACLMessage.INFORM);
 						inform_host.addReceiver(host_name);
 						inform_host.setConversationId("StartVisibility");
 						inform_host.setContent("true");
-						myAgent.send(inform_host);
-						
+						myAgent.send(inform_host);	
 					}
+					answer_exit_req(message);
 				}
 			} else if(message.getPerformative()==ACLMessage.REQUEST){
 				if(message.getContent().equals(Constance.START_GAME) && message.getSender().equals(host_name)){
@@ -196,6 +198,19 @@ public class GameManageBehaviour extends Behaviour{
 		info_game_start.setReplyWith(sound_agent.toJSON());
 		info_game_start.setContent(Constance.CONFIRM_START);
 		myAgent.send(info_game_start);
+	}
+	
+	private void info_all_player_change_sound_name(ACLMessage m) {
+		ACLMessage info_sound_change = new ACLMessage(ACLMessage.CONFIRM);
+		for (int i = 0; i < list_member.size(); i++) {
+			info_sound_change.addReceiver(list_member.get(i));
+		}
+		info_sound_change.setConversationId(m.getConversationId());
+		info_sound_change.setSender(myAgent.getAID());
+		MyAID sound_agent = new MyAID(host_sound_name.getName(), host_sound_name.getAddressesArray()[0]);
+		info_sound_change.setReplyWith(sound_agent.toJSON());
+		info_sound_change.setContent(Constance.Sound_Change);
+		myAgent.send(info_sound_change);
 	}
 	
 	

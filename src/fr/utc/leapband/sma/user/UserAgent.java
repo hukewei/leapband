@@ -399,6 +399,9 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void changeCurrentViewTo(JAgentFrame frame) {
+		if (current_frame == frame) {
+			return;
+		}
 		frame.setVisible(true);
 		if (current_frame != null) {
 			current_frame.setVisible(false);
@@ -486,13 +489,13 @@ public class UserAgent extends GuiAgent{
 		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
 		if(game_view.isVisible()) {
 			hand_1.x = x_1;
-			hand_1.y = y_1 - 170;
+			hand_1.y = y_1 - Constance.Control_Pane_height;
 			hand_1.z = z_1;
 			hand_1.speed = speed_1;
 			hand_1.direction = dir_1;
 			if (two_hand){
 				hand_2.x = x_2;
-				hand_2.y = y_2 - 170;
+				hand_2.y = y_2 - Constance.Control_Pane_height;
 				hand_2.z = z_2;
 				hand_2.speed = speed_2;
 				hand_2.direction = dir_2;
@@ -592,7 +595,7 @@ public class UserAgent extends GuiAgent{
 		} else {
 			multiplier = 1.8f;
 		}
-		return multiplier;
+		return (float) (multiplier * 1.5);
 	}
 	
 	private boolean shouldFireChange(String instrument) {
