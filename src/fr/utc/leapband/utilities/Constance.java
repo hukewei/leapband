@@ -32,4 +32,7 @@ public class Constance {
 	public static String CONFIRM_START = "Game_Start_Confirmed";
 	public static String Volume_Up = "Volume_Up";
 	public static String Volume_Down = "Volume_Down";
+	public static String Forward = "Forward";
+	public static String Rewind = "Rewind";
+	public static String Sound_Directory = "songs/";
 }

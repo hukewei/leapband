@@ -182,7 +182,7 @@ public class ControlPane extends JPanel {
 				        new java.util.TimerTask() {
 				            @Override
 				            public void run() {
-				            	new MusicSelectView(new File("songs/"),myAgent);
+				            	new MusicSelectView(myAgent);
 				            }
 				        }, 
 				        Constance.click_delay 
@@ -313,7 +313,7 @@ public class ControlPane extends JPanel {
 				            public void run() {
 				           
 				    			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_RHYTHM);
-				    			ev.addParameter("forward");
+				    			ev.addParameter(Constance.Forward);
 				    			myAgent.postGuiEvent(ev);
 				            }
 				        }, 
@@ -369,7 +369,7 @@ public class ControlPane extends JPanel {
 				            public void run() {
 				            	
 				    			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_RHYTHM);
-				    			ev.addParameter("rewind");
+				    			ev.addParameter(Constance.Rewind);
 				    			myAgent.postGuiEvent(ev);
 				    			
 				            }
