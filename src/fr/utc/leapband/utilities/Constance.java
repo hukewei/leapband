@@ -19,10 +19,13 @@ public class Constance {
 	static public int click_delay = 1600;
 	static public int Minimun_Distance = 3;
 	static public int Minimun_Fire_interval = 200;
+	static public int Minimun_Guitar_Fire_interval = 750;
+	public static int Control_Pane_height = 150;
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String ROOM_ENTERED = "ROOM_ENTERED";
 	public static String ROOM_QUITTED = "ROOM_QUITTED";
+	public static String Sound_Change = "Sound_Change";
 	public static String roomselect_Mode = "104";
 	public static String EnterGroupMode = "108";
 	public static String ExitGroupMode = "109";
@@ -32,6 +35,7 @@ public class Constance {
 	public static String CONFIRM_START = "Game_Start_Confirmed";
 	public static String Volume_Up = "Volume_Up";
 	public static String Volume_Down = "Volume_Down";
+	public static int Guitar_Type = 25;
 	public static String Forward = "Forward";
 	public static String Rewind = "Rewind";
 	public static String Sound_Directory = "songs/";

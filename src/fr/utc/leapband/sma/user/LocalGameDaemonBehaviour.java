@@ -31,7 +31,8 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 																	MessageTemplate.and(
 																						MessageTemplate.MatchPerformative(ACLMessage.CONFIRM), 
 																						MessageTemplate.MatchConversationId(myAgent.getRoomId())), 
-																	MessageTemplate.MatchContent(Constance.CONFIRM_START)),
+																	(MessageTemplate.or(MessageTemplate.MatchContent(Constance.CONFIRM_START), 
+																			MessageTemplate.MatchContent(Constance.Sound_Change)))),
 												MessageTemplate.and(
 																	MessageTemplate.MatchPerformative(ACLMessage.INFORM),
 																	MessageTemplate.or(
@@ -57,8 +58,14 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 					}
 				}
 			} else if(message.getPerformative() == ACLMessage.CONFIRM){
-				myAgent.setHostSoundName(MyAID.toAID(message.getReplyWith()));
-				myAgent.changeToGameView();
+				if(message.getContent().equals(Constance.Sound_Change)) {
+					myAgent.setHostSoundName(MyAID.toAID(message.getReplyWith()));
+					System.out.println("my local name is " + myAgent.getLocalName());
+					System.out.println("sound play agent change to "+ MyAID.toAID(message.getReplyWith()));
+				} else if (message.getContent().equals(Constance.CONFIRM_START)) {
+					myAgent.setHostSoundName(MyAID.toAID(message.getReplyWith()));
+					myAgent.changeToGameView();
+				}
 			}
 		}
 		

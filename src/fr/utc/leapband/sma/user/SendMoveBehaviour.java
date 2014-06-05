@@ -26,7 +26,7 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 		position = pos;
 		velocity = vel;
 	}
-
+	
 	@Override
 	public void action() {
 		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);

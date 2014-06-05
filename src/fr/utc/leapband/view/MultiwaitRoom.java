@@ -6,14 +6,18 @@ package fr.utc.leapband.view;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
 
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
 
 import fr.utc.leapband.sma.user.UserAgent;
@@ -29,6 +33,7 @@ public class MultiwaitRoom extends JAgentFrame {
 	private JList<String> list_player;
 	private JButton start;
 	private JButton exit;
+	private JLabel roomID;
 	
 	public MultiwaitRoom(UserAgent agent) {
 		super(agent);
@@ -36,26 +41,35 @@ public class MultiwaitRoom extends JAgentFrame {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/roomView1.JPG");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
+		imagePanel.setImagePath("images/roomBg.png");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
+		
+		roomID=new JLabel();
+		roomID.setFont(new Font("Chalkboard", Font.PLAIN, 40));
+		roomID.setBounds((int) (Constance.Windows_width*0.42),(int) (Constance.Windows_height*0.12),(int) (Constance.Windows_width*0.35),(int) (Constance.Windows_height*0.1));
+		imagePanel.add(roomID);
 		
 		//load model to list
 		list_player = new JList<String>();
 		//list_room.setModel(myAgent.getDict());
+		list_player.setBorder(new RoundedBorder(new Color(100,100,100,100)));
 		list_player.setOpaque(false);	
 		((JComponent) list_player.getCellRenderer()).setOpaque(false);
-		list_player.setBackground(new Color(255,255,204,100));
-		list_player.setBounds(303,157,505,530);
+		list_player.setCellRenderer(new MyRenderer(0, Color.RED));
+		//list_player.setBackground(new Color(255,255,204,100));
+		list_player.setBounds((int) (Constance.Windows_width*0.3),(int) (Constance.Windows_height*0.2),(int) (Constance.Windows_width*0.35),(int) (Constance.Windows_height*0.7));
 		list_player.setFixedCellHeight(80);
 		//list_player.setBounds(250,150,500,500);
-		list_player.setFixedCellHeight(80);
 		list_player.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_player);
+		
+		
 		//this.setLayout(null);
 		
 		start = new JButton("Start");
-		start.setBounds(950,150,300, 150);
+		start.setBounds(950,(int) (Constance.Windows_height*0.2),300, 150);
 		start.setFont(new Font("Lucida Calligraphy", Font.BOLD, 30));
 		start.setForeground(Color.BLACK);
 		start.setBorder(new RoundedBorder(new Color(224,224,224,100)));
@@ -167,6 +181,14 @@ public class MultiwaitRoom extends JAgentFrame {
 	
 	}
 	
+	public JLabel getRoomID() {
+		return roomID;
+	}
+
+	public void setRoomID(JLabel roomID) {
+		this.roomID = roomID;
+	}
+
 	public JButton getStartButton(){
 		return start;
 	}
@@ -195,5 +217,34 @@ public class MultiwaitRoom extends JAgentFrame {
 				
 			}
 		}
+	}
+	
+	class MyRenderer extends DefaultListCellRenderer {
+
+	    private Color fontColor;
+	    private int row;
+
+	  
+
+	    public MyRenderer(int row, Color color) {
+	        this.fontColor = color;
+	        this.row = row;
+	    }
+
+	   
+
+	    public Component getListCellRendererComponent(JList list, Object value,
+	            int index, boolean isSelected, boolean cellHasFocus) {
+	        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	       
+	            if (index == row) {
+	                setForeground(fontColor);
+	                setFont(getFont().deriveFont((float) (getFont().getSize())));
+	                setOpaque(false);
+	            }
+	       
+
+	        return this;
+	    }
 	}
 }

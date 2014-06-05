@@ -34,7 +34,8 @@ public class RoomSelectView extends JAgentFrame {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/roomView.jpg");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
+		imagePanel.setImagePath("images/roomBg.png");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
@@ -43,10 +44,11 @@ public class RoomSelectView extends JAgentFrame {
 		list_room = new JList<String>();
 		
 		//list_room.setModel(myAgent.getDict());
-		list_room.setBorder(BorderFactory.createLoweredBevelBorder());
+		list_room.setBorder(new RoundedBorder(new Color(100,100,100,100)));
 		list_room.setOpaque(false);	
 		((JComponent) list_room.getCellRenderer()).setOpaque(false);
-		list_room.setBackground(new Color(255,255,204,100));
+		list_room.setSelectionForeground(Color.RED);
+		//list_room.setBackground(new Color(255,255,204,100));
 		//list_room.setBackground(Color.LIGHT_GRAY);
 		list_room.setBounds((int) (Constance.Windows_width*0.3),(int) (Constance.Windows_height*0.2),(int) (Constance.Windows_width*0.35),(int) (Constance.Windows_height*0.7));
 		list_room.setFixedCellHeight(80);
@@ -55,7 +57,7 @@ public class RoomSelectView extends JAgentFrame {
 		
 		//this.setLayout(null);
 		create_room = new JButton("create room");
-		create_room.setBounds(950,150,300, 150);
+		create_room.setBounds(950,(int) (Constance.Windows_height*0.2),300, 150);
 		create_room.setFont(new Font("Lucida Calligraphy", Font.BOLD, 30));
 		create_room.setForeground(Color.BLACK);
 		create_room.setBorder(new RoundedBorder(new Color(224,224,224,100)));

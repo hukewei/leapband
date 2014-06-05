@@ -21,6 +21,7 @@ public class GameView extends JAgentFrame {
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
+	private boolean hide_split_pane = false;
 
 
 	private Player player = new Player();
@@ -30,6 +31,17 @@ public class GameView extends JAgentFrame {
 	public int instrumentY1;
 	public int instrumentX2;
 	public int instrumentY2;
+	private CustomImgPanel imagePanel;
+
+	
+
+
+	public Piano pianoPane=new Piano();
+	public Guitar guitarPane=new Guitar(myAgent);
+	
+
+//	public static double x=Constance.Windows_width;
+//	public static double y=Constance.Windows_height*0.3;
 
 	
 	public GameView(UserAgent agent) {
@@ -59,49 +71,8 @@ public class GameView extends JAgentFrame {
 		instrumentY2= (int)(Constance.Windows_height*0.66);
 		playDrumRight.setBounds(instrumentX2,instrumentY2, Constance.Windows_width/2, 300);
 		//hands.add(playDrumRight);
-		
-		/*play.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				 play.scaleX = 1.0; 
-				 play.scaleY = 1.0;
-				 play.applyFilter();  
-				 play.repaint();   
-	             
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				 play.scaleX *= 1.2; 
-				 play.scaleY *= 1.2;   
-				 play.applyFilter();  
-				 play.repaint();   
-	               
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-*/		
-		
 
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/drumBack.jpg");
+		imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
@@ -109,13 +80,19 @@ public class GameView extends JAgentFrame {
 		
 		split_pane= new JSplitPane(0,control_pane,hands);
 		split_pane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		split_pane.setDividerLocation(170);
+		split_pane.setDividerLocation(Constance.Control_Pane_height);
 		split_pane.setSize(Constance.Windows_width, Constance.Windows_height);
 		split_pane.setOpaque(false);
 		imagePanel.add(split_pane);
 		
 		imagePanel.add(playDrumLeft);
 		imagePanel.add(playDrumRight);
+		
+		//setGuitar();
+		imagePanel.add(pianoPane);
+		imagePanel.add(guitarPane);
+		
+		
 		
 	}
 	
@@ -208,6 +185,12 @@ public class GameView extends JAgentFrame {
 	public void setControl_pane(ControlPane control_pane) {
 		this.control_pane = control_pane;
 	}
+	
+	public CustomImgPanel getImagePanel() {
+		return imagePanel;
+	}
 
-
+	public void setImagePanel(CustomImgPanel imagePanel) {
+		this.imagePanel = imagePanel;
+	}
 }
