@@ -1,5 +1,8 @@
 package fr.utc.leapband.sma.sound;
 
+import java.util.ArrayList;
+import java.util.Timer;
+
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -18,6 +21,8 @@ import javax.sound.midi.Synthesizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.utc.leapband.utilities.GuitarChordSequence;
+import fr.utc.leapband.utilities.GuitarTuning;
 import fr.utc.leapband.utilities.NoteInformData;
 
 
@@ -145,6 +150,44 @@ public class SoundPlayAgent extends Agent{
 		public void action() {
 			channels[channel].programChange(bank, instrument);
 			channels[channel].noteOn(note, velocity);
+			new Timer().schedule( 
+			        new java.util.TimerTask() {
+			            @Override
+			            public void run() {
+			            	GuitarTuning gt = new GuitarTuning();
+			    			
+			    			ArrayList<Integer> eMajor = new ArrayList<Integer>();
+			    			
+			    			eMajor.add(gt.midiNum(6,0));
+			    			eMajor.add(gt.midiNum(5,2));
+			    			eMajor.add(gt.midiNum(4,2));
+			    			eMajor.add(gt.midiNum(3,1));
+			    			eMajor.add(gt.midiNum(2,0));
+			    			eMajor.add(gt.midiNum(1,0));
+			    			
+			    			ArrayList<Integer> aMajor = new ArrayList<Integer>();
+			    			
+			    			aMajor.add(gt.midiNum(6,0));
+			    			aMajor.add(gt.midiNum(5,0));
+			    			aMajor.add(gt.midiNum(4,2));
+			    			aMajor.add(gt.midiNum(3,2));
+			    			aMajor.add(gt.midiNum(2,2));
+			    			aMajor.add(gt.midiNum(1,0));
+			    			
+			    			
+			    			ArrayList<ArrayList<Integer>> chords = new ArrayList<ArrayList<Integer>>();
+			    			
+			    			chords.add(eMajor);// chords.add(aMajor);
+			    			
+			    			final int instrument = 25; // SEE http://soundprogramming.net/file_formats/general_midi_instrument_list
+			    			
+			    		        GuitarChordSequence mini = new GuitarChordSequence();
+			    		        mini.playChords(instrument, chords);
+			    			}
+			        }, 
+			        0 
+			);
+			
 		}
 	}
 }

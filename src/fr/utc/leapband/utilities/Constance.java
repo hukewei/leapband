@@ -32,4 +32,6 @@ public class Constance {
 	public static String CONFIRM_START = "Game_Start_Confirmed";
 	public static String Volume_Up = "Volume_Up";
 	public static String Volume_Down = "Volume_Down";
+	
+	public static int Guitar_Type = 26;
 }

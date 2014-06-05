@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.utc.leapband.sma.sound.FindNoteGuitarFromMovement;
 import fr.utc.leapband.sma.sound.FindNoteTambourFromMovement;
+import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.MoveInformData;
 import fr.utc.leapband.utilities.NoteInformData;
 import fr.utc.leapband.utilities.NoteInformData.NoteActionType;
@@ -78,7 +79,7 @@ public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 						i= guitar.matchNote();
 						System.out.println("NOTE " + String.valueOf(i));
 						data.setNote(i);
-						data.setInstrument(24);
+						data.setInstrument(Constance.Guitar_Type);
 						data.setBank(0);
 						break;
 					case DEFAULT:
