@@ -1,6 +1,8 @@
 package fr.utc.leapband.view;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
 
@@ -21,6 +23,7 @@ public class GameView extends JAgentFrame {
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
+	private boolean hide_split_pane = false;
 
 
 	private Player player = new Player();
@@ -30,6 +33,17 @@ public class GameView extends JAgentFrame {
 	public int instrumentY1;
 	public int instrumentX2;
 	public int instrumentY2;
+	private CustomImgPanel imagePanel;
+
+	
+
+
+	public Piano pianoPane=new Piano();
+	public Guitar guitarPane=new Guitar(myAgent);
+	
+
+//	public static double x=Constance.Windows_width;
+//	public static double y=Constance.Windows_height*0.3;
 
 	
 	public GameView(UserAgent agent) {
@@ -59,6 +73,9 @@ public class GameView extends JAgentFrame {
 		instrumentY2= (int)(Constance.Windows_height*0.66);
 		playDrumRight.setBounds(instrumentX2,instrumentY2, Constance.Windows_width/2, 300);
 		//hands.add(playDrumRight);
+		
+		
+		
 		
 		/*play.addMouseListener(new MouseListener() {
 			
@@ -101,7 +118,7 @@ public class GameView extends JAgentFrame {
 */		
 		
 
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/drumBack.jpg");
+		imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
@@ -116,6 +133,12 @@ public class GameView extends JAgentFrame {
 		
 		imagePanel.add(playDrumLeft);
 		imagePanel.add(playDrumRight);
+		
+		//setGuitar();
+		imagePanel.add(pianoPane);
+		imagePanel.add(guitarPane);
+		
+		
 		
 	}
 	
@@ -138,7 +161,17 @@ public class GameView extends JAgentFrame {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (isVisible()) {
-			if (evt.getPropertyName().equals("hand1")) {
+			if (evt.getPropertyName().equals("swipe")) {
+	 			if ((String)evt.getNewValue() == "GRAB") {
+	 				if(hide_split_pane) {
+	 					split_pane.setDividerLocation(170);
+	 					hide_split_pane = false;
+	 				} else {
+	 					split_pane.setDividerLocation(0);
+	 					hide_split_pane = true;
+	 				}
+	 			}
+			} else if (evt.getPropertyName().equals("hand1")) {
 //			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
 //					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 				hands.setHand1(((Cordinates) evt.getNewValue()).x,
@@ -208,6 +241,53 @@ public class GameView extends JAgentFrame {
 	public void setControl_pane(ControlPane control_pane) {
 		this.control_pane = control_pane;
 	}
+	
+	public CustomImgPanel getImagePanel() {
+		return imagePanel;
+	}
+
+	public void setImagePanel(CustomImgPanel imagePanel) {
+		this.imagePanel = imagePanel;
+	}
+
+	
+//	public void setGuitar(){
+//		GuitarWidgetView widget1=new GuitarWidgetView("EM");
+//		GuitarWidgetView widget2=new GuitarWidgetView("AM");
+//		GuitarWidgetView widget3=new GuitarWidgetView("DM");
+//		GuitarWidgetView widget4=new GuitarWidgetView("G");
+//		GuitarWidgetView widget5=new GuitarWidgetView("C");
+//		GuitarWidgetView widget6=new GuitarWidgetView("F");
+//		GuitarWidgetView widget7=new GuitarWidgetView("Bb");
+//		GuitarWidgetView widget8=new GuitarWidgetView("Bdim");
+//		
+//		int widths=widget1.getWidth();
+//		int heights=widget1.getHeight();
+//		
+//		widget1.setBounds((int)(x*0.15),(int)y,widths,heights);
+//		widget2.setBounds((int)(x*0.25),(int)y,widths,heights);
+//		widget3.setBounds((int)(x*0.35),(int)y,widths,heights);
+//		widget4.setBounds((int)(x*0.45),(int)y,widths,heights);
+//		widget5.setBounds((int)(x*0.55),(int)y,widths,heights);
+//		widget6.setBounds((int)(x*0.65),(int)y,widths,heights);
+//		widget7.setBounds((int)(x*0.75),(int)y,widths,heights);
+//		widget8.setBounds((int)(x*0.85),(int)y,widths,heights);
+//		
+//		imagePanel.add(widget1);
+//		imagePanel.add(widget2);
+//		imagePanel.add(widget3);
+//		imagePanel.add(widget4);
+//		imagePanel.add(widget5);
+//		imagePanel.add(widget6);
+//		imagePanel.add(widget7);
+//		imagePanel.add(widget8);
+//		
+//		
+//		
+//		
+//	}
+	
+
 
 
 }

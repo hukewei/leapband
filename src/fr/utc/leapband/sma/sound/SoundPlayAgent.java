@@ -130,16 +130,21 @@ public class SoundPlayAgent extends Agent{
 		private int channel;
 		private int bank;
 		private int instrument;
+		private int note;
+		private int velocity;
 		
 		public ChangeSound(NoteInformData data) {
 			this.channel = data.getChannel();
 			this.bank = data.getBank();
 			this.instrument = data.getInstrument();
+			this.note = data.getNote();
+			this.velocity = data.getVelocity();
 		}
 
 		@Override
 		public void action() {
 			channels[channel].programChange(bank, instrument);
+			channels[channel].noteOn(note, velocity);
 		}
 	}
 }

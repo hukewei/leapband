@@ -36,7 +36,8 @@ public class MultiwaitRoom extends JAgentFrame {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);
 		this.setLocationRelativeTo(null);
 		
-		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height, "images/roomView1.JPG");
+		CustomImgPanel imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
+		imagePanel.setImagePath("images/roomView1.JPG");
 		imagePanel.setLayout(null);
 		this.add(imagePanel);
 		
