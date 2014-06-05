@@ -56,7 +56,7 @@ public class RoomSelectView extends JAgentFrame {
 		
 		//this.setLayout(null);
 		create_room = new JButton("create room");
-		create_room.setBounds(950,150,300, 150);
+		create_room.setBounds(950,(int) (Constance.Windows_height*0.2),300, 150);
 		create_room.setFont(new Font("Lucida Calligraphy", Font.BOLD, 30));
 		create_room.setForeground(Color.BLACK);
 		create_room.setBorder(new RoundedBorder(new Color(224,224,224,100)));

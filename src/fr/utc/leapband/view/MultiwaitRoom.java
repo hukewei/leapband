@@ -56,7 +56,7 @@ public class MultiwaitRoom extends JAgentFrame {
 		//this.setLayout(null);
 		
 		start = new JButton("Start");
-		start.setBounds(950,150,300, 150);
+		start.setBounds(950,(int) (Constance.Windows_height*0.2),300, 150);
 		start.setFont(new Font("Lucida Calligraphy", Font.BOLD, 30));
 		start.setForeground(Color.BLACK);
 		start.setBorder(new RoundedBorder(new Color(224,224,224,100)));
