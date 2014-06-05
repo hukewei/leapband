@@ -189,7 +189,7 @@ public class SoundPlayAgent extends Agent{
 		
 			eMajor.add(gt.midiNum(6,0));
 			eMajor.add(gt.midiNum(5,2));
-			eMajor.add(gt.midiNum(4,3));
+			eMajor.add(gt.midiNum(4,2));
 			eMajor.add(gt.midiNum(3,0));
 			eMajor.add(gt.midiNum(2,0));
 			eMajor.add(gt.midiNum(1,0));
@@ -200,18 +200,17 @@ public class SoundPlayAgent extends Agent{
 			eMajor.add(gt.midiNum(6,0));
 			eMajor.add(gt.midiNum(5,0));
 			eMajor.add(gt.midiNum(4,2));
-			eMajor.add(gt.midiNum(3,3));
+			eMajor.add(gt.midiNum(3,2));
 			eMajor.add(gt.midiNum(2,1));
 			eMajor.add(gt.midiNum(1,0));
 			break;
 		case 62://DM
 			
-			eMajor.add(gt.midiNum(6,0));
 			eMajor.add(gt.midiNum(5,0));
 			eMajor.add(gt.midiNum(4,0));
 			eMajor.add(gt.midiNum(3,2));
 			eMajor.add(gt.midiNum(2,3));
-			eMajor.add(gt.midiNum(1,1));
+			eMajor.add(gt.midiNum(1,2));
 			break;
 		case 65: //G
 			
@@ -220,21 +219,21 @@ public class SoundPlayAgent extends Agent{
 			eMajor.add(gt.midiNum(4,0));
 			eMajor.add(gt.midiNum(3,0));
 			eMajor.add(gt.midiNum(2,0));
-			eMajor.add(gt.midiNum(1,4));
+			eMajor.add(gt.midiNum(1,3));
 			break;
 		case 61://C"
 			
-			eMajor.add(gt.midiNum(6,0));
+			eMajor.add(gt.midiNum(6,3));
 			eMajor.add(gt.midiNum(5,3));
-			eMajor.add(gt.midiNum(4,1));
-			eMajor.add(gt.midiNum(3,2));
-			eMajor.add(gt.midiNum(2,0));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,0));
+			eMajor.add(gt.midiNum(2,1));
 			eMajor.add(gt.midiNum(1,0));
 			break;
 		case 64://F
 			
-			eMajor.add(gt.midiNum(6,0));
-			eMajor.add(gt.midiNum(5,0));
+			eMajor.add(gt.midiNum(6,1));
+			eMajor.add(gt.midiNum(5,3));
 			eMajor.add(gt.midiNum(4,3));
 			eMajor.add(gt.midiNum(3,2));
 			eMajor.add(gt.midiNum(2,1));
@@ -252,20 +251,13 @@ public class SoundPlayAgent extends Agent{
 		case 68://Bdim
 			
 			eMajor.add(gt.midiNum(6,1));
-			eMajor.add(gt.midiNum(5,3));
-			eMajor.add(gt.midiNum(4,4));
-			eMajor.add(gt.midiNum(3,2));
-			eMajor.add(gt.midiNum(2,0));
-			eMajor.add(gt.midiNum(1,0));
+			eMajor.add(gt.midiNum(5,2));
+			eMajor.add(gt.midiNum(4,2));
+			eMajor.add(gt.midiNum(3,1));
+			eMajor.add(gt.midiNum(2,2));
+			eMajor.add(gt.midiNum(1,1));
 			break;
 		case 60:
-			
-			eMajor.add(gt.midiNum(6,0));
-			eMajor.add(gt.midiNum(5,0));
-			eMajor.add(gt.midiNum(4,2));
-			eMajor.add(gt.midiNum(3,2));
-			eMajor.add(gt.midiNum(2,2));
-			eMajor.add(gt.midiNum(1,0));
 			break;
 			
 		}
