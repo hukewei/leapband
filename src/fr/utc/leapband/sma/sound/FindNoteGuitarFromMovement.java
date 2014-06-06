@@ -25,7 +25,7 @@ public class FindNoteGuitarFromMovement  {
 		 xHi=Constance.Windows_width*0.455;
 		 xLow= Constance.Windows_width*0.13;
 		 yHi=Constance.Windows_height*0.651;
-		this.movement=movement;
+		 this.movement=movement;
 	}
 
 public	int matchNote(){

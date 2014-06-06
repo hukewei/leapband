@@ -645,7 +645,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isTriggeredGuitar(Cordinates hand) {
 		boolean trigger = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 200) {
+		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 100) {
 			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.85) {
 				trigger =  true;
 			}
