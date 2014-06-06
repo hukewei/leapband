@@ -1,81 +1,82 @@
 package fr.utc.leapband.sma.sound;
 
-import maryb.player.Player;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Timer;
+
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.player.advanced.PlaybackEvent;
+import javazoom.jl.player.advanced.PlaybackListener;
 
 public class MP3MusicPlayer extends MusicPlayer {
 
-    private Player player;
-    private float volume;
-    /**
-     * Constructs a new MusicPlayer object, to use the specified music file.
-     * @param filePath - path to the music file.
-     * @param volume - volume the file should be played at.
-     */
-    
-	public  MP3MusicPlayer(String filename) {
+	private FileInputStream fis;
+	private BufferedInputStream bis;
+	private AdvancedPlayer player;
+	private int pausedOnFrame = 0;
+	private Timer click_task = new Timer();
+
+
+	public MP3MusicPlayer(String filename) throws FileNotFoundException, JavaLayerException {
 		super(filename);
-		 try {
-	            player = new Player();
-	          //  player.setCurrentVolume(volume);
-	            player.setSourceLocation(filename);
-	    } catch(Exception e) {
-	        e.printStackTrace();
-	    }
+		/*
+		fis = new FileInputStream(filename);
+		bis = new BufferedInputStream(fis);
+		player = new AdvancedPlayer(bis);
+		player.setPlayBackListener(new PlaybackListener() {
+		     @Override
+		     public void playbackFinished(PlaybackEvent event) {
+		         pausedOnFrame = event.getFrame();
+		     }
+		 });
+		 */
 	}
 
-    /**
-     * Gets the location of the file being played.
-     * @return
-     */
-    public String getFileLocation() {
-        return filename;
-    }
+	@Override
+	public void Start() {
+		try {
+			fis = new FileInputStream(filename);
+			//bis = new BufferedInputStream(fis);
+			player = new AdvancedPlayer(fis);
+			player.setPlayBackListener(new PlaybackListener() {
+			     @Override
+			     public void playbackStarted(PlaybackEvent event) {
+			    	 event.setFrame(pausedOnFrame);
+			     }
 
-    /**
-     * Gets the volume at which the music file is being played.
-     * @return
-     */
-    public float getVolume() {
-        return volume;
-    }
+				 @Override
+			     public void playbackFinished(PlaybackEvent event) {
+			         pausedOnFrame = event.getFrame();
+			     }
+			 });
 
-    /**
-     * Sets the current volume of the music file being played.
-     * @param volume
-     */
-    public void setVolume(float volume) {
-        this.player.setCurrentVolume(volume);
-    }
+			click_task.schedule(
+					new java.util.TimerTask() {
+						@Override
+						public void run() {
+							try {
+								player.play();
+							} catch (JavaLayerException e) {
+								e.printStackTrace();
+							}
+						}
+					},0
+				);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 
+	@Override
+	public void Pause() {
+		player.stop();
+	}
 
-
-/**
- * Plays the music file.
- */
-public void Start() {
-    if (player != null && !player.getSourceLocation().equals(null) || !player.getSourceLocation().equals("")) {
-        player.play();
-    }
-}
-
-/**
- * Pauses the music file. 
- */
-public void Pause() {
-    if (player != null && !player.getSourceLocation().equals(null) || !player.getSourceLocation().equals("")) {
-        player.pause();
-    }
-}
-
-/**
- * Stops the music file.
- */
-public void Restart() {
-    if (player != null && !player.getSourceLocation().equals(null) || !player.getSourceLocation().equals("")) {
-        player.stop();
-        player.play();
-    }
-}
-
-
+	@Override
+	public void Restart() {
+		player.stop();
+	}
 }
