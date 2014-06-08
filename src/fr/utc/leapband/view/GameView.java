@@ -32,6 +32,7 @@ public class GameView extends JAgentFrame {
 	public int instrumentX2;
 	public int instrumentY2;
 	private CustomImgPanel imagePanel;
+	private boolean can_fire_change = true;
 
 	
 
@@ -96,6 +97,18 @@ public class GameView extends JAgentFrame {
 		
 	}
 	
+	public void disableChange() {
+		can_fire_change = false;
+	}
+	
+	public void enableChange() {
+		can_fire_change = true;
+	}
+	
+	public boolean isCan_fire_change() {
+		return can_fire_change;
+	}
+
 	public void changeVolume(String up_or_down) {
     	double current = myAgent.getCurrent_rotation();
 		if ( up_or_down == Constance.Volume_Up) {

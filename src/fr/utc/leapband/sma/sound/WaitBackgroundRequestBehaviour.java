@@ -49,7 +49,7 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 							player.Stop();
 							player=null;
 						}
-							player = MusicPlayer.getMusicPlayer("songs/short.mp3");
+							player = MusicPlayer.getMusicPlayer("effect/short.mp3");
 							player.Start();
 						player = MusicPlayer.getMusicPlayer(data.getPath());
 						break;

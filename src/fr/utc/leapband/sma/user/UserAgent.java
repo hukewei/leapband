@@ -114,6 +114,9 @@ public class UserAgent extends GuiAgent{
 				break;
 			} 
 		}
+		if (next_song == null) {
+			next_song = songs.get(0).getFile().getPath();
+		}
 		return next_song;
 	}
 	
@@ -128,6 +131,9 @@ public class UserAgent extends GuiAgent{
 				}
 				break;
 			} 
+		}
+		if (before_song == null) {
+			before_song = songs.get(songs.size()-1).getFile().getPath();
 		}
 		return before_song;
 	}
@@ -488,24 +494,25 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2, float speed_1, float speed_2, Vector dir_1, Vector dir_2, boolean two_hand) {
-		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
-		if(game_view.isVisible()) {
-			hand_1.x = x_1;
-			hand_1.y = y_1 - Constance.Control_Pane_height;
-			hand_1.z = z_1;
-			hand_1.speed = speed_1;
-			hand_1.direction = dir_1;
-			if (two_hand){
-				hand_2.x = x_2;
-				hand_2.y = y_2 - Constance.Control_Pane_height;
-				hand_2.z = z_2;
-				hand_2.speed = speed_2;
-				hand_2.direction = dir_2;
-			}
-			//if(d1 > Constance.Minimun_Distance)
-				changes.firePropertyChange("hand1", null, hand_1);
-			//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
-			//if (d2 > Constance.Minimun_Distance)
+		if(game_view.isCan_fire_change()) {
+			//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
+			if(game_view.isVisible()) {
+				hand_1.x = x_1;
+				hand_1.y = y_1 - Constance.Control_Pane_height;
+				hand_1.z = z_1;
+				hand_1.speed = speed_1;
+				hand_1.direction = dir_1;
+				if (two_hand){
+					hand_2.x = x_2;
+					hand_2.y = y_2 - Constance.Control_Pane_height;
+					hand_2.z = z_2;
+					hand_2.speed = speed_2;
+					hand_2.direction = dir_2;
+				}
+				//if(d1 > Constance.Minimun_Distance)
+					changes.firePropertyChange("hand1", null, hand_1);
+				//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
+				//if (d2 > Constance.Minimun_Distance)
 				if (two_hand)changes.firePropertyChange("hand2", null, hand_2);
 				if (selected_instrument == drum) {
 					if(isCollisionForDrumLeft(hand_1) ){
@@ -543,6 +550,7 @@ public class UserAgent extends GuiAgent{
 						}
 					}
 				}
+			}
 		}
 	}
 	
