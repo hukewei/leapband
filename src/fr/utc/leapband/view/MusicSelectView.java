@@ -44,6 +44,7 @@ public class MusicSelectView extends JAgentFrame{
 	public MusicSelectView(UserAgent agent){
 		super(agent);
 		songs = myAgent.getSongs();
+		myAgent.getGame_view().disableChange();
 		/*String path = "src/songs.txt";
 		BufferedReader br = null;
 		String temp = null;
@@ -149,6 +150,7 @@ public class MusicSelectView extends JAgentFrame{
 								ev.addParameter(songs.get(i).getFile().getAbsolutePath());
 								myAgent.postGuiEvent(ev);
 								setVisible(false);
+								myAgent.getGame_view().enableChange();
 				            }
 				        }, 
 				        Constance.click_delay 

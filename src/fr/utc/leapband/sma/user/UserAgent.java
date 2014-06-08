@@ -114,6 +114,9 @@ public class UserAgent extends GuiAgent{
 				break;
 			} 
 		}
+		if (next_song == null) {
+			next_song = songs.get(0).getFile().getPath();
+		}
 		return next_song;
 	}
 	
@@ -128,6 +131,9 @@ public class UserAgent extends GuiAgent{
 				}
 				break;
 			} 
+		}
+		if (before_song == null) {
+			before_song = songs.get(songs.size()-1).getFile().getPath();
 		}
 		return before_song;
 	}
@@ -278,9 +284,9 @@ public class UserAgent extends GuiAgent{
 				System.out.println("music on");
 				if (selected_song == null && getSongs().size() > 0) {
 					this.addBehaviour(new SendBgMusicBehaviour(this, getSongs().get(0).getFile().getPath(), BackgroundMusicActionType.CHANGE_BACKGROUND));
-					selected_song = getSongs().get(0).getFile().getPath();
-					this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
+					selected_song = getSongs().get(0).getFile().getPath();					
 				}
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}else{
 				System.out.println("music off");
 				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
@@ -296,7 +302,7 @@ public class UserAgent extends GuiAgent{
 						this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
 					}
 					selected_song = next_song;
-					this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
+					//this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 				}
 			} else if (arg0.getParameter(0).equals(Constance.Rewind)) {
 				String before_song = getBeforeSong();
@@ -308,8 +314,10 @@ public class UserAgent extends GuiAgent{
 				}
 			}
 			this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
-			this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
-		}
+			if(isBackGroundMusicOn){
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
+				}
+			}
 		
 	}
 	
@@ -486,24 +494,25 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2, float speed_1, float speed_2, Vector dir_1, Vector dir_2, boolean two_hand) {
-		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
-		if(game_view.isVisible()) {
-			hand_1.x = x_1;
-			hand_1.y = y_1 - Constance.Control_Pane_height;
-			hand_1.z = z_1;
-			hand_1.speed = speed_1;
-			hand_1.direction = dir_1;
-			if (two_hand){
-				hand_2.x = x_2;
-				hand_2.y = y_2 - Constance.Control_Pane_height;
-				hand_2.z = z_2;
-				hand_2.speed = speed_2;
-				hand_2.direction = dir_2;
-			}
-			//if(d1 > Constance.Minimun_Distance)
-				changes.firePropertyChange("hand1", null, hand_1);
-			//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
-			//if (d2 > Constance.Minimun_Distance)
+		if(game_view.isCan_fire_change()) {
+			//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
+			if(game_view.isVisible()) {
+				hand_1.x = x_1;
+				hand_1.y = y_1 - Constance.Control_Pane_height;
+				hand_1.z = z_1;
+				hand_1.speed = speed_1;
+				hand_1.direction = dir_1;
+				if (two_hand){
+					hand_2.x = x_2;
+					hand_2.y = y_2 - Constance.Control_Pane_height;
+					hand_2.z = z_2;
+					hand_2.speed = speed_2;
+					hand_2.direction = dir_2;
+				}
+				//if(d1 > Constance.Minimun_Distance)
+					changes.firePropertyChange("hand1", null, hand_1);
+				//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
+				//if (d2 > Constance.Minimun_Distance)
 				if (two_hand)changes.firePropertyChange("hand2", null, hand_2);
 				if (selected_instrument == drum) {
 					if(isCollisionForDrumLeft(hand_1) ){
@@ -541,6 +550,7 @@ public class UserAgent extends GuiAgent{
 						}
 					}
 				}
+			}
 		}
 	}
 	
@@ -645,7 +655,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isTriggeredGuitar(Cordinates hand) {
 		boolean trigger = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 100) {
+		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 200) {
 			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.85) {
 				trigger =  true;
 			}

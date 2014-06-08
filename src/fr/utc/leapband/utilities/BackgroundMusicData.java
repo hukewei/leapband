@@ -4,6 +4,7 @@ public class BackgroundMusicData {
 	public enum BackgroundMusicActionType {
 		START_BACKGROUND,
 		PAUSE_BACKGROUND,
+		STOP_BACKGROUND,
 		CHANGE_BACKGROUND,
 		RESTART_BACKGROUND,
 		DEFAULT

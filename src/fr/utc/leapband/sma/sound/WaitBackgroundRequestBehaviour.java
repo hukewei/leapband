@@ -45,6 +45,12 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 						player.Restart();
 						break;
 					case CHANGE_BACKGROUND:
+						if (player!=null){
+							player.Stop();
+							player=null;
+						}
+							player = MusicPlayer.getMusicPlayer("effect/short.mp3");
+							player.Start();
 						player = MusicPlayer.getMusicPlayer(data.getPath());
 						break;
 					case DEFAULT:
