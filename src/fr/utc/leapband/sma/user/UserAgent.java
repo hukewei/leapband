@@ -278,9 +278,9 @@ public class UserAgent extends GuiAgent{
 				System.out.println("music on");
 				if (selected_song == null && getSongs().size() > 0) {
 					this.addBehaviour(new SendBgMusicBehaviour(this, getSongs().get(0).getFile().getPath(), BackgroundMusicActionType.CHANGE_BACKGROUND));
-					selected_song = getSongs().get(0).getFile().getPath();
-					this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
+					selected_song = getSongs().get(0).getFile().getPath();					
 				}
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}else{
 				System.out.println("music off");
 				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
@@ -296,7 +296,7 @@ public class UserAgent extends GuiAgent{
 						this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
 					}
 					selected_song = next_song;
-					this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
+					//this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 				}
 			} else if (arg0.getParameter(0).equals(Constance.Rewind)) {
 				String before_song = getBeforeSong();
@@ -308,8 +308,10 @@ public class UserAgent extends GuiAgent{
 				}
 			}
 			this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
-			this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
-		}
+			if(isBackGroundMusicOn){
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
+				}
+			}
 		
 	}
 	
@@ -645,7 +647,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isTriggeredGuitar(Cordinates hand) {
 		boolean trigger = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 100) {
+		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 200) {
 			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.85) {
 				trigger =  true;
 			}

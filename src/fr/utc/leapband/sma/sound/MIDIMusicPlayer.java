@@ -32,6 +32,10 @@ public class MIDIMusicPlayer extends MusicPlayer {
 	public void Pause() {
 		sequencer.stop();
 	}
+	public void Stop() {
+		sequencer.stop();
+		sequencer.setTickPosition(0);
+	}
 
 	@Override
 	public void Restart() {
