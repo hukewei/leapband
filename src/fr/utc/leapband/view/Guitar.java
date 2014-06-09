@@ -7,10 +7,10 @@ import fr.utc.leapband.utilities.Constance;
 
 public class Guitar extends JLabel{
 	public static double x=Constance.Windows_width;
-	public static double y=Constance.Windows_height*0.2;
+	public static double y=Constance.Windows_height*0.05;
 	
 	public static int width=(int)(Constance.Windows_width*0.09);
-	public static int height=(int)(Constance.Windows_height*0.7);
+	public static int height=(int)(Constance.Windows_height*0.85);
 //	int widths;
 //	int heights;
 	

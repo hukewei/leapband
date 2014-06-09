@@ -127,6 +127,7 @@ public class GameView extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("hand1")) {
 //			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x

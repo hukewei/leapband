@@ -14,13 +14,13 @@ public class Constance {
 	public static int Hand_width = 80;
 	public static int Hand_height = 45;
 	
-	public static int Gesture_Interval = 850000;
+	public static int Gesture_Interval = 750000;   //100000 == 0.1 second
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
 	static public int click_delay = 1600;
 	static public int Minimun_Distance = 3;
 	static public int Minimun_Fire_interval = 200;
 	static public int Minimun_Guitar_Fire_interval = 750;
-	public static int Control_Pane_height = 150;
+	public static int Control_Pane_height = 120;
 	
 	public static String ROOM_CREATED = "ROOM_CREATED";
 	public static String ROOM_ENTERED = "ROOM_ENTERED";
@@ -39,4 +39,5 @@ public class Constance {
 	public static String Forward = "Forward";
 	public static String Rewind = "Rewind";
 	public static String Sound_Directory = "songs/";
+	public static String CHANGE_FRAME = "CHANGE_FRAME";
 }

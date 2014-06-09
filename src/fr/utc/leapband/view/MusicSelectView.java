@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.CustomImgPanel;
+import fr.utc.leapband.utilities.ImageFlowItem;
 import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.OvalBorder;
 import fr.utc.leapband.utilities.SongFlowItem;
@@ -217,13 +218,24 @@ public class MusicSelectView extends JAgentFrame{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("swipe")) {
 				if ((String)evt.getNewValue() == "UP") {
 					selectLastMusic();
 				} else if ((String)evt.getNewValue() == "DOWN") {
 					selectNextMusic();
-				}				
+				} else if ((String)evt.getNewValue() == "GRAB") {
+					if(i==songs.size()){
+	            		i=0;
+	            	}
+	            	System.out.println(i);
+					GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
+					ev.addParameter(songs.get(i).getFile().getAbsolutePath());
+					myAgent.postGuiEvent(ev);
+					setVisible(false);
+					myAgent.getGame_view().enableChange();
+	 			}			
 			}
 		}
 		

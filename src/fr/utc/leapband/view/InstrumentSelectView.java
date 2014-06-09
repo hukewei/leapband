@@ -64,6 +64,7 @@ public class InstrumentSelectView extends JAgentFrame{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("swipe")) {
 	 			if ((String)evt.getNewValue() == "LEFT") {

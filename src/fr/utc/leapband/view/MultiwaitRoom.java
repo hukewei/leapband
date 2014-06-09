@@ -203,6 +203,7 @@ public class MultiwaitRoom extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("swipe")) {
 				int current_index = list_player.getSelectedIndex();

@@ -17,6 +17,7 @@ import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -406,32 +407,28 @@ public class UserAgent extends GuiAgent{
 		
 	}
 	
-	public void changeCurrentViewTo(JAgentFrame frame) {
+	public void changeCurrentViewTo(final JAgentFrame frame) {
 		if (current_frame == frame) {
 			return;
 		}
-		frame.setVisible(true);
 		if (current_frame != null) {
-			current_frame.setVisible(false);
+			changes.firePropertyChange(Constance.CHANGE_FRAME, null, frame.getName());
+			changes.firePropertyChange(Constance.CHANGE_FRAME, current_frame.getName(), null);
+		} else {
+			changes.firePropertyChange(Constance.CHANGE_FRAME, null, frame.getName());
 		}
 		current_frame = frame;
 	}
 	
 	public void changeToRoomSelectView() {
 		if(getDict()!=null){
-			//room_view.setVisible(true);
 			changeCurrentViewTo(room_view);
-			//instrument_view.setVisible(false);
-			//menu_view.setVisible(false);
 			System.out.println("change to room select view");
 		}
 	}
 		
 	public void changeToRoomWaitView() {
 			if(getDict()!=null){
-				//wait_view.getList_player().setModel(getDictPlayer());
-				//wait_view.setVisible(true);
-				//room_view.setVisible(false);
 				wait_view.getRoomID().setText(current_room_id);
 				changeCurrentViewTo(wait_view);
 			}
@@ -441,25 +438,13 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void changeToInstrumentView(){
-//		instrument_view.setVisible(true);
-//		menu_view.setVisible(false);
 		changeCurrentViewTo(instrument_view);
 	}
 	public void changeToGameView(){
-		//System.out.println("okkk");
-//		game_view.setVisible(true);
-//		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);
 		changeCurrentViewTo(game_view);
 	}
 	
 	public void changeToMenuView(){
-//		menu_view.setVisible(true);
-//		room_view.setVisible(false);
-//		wait_view.setVisible(false);
-//		game_view.setVisible(false);
-//		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);
 		System.out.println("change to menu view");
 		changeCurrentViewTo(menu_view);
 	}
@@ -498,13 +483,13 @@ public class UserAgent extends GuiAgent{
 			//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
 			if(game_view.isVisible()) {
 				hand_1.x = x_1;
-				hand_1.y = y_1 - Constance.Control_Pane_height;
+				hand_1.y = y_1 - Constance.Control_Pane_height - 50;
 				hand_1.z = z_1;
 				hand_1.speed = speed_1;
 				hand_1.direction = dir_1;
 				if (two_hand){
 					hand_2.x = x_2;
-					hand_2.y = y_2 - Constance.Control_Pane_height;
+					hand_2.y = y_2 - Constance.Control_Pane_height - 50;
 					hand_2.z = z_2;
 					hand_2.speed = speed_2;
 					hand_2.direction = dir_2;
@@ -678,20 +663,6 @@ public class UserAgent extends GuiAgent{
 
 	public GameView getGame_view() {
 		return game_view;
-	}
-
-
-	public void setGame_view(GameView game_view) {
-		this.game_view = game_view;
-	}
-	
-	public RoomSelectView getRoom_view() {
-		return room_view;
-	}
-
-
-	public void setRoom_view(RoomSelectView room_view) {
-		this.room_view = room_view;
 	}
 
 
