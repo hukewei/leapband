@@ -3,6 +3,7 @@ package fr.utc.leapband.view;
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Timer;
@@ -39,8 +40,8 @@ public class HomeMouseListener implements MouseListener {
 			home.setBorder(new OvalBorder(home.getWidth(), home.getHeight(), new Color(153,153,255)));
 			home.setBorderPainted(true);
 		}
+		myFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 		myFrame.click_task = new Timer();
-		myFrame.click_task.schedule(new ImageTimerTask(myFrame),0,Constance.click_delay/12);
 		myFrame.click_task.schedule( 
 		        new java.util.TimerTask() {
 		            @Override
