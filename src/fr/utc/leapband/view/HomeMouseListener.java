@@ -12,7 +12,6 @@ import javax.swing.JButton;
 
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
-import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.OvalBorder;
 
 public class HomeMouseListener implements MouseListener {

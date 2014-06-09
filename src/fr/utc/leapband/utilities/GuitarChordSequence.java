@@ -12,10 +12,7 @@ public class GuitarChordSequence {   // this is the first one
 	    player.open();
 	    
 	    Sequence seq = new Sequence(Sequence.PPQ, 4);         
-	    Track track = seq.createTrack();  
-	    
-	    MidiEvent event = null;
-	    
+	    Track track = seq.createTrack();	    
 	    ShortMessage first = new ShortMessage();
 	    first.setMessage(192, 1, instrument, 0);
 	    MidiEvent changeInstrument = new MidiEvent(first, 1); 

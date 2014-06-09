@@ -29,6 +29,7 @@ import fr.utc.leapband.utilities.RoundedBorder;
 
 
 
+@SuppressWarnings("serial")
 public class MenuView extends JAgentFrame {
 	//private JPanel buttonPane;
 	private JButton single;

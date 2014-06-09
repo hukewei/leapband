@@ -8,23 +8,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
-import org.jfugue.Player;
-
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.Cordinates;
 import fr.utc.leapband.utilities.CustomImgPanel;
 import fr.utc.leapband.utilities.ScaleLabel;
 
+@SuppressWarnings("serial")
 public class GameView extends JAgentFrame {
 	
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
-	private boolean hide_split_pane = false;
 
-
-	private Player player = new Player();
+	//private Player player = new Player();
 	public ScaleLabel playDrumLeft;
 	public ScaleLabel playDrumRight;
 	public int instrumentX1;

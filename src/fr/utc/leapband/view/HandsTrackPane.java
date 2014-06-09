@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.utc.leapband.utilities.Constance;
@@ -23,7 +22,6 @@ class HandsTrackPane extends JPanel {
 	private int y_2;
 	private float size_1;
 	private float size_2;
-	private JLabel play;
 
 	public HandsTrackPane() {
 		this.setSize(Constance.Windows_width, Constance.Windows_height);

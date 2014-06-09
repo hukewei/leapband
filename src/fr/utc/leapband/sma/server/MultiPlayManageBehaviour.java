@@ -3,7 +3,7 @@ package fr.utc.leapband.sma.server;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-/*EST-CE QUE JE PEUX METTRE LE CODE DE GAMEDAEMONBEHAVIOUR ICI? */
+
 @SuppressWarnings("serial")
 public class MultiPlayManageBehaviour extends CyclicBehaviour {
 	

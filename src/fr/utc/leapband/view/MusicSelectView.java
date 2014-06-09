@@ -7,30 +7,25 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.CustomImgPanel;
-import fr.utc.leapband.utilities.ImageFlowItem;
-import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.OvalBorder;
 import fr.utc.leapband.utilities.SongFlowItem;
 
 
+@SuppressWarnings("serial")
 public class MusicSelectView extends JAgentFrame{
 	private int i=1;
 	private JLabel label;

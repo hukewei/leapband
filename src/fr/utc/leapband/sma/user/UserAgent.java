@@ -10,18 +10,13 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Gesture;

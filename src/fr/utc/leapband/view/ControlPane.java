@@ -11,7 +11,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.Timer;
 
 import javax.swing.BorderFactory;
@@ -23,10 +22,10 @@ import javax.swing.border.Border;
 
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
-import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.OvalBorder;
 
 
+@SuppressWarnings("serial")
 public class ControlPane extends JPanel {
 	// personnel cursor
 	private UserAgent myAgent;

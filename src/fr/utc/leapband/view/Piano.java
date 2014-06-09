@@ -10,7 +10,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
-import java.security.Key;
 import java.util.Vector;
 
 import javax.swing.JCheckBox;
@@ -41,7 +40,8 @@ public class Piano extends JPanel implements MouseListener {
 
 
 
-      public Piano() {  
+      @SuppressWarnings("unchecked")
+	public Piano() {  
     	  this.setBounds(20, (int)(Constance.Windows_height*0.4),14*kw, kh);
           setLayout(new BorderLayout());  
          // setPreferredSize(new Dimension(42*kw, kh+1));  

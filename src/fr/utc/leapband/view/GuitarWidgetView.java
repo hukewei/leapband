@@ -1,11 +1,7 @@
 package fr.utc.leapband.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Timer;
@@ -15,7 +11,6 @@ import javax.swing.SwingConstants;
 
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
-import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.RectBorder;
 import fr.utc.leapband.utilities.RoundedBorder;
 
@@ -23,8 +18,6 @@ import fr.utc.leapband.utilities.RoundedBorder;
 public class GuitarWidgetView extends JButton implements PropertyChangeListener{
 	public static double width=Constance.Windows_width*0.09;
 	public static double height=Constance.Windows_height*0.7;
-	private int positionX;
-	private int positionY;
 	private int id;
 	
 	 int dx, dy;

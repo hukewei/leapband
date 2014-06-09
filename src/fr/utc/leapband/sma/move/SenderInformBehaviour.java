@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.utc.leapband.utilities.NoteInformData;
 
+@SuppressWarnings("serial")
 public class SenderInformBehaviour extends OneShotBehaviour {
 	private AID aid;
 	NoteInformData inform;

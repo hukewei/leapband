@@ -1,8 +1,5 @@
 package fr.utc.leapband.sma.sound;
 
-import java.util.ArrayList;
-import java.util.Timer;
-
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -12,6 +9,9 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.util.ArrayList;
+import java.util.Timer;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -23,11 +23,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.GuitarChordDemo;
-import fr.utc.leapband.utilities.GuitarChordSequence;
 import fr.utc.leapband.utilities.GuitarTuning;
-import fr.utc.leapband.utilities.InstrumentType;
 import fr.utc.leapband.utilities.NoteInformData;
-import fr.utc.leapband.view.GuitarWidgetView;
 
 
 @SuppressWarnings("serial")
@@ -35,8 +32,6 @@ public class SoundPlayAgent extends Agent{
 	private Synthesizer synthesizer;
 	MidiChannel[] channels;
 	Sequencer sequencer;
-	private MusicPlayer player = null;
-	private int step = 0;
 	
 	public void setup() {
 		DFAgentDescription dfd = new DFAgentDescription();
@@ -185,7 +180,7 @@ public class SoundPlayAgent extends Agent{
 		ArrayList<Integer> eMajor = new ArrayList<Integer>();
 		switch (note){
 
-		case 63: //"EM"
+		case 61: //"EM"
 		
 			eMajor.add(gt.midiNum(6,0));
 			eMajor.add(gt.midiNum(5,2));
@@ -195,7 +190,7 @@ public class SoundPlayAgent extends Agent{
 			eMajor.add(gt.midiNum(1,0));
 			break;
 		
-		case 66://AM
+		case 62://AM
 		
 			eMajor.add(gt.midiNum(6,0));
 			eMajor.add(gt.midiNum(5,0));
@@ -204,15 +199,16 @@ public class SoundPlayAgent extends Agent{
 			eMajor.add(gt.midiNum(2,1));
 			eMajor.add(gt.midiNum(1,0));
 			break;
-		case 62://DM
+		case 63://DM
 			
+			eMajor.add(gt.midiNum(6,0));
 			eMajor.add(gt.midiNum(5,0));
 			eMajor.add(gt.midiNum(4,0));
 			eMajor.add(gt.midiNum(3,2));
 			eMajor.add(gt.midiNum(2,3));
 			eMajor.add(gt.midiNum(1,2));
 			break;
-		case 65: //G
+		case 64: //G
 			
 			eMajor.add(gt.midiNum(6,3));
 			eMajor.add(gt.midiNum(5,2));
@@ -221,7 +217,7 @@ public class SoundPlayAgent extends Agent{
 			eMajor.add(gt.midiNum(2,0));
 			eMajor.add(gt.midiNum(1,3));
 			break;
-		case 61://C"
+		case 65://C"
 			
 			eMajor.add(gt.midiNum(6,3));
 			eMajor.add(gt.midiNum(5,3));
@@ -230,7 +226,7 @@ public class SoundPlayAgent extends Agent{
 			eMajor.add(gt.midiNum(2,1));
 			eMajor.add(gt.midiNum(1,0));
 			break;
-		case 64://F
+		case 66://F
 			
 			eMajor.add(gt.midiNum(6,1));
 			eMajor.add(gt.midiNum(5,3));
@@ -241,21 +237,21 @@ public class SoundPlayAgent extends Agent{
 			break;
 		case 67://Bb
 			
-			eMajor.add(gt.midiNum(6,0));
-			eMajor.add(gt.midiNum(5,3));
+			eMajor.add(gt.midiNum(6,1));
+			eMajor.add(gt.midiNum(5,1));
 			eMajor.add(gt.midiNum(4,3));
-			eMajor.add(gt.midiNum(3,4));
-			eMajor.add(gt.midiNum(2,2));
+			eMajor.add(gt.midiNum(3,3));
+			eMajor.add(gt.midiNum(2,3));
 			eMajor.add(gt.midiNum(1,1));
 			break;
 		case 68://Bdim
 			
-			eMajor.add(gt.midiNum(6,1));
+			eMajor.add(gt.midiNum(6,2));
 			eMajor.add(gt.midiNum(5,2));
-			eMajor.add(gt.midiNum(4,2));
-			eMajor.add(gt.midiNum(3,1));
-			eMajor.add(gt.midiNum(2,2));
-			eMajor.add(gt.midiNum(1,1));
+			eMajor.add(gt.midiNum(4,4));
+			eMajor.add(gt.midiNum(3,4));
+			eMajor.add(gt.midiNum(2,3));
+			eMajor.add(gt.midiNum(1,2));
 			break;
 		case 60:
 			break;

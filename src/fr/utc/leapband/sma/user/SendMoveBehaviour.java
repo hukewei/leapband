@@ -13,6 +13,7 @@ import fr.utc.leapband.utilities.Cordinates;
 import fr.utc.leapband.utilities.MoveInformData;
 import fr.utc.leapband.utilities.Movement;
 
+@SuppressWarnings("serial")
 public class SendMoveBehaviour extends OneShotBehaviour{
 	UserAgent myAgent;
 	Cordinates position;

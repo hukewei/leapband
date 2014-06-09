@@ -7,18 +7,17 @@ import jade.lang.acl.MessageTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fr.utc.leapband.sma.sound.FindNoteGuitarFromMovement;
-import fr.utc.leapband.sma.sound.FindNoteTambourFromMovement;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.MoveInformData;
 import fr.utc.leapband.utilities.NoteInformData;
 import fr.utc.leapband.utilities.NoteInformData.NoteActionType;
 
+@SuppressWarnings("serial")
 public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 	
-	public SoundMessageDaemonBehaviour() {
-		// TODO Auto-generated constructor stub
-	}
+//	public SoundMessageDaemonBehaviour() {
+//		// TODO Auto-generated constructor stub
+//	}
 
 	@Override
 	public void action() {

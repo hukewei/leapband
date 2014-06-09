@@ -25,6 +25,7 @@ public class GetListGroupBehaviour extends Behaviour{
 		this.msg= new ACLMessage(ACLMessage.REQUEST);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void action() {
 		if (first_run) {

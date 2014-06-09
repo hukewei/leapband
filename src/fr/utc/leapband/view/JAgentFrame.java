@@ -17,6 +17,7 @@ import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
 
 
+@SuppressWarnings("serial")
 public abstract class JAgentFrame extends JFrame implements PropertyChangeListener{
 	UserAgent myAgent;
 	Timer click_task = null;

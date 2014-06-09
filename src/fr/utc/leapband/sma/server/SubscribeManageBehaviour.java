@@ -5,6 +5,7 @@ import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+@SuppressWarnings("serial")
 public class SubscribeManageBehaviour extends CyclicBehaviour{
 	MultiPlayAgent myAgent;
 	

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.utc.leapband.utilities.BackgroundMusicData;
 
+@SuppressWarnings("serial")
 public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 	MusicPlayer player = null;
 	
@@ -54,7 +55,8 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 						player = MusicPlayer.getMusicPlayer(data.getPath());
 						break;
 					case DEFAULT:
-						
+						break;
+					default:
 						break;
 				}
 			} catch (Exception e) {

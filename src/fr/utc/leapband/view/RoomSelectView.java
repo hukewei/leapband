@@ -9,7 +9,6 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -22,6 +21,7 @@ import fr.utc.leapband.utilities.CustomImgPanel;
 import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.RoundedBorder;
 
+@SuppressWarnings("serial")
 public class RoomSelectView extends JAgentFrame {
 	private JList<String> list_room;
 	private JButton create_room;
