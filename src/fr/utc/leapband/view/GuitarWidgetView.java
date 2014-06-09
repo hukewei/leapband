@@ -44,13 +44,6 @@ public class GuitarWidgetView extends JButton implements PropertyChangeListener{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-//		if (evt.getPropertyName().equals(Constance.CHANGE_FRAME)) {
-//			if ((String)evt.getOldValue() == getName()) {
-//				setVisible(false);
-//			} else if ((String)evt.getNewValue() == getName()) {
-//				setVisible(true);
-//			}
-//		}
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("chord")) {
 				if (id == (int)evt.getNewValue()) {
