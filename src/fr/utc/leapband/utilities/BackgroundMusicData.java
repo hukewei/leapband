@@ -6,11 +6,13 @@ public class BackgroundMusicData {
 		PAUSE_BACKGROUND,
 		CHANGE_BACKGROUND,
 		RESTART_BACKGROUND,
+		CHANGE_VOLUME,
 		DEFAULT
 	}
 	
 	private BackgroundMusicActionType action;
 	private String path;
+	private int volume;
 	
 	public BackgroundMusicData() {
 		action = BackgroundMusicActionType.DEFAULT;
@@ -28,5 +30,11 @@ public class BackgroundMusicData {
 	}
 	public void setPath(String path) {
 		this.path = path;
+	}
+	public int getVolume() {
+		return volume;
+	}
+	public void setVolume(int volume) {
+		this.volume = volume;
 	}
 }
