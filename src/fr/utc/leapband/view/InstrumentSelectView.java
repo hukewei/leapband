@@ -71,7 +71,7 @@ public class InstrumentSelectView extends JAgentFrame{
 	 				imageFlow.scrollAndAnimateBy(-1);
 	 			} else if ((String)evt.getNewValue() == "RIGHT") {
 	 				imageFlow.scrollAndAnimateBy(1);
-	 			} else if ((String)evt.getNewValue() == "GRAB") {
+	 			} else if ((String)evt.getNewValue() == "GRAB" && imageFlow.getSelectedIndex() != 2) {
 	 				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_INSTRUMENT_EVENT);
 					ev.addParameter(UserAgent.instrument_Mode);
 					ev.addParameter(((ImageFlowItem)imageFlow.getSelectedValue()).getLabel());

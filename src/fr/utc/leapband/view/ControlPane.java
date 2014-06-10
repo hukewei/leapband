@@ -89,7 +89,12 @@ public class ControlPane extends JPanel {
 				        new java.util.TimerTask() {
 				            @Override
 				            public void run() {
-				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
+				            	play.setIcon(new ImageIcon("images/play.png"));
+			            		isPlay=false;
+				    			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_EVENT);
+				    			ev.addParameter(isPlay);
+				    			myAgent.postGuiEvent(ev);
+				    			ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
 								ev.addParameter(UserAgent.return_Menu);
 								myAgent.postGuiEvent(ev);
 				            }
