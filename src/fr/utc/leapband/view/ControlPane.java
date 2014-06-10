@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.OvalBorder;
+import fr.utc.leapband.utilities.RoundedBorder;
 
 
 @SuppressWarnings("serial")
@@ -91,9 +92,12 @@ public class ControlPane extends JPanel {
 				            public void run() {
 				            	play.setIcon(new ImageIcon("images/play.png"));
 			            		isPlay=false;
-				    			GuiEvent ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_EVENT);
-				    			ev.addParameter(isPlay);
-				    			myAgent.postGuiEvent(ev);
+			            		GuiEvent ev = null;
+			            		if (!myAgent.isMultipleMode() || myAgent.isHost()) {
+			            			ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_EVENT);
+			            			ev.addParameter(isPlay);
+			            			myAgent.postGuiEvent(ev);
+			            		}
 				    			ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
 								ev.addParameter(UserAgent.return_Menu);
 								myAgent.postGuiEvent(ev);
@@ -139,8 +143,10 @@ public class ControlPane extends JPanel {
 		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
 		//music.setPreferredSize(new Dimension(400,100));
 
-		music.setBounds((int) (width*0.3), (int) (height*0.02), 400, 100);
-		music.setBackground(Color.WHITE);
+		music.setBounds((int) (width*0.3), (int) (height*0.019), 400, 100);
+		//music.setBackground(Color.WHITE);
+		music.setBorder(new RoundedBorder(new Color(0,128,255,100)));
+		music.setContentAreaFilled( false );
 		//music.setBorder(border);
 		/*music.addActionListener(new ActionListener() {			
 			@Override

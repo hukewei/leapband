@@ -7,21 +7,16 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import fr.utc.leapband.sma.user.UserAgent;
-import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.CustomImgPanel;
-import fr.utc.leapband.utilities.OvalBorder;
 import fr.utc.leapband.utilities.SongFlowItem;
 
 
@@ -35,7 +30,7 @@ public class MusicSelectView extends JAgentFrame{
 //	private JButton suivant;	
 	private List<SongFlowItem> songs = new ArrayList<SongFlowItem>();
 	Timer click_task = null;
-	private JLabel valider;
+	//private JLabel valider;
 	
 	public MusicSelectView(UserAgent agent){
 		super(agent);
@@ -95,71 +90,71 @@ public class MusicSelectView extends JAgentFrame{
 //		JButton suivant = new JButton(next);
 //		suivant.setBounds(510,360,100,100);
     	
-		valider = new JLabel(new ImageIcon("images/ok.png"));
-		valider.setBounds(550,360,100,100);
-		valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
+		//valider = new JLabel(new ImageIcon("images/ok.png"));
+		//valider.setBounds(550,360,100,100);
+		//valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
 		
-		valider.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
-
-				Toolkit toolkit = Toolkit.getDefaultToolkit();
-				Image cursorImage = toolkit.getImage("images/cursor.png");
-				Point cursorHotSpot = new Point(0,0);
-				Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
-				setCursor(customCursor);
-				if (click_task != null) {
-					click_task.cancel();
-					click_task = null;
-				}
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), new Color(153,153,255)));
-				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				click_task = new Timer();
-				click_task.schedule( 
-				        new java.util.TimerTask() {
-				            @Override
-				            public void run() {
-				            	if(i==songs.size()){
-				            		i=0;
-				            	}
-				            	System.out.println(i);
-				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
-								ev.addParameter(songs.get(i).getFile().getAbsolutePath());
-								myAgent.postGuiEvent(ev);
-								setVisible(false);
-								myAgent.getGame_view().enableChange();
-				            }
-				        }, 
-				        Constance.click_delay 
-				);
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		valider.addMouseListener(new MouseListener() {
+//			
+//			@Override
+//			public void mouseReleased(MouseEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void mousePressed(MouseEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void mouseExited(MouseEvent arg0) {
+//				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), Color.GRAY));
+//
+//				Toolkit toolkit = Toolkit.getDefaultToolkit();
+//				Image cursorImage = toolkit.getImage("images/cursor.png");
+//				Point cursorHotSpot = new Point(0,0);
+//				Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
+//				setCursor(customCursor);
+//				if (click_task != null) {
+//					click_task.cancel();
+//					click_task = null;
+//				}
+//				
+//			}
+//			
+//			@Override
+//			public void mouseEntered(MouseEvent arg0) {
+//				valider.setBorder(new OvalBorder(valider.getWidth(), valider.getHeight(), new Color(153,153,255)));
+//				setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//				click_task = new Timer();
+//				click_task.schedule( 
+//				        new java.util.TimerTask() {
+//				            @Override
+//				            public void run() {
+//				            	if(i==songs.size()){
+//				            		i=0;
+//				            	}
+//				            	System.out.println(i);
+//				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_MUSIC_EVENT);
+//								ev.addParameter(songs.get(i).getFile().getAbsolutePath());
+//								myAgent.postGuiEvent(ev);
+//								setVisible(false);
+//								myAgent.getGame_view().enableChange();
+//				            }
+//				        }, 
+//				        Constance.click_delay 
+//				);
+//				
+//			}
+//			
+//			@Override
+//			public void mouseClicked(MouseEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 //		valider.addActionListener(new ActionListener(){
 //			@Override
 //			public void actionPerformed(ActionEvent e) {
@@ -174,7 +169,7 @@ public class MusicSelectView extends JAgentFrame{
 		background.add(labeldown);
 //		background.add(suivant);
 //		background.add(precedent);
-		background.add(valider);
+		//background.add(valider);
 		this.setResizable(false);
 		this.setVisible(true);
 		

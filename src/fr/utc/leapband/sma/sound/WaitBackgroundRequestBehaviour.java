@@ -45,6 +45,9 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 					case RESTART_BACKGROUND:
 						player.Restart();
 						break;
+					case STOP_BACKGROUND:
+						player.Stop();
+						break;
 					case CHANGE_BACKGROUND:
 						if (player!=null){
 							player.Stop();

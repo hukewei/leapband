@@ -202,6 +202,10 @@ public class UserAgent extends GuiAgent{
 		}
 	}
 	
+	public boolean isHost() {
+		return getSoundAgentName().equals(getMySoundAgent());
+	}
+	
 	public void setHostSoundName(AID host) {
 		host_sound_name = host;
 	}
