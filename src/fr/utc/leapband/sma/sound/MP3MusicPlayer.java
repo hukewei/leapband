@@ -79,4 +79,9 @@ public class MP3MusicPlayer extends MusicPlayer {
 	public void Restart() {
 		player.stop();
 	}
+	
+	@Override
+	public void SetVolume(int volume) {
+		//TODO
+	}
 }
