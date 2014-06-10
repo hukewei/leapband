@@ -30,5 +30,5 @@ public abstract class MusicPlayer {
 	public abstract void Start();
 	public abstract void Pause();
 	public abstract void Restart();
-	public abstract void SetVolume();
+	public abstract void SetVolume(int volume);
 }
