@@ -82,5 +82,8 @@ public void Restart() {
     }
 }
 
-
+	@Override
+	public void SetVolume(int volume) {
+		//TODO
+	}
 }

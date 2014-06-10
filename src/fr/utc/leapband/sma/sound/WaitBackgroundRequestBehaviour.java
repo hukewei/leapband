@@ -54,6 +54,9 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 							player.Start();
 						player = MusicPlayer.getMusicPlayer(data.getPath());
 						break;
+					case CHANGE_VOLUME:
+						player.SetVolume(data.getVolume());
+						break;
 					case DEFAULT:
 						break;
 					default:

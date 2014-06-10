@@ -8,6 +8,7 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
+import javax.sound.midi.ShortMessage;
 
 public class MIDIMusicPlayer extends MusicPlayer {
 	
@@ -42,5 +43,24 @@ public class MIDIMusicPlayer extends MusicPlayer {
 		sequencer.stop();
 		sequencer.setTickPosition(0);
 		sequencer.start();	
+	}
+	
+	@Override
+	public void SetVolume(int volume) {
+		if(volume < 0)
+			volume = 0;
+		
+		if(volume > 255)
+			volume = 255;
+		
+		try {
+	            ShortMessage volumeMessage = new ShortMessage();
+	            for (int i = 0; i < 16; i++) {
+	            	volumeMessage.setMessage(ShortMessage.CONTROL_CHANGE, i, 7, volume);
+	                MidiSystem.getReceiver().send(volumeMessage, -1);
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
 	}
 }
