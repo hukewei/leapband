@@ -13,7 +13,8 @@ public class Constance {
 	
 	public static int Hand_width = 80;
 	public static int Hand_height = 45;
-	
+	public static boolean ENABLE_DELAY = true;
+	public static long MAX_MESSAGE_DELAY = 1000000; //1000000 == 1 second
 	public static int Gesture_Interval = 750000;   //100000 == 0.1 second
 	static public int PLAY_IntervalTimer = 5000;   //T120 120/Min
 	static public int click_delay = 1600;

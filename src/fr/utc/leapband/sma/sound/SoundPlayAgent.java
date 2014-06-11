@@ -74,19 +74,20 @@ public class SoundPlayAgent extends Agent{
 				ObjectMapper mapper = new ObjectMapper();
 				try {
 					NoteInformData data = mapper.readValue(request.getContent(), NoteInformData.class);
-					
-					switch(data.getAction()) {
-						case START_NOTE:
-							addBehaviour(new BeginNote(data));
-							break;
-						case STOP_NOTE:
-							addBehaviour(new EndNote(data));
-							break;
-						case CHANGE_INSTRUMENT:
-							addBehaviour(new ChangeSound(data));
-							break;
-						case DEFAULT:
-							break;
+					if (Constance.ENABLE_DELAY && System.currentTimeMillis() - data.getTimestamp() < Constance.MAX_MESSAGE_DELAY) {
+						switch(data.getAction()) {
+							case START_NOTE:
+								addBehaviour(new BeginNote(data));
+								break;
+							case STOP_NOTE:
+								addBehaviour(new EndNote(data));
+								break;
+							case CHANGE_INSTRUMENT:
+								addBehaviour(new ChangeSound(data));
+								break;
+							case DEFAULT:
+								break;
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

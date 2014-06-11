@@ -43,6 +43,7 @@ public class SoundMessageDaemonBehaviour extends CyclicBehaviour{
 					
 					int i;
 					int volume;
+					data.setTimestamp(moveData.getTimestamp());
 					switch(moveData.getInstrumentType()) {
 					case TAMBOUR:
 						
