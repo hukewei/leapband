@@ -1,4 +1,4 @@
-package fr.utc.leapband.sma.sound;
+package fr.utc.leapband.sma.move;
 
 import jade.core.behaviours.OneShotBehaviour;
 import fr.utc.leapband.utilities.Movement;

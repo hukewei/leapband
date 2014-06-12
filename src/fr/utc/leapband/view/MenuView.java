@@ -29,6 +29,7 @@ import fr.utc.leapband.utilities.RoundedBorder;
 
 
 
+@SuppressWarnings("serial")
 public class MenuView extends JAgentFrame {
 	//private JPanel buttonPane;
 	private JButton single;
@@ -64,7 +65,7 @@ public class MenuView extends JAgentFrame {
 		gif.setBounds(950, 80, 500, 150);
 		
 
-		myAgent.addPropertyChangeListener(this);
+		//myAgent.addPropertyChangeListener(this);
 		//mouse = new MousePane();
 		
 	
@@ -284,13 +285,7 @@ public class MenuView extends JAgentFrame {
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-//		if (evt.getPropertyName().equals("pos")) {
-//			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
-//					+ " y = " + ((Cordinates) evt.getNewValue()).y);
-//			mouse.setPos(((Cordinates) evt.getNewValue()).x,
-//					((Cordinates) evt.getNewValue()).y);
-//		}
-
+		super.propertyChange(evt);
 	}
 
 

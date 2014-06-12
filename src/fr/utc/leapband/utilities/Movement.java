@@ -3,8 +3,6 @@ package fr.utc.leapband.utilities;
 
 import javax.vecmath.Point3d;
 
-import com.leapmotion.leap.Vector;
-
 public class Movement {
 	private Point3d pos;
 	private double speed;

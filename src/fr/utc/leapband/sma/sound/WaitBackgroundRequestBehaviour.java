@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fr.utc.leapband.utilities.BackgroundMusicData;
 
+@SuppressWarnings("serial")
 public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 	MusicPlayer player = null;
 	
@@ -44,14 +45,24 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 					case RESTART_BACKGROUND:
 						player.Restart();
 						break;
+					case STOP_BACKGROUND:
+						player.Stop();
+						break;
 					case CHANGE_BACKGROUND:
+						if (player!=null){
+							player.Stop();
+							player=null;
+						}
+							player = MusicPlayer.getMusicPlayer("effect/short.mp3");
+							player.Start();
 						player = MusicPlayer.getMusicPlayer(data.getPath());
 						break;
 					case CHANGE_VOLUME:
 						player.SetVolume(data.getVolume());
 						break;
 					case DEFAULT:
-						
+						break;
+					default:
 						break;
 				}
 			} catch (Exception e) {

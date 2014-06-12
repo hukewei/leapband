@@ -11,7 +11,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.util.Timer;
 
 import javax.swing.BorderFactory;
@@ -23,10 +22,11 @@ import javax.swing.border.Border;
 
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
-import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.OvalBorder;
+import fr.utc.leapband.utilities.RoundedBorder;
 
 
+@SuppressWarnings("serial")
 public class ControlPane extends JPanel {
 	// personnel cursor
 	private UserAgent myAgent;
@@ -61,7 +61,7 @@ public class ControlPane extends JPanel {
 		home = new JLabel(new ImageIcon("images/home.png"));
 		
 		//home.setPreferredSize(new Dimension(100,100));
-		home.setBounds((int) (width*0.01),(int) (height*0.04),100,100);
+		home.setBounds((int) (width*0.01),(int) (height*0.02),100,100);
 		//home.setBackground(Color.WHITE);
 		//home.setOpaque(false);
 		
@@ -90,7 +90,15 @@ public class ControlPane extends JPanel {
 				        new java.util.TimerTask() {
 				            @Override
 				            public void run() {
-				            	GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
+				            	play.setIcon(new ImageIcon("images/play.png"));
+			            		isPlay=false;
+			            		GuiEvent ev = null;
+			            		if (!myAgent.isMultipleMode() || myAgent.isHost()) {
+			            			ev = new GuiEvent(this,UserAgent.CONTROL_MUSIC_EVENT);
+			            			ev.addParameter(isPlay);
+			            			myAgent.postGuiEvent(ev);
+			            		}
+				    			ev = new GuiEvent(this,UserAgent.SELECT_EVENT);
 								ev.addParameter(UserAgent.return_Menu);
 								myAgent.postGuiEvent(ev);
 				            }
@@ -124,7 +132,7 @@ public class ControlPane extends JPanel {
 		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
 		player = new JLabel(new ImageIcon("images/person2.jpg"));
 		//player.setPreferredSize(new Dimension(100,100));
-		player.setBounds((int) (width*0.2), (int) (height*0.05), 100, 100);
+		player.setBounds((int) (width*0.2), (int) (height*0.02), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
 		player.setBorder(border);
@@ -135,8 +143,10 @@ public class ControlPane extends JPanel {
 		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
 		//music.setPreferredSize(new Dimension(400,100));
 
-		music.setBounds((int) (width*0.3), (int) (height*0.05), 400, 100);
-		music.setBackground(Color.WHITE);
+		music.setBounds((int) (width*0.3), (int) (height*0.019), 400, 100);
+		//music.setBackground(Color.WHITE);
+		music.setBorder(new RoundedBorder(new Color(0,128,255,100)));
+		music.setContentAreaFilled( false );
 		//music.setBorder(border);
 		/*music.addActionListener(new ActionListener() {			
 			@Override
@@ -202,11 +212,11 @@ public class ControlPane extends JPanel {
 		
 		
 		play = new JLabel(new ImageIcon("images/play.png"));
-		play.setBounds((int) (width*0.7), (int) (height*0.05), 100, 100);
+		play.setBounds((int) (width*0.7), (int) (height*0.02), 100, 100);
 		rewind=new JLabel(new ImageIcon("images/rewind.png"));
-		rewind.setBounds((int) (width*0.62), (int) (height*0.05), 100, 100);
+		rewind.setBounds((int) (width*0.62), (int) (height*0.02), 100, 100);
 		forward=new JLabel(new ImageIcon("images/fast_forward.png"));
-		forward.setBounds((int) (width*0.78), (int) (height*0.05), 100, 100);
+		forward.setBounds((int) (width*0.78), (int) (height*0.02), 100, 100);
 		
 		play.addMouseListener(new MouseListener() {
 		
@@ -387,7 +397,7 @@ public class ControlPane extends JPanel {
 	
 		
 		volume = new JLabel(new ImageIcon("images/volume.png"));
-		volume.setBounds((int) (width*0.9), (int) (height*0.05), 100, 100);
+		volume.setBounds((int) (width*0.9), (int) (height*0.02), 100, 100);
 		
 		this.add(home);
 		this.add(player);

@@ -64,13 +64,14 @@ public class InstrumentSelectView extends JAgentFrame{
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("swipe")) {
 	 			if ((String)evt.getNewValue() == "LEFT") {
 	 				imageFlow.scrollAndAnimateBy(-1);
 	 			} else if ((String)evt.getNewValue() == "RIGHT") {
 	 				imageFlow.scrollAndAnimateBy(1);
-	 			} else if ((String)evt.getNewValue() == "GRAB") {
+	 			} else if ((String)evt.getNewValue() == "GRAB" && imageFlow.getSelectedIndex() != 2) {
 	 				GuiEvent ev = new GuiEvent(this,UserAgent.SELECT_INSTRUMENT_EVENT);
 					ev.addParameter(UserAgent.instrument_Mode);
 					ev.addParameter(((ImageFlowItem)imageFlow.getSelectedValue()).getLabel());

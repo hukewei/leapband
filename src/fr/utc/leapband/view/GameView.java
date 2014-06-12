@@ -8,23 +8,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
-import org.jfugue.Player;
-
 import fr.utc.leapband.sma.user.UserAgent;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.Cordinates;
 import fr.utc.leapband.utilities.CustomImgPanel;
 import fr.utc.leapband.utilities.ScaleLabel;
 
+@SuppressWarnings("serial")
 public class GameView extends JAgentFrame {
 	
 	private HandsTrackPane hands;
 	private JSplitPane split_pane;
 	private ControlPane control_pane;
-	private boolean hide_split_pane = false;
 
-
-	private Player player = new Player();
+	//private Player player = new Player();
 	public ScaleLabel playDrumLeft;
 	public ScaleLabel playDrumRight;
 	public int instrumentX1;
@@ -32,6 +29,7 @@ public class GameView extends JAgentFrame {
 	public int instrumentX2;
 	public int instrumentY2;
 	private CustomImgPanel imagePanel;
+	private boolean can_fire_change = true;
 
 	
 
@@ -96,6 +94,18 @@ public class GameView extends JAgentFrame {
 		
 	}
 	
+	public void disableChange() {
+		can_fire_change = false;
+	}
+	
+	public void enableChange() {
+		can_fire_change = true;
+	}
+	
+	public boolean isCan_fire_change() {
+		return can_fire_change;
+	}
+
 	public void changeVolume(String up_or_down) {
     	double current = myAgent.getCurrent_rotation();
 		if ( up_or_down == Constance.Volume_Up) {
@@ -114,6 +124,7 @@ public class GameView extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("hand1")) {
 //			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x

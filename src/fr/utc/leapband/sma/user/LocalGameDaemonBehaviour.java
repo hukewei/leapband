@@ -24,6 +24,7 @@ public class LocalGameDaemonBehaviour extends Behaviour{
 		System.out.println("local multiplay daemon behaviour created");
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void action() {
 		MessageTemplate mt = MessageTemplate.or(

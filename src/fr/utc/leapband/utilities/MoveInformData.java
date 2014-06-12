@@ -6,11 +6,20 @@ public class MoveInformData {
 	//private AID host_AID;
 	private InstrumentType instrumentType;
 	private float velocity_multiplier;
+	private long timestamp;
 	
 	public MoveInformData() {
 		move = null;
 		//host_AID = null;
 		instrumentType = InstrumentType.DEFAULT;
+	}
+	
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 	
 	public float getVelocity_multiplier() {

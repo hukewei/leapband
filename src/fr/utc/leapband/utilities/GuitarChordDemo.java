@@ -54,9 +54,6 @@ public class GuitarChordDemo {   // this is the first one
         
          Sequence seq = new Sequence(Sequence.PPQ, 4);         
          Track track = seq.createTrack();  
-          
-         MidiEvent event = null;
-
          ShortMessage first = new ShortMessage();
          first.setMessage(192, 1, instrument, 0);
          MidiEvent changeInstrument = new MidiEvent(first, 1); 

@@ -1,8 +1,5 @@
 package fr.utc.leapband.view;
 
-
-
-
 import jade.gui.GuiEvent;
 
 import java.awt.Color;
@@ -13,7 +10,6 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -26,9 +22,7 @@ import fr.utc.leapband.utilities.CustomImgPanel;
 import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.RoundedBorder;
 
-
-
-
+@SuppressWarnings("serial")
 public class MultiwaitRoom extends JAgentFrame {
 	private JList<String> list_player;
 	private JButton start;
@@ -203,6 +197,7 @@ public class MultiwaitRoom extends JAgentFrame {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("swipe")) {
 				int current_index = list_player.getSelectedIndex();
@@ -233,7 +228,8 @@ public class MultiwaitRoom extends JAgentFrame {
 
 	   
 
-	    public Component getListCellRendererComponent(JList list, Object value,
+	    @SuppressWarnings("rawtypes")
+		public Component getListCellRendererComponent(JList list, Object value,
 	            int index, boolean isSelected, boolean cellHasFocus) {
 	        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 	       

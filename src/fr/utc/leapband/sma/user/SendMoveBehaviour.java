@@ -4,6 +4,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
 import java.io.StringWriter;
+import java.util.Date;
 
 import javax.vecmath.Point3d;
 
@@ -13,6 +14,7 @@ import fr.utc.leapband.utilities.Cordinates;
 import fr.utc.leapband.utilities.MoveInformData;
 import fr.utc.leapband.utilities.Movement;
 
+@SuppressWarnings("serial")
 public class SendMoveBehaviour extends OneShotBehaviour{
 	UserAgent myAgent;
 	Cordinates position;
@@ -43,6 +45,7 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 		message.addReplyTo(myAgent.getSoundAgentName());
 		//my_data.setHost_AID(myAgent.getSoundAgentName());
 		my_data.setInstrumentType(myAgent.getSelectedInstrument());
+		my_data.setTimestamp(System.currentTimeMillis());
 
 		ObjectMapper mapper = new ObjectMapper();
 		StringWriter sw = new StringWriter();

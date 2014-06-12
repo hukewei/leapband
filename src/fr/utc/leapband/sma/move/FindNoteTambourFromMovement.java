@@ -1,4 +1,4 @@
-package fr.utc.leapband.sma.sound;
+package fr.utc.leapband.sma.move;
 
 import javax.vecmath.Point3d;
 

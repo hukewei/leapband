@@ -1,8 +1,6 @@
-package fr.utc.leapband.sma.sound;
+package fr.utc.leapband.sma.move;
 
 import javax.vecmath.Point3d;
-
-import com.sun.j3d.utils.geometry.Cylinder;
 
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.Movement;

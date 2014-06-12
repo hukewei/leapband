@@ -17,6 +17,7 @@ public class UserContainer {
 	/**
 	 * @param args
 	 */
+	@SuppressWarnings("unused")
 	public static void run(String[] args) {
 		Runtime rt = Runtime.instance();
 		Profile p = null;

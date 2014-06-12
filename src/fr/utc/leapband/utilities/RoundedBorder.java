@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.border.AbstractBorder;
 
+@SuppressWarnings("serial")
 public class RoundedBorder extends AbstractBorder  {
 
 	private Color background; 

@@ -48,6 +48,7 @@ import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.CrystalCaseFactory;
 import fr.utc.leapband.utilities.ImageFlowItem;
 
+@SuppressWarnings("serial")
 public class ImageFlow extends JPanel {
 	
 	private UserAgent myAgent;
@@ -360,7 +361,8 @@ public class ImageFlow extends JPanel {
         g2.setComposite(composite);
     }
 
-    private void promoteAvatarToDrawable(List<DrawableAvatar> drawables,
+    @SuppressWarnings("unused")
+	private void promoteAvatarToDrawable(List<DrawableAvatar> drawables,
                                          int x, int y, int width, int height,
                                          int offset) {
 
@@ -627,7 +629,8 @@ public class ImageFlow extends JPanel {
 
 
     private class PicturesFinderThread implements Runnable {
-        private List<File> artworks;
+        @SuppressWarnings("unused")
+		private List<File> artworks;
 
         public PicturesFinderThread() {
             try
@@ -667,7 +670,6 @@ public class ImageFlow extends JPanel {
             avatarsText.add("Gorillaz");
 */
 
-            int i = 0;
             for (ImageFlowItem item: avatars) {
                 try {
                     //BufferedImage image = ImageIO.read(url);
@@ -722,7 +724,8 @@ public class ImageFlow extends JPanel {
         }
     }
 
-    private class DrawableAvatar implements Comparable {
+    @SuppressWarnings("rawtypes")
+	private class DrawableAvatar implements Comparable {
         private int index;
         private double x;
         private double y;

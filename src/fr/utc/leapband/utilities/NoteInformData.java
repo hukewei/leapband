@@ -15,7 +15,8 @@ public class NoteInformData {
 	private int channel;
 	private int instrument;
 	private int bank;
-	
+	private long timestamp;
+
 	public NoteInformData() {
 		action = NoteActionType.DEFAULT;
 		note = -1;
@@ -23,6 +24,15 @@ public class NoteInformData {
 		channel = -1;
 		instrument = -1;
 		bank = -1;
+		timestamp = 0;
+	}
+	
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public NoteActionType getAction() {

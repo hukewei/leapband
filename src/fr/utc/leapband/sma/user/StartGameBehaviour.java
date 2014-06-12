@@ -11,7 +11,6 @@ public class StartGameBehaviour extends OneShotBehaviour{
 	private ACLMessage msg;
 	private UserAgent myAgent;
 	private boolean first=true;
-	private boolean done=false;
 
 
 	public StartGameBehaviour(UserAgent myAgent) {

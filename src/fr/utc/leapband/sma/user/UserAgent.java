@@ -10,8 +10,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.gui.GuiAgent;
 import jade.gui.GuiEvent;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -19,8 +17,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
 
 import com.leapmotion.leap.Controller;
 import com.leapmotion.leap.Gesture;
@@ -114,6 +110,9 @@ public class UserAgent extends GuiAgent{
 				break;
 			} 
 		}
+		if (next_song == null) {
+			next_song = songs.get(0).getFile().getPath();
+		}
 		return next_song;
 	}
 	
@@ -128,6 +127,9 @@ public class UserAgent extends GuiAgent{
 				}
 				break;
 			} 
+		}
+		if (before_song == null) {
+			before_song = songs.get(songs.size()-1).getFile().getPath();
 		}
 		return before_song;
 	}
@@ -198,6 +200,10 @@ public class UserAgent extends GuiAgent{
 		} else {
 			return getMySoundAgent();
 		}
+	}
+	
+	public boolean isHost() {
+		return getSoundAgentName().equals(getMySoundAgent());
 	}
 	
 	public void setHostSoundName(AID host) {
@@ -278,9 +284,9 @@ public class UserAgent extends GuiAgent{
 				System.out.println("music on");
 				if (selected_song == null && getSongs().size() > 0) {
 					this.addBehaviour(new SendBgMusicBehaviour(this, getSongs().get(0).getFile().getPath(), BackgroundMusicActionType.CHANGE_BACKGROUND));
-					selected_song = getSongs().get(0).getFile().getPath();
-					this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
+					selected_song = getSongs().get(0).getFile().getPath();					
 				}
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
 			}else{
 				System.out.println("music off");
 				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
@@ -296,7 +302,7 @@ public class UserAgent extends GuiAgent{
 						this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
 					}
 					selected_song = next_song;
-					this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
+					//this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 				}
 			} else if (arg0.getParameter(0).equals(Constance.Rewind)) {
 				String before_song = getBeforeSong();
@@ -308,8 +314,10 @@ public class UserAgent extends GuiAgent{
 				}
 			}
 			this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
-			this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
-		}
+			if(isBackGroundMusicOn){
+				this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.START_BACKGROUND));
+				}
+			}
 		
 	}
 	
@@ -398,32 +406,28 @@ public class UserAgent extends GuiAgent{
 		
 	}
 	
-	public void changeCurrentViewTo(JAgentFrame frame) {
+	public void changeCurrentViewTo(final JAgentFrame frame) {
 		if (current_frame == frame) {
 			return;
 		}
-		frame.setVisible(true);
 		if (current_frame != null) {
-			current_frame.setVisible(false);
+			changes.firePropertyChange(Constance.CHANGE_FRAME, null, frame.getName());
+			changes.firePropertyChange(Constance.CHANGE_FRAME, current_frame.getName(), null);
+		} else {
+			changes.firePropertyChange(Constance.CHANGE_FRAME, null, frame.getName());
 		}
 		current_frame = frame;
 	}
 	
 	public void changeToRoomSelectView() {
 		if(getDict()!=null){
-			//room_view.setVisible(true);
 			changeCurrentViewTo(room_view);
-			//instrument_view.setVisible(false);
-			//menu_view.setVisible(false);
 			System.out.println("change to room select view");
 		}
 	}
 		
 	public void changeToRoomWaitView() {
 			if(getDict()!=null){
-				//wait_view.getList_player().setModel(getDictPlayer());
-				//wait_view.setVisible(true);
-				//room_view.setVisible(false);
 				wait_view.getRoomID().setText(current_room_id);
 				changeCurrentViewTo(wait_view);
 			}
@@ -433,25 +437,13 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void changeToInstrumentView(){
-//		instrument_view.setVisible(true);
-//		menu_view.setVisible(false);
 		changeCurrentViewTo(instrument_view);
 	}
 	public void changeToGameView(){
-		//System.out.println("okkk");
-//		game_view.setVisible(true);
-//		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);
 		changeCurrentViewTo(game_view);
 	}
 	
 	public void changeToMenuView(){
-//		menu_view.setVisible(true);
-//		room_view.setVisible(false);
-//		wait_view.setVisible(false);
-//		game_view.setVisible(false);
-//		wait_view.setVisible(false);
-//		instrument_view.setVisible(false);
 		System.out.println("change to menu view");
 		changeCurrentViewTo(menu_view);
 	}
@@ -486,24 +478,25 @@ public class UserAgent extends GuiAgent{
 	}
 	
 	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2, float speed_1, float speed_2, Vector dir_1, Vector dir_2, boolean two_hand) {
-		//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
-		if(game_view.isVisible()) {
-			hand_1.x = x_1;
-			hand_1.y = y_1 - Constance.Control_Pane_height;
-			hand_1.z = z_1;
-			hand_1.speed = speed_1;
-			hand_1.direction = dir_1;
-			if (two_hand){
-				hand_2.x = x_2;
-				hand_2.y = y_2 - Constance.Control_Pane_height;
-				hand_2.z = z_2;
-				hand_2.speed = speed_2;
-				hand_2.direction = dir_2;
-			}
-			//if(d1 > Constance.Minimun_Distance)
-				changes.firePropertyChange("hand1", null, hand_1);
-			//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
-			//if (d2 > Constance.Minimun_Distance)
+		if(game_view.isCan_fire_change()) {
+			//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
+			if(game_view.isVisible()) {
+				hand_1.x = x_1;
+				hand_1.y = y_1 - Constance.Control_Pane_height - 50;
+				hand_1.z = z_1;
+				hand_1.speed = speed_1;
+				hand_1.direction = dir_1;
+				if (two_hand){
+					hand_2.x = x_2;
+					hand_2.y = y_2 - Constance.Control_Pane_height - 50;
+					hand_2.z = z_2;
+					hand_2.speed = speed_2;
+					hand_2.direction = dir_2;
+				}
+				//if(d1 > Constance.Minimun_Distance)
+					changes.firePropertyChange("hand1", null, hand_1);
+				//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
+				//if (d2 > Constance.Minimun_Distance)
 				if (two_hand)changes.firePropertyChange("hand2", null, hand_2);
 				if (selected_instrument == drum) {
 					if(isCollisionForDrumLeft(hand_1) ){
@@ -541,6 +534,7 @@ public class UserAgent extends GuiAgent{
 						}
 					}
 				}
+			}
 		}
 	}
 	
@@ -645,7 +639,7 @@ public class UserAgent extends GuiAgent{
 	public boolean isTriggeredGuitar(Cordinates hand) {
 		boolean trigger = false;
 		//System.out.println("direction = " + hand.direction.getY() + " speed = " + hand.speed);
-		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 100) {
+		if(Math.abs(hand.direction.getY()) > Math.abs(hand.direction.getX()) && Math.abs(hand.speed) > 200) {
 			if (hand.y > Constance.Windows_height * 0.35 && hand.y < Constance.Windows_height * 0.85) {
 				trigger =  true;
 			}
@@ -668,20 +662,6 @@ public class UserAgent extends GuiAgent{
 
 	public GameView getGame_view() {
 		return game_view;
-	}
-
-
-	public void setGame_view(GameView game_view) {
-		this.game_view = game_view;
-	}
-	
-	public RoomSelectView getRoom_view() {
-		return room_view;
-	}
-
-
-	public void setRoom_view(RoomSelectView room_view) {
-		this.room_view = room_view;
 	}
 
 

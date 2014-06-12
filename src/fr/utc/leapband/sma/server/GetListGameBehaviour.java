@@ -24,28 +24,21 @@ public class GetListGameBehaviour extends OneShotBehaviour{
 
 	@Override
 	public void action() {
+		ACLMessage reply=msg.createReply();
 		
-			ACLMessage reply=msg.createReply();
-			
-			reply.setPerformative(ACLMessage.INFORM);
+		reply.setPerformative(ACLMessage.INFORM);
 
-			reply.setConversationId(Constance.GROUP_CREATED);
-			
-			try {
-				reply.setContentObject(myAgent.getDict());
-				System.out.println("set defautlistmodele of reply\n");
-				myAgent.send(reply);
-				System.out.println("multiAgent sent reply\n");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
+		reply.setConversationId(Constance.GROUP_CREATED);
 		
-
-		
-		
+		try {
+			reply.setContentObject(myAgent.getDict());
+			System.out.println("set defautlistmodele of reply\n");
+			myAgent.send(reply);
+			System.out.println("multiAgent sent reply\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

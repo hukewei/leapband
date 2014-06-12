@@ -14,8 +14,10 @@ import java.util.Timer;
 import javax.swing.JFrame;
 
 import fr.utc.leapband.sma.user.UserAgent;
+import fr.utc.leapband.utilities.Constance;
 
 
+@SuppressWarnings("serial")
 public abstract class JAgentFrame extends JFrame implements PropertyChangeListener{
 	UserAgent myAgent;
 	Timer click_task = null;
@@ -25,7 +27,15 @@ public abstract class JAgentFrame extends JFrame implements PropertyChangeListen
 		myAgent.addPropertyChangeListener(this);
 	}
 	@Override
-	abstract public void propertyChange(PropertyChangeEvent evt);
+	public void propertyChange(PropertyChangeEvent evt){
+		if (evt.getPropertyName().equals(Constance.CHANGE_FRAME)) {
+			if ((String)evt.getOldValue() == getName()) {
+				setVisible(false);
+			} else if ((String)evt.getNewValue() == getName()) {
+				setVisible(true);
+			}
+		}
+	}
 	
 	public void hideCursor() {
 		Image image = Toolkit.getDefaultToolkit().createImage(
