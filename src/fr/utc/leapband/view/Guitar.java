@@ -12,8 +12,6 @@ public class Guitar extends JLabel{
 	
 	public static int width=(int)(Constance.Windows_width*0.09);
 	public static int height=(int)(Constance.Windows_height*0.85);
-//	int widths;
-//	int heights;
 	
 	public Guitar(UserAgent myAgent){
 		
