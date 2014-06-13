@@ -44,7 +44,6 @@ public class Piano extends JPanel implements MouseListener {
 	public Piano() {  
     	  this.setBounds(20, (int)(Constance.Windows_height*0.4),14*kw, kh);
           setLayout(new BorderLayout());  
-         // setPreferredSize(new Dimension(42*kw, kh+1));  
           int transpose = 24;    
           int whiteIDs[] = { 0, 2, 4, 5, 7, 9, 11 };   
           
@@ -165,17 +164,9 @@ public class Piano extends JPanel implements MouseListener {
           }  
           public void on() {  
               setNoteState(ON);  
-//              cc.channel.noteOn(kNum, cc.velocity);  
-//              if (record) {  
-//                  createShortEvent(NOTEON, kNum);  
-//              }  
           }  
           public void off() {  
               setNoteState(OFF);  
-//              cc.channel.noteOff(kNum, cc.velocity);  
-//              if (record) {  
-//                  createShortEvent(NOTEOFF, kNum);  
-//              }  
           }  
           public void setNoteState(int state) {  
               noteState = state;  

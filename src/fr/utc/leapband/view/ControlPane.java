@@ -54,16 +54,10 @@ public class ControlPane extends JPanel {
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
 		this.setLayout(null);
-		this.setBackground(new Color(255,255,204));
-		//this.setBackground(Color.BLACK);
-		
+		this.setBackground(new Color(255,255,204));		
 		
 		home = new JLabel(new ImageIcon("images/home.png"));
-		
-		//home.setPreferredSize(new Dimension(100,100));
 		home.setBounds((int) (width*0.01),(int) (height*0.02),100,100);
-		//home.setBackground(Color.WHITE);
-		//home.setOpaque(false);
 		
 		home.addMouseListener(new MouseListener() {
 			
@@ -126,12 +120,7 @@ public class ControlPane extends JPanel {
 			}
 		}); 
 		
-		
-		/*JLabel userId=new JLabel("player1");
-		userId.setBounds(220, 20, 100, 20);
-		userId.setHorizontalAlignment(SwingConstants.CENTER);*/
 		player = new JLabel(new ImageIcon("images/person2.jpg"));
-		//player.setPreferredSize(new Dimension(100,100));
 		player.setBounds((int) (width*0.2), (int) (height*0.02), 100, 100);
 		Border border=BorderFactory.createLineBorder(Color.BLACK, 5);
 
@@ -141,20 +130,10 @@ public class ControlPane extends JPanel {
 		
 		music = new JButton("Choose a music");
 		music.setFont(new Font("Chalkboard", Font.BOLD, 30));
-		//music.setPreferredSize(new Dimension(400,100));
 
 		music.setBounds((int) (width*0.3), (int) (height*0.019), 400, 100);
-		//music.setBackground(Color.WHITE);
 		music.setBorder(new RoundedBorder(new Color(0,128,255,100)));
 		music.setContentAreaFilled( false );
-		//music.setBorder(border);
-		/*music.addActionListener(new ActionListener() {			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				new musicview(new File("src/songs/"),myAgent);
-			}
-		});*/
 		
 		music.addMouseListener(new MouseListener() {
 			
@@ -406,10 +385,6 @@ public class ControlPane extends JPanel {
 		this.add(forward);
 		this.add(rewind);
 		this.add(volume);
-		
-		
-		//this.add(userId);
-		//this.add(play);
 	}
 	public JLabel getVolume() {
 		return volume;

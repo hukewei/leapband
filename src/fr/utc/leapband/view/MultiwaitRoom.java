@@ -47,21 +47,15 @@ public class MultiwaitRoom extends JAgentFrame {
 		
 		//load model to list
 		list_player = new JList<String>();
-		//list_room.setModel(myAgent.getDict());
 		list_player.setBorder(new RoundedBorder(new Color(100,100,100,100)));
 		list_player.setOpaque(false);	
 		((JComponent) list_player.getCellRenderer()).setOpaque(false);
 		list_player.setCellRenderer(new MyRenderer(0, Color.RED));
-		//list_player.setBackground(new Color(255,255,204,100));
 		list_player.setBounds((int) (Constance.Windows_width*0.3),(int) (Constance.Windows_height*0.2),(int) (Constance.Windows_width*0.35),(int) (Constance.Windows_height*0.7));
 		list_player.setFixedCellHeight(80);
-		//list_player.setBounds(250,150,500,500);
 		list_player.setFont(new Font("Serif", Font.PLAIN, 30));
 		imagePanel.add(list_player);
-		
-		
-		//this.setLayout(null);
-		
+				
 		start = new JButton("Start");
 		start.setBounds(950,(int) (Constance.Windows_height*0.2),300, 150);
 		start.setFont(new Font("Lucida Calligraphy", Font.BOLD, 30));

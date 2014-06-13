@@ -38,7 +38,6 @@ public class InstrumentSelectView extends JAgentFrame{
 		Icon icon = new ImageIcon("images/home.png");
 		home.setBounds(0,0,100,100);
 		home.setIcon(icon);
-		//home.setBackground(new Color(110, 110, 110));
 		imageFlowPanel.add(home);
 		
 		

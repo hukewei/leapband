@@ -22,7 +22,6 @@ public class MultiPlayUpdateBehaviour extends Behaviour {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void action() {
-		// TODO Auto-generated method stub
 		if(first){
 			ACLMessage multiPlayRegister = new ACLMessage(ACLMessage.SUBSCRIBE);
 			multiPlayRegister.setConversationId("register");
@@ -63,7 +62,6 @@ public class MultiPlayUpdateBehaviour extends Behaviour {
 
 	@Override
 	public boolean done() {
-		// TODO Auto-generated method stub
 		if(done){
 			return true;
 		}else{

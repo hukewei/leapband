@@ -77,7 +77,6 @@ public class UserAgent extends GuiAgent{
 	private AID host_sound_name = null;
 	private String selected_instrument = null;
 	private String selected_song = null;
-	//private String selected_avatar=null;
 	private boolean isBackGroundMusicOn=false;
 	String current_room_id = null; //conversation id if in a group
 	private JAgentFrame current_frame = null;
@@ -147,14 +146,12 @@ public class UserAgent extends GuiAgent{
 		game_view = new GameView(this);
 		room_view = new RoomSelectView(this);
 		wait_view = new MultiwaitRoom(this);
-		//menu_view.setVisible(true);
 		changeCurrentViewTo(menu_view);
-		//game_view.setVisible(true);
 		
 		listener = new LeapListener(this);
         controller = new Controller();
         
-        controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
+        //controller.enableGesture( Gesture.Type.TYPE_KEY_TAP );
         controller.enableGesture( Gesture.Type.TYPE_CIRCLE);
         controller.enableGesture( Gesture.Type.TYPE_SWIPE);
         //controller.enableGesture( Gesture.Type.TYPE_SCREEN_TAP);
@@ -162,13 +159,6 @@ public class UserAgent extends GuiAgent{
         listener.setClickType(1); 
         listener.setCalibratedScren(true);
         controller.addListener(listener);
-       
-        System.out.println("Press Enter to quit...");
-//        try {
-//            System.in.read();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
         // Remove the listener when done
         //controller.removeListener(listener);
@@ -243,13 +233,8 @@ public class UserAgent extends GuiAgent{
 			
 		}else if(arg0.getType()==0){
 			//ask for the list of rooms
-//			ACLMessage messageDemande = new ACLMessage(ACLMessage.REQUEST);
-//			messageDemande.setContent(arg0.getParameter(0).toString());	
-			
 			this.addBehaviour(new GetListGroupBehaviour(this));
 			System.out.println("userAgent envoyer demande\n");
-
-
 		} else if(arg0.getType() == CREATE_ROOM_EVENT){
 			this.addBehaviour(new CreatGroupBehaviour(this));
 		} else if(arg0.getType() == JOINT_ROOM_EVENT){
@@ -258,7 +243,6 @@ public class UserAgent extends GuiAgent{
 		} else if(arg0.getType() == EXIT_ROOM_EVENT){
 			if (current_room_id != null)
 			this.addBehaviour(new ExitGroupBehaviour(this, current_room_id));
-			//this.addBehaviour(new GetListGroupBehaviour(this));
 		}else if(arg0.getType()==CONFIRM_ROOM_EVENT){
 			System.out.println("start game demande");
 			this.addBehaviour(new StartGameBehaviour(this));
@@ -302,7 +286,6 @@ public class UserAgent extends GuiAgent{
 						this.addBehaviour(new SendBgMusicBehaviour(this, null, BackgroundMusicActionType.PAUSE_BACKGROUND));
 					}
 					selected_song = next_song;
-					//this.addBehaviour(new SendBgMusicBehaviour(this, selected_song, BackgroundMusicActionType.CHANGE_BACKGROUND));
 				}
 			} else if (arg0.getParameter(0).equals(Constance.Rewind)) {
 				String before_song = getBeforeSong();
@@ -479,7 +462,6 @@ public class UserAgent extends GuiAgent{
 	
 	public void updateHands(float x_1, float y_1, float x_2, float y_2, float z_1, float z_2, float speed_1, float speed_2, Vector dir_1, Vector dir_2, boolean two_hand) {
 		if(game_view.isCan_fire_change()) {
-			//double d1 = Math.sqrt((x_1-hand_1.x)*(x_1-hand_1.x) + (y_1-hand_1.y)*(y_1-hand_1.y) + (z_1 - hand_1.z)*(z_1 - hand_1.z));
 			if(game_view.isVisible()) {
 				hand_1.x = x_1;
 				hand_1.y = y_1 - Constance.Control_Pane_height - 50;
@@ -493,10 +475,7 @@ public class UserAgent extends GuiAgent{
 					hand_2.speed = speed_2;
 					hand_2.direction = dir_2;
 				}
-				//if(d1 > Constance.Minimun_Distance)
-					changes.firePropertyChange("hand1", null, hand_1);
-				//double d2 = Math.sqrt((x_2-hand_2.x)*(x_2-hand_2.x) + (y_2-hand_2.y)*(y_2-hand_2.y) + (z_2 - hand_2.z)*(z_2 - hand_2.z));
-				//if (d2 > Constance.Minimun_Distance)
+				changes.firePropertyChange("hand1", null, hand_1);
 				if (two_hand)changes.firePropertyChange("hand2", null, hand_2);
 				if (selected_instrument == drum) {
 					if(isCollisionForDrumLeft(hand_1) ){
@@ -686,10 +665,7 @@ public class UserAgent extends GuiAgent{
 		wait_view.getList_player().setModel(this.dict_list_player);
 		System.out.println("update dict player");
 	}
-	public int[] getInstrumentPosition(){
-		return null;
-		//return new int[]{game_view.instrumentX,game_view.instrumentY};
-	}
+	
 	public void changeStartVisibility(boolean vis){
 		wait_view.getStartButton().setVisible(vis);
 	}

@@ -22,11 +22,9 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 		if (msg == UserAgent.Single_Mode) {
 			myAgent.setSingle_mode(true);
 			myAgent.changeToInstrumentView();
-			//myAgent.changeToRoomSelectView();
 		} else if (msg == UserAgent.Multiple_Mode) {
 			myAgent.setMultiple_mode(true);
 			myAgent.changeToInstrumentView();
-			//myAgent.changeToRoomSelectView();
 			myAgent.addBehaviour(new MultiPlayUpdateBehaviour(myAgent));
 		}else if(msg == UserAgent.return_Menu){
 			if (myAgent.isMultiple_mode() && myAgent.getCurrent_frame().getClass() == GameView.class) {
@@ -49,8 +47,6 @@ public class ModeSelectBehaviour extends OneShotBehaviour{
 				System.out.println("multimode---select room");
 				myAgent.changeToRoomSelectView();
 			}
-			//myAgent.setSingle_mode(false);
-			//myAgent.setMultiple_mode(false);
 		} else if (msg == Constance.roomselect_Mode){
 			System.out.println("enter waiting room");
 			myAgent.changeToRoomWaitView();

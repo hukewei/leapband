@@ -4,7 +4,6 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
 import java.io.StringWriter;
-import java.util.Date;
 
 import javax.vecmath.Point3d;
 
@@ -33,7 +32,6 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 	public void action() {
 		ACLMessage message = new ACLMessage(ACLMessage.REQUEST);
 		message.addReceiver(myAgent.getNoteAgentName());
-		//move.setDirection(position.direction);
 		move.setSpeed(position.speed);
 		pos.x = position.x;
 		pos.y = position.y;
@@ -43,7 +41,6 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 		my_data.setVelocity_multiplier(velocity);
 		message.clearAllReplyTo();
 		message.addReplyTo(myAgent.getSoundAgentName());
-		//my_data.setHost_AID(myAgent.getSoundAgentName());
 		my_data.setInstrumentType(myAgent.getSelectedInstrument());
 		my_data.setTimestamp(System.currentTimeMillis());
 

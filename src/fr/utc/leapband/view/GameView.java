@@ -36,10 +36,7 @@ public class GameView extends JAgentFrame {
 
 	public Piano pianoPane=new Piano();
 	public Guitar guitarPane=new Guitar(myAgent);
-	
 
-//	public static double x=Constance.Windows_width;
-//	public static double y=Constance.Windows_height*0.3;
 
 	
 	public GameView(UserAgent agent) {
@@ -51,24 +48,18 @@ public class GameView extends JAgentFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		hands = new HandsTrackPane();
-		//hands.setLayout(null);
-		//this.add(hands,BorderLayout.CENTER);
 		hands.setSize(new Dimension(Constance.Windows_width, Constance.Windows_height));
 		control_pane = new ControlPane(agent);
 		control_pane.setLayout(null);
-//		JPanel hand_pane = new JPanel();
-//		hand_pane.add(hands);
 		playDrumLeft = new ScaleLabel();
 		instrumentX1=(int)(Constance.Windows_width*0.05);
 		instrumentY1= (int)(Constance.Windows_height*0.66);
 		playDrumLeft.setBounds(instrumentX1,instrumentY1, Constance.Windows_width/2, 300);
-		//hands.add(playDrumLeft);
 		
 		playDrumRight = new ScaleLabel();
 		instrumentX2=(int)(Constance.Windows_width*0.47);
 		instrumentY2= (int)(Constance.Windows_height*0.66);
 		playDrumRight.setBounds(instrumentX2,instrumentY2, Constance.Windows_width/2, 300);
-		//hands.add(playDrumRight);
 
 		imagePanel=new CustomImgPanel(Constance.Windows_width, Constance.Windows_height);
 		imagePanel.setLayout(null);
@@ -86,12 +77,8 @@ public class GameView extends JAgentFrame {
 		imagePanel.add(playDrumLeft);
 		imagePanel.add(playDrumRight);
 		
-		//setGuitar();
 		imagePanel.add(pianoPane);
 		imagePanel.add(guitarPane);
-		
-		
-		
 	}
 	
 	public void disableChange() {
@@ -127,14 +114,10 @@ public class GameView extends JAgentFrame {
 		super.propertyChange(evt);
 		if (isVisible()) {
 			if (evt.getPropertyName().equals("hand1")) {
-//			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
-//					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 				hands.setHand1(((Cordinates) evt.getNewValue()).x,
 						((Cordinates) evt.getNewValue()).y,
 						((Cordinates) evt.getNewValue()).z);
 			} else if (evt.getPropertyName().equals("hand2")) {
-	//			System.out.println("x = " + ((Cordinates) evt.getNewValue()).x
-	//					+ " y = " + ((Cordinates) evt.getNewValue()).y);
 				hands.setHand2(((Cordinates) evt.getNewValue()).x,
 						((Cordinates) evt.getNewValue()).y,
 						((Cordinates) evt.getNewValue()).z);

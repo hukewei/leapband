@@ -21,19 +21,6 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				BackgroundMusicData data = mapper.readValue(request.getContent(), BackgroundMusicData.class);
-				/*BackgroundMusicData data = new BackgroundMusicData();
-				System.out.println(step);
-				if(step == 0) {
-					data.setAction(BackgroundMusicData.BackgroundMusicActionType.CHANGE_BACKGROUND);
-					data.setPath("/Users/Alexandre/Desktop/Life Is Like A Song.mp3");
-					step++;
-				} else if(step == 1) {
-					data.setAction(BackgroundMusicData.BackgroundMusicActionType.START_BACKGROUND);
-					step++;
-				} else {
-					data.setAction(BackgroundMusicData.BackgroundMusicActionType.PAUSE_BACKGROUND);
-					step = 1;
-				}*/
 				
 				switch(data.getAction()) {
 					case START_BACKGROUND:

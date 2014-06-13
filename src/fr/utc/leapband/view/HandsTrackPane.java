@@ -41,19 +41,6 @@ class HandsTrackPane extends JPanel {
 	
 	public float getHandSize(float f) {
 		float size = 0;
-//		if (f < -150) {
-//			size = 1;
-//		} else if (f < -50) {
-//			size = 2;
-//		} else if ( f < 0 ) {
-//			size = 3;
-//		} else if ( f < 50) {
-//			size = 4;
-//		} else if (f < 150) {
-//			size = 5;
-//		} else {
-//			size = 6;
-//		}
 		size = (f+150)/150;
 		return size;
 	}

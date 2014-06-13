@@ -54,7 +54,6 @@ public class MenuView extends JAgentFrame {
 		JLabel leap_band = new JLabel(new ImageIcon("images/leapband.png"));
 		
 		leap_band.setBounds(500, 30, 500, 150);
-		//leap_band.setFont(new Font("Serif", Font.PLAIN, 50));
 		leap_band.setHorizontalAlignment(SwingConstants.CENTER);
 		leap_band.setForeground(Color.MAGENTA);
 		
@@ -63,24 +62,6 @@ public class MenuView extends JAgentFrame {
 		JLabel gif=new JLabel(new ImageIcon("images/notesdorees.gif"));
 		imagePanel.add(gif);
 		gif.setBounds(950, 80, 500, 150);
-		
-
-		//myAgent.addPropertyChangeListener(this);
-		//mouse = new MousePane();
-		
-	
-//		buttonPane = new JPanel(new BorderLayout());
-//		buttonPane.setLayout(null);
-//		this.add(buttonPane,BorderLayout.CENTER);
-//		buttonPane.setSize(new Dimension(Constance.Windows_width, Constance.Windows_height));
-		
-		
-		//this.add(imagePanel);
-		
-
-		//*************** button
-		//mouse.setLayout(null);
-		/*JLabel leap_band = new JLabel("Leap Band");*/
 		single = new JButton("Single Mode");
 		single.setFont(new Font("Lucida Calligraphy", Font.BOLD, 30));
 		single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
@@ -89,7 +70,6 @@ public class MenuView extends JAgentFrame {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				//selectSingleMode();
 				single.setBorder(new RoundedBorder(new Color(0,128,255,100)));
 			}
 			
@@ -265,10 +245,6 @@ public class MenuView extends JAgentFrame {
 		Point cursorHotSpot = new Point(0,0);
 		Cursor customCursor = toolkit.createCustomCursor(cursorImage, cursorHotSpot, "Cursor");
 		this.setCursor(customCursor);
-		
-		//this.hideCursor();
-		
-		
 	}
 
 	private void selectSingleMode() {
@@ -287,7 +263,4 @@ public class MenuView extends JAgentFrame {
 	public void propertyChange(PropertyChangeEvent evt) {
 		super.propertyChange(evt);
 	}
-
-
-
 }
