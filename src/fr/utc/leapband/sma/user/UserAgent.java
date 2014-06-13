@@ -140,6 +140,7 @@ public class UserAgent extends GuiAgent{
 		SoundPlayAgentNickName = (String) getArguments()[0];
 		System.out.println("SoundPlayAgentNickName = " + SoundPlayAgentNickName);
 		System.out.println(getLocalName()+"--> Installed");
+		addBehaviour(new GetNTPDateBehaviour());
 		changes = new PropertyChangeSupport(this);
 		menu_view = new MenuView(this);
 		instrument_view = new InstrumentSelectView(this);

@@ -11,6 +11,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Timer;
 
 import javax.sound.midi.MidiChannel;
@@ -21,6 +22,7 @@ import javax.sound.midi.Synthesizer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.utc.leapband.sma.user.GetNTPDateBehaviour;
 import fr.utc.leapband.utilities.Constance;
 import fr.utc.leapband.utilities.GuitarChordDemo;
 import fr.utc.leapband.utilities.GuitarTuning;
@@ -74,7 +76,7 @@ public class SoundPlayAgent extends Agent{
 				ObjectMapper mapper = new ObjectMapper();
 				try {
 					NoteInformData data = mapper.readValue(request.getContent(), NoteInformData.class);
-					if (Constance.ENABLE_DELAY && System.currentTimeMillis() - data.getTimestamp() < Constance.MAX_MESSAGE_DELAY) {
+					if (Constance.ENABLE_DELAY && Calendar.getInstance().getTimeInMillis() - data.getTimestamp() < Constance.MAX_MESSAGE_DELAY) {
 						switch(data.getAction()) {
 							case START_NOTE:
 								addBehaviour(new BeginNote(data));

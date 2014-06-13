@@ -4,6 +4,7 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.lang.acl.ACLMessage;
 
 import java.io.StringWriter;
+import java.util.Calendar;
 
 import javax.vecmath.Point3d;
 
@@ -42,7 +43,7 @@ public class SendMoveBehaviour extends OneShotBehaviour{
 		message.clearAllReplyTo();
 		message.addReplyTo(myAgent.getSoundAgentName());
 		my_data.setInstrumentType(myAgent.getSelectedInstrument());
-		my_data.setTimestamp(System.currentTimeMillis());
+		my_data.setTimestamp(Calendar.getInstance().getTimeInMillis());
 
 		ObjectMapper mapper = new ObjectMapper();
 		StringWriter sw = new StringWriter();
