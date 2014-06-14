@@ -156,11 +156,11 @@ public final class NTPClient
 
     public static Date getRemoteTime()
     {
-    	String[] args = {"ntp.utc.fr"};
+    	String[] args = {"ntp.utc.fr", "0.fr.pool.ntp.org", "1.fr.pool.ntp.org"};
 
         NTPUDPClient client = new NTPUDPClient();
-        // We want to timeout if a response takes longer than 10 seconds
-        client.setDefaultTimeout(10000);
+        // We want to timeout if a response takes longer than 1 seconds
+        client.setDefaultTimeout(1000);
         try {
             client.open();
             for (String arg : args)
@@ -172,7 +172,8 @@ public final class NTPClient
                     TimeInfo info = client.getTime(hostAddr);
                     return processResponse(info);
                 } catch (IOException ioe) {
-                    ioe.printStackTrace();
+                    continue;
+                	//ioe.printStackTrace();
                 }
             }
         } catch (SocketException e) {

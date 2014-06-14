@@ -1,7 +1,10 @@
 package fr.utc.leapband.sma.user;
 
 import java.util.Calendar;
+import java.util.Timer;
 
+import fr.utc.leapband.utilities.Constance;
+import fr.utc.leapband.utilities.ImageTimerTask;
 import fr.utc.leapband.utilities.NTPClient;
 import jade.core.behaviours.OneShotBehaviour;
 
@@ -12,7 +15,16 @@ public class GetNTPDateBehaviour extends OneShotBehaviour{
 	public void action() {
         // get the current time
         System.out.println("Current time is :" + Calendar.getInstance().getTime());
-		Calendar.getInstance().setTime(NTPClient.getRemoteTime());
+        // get NTP time in another Thread
+        new Timer().schedule( 
+		        new java.util.TimerTask() {
+		            @Override
+		            public void run() {
+		            	Calendar.getInstance().setTime(NTPClient.getRemoteTime());
+		            }
+		        }, 
+		        0
+		);
 		// get the current time
 		System.out.println("After setting Time:  " + Calendar.getInstance().getTime());
 	}

@@ -140,7 +140,6 @@ public class UserAgent extends GuiAgent{
 		SoundPlayAgentNickName = (String) getArguments()[0];
 		System.out.println("SoundPlayAgentNickName = " + SoundPlayAgentNickName);
 		System.out.println(getLocalName()+"--> Installed");
-		addBehaviour(new GetNTPDateBehaviour());
 		changes = new PropertyChangeSupport(this);
 		menu_view = new MenuView(this);
 		instrument_view = new InstrumentSelectView(this);
@@ -451,6 +450,9 @@ public class UserAgent extends GuiAgent{
 	}
 
 	public void setMultiple_mode(boolean multiple_mode) {
+		if(multiple_mode) {
+			addBehaviour(new GetNTPDateBehaviour());
+		}
 		this.multiple_mode = multiple_mode;
 		this.single_mode = !multiple_mode;
 	}
