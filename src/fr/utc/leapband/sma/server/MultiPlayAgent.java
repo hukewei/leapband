@@ -7,6 +7,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,13 @@ public class MultiPlayAgent extends Agent{
 		addBehaviour(new MultiPlayManageBehaviour(this));
 		addBehaviour(new GameDaemonBehaviour(this));
 		addBehaviour(new SubscribeManageBehaviour(this));
+		NtpServer ntp_server = new NtpServer();
+		try {
+			ntp_server.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
