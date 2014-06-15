@@ -13,7 +13,8 @@ public class WaitBackgroundRequestBehaviour extends CyclicBehaviour {
 	MusicPlayer player = null;
 	
 	public void action() {
-		MessageTemplate filtre = MessageTemplate.MatchPerformative(ACLMessage.PROPAGATE);
+		MessageTemplate filtre = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
+				MessageTemplate.MatchConversationId("BACKGROUND"));
 		
 		ACLMessage request = myAgent.receive(filtre);
 		

@@ -25,7 +25,8 @@ public class SendBgMusicBehaviour extends OneShotBehaviour{
 
 	@Override
 	public void action() {
-		ACLMessage message = new ACLMessage(ACLMessage.PROPAGATE);
+		ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+		message.setConversationId("BACKGROUND");
 		message.addReceiver(myAgent.getSoundAgentName());
 		my_data.setAction(type);
 		my_data.setPath(path);

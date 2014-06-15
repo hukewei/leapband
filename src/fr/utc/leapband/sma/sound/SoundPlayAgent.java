@@ -66,7 +66,8 @@ public class SoundPlayAgent extends Agent{
 	public class WaitNoteRequestBehaviour extends CyclicBehaviour {
 
 		public void action() {
-			MessageTemplate filtre = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+			MessageTemplate filtre = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
+					MessageTemplate.MatchConversationId("NOTE"));
 			
 			ACLMessage request = myAgent.receive(filtre);
 			
