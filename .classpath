@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="lib/vecmath.jar"/>
 	<classpathentry kind="lib" path="lib/jl1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/JavaMediaPlayer.jar"/>
+	<classpathentry kind="lib" path="lib/commons-net-3.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

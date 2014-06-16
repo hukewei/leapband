@@ -450,6 +450,9 @@ public class UserAgent extends GuiAgent{
 	}
 
 	public void setMultiple_mode(boolean multiple_mode) {
+		if(multiple_mode) {
+			addBehaviour(new GetNTPDateBehaviour());
+		}
 		this.multiple_mode = multiple_mode;
 		this.single_mode = !multiple_mode;
 	}
