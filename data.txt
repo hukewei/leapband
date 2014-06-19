@@ -1,0 +1,1 @@
+LeapBand est une application permettant de jouer des différents types d'instrument de façon interactive et en collaboration avec le capteur Leap Motion. 
